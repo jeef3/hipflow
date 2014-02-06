@@ -7,6 +7,9 @@ angular.module('hipFlowApp')
     var flowdock = new Flowdock();
     flowdock.connect('');
 
+    flowdock.rooms($scope, 'rooms', true);
+    flowdock.queries($scope, 'queries', true);
+
     flowdock.onMessage(function (message) {
       switch (message.event) {
         case 'message':
@@ -16,16 +19,6 @@ angular.module('hipFlowApp')
 
       $scope.$apply();
     });
-
-    $scope.rooms = [
-      { name: 'Idle chit-chat' },
-      { name: 'Dev' }
-    ];
-
-    $scope.queries = [
-      { name: 'Alan', online: true },
-      { name: 'Serge', online: false }
-    ];
 
     $scope.send = function (message) {
       $scope.messages.push({

@@ -1,10 +1,10 @@
-<div class="sidebar">
-
+<section class="sidebar">
   <ul class="room-list">
     <li ng-repeat="room in rooms">
       <i class="fa fa-fw fa-users"></i> {{room.name}}
     </li>
   </ul>
+
   <ul class="queries">
     <li class="query"
         ng-repeat="query in queries"
@@ -16,12 +16,13 @@
                      'fa-circle-o': !query.online}"></i> {{query.name}}
     </li>
   </ul>
-</div>
+</section>
 
-<div class="chat">
+<section class="chat">
   <div class="topic-bar">
 
   </div>
+
   <div class="messages-container">
     <ul class="messages">
       <li class="message"
@@ -31,14 +32,15 @@
       </li>
     </ul>
   </div>
+
   <div class="chat-bar">
     <form ng-submit="send(message)">
       <input type="text" ng-model="message">
       <button type="submit" class="btn">Send</button>
     </form>
   </div>
-</div>
+</section>
 
-<div class="sidebar">
+<aside class="chat-context">
 
-</div>
+</aside>
