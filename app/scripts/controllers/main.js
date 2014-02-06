@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('hipFlowAApp')
-  .controller('MainCtrl', function ($scope) {
+angular.module('hipFlowApp')
+  .controller('MainCtrl', function ($scope, Flowdock) {
     $scope.rooms = [
       { name: 'Idle chit-chat' },
       { name: 'Dev' }
