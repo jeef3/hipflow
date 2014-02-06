@@ -2,6 +2,21 @@
 
 angular.module('hipFlowApp')
   .controller('MainCtrl', function ($scope, Flowdock) {
+    $scope.messages = [];
+
+    var flowdock = new Flowdock();
+    flowdock.connect('');
+
+    flowdock.onMessage(function (message) {
+      switch (message.event) {
+        case 'message':
+          $scope.messages.push(message);
+          break;
+      }
+
+      $scope.$apply();
+    });
+
     $scope.rooms = [
       { name: 'Idle chit-chat' },
       { name: 'Dev' }
@@ -10,13 +25,6 @@ angular.module('hipFlowApp')
     $scope.queries = [
       { name: 'Alan', online: true },
       { name: 'Serge', online: false }
-    ];
-
-    $scope.messages = [
-      {
-        user: 'Jeff Knaggs',
-        content: 'Maybe have screenshots of situation/options for context?\nnearly every page will have a learner search. Should it be a right-side filter?'
-      }
     ];
 
     $scope.send = function (message) {
