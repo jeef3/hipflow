@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('hipFlowApp')
-  .controller('MessagesCtrl', function ($scope, Flowdock) {
+  .controller('MessagesCtrl', function ($scope, Flowdock, localStorageService) {
     var currentRoom = null;
 
-    $scope.logs = {};
+    $scope.logs = localStorageService.get('chatLogs') || [];
     $scope.messages = [];
 
     $scope.send = function (message) {
@@ -32,6 +32,8 @@ angular.module('hipFlowApp')
 
         $scope.logs[log].push(message);
       }
+
+      localStorageService.add('chatLogs', $scope.logs);
     });
 
     $scope.$on('SHOW_CHAT', function (e, chatId) {
