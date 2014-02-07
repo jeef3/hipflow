@@ -15,7 +15,7 @@ angular.module('hipFlowApp')
         $scope.queries = result.data;
       });
 
-    $scope.$on('SHOW_CHAT', function (e, chatId) {
-      $scope.currentRoom = chatId;
+    $scope.$on('SHOW_ROOM', function (e, room) {
+      $scope.currentRoom = room;
     });
   });

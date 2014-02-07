@@ -5,9 +5,6 @@ angular.module('hipFlowApp', [
     'LocalStorageModule',
     'angularMoment'
   ])
-  .config(function ($httpProvider, $locationProvider, localStorageServiceProvider) {
+  .config(function ($httpProvider, localStorageServiceProvider) {
     localStorageServiceProvider.setPrefix('hipflow');
-
-    $locationProvider
-      .hashPrefix('!');
   });
