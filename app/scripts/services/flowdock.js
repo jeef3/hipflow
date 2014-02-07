@@ -75,6 +75,9 @@ angular.module('hipFlowApp')
       me: function () {
         return { id: '58790' };
       },
+      getUsers: function () {
+        return $http.get(api('users'));
+      },
       getRooms: function () {
         return $http.get(api('flows'));
       },
