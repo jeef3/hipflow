@@ -4,7 +4,7 @@ angular.module('hipFlowApp')
   .controller('MessagesCtrl', function ($scope, Flowdock, localStorageService) {
     var currentRoom = null;
 
-    $scope.logs = localStorageService.get('chatLogs') || [];
+    $scope.logs = localStorageService.get('chatLogs') || {};
     $scope.messages = [];
 
     $scope.send = function (message) {
