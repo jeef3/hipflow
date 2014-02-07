@@ -1,0 +1,80 @@
+.topic-bar {
+  display: none;
+}
+
+.chat-bar {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 32px;
+
+  background: rgb(230, 230, 230);
+}
+
+.messages-container {
+  overflow-y: scroll;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 32px;
+  left: 0;
+}
+
+.messages {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  max-height: 100%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  list-style: none;
+}
+
+.message {
+  position: relative;
+  width: 100%;
+
+  border-top: solid 1px rgb(225, 225, 225);
+}
+
+.message__user {
+  display: table-cell;
+  width: 140px;
+  padding: 0.313em 0.625em;
+
+  font-weight: 500;
+  text-align: right;
+
+  background: rgb(247, 247, 247);
+  border-right: solid 1px rgb(225, 225, 225);
+  box-shadow: inset -1px 1px 0 0 #ffffff;
+}
+
+.message__content {
+  display: table-cell;
+  padding: 0.313em 0.625em;
+}
+
+.message__time {
+  display: none;
+  position: absolute;
+  padding: 0 0.626em;
+  right: 0.625em;
+  top: -0.625em;
+
+  color: rgb(153, 153, 153);
+  font-size: 0.813em;
+  font-weight: 300;
+  user-select: none;
+  cursor: default;
+
+  background: #ffffff;
+
+  .message:last-child &,
+  .message:hover & {
+    display: block;
+  }
+}

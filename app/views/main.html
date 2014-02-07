@@ -46,6 +46,7 @@
           ng-repeat="message in messages">
         <span class="message__user" ng-bind="message.user"></span>
         <span class="message__content" ng-bind="message.content"></span>
+        <span class="message__time" am-time-ago="message.sent"></span>
       </li>
     </ul>
   </div>
