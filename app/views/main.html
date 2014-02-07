@@ -1,21 +1,36 @@
 <section class="sidebar" ng-controller="RoomCtrl">
+  <div>Lobby</div>
+
   <ul class="room-list">
-    <li ng-repeat="room in rooms"
-        ng-click="show(room.id)">
-      <i class="fa fa-fw fa-users"></i> {{room.name}}
+    <li class="room"
+        ng-repeat="room in rooms">
+      <button type="button" class="room__join-btn" ng-click="show(room.id)">
+        <i class="fa fa-fw fa-users"></i>
+        <span ng-bind="room.name"></span>
+      </button>
+
+      <button type="button" class="room__close-btn" ng-click="leave(room.id)">
+        <i class="fa fa-fw fa-times"></i>
+      </button>
     </li>
   </ul>
 
-  <ul class="queries">
-    <li class="query"
-        ng-repeat="query in queries"
+  <ul class="room-list">
+    <li class="room"
+        ng-repeat="query in queries | filter:open"
         ng-click="show(query.id)"
         ng-class="{'query-online': query.online,
                    'query-offline': !query.online}">
+      <button type="button" class="room__join-btn" ng-click="show(room.id)">
+        <i class="fa fa-fw"
+            ng-class="{'fa-circle': query.online,
+                       'fa-circle-o': !query.online}"></i>
+        <span ng-bind="query.name"></span>
+      </button>
 
-      <i class="fa fa-fw"
-          ng-class="{'fa-circle': query.online,
-                     'fa-circle-o': !query.online}"></i> {{query.name}}
+      <button type="button" class="room__close-btn" ng-click="leave(room.id)">
+        <i class="fa fa-fw fa-times"></i>
+      </button>
     </li>
   </ul>
 </section>

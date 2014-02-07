@@ -1,0 +1,69 @@
+.room-list {
+  padding: 0;
+  margin: 0;
+
+  list-style: none;
+
+  &:last-child:after {
+    content: '';
+
+    display: block;
+    height: 0;
+    border-bottom: solid 1px rgb(65, 72, 86);
+  }
+}
+
+.room {
+  position: relative;
+  overflow: auto;
+
+  border-top: solid 1px rgb(65, 72, 86);
+  border-bottom: solid 1px rgb(36, 43, 55);
+
+  &.active {
+    border-top-color: rgb(36, 31, 40);
+    background: rgb(36, 43, 55);
+  }
+}
+
+.room__join-btn,
+.room__close-btn {
+  padding: 0;
+  margin: 0;
+
+  line-height: 2em;
+  color: rgb(177, 179, 174);
+  cursor: pointer;
+
+  border: 0;
+  background: none;
+}
+
+.room__join-btn {
+  float: left;
+  width: 100%;
+  padding: 0 0.625em;
+
+  text-align: left;
+
+  .active &,
+  &:hover,
+  &:active,
+  &:focus {
+    color: #ffffff;
+  }
+}
+
+.room__close-btn {
+  position: absolute;
+  width: 2em;
+  right: 0;
+
+  color: rgb(81, 87, 100);
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: #ffffff;
+  }
+}
