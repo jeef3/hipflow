@@ -14,8 +14,4 @@ angular.module('hipFlowApp')
 
         localStorageService.add('users', $scope.users);
       });
-
-    $scope.show = function (chatId) {
-      $scope.$broadcast('SHOW_CHAT', chatId);
-    };
   });

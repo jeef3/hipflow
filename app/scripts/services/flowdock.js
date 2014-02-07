@@ -98,7 +98,7 @@ angular.module('hipFlowApp')
       },
       getMessages: function (flowId, sinceId) {
         var deferred = $q.defer();
-        $http.get(api('flows/skilitics/' + flowId + '/messages?since_id=' + sinceId))
+        $http.get(api('flows/' + flowId + '/messages?since_id=' + sinceId))
           .success(function (messages) {
             deferred.resolve(messages);
           })

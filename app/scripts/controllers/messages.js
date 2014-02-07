@@ -54,28 +54,19 @@ angular.module('hipFlowApp')
       localStorageService.add('chatLogs', $scope.logs);
     });
 
-    var maybeLoadMore = function () {
+    var showRoom = function (room) {
       $scope.isLoading = true;
 
-      if (parseInt(currentRoomId, 10)) {
-        Flowdock.getPrivateMessages(currentRoomId)
-          .then(loadMessages);
+      var chatId;
+      if (room.match(/^\/private/)) {
+        chatId = room.match(/^\/private\/(.*)/)[1];
+        Flowdock.getPrivateMessages(chatId).then(loadMessages);
       } else {
-        Flowdock.getMessages(currentRoomId)
-          .then(loadMessages);
-      }
-    };
-
-    var showRoom = function (chatId) {
-      if (!$scope.logs[chatId]) {
-        // TODO: Get it
-        $scope.logs[chatId] = [];
+        chatId = room.match(/^\/(.*)/)[1];
+        Flowdock.getMessages(chatId).then(loadMessages);
       }
 
-      currentRoomId = chatId;
       $scope.messages = $scope.logs[chatId];
-
-      maybeLoadMore();
     };
 
     // $scope.$on('SHOW_CHAT', function (e, chatId) {
@@ -84,5 +75,6 @@ angular.module('hipFlowApp')
 
     $scope.$on('$locationChangeSuccess', function () {
       var path = $location.path();
+      showRoom(path);
     });
   });
