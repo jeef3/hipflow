@@ -2,8 +2,8 @@
 
 angular.module('hipFlowApp')
   .controller('MessagesCtrl', function ($scope, Flowdock, localStorageService) {
-    var currentRoom = null;
-
+    var currentRoomId;
+    $scope.isLoading = true;
     $scope.logs = localStorageService.get('chatLogs') || {};
     $scope.messages = [];
 
@@ -14,30 +14,67 @@ angular.module('hipFlowApp')
       });
     };
 
+    var addMessage = function (log, message) {
+      if (!$scope.logs[log]) {
+        $scope.logs[log] = [message];
+        return;
+      }
+
+      var exists = $scope.logs[log].filter(function (m) {
+        return m.uuid === message.uuid;
+      });
+
+      if (exists.length) {
+        return;
+      }
+
+      $scope.logs[log].push(message);
+    };
+
+    var loadMessages = function (messages) {
+      messages.forEach(function (message) {
+        addMessage(currentRoomId, message);
+      });
+
+      localStorageService.add('chatLogs', $scope.logs);
+      $scope.isLoading = false;
+    };
+
     Flowdock.listen(['message'], function (message) {
       if (message.flow) {
-        if (!$scope.logs[message.flow]) {
-          $scope.logs[message.flow] = [];
-        }
-
-        $scope.logs[message.flow].push(message);
+        addMessage(message.flow, message);
       } else if (message.to) {
         var log = message.to === Flowdock.me().id ?
           message.user :
           message.to;
 
-        if (!$scope.logs[log]) {
-          $scope.logs[log] = [];
-        }
-
-        $scope.logs[log].push(message);
+        addMessage(log, message);
       }
 
       localStorageService.add('chatLogs', $scope.logs);
     });
 
+    var maybeLoadMore = function () {
+      $scope.isLoading = true;
+
+      if (parseInt(currentRoomId, 10)) {
+        Flowdock.getPrivateMessages(currentRoomId)
+          .then(loadMessages);
+      } else {
+        Flowdock.getMessages(currentRoomId)
+          .then(loadMessages);
+      }
+    };
+
     $scope.$on('SHOW_CHAT', function (e, chatId) {
-      currentRoom = chatId;
+      if (!$scope.logs[chatId]) {
+        // TODO: Get it
+        $scope.logs[chatId] = [];
+      }
+
+      currentRoomId = chatId;
       $scope.messages = $scope.logs[chatId];
+
+      maybeLoadMore();
     });
   });

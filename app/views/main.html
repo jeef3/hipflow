@@ -6,7 +6,7 @@
         ng-repeat="room in rooms | filter:{open:true}"
         ng-class="{'active': room.id === currentRoom}">
       <button type="button" class="room__join-btn" ng-click="show(room.id)">
-        <i class="fa fa-fw fa-users room__type-icon"></i>
+        <i class="fa fa-fw fa-comments room__type-icon"></i>
         <span ng-bind="room.name"></span>
       </button>
 
@@ -43,12 +43,17 @@
   </div>
 
   <div class="messages-container">
-    <ul class="messages">
+    <ul class="messages" ng-class="{'is-loading': isLoading}">
+      <li class="messages-loading">
+        <i class="fa fa-fw fa-refresh fa-spin"></i>
+      </li>
       <li class="message"
-          ng-repeat="message in messages">
-        <div class="message__user" ng-bind="users[message.user].nick"></div>
-        <div class="message__content" ng-bind="message.content"></div>
-        <div class="message__time" am-time-ago="message.sent"></div>
+          ng-repeat="message in messages | orderBy:'sent'">
+        <div ng-if="message.event === 'message'">
+          <div class="message__user" ng-bind="users[message.user].nick"></div>
+          <div class="message__content" ng-bind="message.content"></div>
+          <div class="message__time" am-time-ago="message.sent"></div>
+        </div>
       </li>
     </ul>
   </div>

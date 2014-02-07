@@ -80,3 +80,16 @@
     display: block;
   }
 }
+
+.messages-loading {
+  display: none;
+  padding: 0.313em;
+
+  font-size: 3em;
+  color: #dddddd;
+  text-align: center;
+
+  .is-loading & {
+    display: block;
+  }
+}

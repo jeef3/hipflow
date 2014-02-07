@@ -83,6 +83,30 @@ angular.module('hipFlowApp')
       },
       getQueries: function () {
         return $http.get(api('private'));
+      },
+      getPrivateMessages: function (userId, sinceId) {
+        var deferred = $q.defer();
+        $http.get(api('private/' + userId + '/messages?since_id=' + sinceId))
+          .success(function (messages) {
+            deferred.resolve(messages);
+          })
+          .error(function () {
+            deferred.reject();
+          });
+
+        return deferred.promise;
+      },
+      getMessages: function (flowId, sinceId) {
+        var deferred = $q.defer();
+        $http.get(api('flows/skilitics/' + flowId + '/messages?since_id=' + sinceId))
+          .success(function (messages) {
+            deferred.resolve(messages);
+          })
+          .error(function () {
+            deferred.reject();
+          });
+
+        return deferred.promise;
       }
     };
   });
