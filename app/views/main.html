@@ -3,9 +3,10 @@
 
   <ul class="room-list">
     <li class="room"
-        ng-repeat="room in rooms | filter:{open:true}">
+        ng-repeat="room in rooms | filter:{open:true}"
+        ng-class="{'active': room.id === currentRoom}">
       <button type="button" class="room__join-btn" ng-click="show(room.id)">
-        <i class="fa fa-fw fa-users"></i>
+        <i class="fa fa-fw fa-users room__type-icon"></i>
         <span ng-bind="room.name"></span>
       </button>
 
@@ -20,15 +21,16 @@
         ng-repeat="query in queries | filter:{open:true}"
         ng-click="show(query.id)"
         ng-class="{'query-online': query.online,
-                   'query-offline': !query.online}">
-      <button type="button" class="room__join-btn" ng-click="show(room.id)">
-        <i class="fa fa-fw"
+                   'query-offline': !query.online,
+                   'active': query.id === currentRoom}">
+      <button type="button" class="room__join-btn" ng-click="show(query.id)">
+        <i class="fa fa-fw room__type-icon"
             ng-class="{'fa-circle': query.online,
                        'fa-circle-o': !query.online}"></i>
         <span ng-bind="query.name"></span>
       </button>
 
-      <button type="button" class="room__close-btn" ng-click="leave(room.id)">
+      <button type="button" class="room__close-btn" ng-click="leave(query.id)">
         <i class="fa fa-fw fa-times"></i>
       </button>
     </li>

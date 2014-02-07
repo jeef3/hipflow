@@ -17,12 +17,18 @@
   position: relative;
   overflow: auto;
 
+  color: rgb(177, 179, 174);
+
   border-top: solid 1px rgb(65, 72, 86);
   border-bottom: solid 1px rgb(36, 43, 55);
 
   &.active {
     border-top-color: rgb(36, 31, 40);
     background: rgb(36, 43, 55);
+  }
+
+  &.unread {
+    color: #ffffff;
   }
 }
 
@@ -32,7 +38,6 @@
   margin: 0;
 
   line-height: 2em;
-  color: rgb(177, 179, 174);
   cursor: pointer;
 
   border: 0;
@@ -45,6 +50,7 @@
   padding: 0 0.625em;
 
   text-align: left;
+  color: inherit;
 
   .active &,
   &:hover,
@@ -65,5 +71,11 @@
   &:active,
   &:focus {
     color: #ffffff;
+  }
+}
+
+.room__type-icon {
+  .query-online & {
+    color: #32BE32;
   }
 }
