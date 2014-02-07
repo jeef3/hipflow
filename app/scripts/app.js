@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('hipFlowApp', [
+    'ngSanitize',
     'LocalStorageModule',
     'angularMoment'
   ])
