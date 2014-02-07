@@ -3,7 +3,7 @@
 
   <ul class="room-list">
     <li class="room"
-        ng-repeat="room in rooms">
+        ng-repeat="room in rooms | filter:{open:true}">
       <button type="button" class="room__join-btn" ng-click="show(room.id)">
         <i class="fa fa-fw fa-users"></i>
         <span ng-bind="room.name"></span>
@@ -17,7 +17,7 @@
 
   <ul class="room-list">
     <li class="room"
-        ng-repeat="query in queries | filter:open"
+        ng-repeat="query in queries | filter:{open:true}"
         ng-click="show(query.id)"
         ng-class="{'query-online': query.online,
                    'query-offline': !query.online}">
