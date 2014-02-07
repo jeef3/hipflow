@@ -5,12 +5,16 @@
     <li class="room"
         ng-repeat="room in rooms | filter:{open:true}"
         ng-class="{'active': room.id === currentRoom}">
-      <a class="room__join-btn" ng-href="#!/{{room.organization.parameterized_name}}/{{room.parameterized_name}}">
+      <button type="button"
+          class="room__join-btn"
+          ng-click="showRoom(room.organization.parameterized_name + '/' + room.parameterized_name)">
         <i class="fa fa-fw fa-comments room__type-icon"></i>
         <span ng-bind="room.name"></span>
-      </a>
+      </button>
 
-      <button type="button" class="room__close-btn" ng-click="leave(room.id)">
+      <button type="button"
+          class="room__close-btn"
+          ng-click="leaveRoom(room.organization.parameterized_name + '/' + room.parameterized_name)">
         <i class="fa fa-fw fa-times"></i>
       </button>
     </li>
@@ -23,14 +27,18 @@
         ng-class="{'query-online': query.online,
                    'query-offline': !query.online,
                    'active': query.id === currentRoom}">
-      <a class="room__join-btn" ng-href="#!/private/{{query.id}}">
+      <button type="button"
+          class="room__join-btn"
+          ng-click="showRoom('private/' + query.id)">
         <i class="fa fa-fw room__type-icon"
             ng-class="{'fa-circle': query.online,
                        'fa-circle-o': !query.online}"></i>
         <span ng-bind="query.name"></span>
-      </a>
+      </button>
 
-      <button type="button" class="room__close-btn" ng-click="leave(query.id)">
+      <button type="button"
+          class="room__close-btn"
+          ng-click="leaveRoom('private/' + query.id)">
         <i class="fa fa-fw fa-times"></i>
       </button>
     </li>

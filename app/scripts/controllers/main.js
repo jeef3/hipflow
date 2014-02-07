@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hipFlowApp')
-  .controller('MainCtrl', function ($scope, $timeout, $location, Flowdock, localStorageService) {
+  .controller('MainCtrl', function ($scope, $rootScope, Flowdock, localStorageService) {
     Flowdock.connect('');
 
     $scope.users = localStorageService.get('users') || {};
@@ -14,4 +14,12 @@ angular.module('hipFlowApp')
 
         localStorageService.add('users', $scope.users);
       });
+
+    $scope.showRoom = function (room) {
+      $rootScope.$broadcast('SHOW_ROOM', room);
+    };
+
+    $scope.leaveRoom = function (room) {
+      $rootScope.$broadcast('LEAVE_ROOM', room);
+    };
   });

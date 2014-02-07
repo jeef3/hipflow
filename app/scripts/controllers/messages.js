@@ -7,13 +7,6 @@ angular.module('hipFlowApp')
     $scope.logs = localStorageService.get('chatLogs') || {};
     $scope.messages = [];
 
-    $scope.send = function (message) {
-      $scope.messages.push({
-        user: 'Jeff Knaggs',
-        content: message
-      });
-    };
-
     var addMessage = function (log, message) {
       if (!$scope.logs[log]) {
         $scope.logs[log] = [message];
@@ -57,24 +50,23 @@ angular.module('hipFlowApp')
     var showRoom = function (room) {
       $scope.isLoading = true;
 
-      var chatId;
-      if (room.match(/^\/private/)) {
-        chatId = room.match(/^\/private\/(.*)/)[1];
-        Flowdock.getPrivateMessages(chatId).then(loadMessages);
+      if (room.search(/^private/)) {
+        var privateChatId = room.match(/^private\/(.*)/)[1];
+        Flowdock.getPrivateMessages(privateChatId).then(loadMessages);
       } else {
-        chatId = room.match(/^\/(.*)/)[1];
-        Flowdock.getMessages(chatId).then(loadMessages);
+        Flowdock.getMessages(room).then(loadMessages);
       }
-
-      $scope.messages = $scope.logs[chatId];
     };
 
-    // $scope.$on('SHOW_CHAT', function (e, chatId) {
-    //   showRoom(chatId);
-    // });
+    var leaveRoom = function (room) {
+      // TODO: Leave room
+    };
 
-    $scope.$on('$locationChangeSuccess', function () {
-      var path = $location.path();
-      showRoom(path);
+    $scope.$on('SHOW_ROOM', function (e, room) {
+      showRoom(room);
+    });
+
+    $scope.$on('LEAVE_ROOM', function (e, room) {
+      leaveRoom(room);
     });
   });
