@@ -44,9 +44,9 @@
     <ul class="messages">
       <li class="message"
           ng-repeat="message in messages">
-        <span class="message__user" ng-bind="message.user"></span>
-        <span class="message__content" ng-bind="message.content"></span>
-        <span class="message__time" am-time-ago="message.sent"></span>
+        <div class="message__user" ng-bind="users[message.user].nick"></div>
+        <div class="message__content" ng-bind="message.content"></div>
+        <div class="message__time" am-time-ago="message.sent"></div>
       </li>
     </ul>
   </div>
