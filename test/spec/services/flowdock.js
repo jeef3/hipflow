@@ -3,7 +3,7 @@
 describe('Service: flowdock', function () {
 
   // load the service's module
-  beforeEach(module('hipFlowAApp'));
+  beforeEach(module('hipFlowApp'));
 
   // instantiate service
   var flowdock;

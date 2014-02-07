@@ -1,82 +1,85 @@
 'use strict';
 
 angular.module('hipFlowApp')
-  .factory('Flowdock', function ($q, $http) {
-
-    function Flowdock() {
-    }
-
-    Flowdock.prototype.connect = function () {
-      var credentials = [].slice.call(arguments, 0);
-
-      switch (credentials.length) {
-        case 0:
-          // No authentication
-          break;
-        case 1:
-          // Token
-          break;
-        case 2:
-          // User/pass
-          break;
-        default:
-          throw new Error('Credentials should be a token or user/pass');
-      }
-
-      return this;
+  .service('Flowdock', function Flowdock($q, $http, $rootScope) {
+    var api = function (url) {
+      return 'https://api.flowdock.com/' + url;
     };
 
-    Flowdock.prototype.onMessage = function (fn) {
-      var stream = new EventSource('https://stream.flowdock.com/flows?user=58806', { withCredentials: true });
+    var stream = null,
+      listeners = [];
+
+    var startListening = function (rooms) {
+      if (stream) {
+        stream.close();
+      }
+
+      stream = new EventSource(
+        'https://stream.flowdock.com/flows?active=true&filter=' + rooms.join(',') + '&user=1',
+        { withCredentials: true });
 
       stream.onmessage = function (e) {
-        console.log('received');
-        var message = JSON.parse(e.data);
+        var _this = this,
+          message = JSON.parse(e.data);
 
-        fn(message);
+        console.log(message);
+
+        listeners.forEach(function (listener) {
+          if (listener.events.indexOf(message.event) !== -1) {
+            listener.fn.call(_this, message);
+          }
+        });
+
+        $rootScope.$apply();
       };
     };
 
-    Flowdock.prototype.rooms = function (scope, prop, openOnly) {
-      scope[prop] = [];
+    return {
+      connect: function () {
+        var credentials = [].slice.call(arguments, 0);
 
-      $http.get('https://api.flowdock.com/flows')
-        .success(function (result) {
-          scope[prop] = result.filter(function (room) {
-            return room.open || !openOnly;
-          })
-          .map(function (room) {
-            return {
-              id: room.id,
-              name: room.name
-            };
+        switch (credentials.length) {
+          case 0:
+            // No authentication
+            break;
+          case 1:
+            // Token
+            break;
+          case 2:
+            // User/pass
+            break;
+          default:
+            throw new Error('Credentials should be a token or user/pass');
+        }
+
+        $http.get(api('flows'))
+          .success(function (result) {
+            var rooms = result
+              .filter(function (room) {
+                return room.open;
+              })
+              .map(function (room) {
+                return room.id;
+              });
+            startListening(rooms);
           });
-        })
-        .error(function () {
-          scope[prop] = [];
+
+        return this;
+      },
+      listen: function (events, fn) {
+        listeners.push({
+          events: events,
+          fn: fn
         });
-
-      return this;
+      },
+      me: function () {
+        return { id: '58790' };
+      },
+      getRooms: function () {
+        return $http.get(api('flows'));
+      },
+      getQueries: function () {
+        return $http.get(api('private'));
+      }
     };
-
-    Flowdock.prototype.queries = function (scope, prop, openOnly) {
-      $http.get('https://api.flowdock.com/private')
-        .success(function (result) {
-          scope[prop] = result.filter(function (query) {
-            return query.open || !openOnly;
-          })
-          .map(function (query) {
-            return {
-              name: query.name
-            };
-          });
-        })
-        .error(function () {
-          scope[prop] = [];
-        });
-
-      return this;
-    };
-
-    return Flowdock;
   });

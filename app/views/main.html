@@ -1,6 +1,7 @@
-<section class="sidebar">
+<section class="sidebar" ng-controller="RoomCtrl">
   <ul class="room-list">
-    <li ng-repeat="room in rooms">
+    <li ng-repeat="room in rooms"
+        ng-click="show(room.id)">
       <i class="fa fa-fw fa-users"></i> {{room.name}}
     </li>
   </ul>
@@ -8,6 +9,7 @@
   <ul class="queries">
     <li class="query"
         ng-repeat="query in queries"
+        ng-click="show(query.id)"
         ng-class="{'query-online': query.online,
                    'query-offline': !query.online}">
 
@@ -18,7 +20,7 @@
   </ul>
 </section>
 
-<section class="chat">
+<section class="chat" ng-controller="MessagesCtrl">
   <div class="topic-bar">
 
   </div>
@@ -41,6 +43,6 @@
   </div>
 </section>
 
-<aside class="chat-context">
+<aside class="chat-context" ng="ChatContextCtrl">
 
 </aside>
