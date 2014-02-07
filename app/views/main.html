@@ -5,10 +5,10 @@
     <li class="room"
         ng-repeat="room in rooms | filter:{open:true}"
         ng-class="{'active': room.id === currentRoom}">
-      <button type="button" class="room__join-btn" ng-click="show(room.id)">
+      <a class="room__join-btn" ng-href="#!/{{room.organization.parameterized_name}}/{{room.parameterized_name}}">
         <i class="fa fa-fw fa-comments room__type-icon"></i>
         <span ng-bind="room.name"></span>
-      </button>
+      </a>
 
       <button type="button" class="room__close-btn" ng-click="leave(room.id)">
         <i class="fa fa-fw fa-times"></i>
@@ -23,12 +23,12 @@
         ng-class="{'query-online': query.online,
                    'query-offline': !query.online,
                    'active': query.id === currentRoom}">
-      <button type="button" class="room__join-btn" ng-click="show(query.id)">
+      <a class="room__join-btn" ng-href="#!/private/{{query.id}}">
         <i class="fa fa-fw room__type-icon"
             ng-class="{'fa-circle': query.online,
                        'fa-circle-o': !query.online}"></i>
         <span ng-bind="query.name"></span>
-      </button>
+      </a>
 
       <button type="button" class="room__close-btn" ng-click="leave(query.id)">
         <i class="fa fa-fw fa-times"></i>
@@ -37,13 +37,16 @@
   </ul>
 </section>
 
-<section class="chat" ng-controller="MessagesCtrl">
+<section ng-controller="MessagesCtrl"
+    ng-class="{'is-loading': isLoading}"
+    class="chat">
+
   <div class="topic-bar">
 
   </div>
 
   <div class="messages-container">
-    <ul class="messages" ng-class="{'is-loading': isLoading}">
+    <ul class="messages">
       <li class="messages-loading">
         <i class="fa fa-fw fa-refresh fa-spin"></i>
       </li>

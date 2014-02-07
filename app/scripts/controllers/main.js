@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hipFlowApp')
-  .controller('MainCtrl', function ($scope, $timeout, Flowdock, localStorageService) {
+  .controller('MainCtrl', function ($scope, $timeout, $location, Flowdock, localStorageService) {
     Flowdock.connect('');
 
     $scope.users = localStorageService.get('users') || {};

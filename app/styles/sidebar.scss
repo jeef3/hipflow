@@ -16,20 +16,6 @@
 .room {
   position: relative;
   overflow: auto;
-
-  color: rgb(177, 179, 174);
-
-  border-top: solid 1px rgb(65, 72, 86);
-  border-bottom: solid 1px rgb(36, 43, 55);
-
-  &.active {
-    border-top-color: rgb(36, 31, 40);
-    background: rgb(36, 43, 55);
-  }
-
-  &.unread {
-    color: #ffffff;
-  }
 }
 
 .room__join-btn,
@@ -38,6 +24,7 @@
   margin: 0;
 
   line-height: 2em;
+  text-decoration: none;
   cursor: pointer;
 
   border: 0;
@@ -50,7 +37,19 @@
   padding: 0 0.625em;
 
   text-align: left;
-  color: inherit;
+  color: rgb(177, 179, 174);
+
+  border-top: solid 1px rgb(65, 72, 86);
+  border-bottom: solid 1px rgb(36, 43, 55);
+
+  .active & {
+    border-top-color: rgb(36, 31, 40);
+    background: rgb(36, 43, 55);
+  }
+
+  .unread & {
+    color: #ffffff;
+  }
 
   .active &,
   &:hover,

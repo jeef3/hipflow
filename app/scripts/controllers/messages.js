@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hipFlowApp')
-  .controller('MessagesCtrl', function ($scope, Flowdock, localStorageService) {
+  .controller('MessagesCtrl', function ($scope, $location, Flowdock, localStorageService) {
     var currentRoomId;
     $scope.isLoading = true;
     $scope.logs = localStorageService.get('chatLogs') || {};
@@ -66,7 +66,7 @@ angular.module('hipFlowApp')
       }
     };
 
-    $scope.$on('SHOW_CHAT', function (e, chatId) {
+    var showRoom = function (chatId) {
       if (!$scope.logs[chatId]) {
         // TODO: Get it
         $scope.logs[chatId] = [];
@@ -76,5 +76,13 @@ angular.module('hipFlowApp')
       $scope.messages = $scope.logs[chatId];
 
       maybeLoadMore();
+    };
+
+    // $scope.$on('SHOW_CHAT', function (e, chatId) {
+    //   showRoom(chatId);
+    // });
+
+    $scope.$on('$locationChangeSuccess', function () {
+      var path = $location.path();
     });
   });
