@@ -2,7 +2,7 @@
 
 angular.module('hipFlowApp')
   .service('Flowdock', function Flowdock($q, $http, $rootScope, localStorageService) {
-    // $scope.logs = localStorageService.get('chatLogs') || {};
+
     var data = {
       users: localStorageService.get('users') || [],
       rooms: localStorageService.get('rooms') || [],
@@ -139,7 +139,7 @@ angular.module('hipFlowApp')
 
             messages.forEach(function (message) {
               var exists = data.chatLogs[room.id].filter(function (m) {
-                return m.uuid === message.uuid;
+                return m.id === message.id;
               });
 
               if (exists.length) {
