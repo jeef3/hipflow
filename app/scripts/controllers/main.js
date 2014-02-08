@@ -23,6 +23,11 @@ angular.module('hipFlowApp')
       return Flowdock.getUserById(userId);
     };
 
+    $scope.send = function (message) {
+      Flowdock.sendMessageToRoom(message, $scope.currentRoom);
+      // $scope.sendMessageForm.$setPristine();
+    };
+
     $scope.isOnline = function (user) {
       var now = new Date(),
         ping = user.last_ping,
