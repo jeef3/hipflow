@@ -61,6 +61,14 @@
   a:hover {
     text-decoration: underline;
   }
+
+  .inline-code {
+    padding: 0.125em;
+
+    border: solid 1px #ccc;
+    border-radius: .313em;
+    background: #eee;
+  }
 }
 
 .message__user {
