@@ -45,28 +45,17 @@
   </ul>
 </section>
 
-<section ng-controller="MessagesCtrl"
-    ng-class="{'is-loading': isLoading}"
-    class="chat">
+<section class="chat">
 
-  <div class="topic-bar">
-
-  </div>
-
-  <div class="messages-container">
-    <ul class="messages">
-      <li class="messages-loading">
-        <i class="fa fa-fw fa-refresh fa-spin"></i>
-      </li>
-      <li class="message"
-          ng-repeat="message in messages | orderBy:'sent'">
-        <div ng-if="message.event === 'message'">
-          <div class="message__user" ng-bind="users[message.user].nick"></div>
-          <div class="message__content" ng-bind-html="message.content | codeFormat | messageLinks"></div>
-          <div class="message__time" am-time-ago="message.sent"></div>
-        </div>
-      </li>
-    </ul>
+  <div ng-controller="MessagesCtrl" class="message-windows">
+    <div class="message-window"
+        ng-controller="MessageWindowCtrl"
+        ng-class="{'is-loading': isLoading}"
+        ng-repeat="room in rooms"
+        ng-init="room = room"
+        ng-show="room == currentRoom">
+      <div ng-include="'views/message-window.html'"></div>
+    </div>
   </div>
 
   <div class="chat-bar">

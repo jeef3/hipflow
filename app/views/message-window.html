@@ -1,0 +1,19 @@
+<div class="topic-bar">
+  {{room}}
+</div>
+
+<div class="messages-container">
+  <ul class="messages">
+    <li class="messages-loading">
+      <i class="fa fa-fw fa-refresh fa-spin"></i>
+    </li>
+    <li class="message"
+        ng-repeat="message in messages | orderBy:'sent'">
+      <div ng-if="message.event === 'message'">
+        <div class="message__user" ng-bind="users[message.user].nick"></div>
+        <div class="message__content" ng-bind-html="message.content | codeFormat | messageLinks"></div>
+        <div class="message__time" am-time-ago="message.sent"></div>
+      </div>
+    </li>
+  </ul>
+</div>
