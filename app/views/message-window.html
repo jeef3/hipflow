@@ -8,7 +8,7 @@
       <i class="fa fa-fw fa-refresh fa-spin"></i>
     </li>
     <li class="message"
-        ng-repeat="message in flowdock.messages[room] | orderBy:'sent'">
+        ng-repeat="message in flowdock.chatLogs[room.id] | orderBy:'sent'">
       <div ng-if="message.event === 'message'">
         <div class="message__user" ng-bind="users[message.user].nick"></div>
         <div class="message__content" ng-bind-html="message.content | codeFormat | messageLinks"></div>
