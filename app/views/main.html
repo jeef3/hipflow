@@ -82,7 +82,7 @@
           ng-repeat="user in currentRoom.users"
           ng-class="{'user-online': isOnline(user),
                      'user-offline': !isOnline(user)}">
-        <i class="fa fa-fw"
+        <i class="fa fa-fw user__online-status-icon"
             ng-class="{'fa-circle': isOnline(user),
                        'fa-circle-o': !isOnline(user)}"></i>
         <span ng-bind="user.nick"></span>

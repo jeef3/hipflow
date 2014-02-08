@@ -4,3 +4,13 @@
 
   list-style: none;
 }
+
+.user {
+
+}
+
+.user__online-status-icon {
+  .user-online & {
+    color: green;
+  }
+}
