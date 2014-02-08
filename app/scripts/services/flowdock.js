@@ -15,32 +15,44 @@ angular.module('hipFlowApp')
       return 'https://api.flowdock.com/' + url;
     };
 
-    var stream = null,
-      listeners = [];
+    var stream = null;
 
-    var startListening = function (rooms) {
+    var startListening = function () {
       if (stream) {
         stream.close();
       }
 
       stream = new EventSource(
-        'https://stream.flowdock.com/flows?active=true&filter=' + rooms.join(',') + '&user=1',
+        'https://stream.flowdock.com/flows?active=true&filter=' + data.rooms.join(',') + '&user=1',
         { withCredentials: true });
 
       stream.onmessage = function (e) {
-        var _this = this,
-          message = JSON.parse(e.data);
+        var message = JSON.parse(e.data);
 
         console.log(message);
 
-        listeners.forEach(function (listener) {
-          if (listener.events.indexOf(message.event) !== -1) {
-            listener.fn.call(_this, message);
-          }
-        });
+        switch (message.event) {
+          case 'message':
+            handleMessage(message);
+            break;
+        }
 
         $rootScope.$apply();
       };
+    };
+
+    var handleMessage = function (message) {
+      if (message.flow) {
+        data.chatLogs[message.flow].push(message);
+      } else if (message.to) {
+        var log = message.to === Flowdock.me().id ?
+          message.user :
+          message.to;
+
+        data.chatLogs[log].push(message);
+      }
+
+      localStorageService.add('chatLogs', data.chatLogs);
     };
 
     var updateData = function () {
@@ -59,7 +71,6 @@ angular.module('hipFlowApp')
         localStorageService.add('queries', queries);
       });
     };
-    // updateData();
 
     return {
       data: data,
@@ -89,16 +100,11 @@ angular.module('hipFlowApp')
               .map(function (room) {
                 return room.id;
               });
-            // startListening(rooms);
           });
 
+        // updateData();
+        // startListening(rooms);
         return this;
-      },
-      listen: function (events, fn) {
-        listeners.push({
-          events: events,
-          fn: fn
-        });
       },
       me: function () {
         return { id: '58790' };
