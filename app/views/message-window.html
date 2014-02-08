@@ -10,7 +10,7 @@
     <li class="message"
         ng-repeat="message in flowdock.chatLogs[room.id] | orderBy:'sent'">
       <div ng-if="message.event === 'message'">
-        <div class="message__user" ng-bind="users[message.user].nick"></div>
+        <div class="message__user" ng-bind="user(message.user).nick"></div>
         <div class="message__content" ng-bind-html="message.content | codeFormat | messageLinks"></div>
         <div class="message__time" am-time-ago="message.sent"></div>
       </div>

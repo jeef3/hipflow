@@ -7,7 +7,7 @@ angular.module('hipFlowApp')
 
     var currentRoomId = localStorageService.get('currentRoom') || null;
     $scope.currentRoom = currentRoomId ?
-      Flowdock.getRoom(currentRoomId) :
+      Flowdock.getRoomById(currentRoomId) :
       null;
 
     $scope.showRoom = function (room) {
@@ -17,6 +17,10 @@ angular.module('hipFlowApp')
 
     $scope.leaveRoom = function (room) {
       // TODO: Leave room
+    };
+
+    $scope.user = function (userId) {
+      return Flowdock.getUserById(userId);
     };
 
     $scope.isOnline = function (user) {

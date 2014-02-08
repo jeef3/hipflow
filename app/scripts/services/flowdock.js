@@ -98,10 +98,14 @@ angular.module('hipFlowApp')
       me: function () {
         return { id: '58790' };
       },
-      getUser: function (id) {
-        // TODO cycle through users to find user
+      getUserById: function (userId) {
+        var user = data.users.filter(function (user) {
+          return user.id === parseInt(userId, 10);
+        });
+
+        return user[0];
       },
-      getRoom: function (roomId) {
+      getRoomById: function (roomId) {
         var room = data.rooms.filter(function (room) {
           return room.id === roomId;
         });
