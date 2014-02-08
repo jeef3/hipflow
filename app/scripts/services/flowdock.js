@@ -91,19 +91,8 @@ angular.module('hipFlowApp')
             throw new Error('Credentials should be a token or user/pass');
         }
 
-        $http.get(api('flows'))
-          .success(function (result) {
-            var rooms = result
-              .filter(function (room) {
-                return room.open;
-              })
-              .map(function (room) {
-                return room.id;
-              });
-          });
-
-        // updateData();
-        // startListening(rooms);
+        updateData();
+        startListening();
         return this;
       },
       me: function () {
@@ -112,12 +101,20 @@ angular.module('hipFlowApp')
       getUser: function (id) {
         // TODO cycle through users to find user
       },
+      getRoom: function (roomId) {
+        var room = data.rooms.filter(function (room) {
+          return room.id === roomId;
+        });
 
-      getRooms: function () {
-        return $http.get(api('flows'));
-      },
-      getQueries: function () {
-        return $http.get(api('private'));
+        if (room && room.length) {
+          return room[0];
+        }
+
+        room = data.queries.filter(function (query) {
+          return query.id === roomId;
+        });
+
+        return room[0];
       },
       getPrivateMessages: function (userId, sinceId) {
         var deferred = $q.defer();
