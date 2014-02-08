@@ -1,7 +1,16 @@
 'use strict';
 
 angular.module('hipFlowApp')
-  .service('Flowdock', function Flowdock($q, $http, $rootScope) {
+  .service('Flowdock', function Flowdock($q, $http, $rootScope, localStorageService) {
+    // $scope.logs = localStorageService.get('chatLogs') || {};
+    var data = {
+      users: localStorageService.get('users') || [],
+      rooms: localStorageService.get('rooms') || [],
+      queries: localStorageService.get('queries') || [],
+
+      chatLogs: localStorageService.get('chatLogs') || {}
+    };
+
     var api = function (url) {
       return 'https://api.flowdock.com/' + url;
     };
@@ -34,7 +43,26 @@ angular.module('hipFlowApp')
       };
     };
 
+    var updateData = function () {
+      $http.get(api('users')).success(function (users) {
+        data.users = users;
+        localStorageService.add('users', users);
+      });
+
+      $http.get(api('flows')).success(function (rooms) {
+        data.rooms = rooms;
+        localStorageService.add('rooms', rooms);
+      });
+
+      $http.get(api('private')).success(function (queries) {
+        data.queries = queries;
+        localStorageService.add('queries', queries);
+      });
+    };
+    // updateData();
+
     return {
+      data: data,
       connect: function () {
         var credentials = [].slice.call(arguments, 0);
 
@@ -61,7 +89,7 @@ angular.module('hipFlowApp')
               .map(function (room) {
                 return room.id;
               });
-            startListening(rooms);
+            // startListening(rooms);
           });
 
         return this;
@@ -75,9 +103,10 @@ angular.module('hipFlowApp')
       me: function () {
         return { id: '58790' };
       },
-      getUsers: function () {
-        return $http.get(api('users'));
+      getUser: function (id) {
+        // TODO cycle through users to find user
       },
+
       getRooms: function () {
         return $http.get(api('flows'));
       },

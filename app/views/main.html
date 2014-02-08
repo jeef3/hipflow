@@ -1,20 +1,20 @@
-<section class="sidebar" ng-controller="RoomCtrl">
+<section class="sidebar">
   <div>Lobby</div>
 
   <ul class="room-list">
     <li class="room"
-        ng-repeat="room in rooms | filter:{open:true}"
-        ng-class="{'active': room.id === currentRoom}">
+        ng-repeat="room in flowdock.rooms | filter:{open:true}"
+        ng-class="{'active': room === currentRoom}">
       <button type="button"
           class="room__join-btn"
-          ng-click="showRoom(room.organization.parameterized_name + '/' + room.parameterized_name)">
+          ng-click="showRoom(room)">
         <i class="fa fa-fw fa-comments room__type-icon"></i>
         <span ng-bind="room.name"></span>
       </button>
 
       <button type="button"
           class="room__close-btn"
-          ng-click="leaveRoom(room.organization.parameterized_name + '/' + room.parameterized_name)">
+          ng-click="leaveRoom(room)">
         <i class="fa fa-fw fa-times"></i>
       </button>
     </li>
@@ -22,14 +22,13 @@
 
   <ul class="room-list">
     <li class="room"
-        ng-repeat="query in queries | filter:{open:true}"
-        ng-click="show(query.id)"
+        ng-repeat="query in flowdock.queries | filter:{open:true}"
         ng-class="{'query-online': query.online,
                    'query-offline': !query.online,
-                   'active': query.id === currentRoom}">
+                   'active': query === currentRoom}">
       <button type="button"
           class="room__join-btn"
-          ng-click="showRoom('private/' + query.id)">
+          ng-click="showRoom(query)">
         <i class="fa fa-fw room__type-icon"
             ng-class="{'fa-circle': query.online,
                        'fa-circle-o': !query.online}"></i>
@@ -38,7 +37,7 @@
 
       <button type="button"
           class="room__close-btn"
-          ng-click="leaveRoom('private/' + query.id)">
+          ng-click="leaveRoom(room)">
         <i class="fa fa-fw fa-times"></i>
       </button>
     </li>
@@ -48,12 +47,22 @@
 <section class="chat">
 
   <div ng-controller="MessagesCtrl" class="message-windows">
+    <!-- Rooms -->
     <div class="message-window"
         ng-controller="MessageWindowCtrl"
         ng-class="{'is-loading': isLoading}"
-        ng-repeat="room in rooms"
+        ng-repeat="room in flowdock.rooms"
         ng-init="room = room"
-        ng-show="room == currentRoom">
+        ng-show="room === currentRoom">
+      <div ng-include="'views/message-window.html'"></div>
+    </div>
+    <!-- Queries -->
+    <div class="message-window"
+        ng-controller="MessageWindowCtrl"
+        ng-class="{'is-loading': isLoading}"
+        ng-repeat="room in flowdock.queries"
+        ng-init="room = room"
+        ng-show="room === currentRoom">
       <div ng-include="'views/message-window.html'"></div>
     </div>
   </div>

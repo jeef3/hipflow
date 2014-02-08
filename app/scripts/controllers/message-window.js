@@ -2,10 +2,7 @@
 
 angular.module('hipFlowApp')
   .controller('MessageWindowCtrl', function ($scope, Flowdock) {
-    // $scope.messages = Flowdock.messages;
     $scope.isLoading = true;
-
-    $scope.messages = [{ content: 'hai' }];
 
     var addMessage = function (log, message) {
       if (!$scope.logs[log]) {
@@ -23,6 +20,13 @@ angular.module('hipFlowApp')
 
       $scope.logs[log].push(message);
     };
+
+    // if (room.search(/^private\//) !== -1) {
+    //     var privateChatId = room.match(/^private\/(.*)/)[1];
+    //     Flowdock.getPrivateMessages(privateChatId).then(loadMessages);
+    //   } else {
+    //     Flowdock.getMessages(room).then(loadMessages);
+    //   }
 
     var loadMessages = function (messages) {
       messages.forEach(function (message) {
