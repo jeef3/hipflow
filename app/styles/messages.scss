@@ -38,6 +38,19 @@
   width: 100%;
 
   border-top: solid 1px rgb(225, 225, 225);
+
+  &.notify {
+    border-top-color: rgb(236, 220, 191);
+    background: rgb(255, 251, 233);
+  }
+  &.success {
+    border-top-color: rgb(190, 224, 144);
+    background: rgb(245, 248, 232);
+  }
+  &.failure {
+    border-top-color: rgb(225, 175, 176);
+    background: rgb(249, 230, 230);
+  }
 }
 
 .message__user {
@@ -51,6 +64,22 @@
   background: rgb(247, 247, 247);
   border-right: solid 1px rgb(225, 225, 225);
   box-shadow: inset -1px 1px 0 0 #ffffff;
+
+  .notify & {
+    background: rgb(253, 235, 200);
+    border-right-color: rgb(229, 207, 172);
+    box-shadow: inset -1px 1px 0 0 rgb(255, 250, 235);
+  }
+  .success & {
+    background: rgb(223, 242, 206);
+    border-right-color: rgb(190, 224, 144);
+    box-shadow: inset -1px 1px 0 0 rgb(255, 250, 235);
+  }
+  .failure & {
+    background: rgb(243, 208, 208);
+    border-right-color: rgb(225, 175, 176);
+    box-shadow: inset -1px 1px 0 0 rgb(247, 222, 222);
+  }
 }
 
 .message__content {
@@ -87,4 +116,8 @@
   font-size: 3em;
   color: #dddddd;
   text-align: center;
+}
+
+.strong {
+  font-weight: 600;
 }
