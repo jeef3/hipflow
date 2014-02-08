@@ -111,7 +111,7 @@ angular.module('hipFlowApp')
         }
 
         room = data.queries.filter(function (query) {
-          return query.id === roomId;
+          return query.id === parseInt(roomId, 10);
         });
 
         return room[0];
