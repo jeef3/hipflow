@@ -151,6 +151,22 @@ angular.module('hipFlowApp')
 
             localStorageService.add('chatLogs', data.chatLogs);
           });
+      },
+      sendMessageToRoom: function (message, room) {
+        var method,
+          messageData = {
+            event: 'message',
+            content: message
+          };
+
+        if (room.access_mode) {
+          method = 'messages';
+          messageData.flow = room.id;
+        } else {
+          method = 'private/' + room.id + '/messages';
+        }
+
+        $http.post(api(method), messageData);
       }
     };
   });
