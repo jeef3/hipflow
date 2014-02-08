@@ -61,7 +61,7 @@ angular.module('hipFlowApp')
         localStorageService.add('users', users);
       });
 
-      $http.get(api('flows')).success(function (rooms) {
+      $http.get(api('flows/all?users=1')).success(function (rooms) {
         data.rooms = rooms;
         localStorageService.add('rooms', rooms);
       });
