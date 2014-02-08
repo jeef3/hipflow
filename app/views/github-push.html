@@ -4,8 +4,7 @@
 <span class="strong" ng-bind="message.content.pusher.name"></span>
 pushed to branch
 <span class="strong" ng-bind="message.content.ref | localBranchName"></span> of
-<span class="strong" ng-bind="message.content.repository.owner.name"></span>/
-<span class="strong" ng-bind="message.content.repository.name"></span>
+<span class="strong" ng-bind="message.content.repository.owner.name"></span>/<span class="strong" ng-bind="message.content.repository.name"></span>
 <ol>
   <li ng-repeat="commit in message.content.commits">
     <span ng-bind="commit.message"></span>

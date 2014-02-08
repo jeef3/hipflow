@@ -51,6 +51,16 @@
     border-top-color: rgb(225, 175, 176);
     background: rgb(249, 230, 230);
   }
+
+  a {
+    font-weight: 600;
+    // color: rgb(62, 116, 173);
+    color: #000000;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
 }
 
 .message__user {
