@@ -6,4 +6,6 @@ commented on
 <a class="strong" ng-href="{{message.content.comment.html_url}}" target="_blank">pull request 00</a>
 of
 <span class="strong" ng-bind="message.content.repository.owner.login"></span>/<span class="strong" ng-bind="message.content.repository.name"></span>:
-<span ng-bind="message.content.comment.body | inlineCode"></span>
+<span class="strong" ng-click=""><i class="fa fa-fw fa-plus-square-o"></i> Show comment</span>
+
+<div class="comment" ng-bind-html="message.content.comment.body_html"></div>
