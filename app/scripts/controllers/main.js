@@ -18,4 +18,16 @@ angular.module('hipFlowApp')
     $scope.leaveRoom = function (room) {
       // TODO: Leave room
     };
+
+    $scope.isOnline = function (user) {
+      var now = new Date(),
+        ping = user.last_ping,
+        diff = now - ping;
+
+      if (diff < 300000) {
+        return true;
+      } else {
+        return false;
+      }
+    };
   });
