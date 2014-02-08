@@ -1,10 +1,10 @@
 <div class="topic-bar">
-  {{room}}
+  {{room.name}}
 </div>
 
 <div class="messages-container">
   <ul class="messages">
-    <li class="messages-loading">
+    <li class="messages-loading" ng-show="isLoadingOlder">
       <i class="fa fa-fw fa-refresh fa-spin"></i>
     </li>
     <li class="message"
@@ -14,6 +14,9 @@
         <div class="message__content" ng-bind-html="message.content | codeFormat | messageLinks"></div>
         <div class="message__time" am-time-ago="message.sent"></div>
       </div>
+    </li>
+    <li class="messages-loading">
+      <i class="fa fa-fw fa-refresh fa-spin" ng-show="isLoadingNewer"></i>
     </li>
   </ul>
 </div>

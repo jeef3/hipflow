@@ -120,29 +120,37 @@ angular.module('hipFlowApp')
 
         return room[0];
       },
-      getPrivateMessages: function (userId, sinceId) {
-        var deferred = $q.defer();
-        $http.get(api('private/' + userId + '/messages?since_id=' + sinceId))
-          .success(function (messages) {
-            deferred.resolve(messages);
-          })
-          .error(function () {
-            deferred.reject();
-          });
+      getMessagesForRoom: function (room, sinceId) {
+        var method;
+        if (room.access_mode) {
+          method = 'flows/' +
+            room.organization.parameterized_name + '/' +
+            room.parameterized_name +
+            '/messages';
+        } else {
+          method = 'private/' + room.id + '/messages';
+        }
 
-        return deferred.promise;
-      },
-      getMessages: function (flowId, sinceId) {
-        var deferred = $q.defer();
-        $http.get(api('flows/' + flowId + '/messages?since_id=' + sinceId))
+        $http.get(api(method))
           .success(function (messages) {
-            deferred.resolve(messages);
-          })
-          .error(function () {
-            deferred.reject();
-          });
+            if (!data.chatLogs[room.id]) {
+              data.chatLogs[room.id] = [];
+            }
 
-        return deferred.promise;
+            messages.forEach(function (message) {
+              var exists = data.chatLogs[room.id].filter(function (m) {
+                return m.uuid === message.uuid;
+              });
+
+              if (exists.length) {
+                return;
+              }
+
+              data.chatLogs[room.id].push(message);
+            });
+
+            localStorageService.add('chatLogs', data.chatLogs);
+          });
       }
     };
   });
