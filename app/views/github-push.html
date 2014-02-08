@@ -1,0 +1,15 @@
+<!-- WalkToFreedom pushed to branch nap-886-session-expiry-designer of skilitics/portal
+- nap-886 couple of tweaks to the css (65f7c76) -->
+
+<span ng-bind="message.content.pusher.name"></span>
+pushed to branch
+<span ng-bind="message.content.ref"></span> of
+<span ng-bind="message.content.repository.owner.name"></span>/
+<span ng-bind="message.content.repository.name"></span>
+<ol>
+  <li ng-repeat="commit in message.content.commits">
+    &mdash; <span ng-bind="commit.message"></span>
+    <span ng-bind="commit.id | shortHash"></span>
+  </li>
+</ol>
+
