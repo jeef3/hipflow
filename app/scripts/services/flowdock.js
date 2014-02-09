@@ -22,6 +22,10 @@ angular.module('hipFlowApp')
         stream.close();
       }
 
+      var rooms = data.rooms.map(function (room) {
+        return room.organization.parameterized_name + '/' + room.parameterized_name;
+      }).join(',');
+
       stream = new EventSource(
         'https://stream.flowdock.com/flows?active=true&filter=' + data.rooms.join(',') + '&user=1',
         { withCredentials: true });
@@ -139,7 +143,7 @@ angular.module('hipFlowApp')
 
             messages.forEach(function (message) {
               var exists = data.chatLogs[room.id].filter(function (m) {
-                return m.id === message.id;
+                return m.uuid === message.uuid || m.id === message.id;
               });
 
               if (exists.length) {
