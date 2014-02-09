@@ -1,14 +1,12 @@
 <!-- WalkToFreedom pushed to branch nap-886-session-expiry-designer of skilitics/portal
 - nap-886 couple of tweaks to the css (65f7c76) -->
 
-<span class="strong" ng-bind="message.content.pusher.name"></span>
-pushed to branch
-<span class="strong" ng-bind="message.content.ref | localBranchName"></span> of
-<span class="strong" ng-bind="message.content.repository.owner.name"></span>/<span class="strong" ng-bind="message.content.repository.name"></span>
+{{github.pusher.name}} pushed to branch
+<a ng-href="{{github.compare}}" ng-bind="github.ref | localBranchName"></a> of
+<a ng-href="{{github.repository.url}}" target="_blank">{{github.repository.owner.name}}/{{github.repository.name}}</a>:
 <ol>
-  <li ng-repeat="commit in message.content.commits">
-    <span ng-bind="commit.message"></span>
-    (<span class="strong" ng-bind="commit.id | shortHash"></span>)
+  <li ng-repeat="commit in github.commits">
+    {{commit.message}} (<a ng-href="{{commit.url}}" ng-bind="commit.id | shortHash" target="_blank"></a>)
   </li>
 </ol>
 

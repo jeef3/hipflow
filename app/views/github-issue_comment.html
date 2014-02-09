@@ -1,11 +1,10 @@
 <!-- simonbuchan commented on pull request 189 of skilitics/portal: Checking
 the flex sdk source (which IDEA makes nic... -->
 
-<span class="strong" ng-bind="message.content.comment.user.login"></span>
-commented on
-<a class="strong" ng-href="{{message.content.comment.html_url}}" target="_blank">pull request 00</a>
+{{github.comment.user.login}} commented on
+<a class="strong" ng-href="{{message.content.comment.html_url}}" target="_blank">pull request ??</a>
 of
-<span class="strong" ng-bind="message.content.repository.owner.login"></span>/<span class="strong" ng-bind="message.content.repository.name"></span>:
-<span ng-click=""><i class="fa fa-fw fa-plus-square-o"></i></span>
+<a ng-href="{{github.repository.url}}" target="_blank">{{github.repository.owner.login}}/{{github.repository.name}}</a>:
+<button ng-click="commentVisible = !commentVisible"><i class="fa fa-fw fa-plus-square-o"></i></button>
 
-<div class="comment" ng-bind-html="message.content.comment.body_html"></div>
+<div class="comment" ng-show="commentVisible" ng-bind-html="github.comment.body_html"></div>

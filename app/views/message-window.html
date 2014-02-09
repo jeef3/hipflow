@@ -18,7 +18,7 @@
       </div>
 
       <!-- VCS (GitHub) -->
-      <div ng-if="message.event === 'vcs'">
+      <div ng-if="message.event === 'vcs'" ng-init="github = message.content">
         <div class="message__user">GitHub</div>
         <div class="message__content" ng-include="'views/github-' + message.content.event + '.html'"></div>
         <div class="message__time" am-time-ago="message.sent"></div>
