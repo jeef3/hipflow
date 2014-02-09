@@ -133,7 +133,8 @@ angular.module('hipFlowApp')
 
             messages.forEach(function (message) {
               var exists = data.chatLogs[room.id].filter(function (m) {
-                return m.uuid === message.uuid || m.id === message.id;
+                return (typeof m.uuid !== 'undefined' && m.uuid === message.uuid) ||
+                  m.id === message.id;
               });
 
               if (exists.length) {
