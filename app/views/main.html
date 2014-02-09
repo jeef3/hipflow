@@ -1,92 +1,105 @@
-<section class="sidebar">
-  <div>Lobby</div>
+<div ng-if="authenticated">
+  <section class="sidebar">
+    <div>Lobby</div>
 
-  <ul class="room-list">
-    <li class="room"
-        ng-repeat="room in flowdock.rooms | filter:{open:true}"
-        ng-class="{'active': room === currentRoom}">
-      <button type="button"
-          class="room__join-btn"
-          ng-click="showRoom(room)">
-        <i class="fa fa-fw fa-comments room__type-icon"></i>
-        <span ng-bind="room.name"></span>
-      </button>
+    <ul class="room-list">
+      <li class="room"
+          ng-repeat="room in flowdock.rooms | filter:{open:true}"
+          ng-class="{'active': room === currentRoom}">
+        <button type="button"
+            class="room__join-btn"
+            ng-click="showRoom(room)">
+          <i class="fa fa-fw fa-comments room__type-icon"></i>
+          <span ng-bind="room.name"></span>
+        </button>
 
-      <button type="button"
-          class="room__close-btn"
-          ng-click="leaveRoom(room)">
-        <i class="fa fa-fw fa-times"></i>
-      </button>
-    </li>
-  </ul>
-
-  <ul class="room-list">
-    <li class="room"
-        ng-repeat="query in flowdock.queries | filter:{open:true}"
-        ng-class="{'query-online': query.online,
-                   'query-offline': !query.online,
-                   'active': query === currentRoom}">
-      <button type="button"
-          class="room__join-btn"
-          ng-click="showRoom(query)">
-        <i class="fa fa-fw room__type-icon"
-            ng-class="{'fa-circle': query.online,
-                       'fa-circle-o': !query.online}"></i>
-        <span ng-bind="query.name"></span>
-      </button>
-
-      <button type="button"
-          class="room__close-btn"
-          ng-click="leaveRoom(room)">
-        <i class="fa fa-fw fa-times"></i>
-      </button>
-    </li>
-  </ul>
-</section>
-
-<section class="chat">
-
-  <div class="message-windows">
-    <!-- Rooms -->
-    <div class="message-window"
-        ng-controller="MessageWindowCtrl"
-        ng-class="{'is-loading': isLoading}"
-        ng-repeat="room in flowdock.rooms"
-        ng-init="room = room"
-        ng-show="room === currentRoom">
-      <div ng-include="'views/message-window.html'"></div>
-    </div>
-    <!-- Queries -->
-    <div class="message-window"
-        ng-controller="MessageWindowCtrl"
-        ng-class="{'is-loading': isLoading}"
-        ng-repeat="room in flowdock.queries"
-        ng-init="room = room"
-        ng-show="room === currentRoom">
-      <div ng-include="'views/message-window.html'"></div>
-    </div>
-  </div>
-
-  <div class="chat-bar">
-    <form ng-submit="send(message)">
-      <input type="text" ng-model="message">
-      <button type="submit" class="btn">Send</button>
-    </form>
-  </div>
-</section>
-
-<aside class="chat-context" ng="ChatContextCtrl">
-  <div>
-    <ul class="users">
-      <li class="user"
-          ng-repeat="user in currentRoom.users"
-          ng-class="{'user-online': isOnline(user),
-                     'user-offline': !isOnline(user)}">
-        <i class="fa fa-fw user__online-status-icon"
-            ng-class="{'fa-circle': isOnline(user),
-                       'fa-circle-o': !isOnline(user)}"></i>
-        <span ng-bind="user.nick"></span>
+        <button type="button"
+            class="room__close-btn"
+            ng-click="leaveRoom(room)">
+          <i class="fa fa-fw fa-times"></i>
+        </button>
       </li>
     </ul>
-  </div>
-</aside>
+
+    <ul class="room-list">
+      <li class="room"
+          ng-repeat="query in flowdock.queries | filter:{open:true}"
+          ng-class="{'query-online': query.online,
+                     'query-offline': !query.online,
+                     'active': query === currentRoom}">
+        <button type="button"
+            class="room__join-btn"
+            ng-click="showRoom(query)">
+          <i class="fa fa-fw room__type-icon"
+              ng-class="{'fa-circle': query.online,
+                         'fa-circle-o': !query.online}"></i>
+          <span ng-bind="query.name"></span>
+        </button>
+
+        <button type="button"
+            class="room__close-btn"
+            ng-click="leaveRoom(room)">
+          <i class="fa fa-fw fa-times"></i>
+        </button>
+      </li>
+    </ul>
+  </section>
+
+  <section class="chat">
+
+    <div class="message-windows">
+      <!-- Rooms -->
+      <div class="message-window"
+          ng-controller="MessageWindowCtrl"
+          ng-class="{'is-loading': isLoading}"
+          ng-repeat="room in flowdock.rooms"
+          ng-init="room = room"
+          ng-show="room === currentRoom">
+        <div ng-include="'views/message-window.html'"></div>
+      </div>
+      <!-- Queries -->
+      <div class="message-window"
+          ng-controller="MessageWindowCtrl"
+          ng-class="{'is-loading': isLoading}"
+          ng-repeat="room in flowdock.queries"
+          ng-init="room = room"
+          ng-show="room === currentRoom">
+        <div ng-include="'views/message-window.html'"></div>
+      </div>
+    </div>
+
+    <div class="chat-bar">
+      <form ng-submit="send(message)">
+        <input type="text" ng-model="message">
+        <button type="submit" class="btn">Send</button>
+      </form>
+    </div>
+  </section>
+
+  <aside class="chat-context" ng="ChatContextCtrl">
+    <div>
+      <ul class="users">
+        <li class="user"
+            ng-repeat="user in currentRoom.users"
+            ng-class="{'user-online': isOnline(user),
+                       'user-offline': !isOnline(user)}">
+          <i class="fa fa-fw user__online-status-icon"
+              ng-class="{'fa-circle': isOnline(user),
+                         'fa-circle-o': !isOnline(user)}"></i>
+          <span ng-bind="user.nick"></span>
+        </li>
+      </ul>
+    </div>
+  </aside>
+</div>
+<div ng-if="!authenticated">
+  <form name="loginForm" ng-submit="login()">
+    <label for="api-token">API Token</label>
+    <input id="api-token" type="text" ng-model="apiToken">
+
+    <label for="stream-token">Stream token</label>
+    <input id="stream-token" type="text" ng-model="streamToken">
+
+    <button type="submit">Login</button>
+  </form>
+</div>

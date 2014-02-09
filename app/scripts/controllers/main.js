@@ -2,17 +2,41 @@
 
 angular.module('hipFlowApp')
   .controller('MainCtrl', function ($scope, $rootScope, Flowdock, localStorageService) {
-    // Flowdock.connect('');
-    $scope.flowdock = Flowdock.data;
+    $scope.apiToken = localStorageService.get('apiToken') || '';
+    $scope.streamToken = localStorageService.get('streamToken') || '';
 
-    var currentRoomId = localStorageService.get('currentRoom') || null;
-    $scope.currentRoom = currentRoomId ?
-      Flowdock.getRoomById(currentRoomId) :
-      null;
+    var connect = function () {
+      Flowdock.connect({
+        api: $scope.apiToken,
+        stream: $scope.streamToken
+      });
+
+      $scope.authenticated = true;
+
+      $scope.flowdock = Flowdock.data;
+
+      var currentRoomId = localStorageService.get('currentRoom') || null;
+      $scope.currentRoom = currentRoomId ?
+        Flowdock.getRoomById(currentRoomId) :
+        null;
+    };
+
+    if ($scope.apiToken && $scope.streamToken) {
+      connect();
+    }
+
+    $scope.login = function () {
+      localStorageService.set('apiToken', this.apiToken);
+      localStorageService.set('streamToken', this.streamToken);
+
+      connect();
+    };
 
     $scope.showRoom = function (room) {
       $scope.currentRoom = room;
       localStorageService.add('currentRoom', room.id);
+
+      Flowdock.getMessagesForRoom(room);
     };
 
     $scope.leaveRoom = function (room) {
