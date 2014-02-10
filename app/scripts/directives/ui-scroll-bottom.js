@@ -19,17 +19,17 @@ angular.module('hipFlowApp')
           }
         };
 
-        var observer = new MutationObserver(function (mutations) {
-          mutations.forEach(function (mutation) {
-            scroll();
-          });
-        });
+        var observer = new MutationObserver(scroll);
 
         var config = {
           childList: true
         };
 
         observer.observe(element[0].children[0], config);
+
+        scope.$on('$destroy', function() {
+          observer.disconnect();
+        });
       }
     };
   });
