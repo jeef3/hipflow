@@ -15,7 +15,7 @@ angular.module('hipFlowApp')
 
       $scope.flowdock = Flowdock.data;
 
-      var currentRoomId = localStorageService.get('currentRoom') || null;
+      var currentRoomId = localStorageService.get('currentRoomId') || null;
       $scope.currentRoom = currentRoomId ?
         Flowdock.getRoomById(currentRoomId) :
         null;
@@ -34,7 +34,7 @@ angular.module('hipFlowApp')
 
     $scope.showRoom = function (room) {
       $scope.currentRoom = room;
-      localStorageService.add('currentRoom', room.id);
+      localStorageService.add('currentRoomId', room.id);
 
       Flowdock.getMessagesForRoom(room);
     };
