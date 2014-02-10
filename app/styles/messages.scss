@@ -72,6 +72,7 @@
 }
 
 .message__user {
+  position: relative;
   display: table-cell;
   width: 140px;
   padding: 0.313em 0.625em;
@@ -98,6 +99,12 @@
     border-right-color: rgb(225, 175, 176);
     box-shadow: inset -1px 1px 0 0 rgb(247, 222, 222);
   }
+}
+
+.message__comment {
+  position: absolute;
+  padding: 0.313em;
+  left: 0.625em;
 }
 
 .message__content {

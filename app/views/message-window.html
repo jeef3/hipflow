@@ -17,6 +17,26 @@
         <div class="message__time" am-time-ago="message.sent"></div>
       </div>
 
+      <!-- Comment -->
+      <div ng-if="message.event === 'comment'">
+        <div class="message__user">
+          {{user(message.user).nick}}
+          <i class="fa fa-fw fa-comments-o message__comment"></i>
+        </div>
+        <div class="message__content" ng-bind-html="message.content.text | codeFormat | messageLinks"></div>
+        <div class="message__time" am-time-ago="message.sent"></div>
+        <!-- TODO: Link via tags[]influx:id -->
+      </div>
+
+      <!-- File -->
+      <div ng-if="message.event === 'file'">
+        <div class="message__user" ng-bind="user(message.user).nick"></div>
+        <div class="message__content">
+          TODO: Display image {{message.content.file_name}}
+        </div>
+        <div class="message__time" am-time-ago="message.sent"></div>
+      </div>
+
       <!-- VCS (GitHub) -->
       <div ng-if="message.event === 'vcs'" ng-init="github = message.content">
         <div class="message__user">GitHub</div>
