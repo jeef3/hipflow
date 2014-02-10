@@ -1,9 +1,7 @@
 'use strict';
 
 angular.module('hipFlowApp')
-  .service('Flowdock', function Flowdock($q, $http, $rootScope, localStorageService) {
-
-    var auth = '';
+  .service('Flowdock', function Flowdock($q, $http, $rootScope, localStorageService, Uuid) {
 
     var data = {
       users: localStorageService.get('users') || [],
@@ -162,6 +160,9 @@ angular.module('hipFlowApp')
           method = 'private/' + room.id + '/messages';
         }
 
+        method.uuid = Uuid.generate();
+
+        data.chatLogs[room.id].push(message);
         $http.post(api(method), messageData);
       }
     };
