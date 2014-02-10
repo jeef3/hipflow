@@ -22,9 +22,14 @@ angular.module('hipFlowApp')
         stream.close();
       }
 
-      var rooms = data.rooms.map(function (room) {
-        return room.organization.parameterized_name + '/' + room.parameterized_name;
-      }).join(',');
+      var rooms = data.rooms
+        .filter(function (room) {
+          return room.open;
+        })
+        .map(function (room) {
+          return room.organization.parameterized_name + '/' + room.parameterized_name;
+        })
+        .join(',');
 
       stream = new EventSource(
         'https://stream.flowdock.com/flows?active=true&filter=' + rooms + '&user=1',
