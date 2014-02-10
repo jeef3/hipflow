@@ -124,6 +124,10 @@ angular.module('hipFlowApp')
           method = 'private/' + room.id + '/messages';
         }
 
+        if (sinceId) {
+          method = method + '?since_id=' + sinceId;
+        }
+
         $http.get(api(method))
           .success(function (messages) {
             if (!data.chatLogs[room.id]) {
