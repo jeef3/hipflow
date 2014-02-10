@@ -6,7 +6,7 @@
 <a ng-href="{{github.repository.url}}" target="_blank">{{github.repository.owner.name}}/{{github.repository.name}}</a>:
 <ol>
   <li ng-repeat="commit in github.commits">
-    {{commit.message}} (<a ng-href="{{commit.url}}" ng-bind="commit.id | shortHash" target="_blank"></a>)
+    <a class="code" ng-href="{{commit.url}}" ng-bind="commit.id | shortHash" target="_blank"></a> {{commit.message}}
   </li>
 </ol>
 
