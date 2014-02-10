@@ -2,13 +2,13 @@
 
 angular.module('hipFlowApp')
   .controller('MainCtrl', function ($scope, $rootScope, Flowdock, localStorageService) {
-    $scope.apiToken = localStorageService.get('apiToken') || '';
-    $scope.streamToken = localStorageService.get('streamToken') || '';
+    $scope.email = localStorageService.get('email') || '';
+    $scope.password = localStorageService.get('password') || '';
 
     var connect = function () {
       Flowdock.connect({
-        api: $scope.apiToken,
-        stream: $scope.streamToken
+        email: $scope.email,
+        password: $scope.password
       });
 
       $scope.authenticated = true;
@@ -21,13 +21,13 @@ angular.module('hipFlowApp')
         null;
     };
 
-    if ($scope.apiToken && $scope.streamToken) {
+    if ($scope.email && $scope.password) {
       connect();
     }
 
     $scope.login = function () {
-      localStorageService.set('apiToken', this.apiToken);
-      localStorageService.set('streamToken', this.streamToken);
+      localStorageService.set('email', this.email);
+      localStorageService.set('password', this.password);
 
       connect();
     };

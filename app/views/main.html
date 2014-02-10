@@ -94,11 +94,11 @@
 </div>
 <div ng-if="!authenticated">
   <form name="loginForm" ng-submit="login()">
-    <label for="api-token">API Token</label>
-    <input id="api-token" type="text" ng-model="apiToken">
+    <label for="email">Email</label>
+    <input id="email" type="text" ng-model="email">
 
-    <label for="stream-token">Stream token</label>
-    <input id="stream-token" type="text" ng-model="streamToken">
+    <label for="password">Password</label>
+    <input id="password" type="text" ng-model="password">
 
     <button type="submit">Login</button>
   </form>

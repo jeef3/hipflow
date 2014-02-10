@@ -3,8 +3,7 @@
 angular.module('hipFlowApp')
   .service('Flowdock', function Flowdock($q, $http, $rootScope, localStorageService) {
 
-    var apiToken,
-      streamToken;
+    var auth = '';
 
     var data = {
       users: localStorageService.get('users') || [],
@@ -30,7 +29,7 @@ angular.module('hipFlowApp')
       }).join(',');
 
       stream = new EventSource(
-        'https://stream.flowdock.com/flows?active=true&filter=' + rooms + '&user=1&access_token=' + streamToken,
+        'https://stream.flowdock.com/flows?active=true&filter=' + rooms + '&user=1',
         { withCredentials: false });
 
       stream.onmessage = function (e) {
@@ -64,17 +63,17 @@ angular.module('hipFlowApp')
     };
 
     var updateData = function () {
-      $http.get(api('users'), { params: { access_token: apiToken } }).success(function (users) {
+      $http.get(api('users')).success(function (users) {
         data.users = users;
         localStorageService.add('users', users);
       });
 
-      $http.get(api('flows/all'), { params: { users: 1, access_token: apiToken} }).success(function (rooms) {
+      $http.get(api('flows/all'), { params: { users: 1 } }).success(function (rooms) {
         data.rooms = rooms;
         localStorageService.add('rooms', rooms);
       });
 
-      $http.get(api('private'), { params: { access_token: apiToken } }).success(function (queries) {
+      $http.get(api('private')).success(function (queries) {
         data.queries = queries;
         localStorageService.add('queries', queries);
       });
@@ -82,9 +81,11 @@ angular.module('hipFlowApp')
 
     return {
       data: data,
-      connect: function (tokens) {
-        apiToken = tokens.api;
-        streamToken = tokens.stream;
+      connect: function (credentials) {
+        if (credentials.email && credentials.password) {
+          $http.defaults.headers.common.Authorization = 'Basic ' + btoa(
+            credentials.email + ':' + credentials.password);
+        }
 
         updateData();
         startListening();
@@ -125,7 +126,7 @@ angular.module('hipFlowApp')
           method = 'private/' + room.id + '/messages';
         }
 
-        $http.get(api(method), { params: { access_token: apiToken } })
+        $http.get(api(method))
           .success(function (messages) {
             if (!data.chatLogs[room.id]) {
               data.chatLogs[room.id] = [];
@@ -160,8 +161,6 @@ angular.module('hipFlowApp')
         } else {
           method = 'private/' + room.id + '/messages';
         }
-
-        messageData.access_token = apiToken;
 
         $http.post(api(method), messageData);
       }
