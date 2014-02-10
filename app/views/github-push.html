@@ -4,9 +4,12 @@
 {{github.pusher.name}} pushed to branch
 <a ng-href="{{github.compare}}" ng-bind="github.ref | localBranchName"></a> of
 <a ng-href="{{github.repository.url}}" target="_blank">{{github.repository.owner.name}}/{{github.repository.name}}</a>:
-<ol>
-  <li ng-repeat="commit in github.commits">
+<ol ng-init="showCommits = 3">
+  <li ng-repeat="commit in github.commits | limitTo:showCommits">
     <a class="code" ng-href="{{commit.url}}" ng-bind="commit.id | shortHash" target="_blank"></a> {{commit.message}}
   </li>
 </ol>
+<div ng-if="github.commits.length > 3">
+  <button ng-click="showCommits = github.commits.length">Show all</button>
+</div>
 
