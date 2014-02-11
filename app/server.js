@@ -15,9 +15,9 @@ app.configure(function () {
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/login', passport.authenticate('provider'));
+app.get('/login', passport.authenticate('flowdock'));
 app.get('/oauth/callback',
-  passport.authenticate('provider', { successRedirect: '/',
+  passport.authenticate('flowdock', { successRedirect: '/',
                                       failureRedirect: '/login' }));
 
 app.listen(app.get('port'), function () {

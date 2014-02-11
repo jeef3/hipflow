@@ -5,7 +5,7 @@ var mongo = require('mongoskin'),
   OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
 
 module.exports = function () {
-  passport.use(new OAuth2Strategy({
+  passport.use('flowdock', new OAuth2Strategy({
       authorizationURL: 'https://api.flowdock.com/oauth/authorize',
       tokenURL: 'https://api.flowdock.com/oauth/token',
       clientID: process.env.FLOWDOCK_APPLICATION_ID,
