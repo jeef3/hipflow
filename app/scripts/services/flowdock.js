@@ -169,9 +169,9 @@ angular.module('hipFlowApp')
           method = 'private/' + room.id + '/messages';
         }
 
-        method.uuid = Uuid.generate();
+        messageData.uuid = Uuid.generate();
 
-        data.chatLogs[room.id].push(message);
+        data.chatLogs[room.id].push(messageData);
         $http.post(api(method), messageData);
       }
     };
