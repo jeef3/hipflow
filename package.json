@@ -1,7 +1,10 @@
 {
   "name": "hipflow",
   "description": "HipChat, for Flowdock users",
-  "keyword": ["hipchat", "flowdock"],
+  "keyword": [
+    "hipchat",
+    "flowdock"
+  ],
   "version": "0.0.0",
   "dependencies": {},
   "devDependencies": {
