@@ -1,0 +1,43 @@
+<div class="sidebar">
+  <button type="button" class="sidebar-btn">Lobby</button>
+
+  <nav>
+    <ul class="room-list">
+      <li class="room"
+          ng-repeat="room in flowdock.rooms | filter:{open:true}"
+          ng-class="{'active': room === currentRoom}">
+        <button type="button"
+            class="sidebar-btn room__join-btn"
+            ng-click="showRoom(room)">
+          <i class="fa fa-fw fa-comments room__type-icon"></i> {{room.name}}
+        </button>
+
+        <button type="button"
+            class="room__close-btn"
+            ng-click="leaveRoom(room)">
+          <i class="fa fa-fw fa-times"></i>
+        </button>
+      </li>
+
+      <li class="room"
+          ng-repeat="query in flowdock.queries | filter:{open:true}"
+          ng-class="{'query-online': query.online,
+                     'query-offline': !query.online,
+                     'active': query === currentRoom}">
+        <button type="button"
+            class="sidebar-btn room__join-btn"
+            ng-click="showRoom(query)">
+          <i class="fa fa-fw room__type-icon"
+              ng-class="{'fa-circle': query.online,
+                         'fa-circle-o': !query.online}"></i> {{query.name}}
+        </button>
+
+        <button type="button"
+            class="room__close-btn"
+            ng-click="leaveRoom(room)">
+          <i class="fa fa-fw fa-times"></i>
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>

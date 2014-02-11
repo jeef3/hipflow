@@ -18,29 +18,21 @@
   overflow: auto;
 }
 
-.room__join-btn,
-.room__close-btn {
-  padding: 0;
+.sidebar-btn {
+  display: block;
+  width: 100%;
+  padding: 0 0.625em;
   margin: 0;
 
   line-height: 2em;
-  text-decoration: none;
+  text-align: left;
+  color: rgb(177, 179, 174);
   cursor: pointer;
 
   border: 0;
-  background: none;
-}
-
-.room__join-btn {
-  float: left;
-  width: 100%;
-  padding: 0 0.625em;
-
-  text-align: left;
-  color: rgb(177, 179, 174);
-
   border-top: solid 1px rgb(65, 72, 86);
   border-bottom: solid 1px rgb(36, 43, 55);
+  background: none;
 
   .active & {
     border-top-color: rgb(36, 31, 40);
@@ -62,9 +54,14 @@
 .room__close-btn {
   position: absolute;
   width: 2em;
+  height: 2em;
+  top: 0;
   right: 0;
 
   color: rgb(81, 87, 100);
+
+  border: 0;
+  background: none;
 
   &:hover,
   &:active,
