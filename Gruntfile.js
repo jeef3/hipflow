@@ -117,7 +117,8 @@ module.exports = function (grunt) {
           src: [
             '.tmp',
             '<%= yeoman.dist %>/*',
-            '!<%= yeoman.dist %>/.git*'
+            '!<%= yeoman.dist %>/.git*',
+            'hipflow.nw'
           ]
         }]
       },
@@ -302,6 +303,20 @@ module.exports = function (grunt) {
       }
     },
 
+    compress: {
+      dist: {
+        options: {
+          archive: 'hipflow.nw',
+          mode: 'zip',
+          pretty: true
+        },
+        files: [
+          { src: 'package.json' },
+          { cwd: '<%= yeoman.dist %>/', src: '**', expand: true }
+        ]
+      }
+    },
+
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
@@ -395,7 +410,8 @@ module.exports = function (grunt) {
     'uglify',
     'rev',
     'usemin',
-    'htmlmin'
+    'htmlmin',
+    'compress'
   ]);
 
   grunt.registerTask('default', [
