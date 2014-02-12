@@ -1,46 +1,34 @@
-<div ng-if="authenticated">
-  <div ng-include="'views/sidebar.html'"></div>
 
-  <section class="chat">
-    <div class="message-windows">
-      <!-- Rooms -->
-      <div class="message-window"
-          ng-controller="MessageWindowCtrl"
-          ng-class="{'is-loading': isLoading}"
-          ng-repeat="room in flowdock.rooms"
-          ng-init="room = room"
-          ng-show="room.id === currentRoom.id">
-        <div ng-include="'views/message-window.html'"></div>
-      </div>
-      <!-- Queries -->
-      <div class="message-window"
-          ng-controller="MessageWindowCtrl"
-          ng-class="{'is-loading': isLoading}"
-          ng-repeat="room in flowdock.queries"
-          ng-init="room = room"
-          ng-show="room.id === currentRoom.id">
-        <div ng-include="'views/message-window.html'"></div>
-      </div>
+<div ng-include="'views/sidebar.html'"></div>
+
+<section class="chat">
+  <div class="message-windows">
+    <!-- Rooms -->
+    <div class="message-window"
+        ng-controller="MessageWindowCtrl"
+        ng-class="{'is-loading': isLoading}"
+        ng-repeat="room in flowdock.rooms"
+        ng-init="room = room"
+        ng-show="room.id === currentRoom.id">
+      <div ng-include="'views/message-window.html'"></div>
     </div>
-
-    <div class="chat-bar">
-      <form ng-submit="send(message)">
-        <input type="text" ng-model="message">
-        <button type="submit" class="btn">Send</button>
-      </form>
+    <!-- Queries -->
+    <div class="message-window"
+        ng-controller="MessageWindowCtrl"
+        ng-class="{'is-loading': isLoading}"
+        ng-repeat="room in flowdock.queries"
+        ng-init="room = room"
+        ng-show="room.id === currentRoom.id">
+      <div ng-include="'views/message-window.html'"></div>
     </div>
-  </section>
+  </div>
 
-  <div ng-include="'views/chat-context.html'"></div>
-</div>
-<div ng-if="!authenticated">
-  <form name="loginForm" ng-submit="login()">
-    <label for="email">Email</label>
-    <input id="email" type="text" ng-model="email">
+  <div class="chat-bar">
+    <form ng-submit="send(message)">
+      <input type="text" ng-model="message">
+      <button type="submit" class="btn">Send</button>
+    </form>
+  </div>
+</section>
 
-    <label for="password">Password</label>
-    <input id="password" type="text" ng-model="password">
-
-    <button type="submit">Login</button>
-  </form>
-</div>
+<div ng-include="'views/chat-context.html'"></div>
