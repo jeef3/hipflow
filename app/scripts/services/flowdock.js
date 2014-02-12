@@ -88,13 +88,15 @@ angular.module('hipFlowApp')
     };
 
     var handleUserHeartbeat = function (message) {
-      var room = getRoomById(message.flow ? message.flow : message.to);
+      var room = getRoomById(message.flow ? message.flow : message.user);
 
       var user = room.users.filter(function (u) {
         return u.id === parseInt(message.user);
-      });
+      })[0];
 
-      user.last_ping = message.sent;
+      if (user) {
+        user.last_ping = message.sent;
+      }
     };
 
     var updateData = function () {
@@ -129,6 +131,9 @@ angular.module('hipFlowApp')
       return user[0];
     };
     var getRoomById = function (roomId) {
+
+      // TODO: What to do if looking for me?
+
       var room = data.rooms.filter(function (room) {
         return room.id === roomId;
       });
