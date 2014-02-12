@@ -2,26 +2,15 @@
 
 angular.module('hipFlowApp')
   .controller('MainCtrl', function ($scope, $rootScope, Flowdock, localStorageService) {
+    var token = '';
+    Flowdock.connect(token);
 
-    var connect = function () {
-      Flowdock.connect({
-        email: $scope.email,
-        password: $scope.password
-      });
+    $scope.flowdock = Flowdock.data;
 
-      $scope.authenticated = true;
-
-      $scope.flowdock = Flowdock.data;
-
-      var currentRoomId = localStorageService.get('currentRoomId') || null;
-      $scope.currentRoom = currentRoomId ?
-        Flowdock.getRoomById(currentRoomId) :
-        null;
-    };
-
-    $scope.login = function () {
-      connect();
-    };
+    var currentRoomId = localStorageService.get('currentRoomId') || null;
+    $scope.currentRoom = currentRoomId ?
+      Flowdock.getRoomById(currentRoomId) :
+      null;
 
     $scope.showRoom = function (room) {
       $scope.currentRoom = room;

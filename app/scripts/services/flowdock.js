@@ -3,6 +3,8 @@
 angular.module('hipFlowApp')
   .service('Flowdock', function Flowdock($q, $http, $rootScope, localStorageService, Uuid) {
 
+    var authToken = null;
+
     var data = {
       users: localStorageService.get('users') || [],
       rooms: localStorageService.get('rooms') || [],
@@ -11,8 +13,22 @@ angular.module('hipFlowApp')
       chatLogs: localStorageService.get('chatLogs') || {}
     };
 
-    var api = function (url) {
-      return 'https://api.flowdock.com/' + url;
+    var apiGet = function (path, params) {
+      var url = 'https://api.flowdock.com/' + path;
+      var options = {
+        params: angular.extend({}, params, { access_token: authToken })
+      };
+
+      return $http.get(url, options);
+    };
+
+    var apiPost = function (path, params) {
+      var url = 'https://api.flowdock.com/' + path;
+      var options = {
+        params: angular.extend({}, params, { access_token: authToken })
+      };
+
+      return $http.post(url, options);
     };
 
     var stream = null;
@@ -66,17 +82,17 @@ angular.module('hipFlowApp')
     };
 
     var updateData = function () {
-      $http.get(api('users')).success(function (users) {
+      apiGet('users').success(function (users) {
         data.users = users;
         localStorageService.add('users', users);
       });
 
-      $http.get(api('flows/all'), { params: { users: 1 } }).success(function (rooms) {
+      apiGet('flows/all', { users: 1 }).success(function (rooms) {
         data.rooms = rooms;
         localStorageService.add('rooms', rooms);
       });
 
-      $http.get(api('private')).success(function (queries) {
+      apiGet('private').success(function (queries) {
         data.queries = queries;
         localStorageService.add('queries', queries);
       });
@@ -84,11 +100,8 @@ angular.module('hipFlowApp')
 
     return {
       data: data,
-      connect: function (credentials) {
-        if (credentials.email && credentials.password) {
-          $http.defaults.headers.common.Authorization = 'Basic ' + btoa(
-            credentials.email + ':' + credentials.password);
-        }
+      connect: function (token) {
+        authToken = token;
 
         updateData();
         startListening();
@@ -129,11 +142,7 @@ angular.module('hipFlowApp')
           method = 'private/' + room.id + '/messages';
         }
 
-        if (sinceId) {
-          method = method + '?since_id=' + sinceId;
-        }
-
-        $http.get(api(method))
+        apiGet(method, { since_id: sinceId })
           .success(function (messages) {
             if (!data.chatLogs[room.id]) {
               data.chatLogs[room.id] = [];
@@ -172,7 +181,7 @@ angular.module('hipFlowApp')
         messageData.uuid = Uuid.generate();
 
         data.chatLogs[room.id].push(messageData);
-        $http.post(api(method), messageData);
+        apiPost(method, messageData);
       }
     };
   });
