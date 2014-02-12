@@ -73,18 +73,17 @@ angular.module('hipFlowApp')
     };
 
     var handleMessage = function (message) {
+      var roomId;
+
       if (message.flow) {
-        data.chatLogs[message.flow].push(message);
+        roomId = message.flow;
       } else if (message.to) {
-        var log = message.to === '58790' ?
+        roomId = message.to === '58790' ?
           message.user :
           message.to;
-
-        // TODO: Check for existing
-        data.chatLogs[log].push(message);
       }
 
-      localStorageService.add('chatLogs', data.chatLogs);
+      addMessagesToRoom(message, roomId);
     };
 
     var handleUserHeartbeat = function (message) {
@@ -161,25 +160,32 @@ angular.module('hipFlowApp')
 
       apiGet(method, { since_id: sinceId })
         .success(function (messages) {
-          if (!data.chatLogs[room.id]) {
-            data.chatLogs[room.id] = [];
-          }
-
-          messages.forEach(function (message) {
-            var exists = data.chatLogs[room.id].filter(function (m) {
-              return (typeof m.uuid !== 'undefined' && m.uuid === message.uuid) ||
-                m.id === message.id;
-            });
-
-            if (exists.length) {
-              return;
-            }
-
-            data.chatLogs[room.id].push(message);
-          });
-
-          localStorageService.add('chatLogs', data.chatLogs);
+          addMessagesToRoom(messages, room.id);
         });
+    };
+    var addMessagesToRoom = function (messages, roomId) {
+      if (!(messages instanceof Array)) {
+        messages = [messages];
+      }
+
+      if (!data.chatLogs[roomId]) {
+        data.chatLogs[roomId] = [];
+      }
+
+      messages.forEach(function (message) {
+        var exists = data.chatLogs[roomId].filter(function (m) {
+          return (typeof m.uuid !== 'undefined' && m.uuid === message.uuid) ||
+            m.id === message.id;
+        })[0];
+
+        if (exists) {
+          angular.copy(message, exists);
+        } else {
+          data.chatLogs[roomId].push(message);
+        }
+      });
+
+      localStorageService.add('chatLogs', data.chatLogs);
     };
     var sendMessageToRoom = function (message, room) {
       var method,
@@ -195,6 +201,7 @@ angular.module('hipFlowApp')
         method = 'private/' + room.id + '/messages';
       }
 
+      messageData.user = me().id;
       messageData.uuid = Uuid.generate();
 
       data.chatLogs[room.id].push(messageData);
