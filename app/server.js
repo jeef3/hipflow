@@ -6,12 +6,9 @@ var express = require('express'),
 
 app.set('port', process.env.PORT || 9000);
 
-app.configure('development', function () {
-
-});
-
 app.configure(function () {
   app.use(express.methodOverride());
+  app.use(express.cookieParser());
 });
 
 require('./config/passport')();
@@ -22,7 +19,10 @@ app.get('/login', passport.authenticate('flowdock'));
 app.get('/oauth/callback',
   passport.authenticate('flowdock', { session: false }),
   function (req, res) {
-    console.log('the callback callback', req.user);
+    res.cookie('flowauth', {
+      accessToken: req.user.accessToken,
+      refreshToken: req.user.refreshToken
+    });
     res.redirect('/');
   });
 
