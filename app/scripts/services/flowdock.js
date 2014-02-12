@@ -34,6 +34,14 @@ angular.module('hipFlowApp')
       return $http.post(url, data);
     };
 
+    var apiPut = function (path, params) {
+      var url = 'https://api.flowdock.com/' + path;
+      var token = FlowdockAuth.token();
+      var data = angular.extend({}, params, { access_token: token });
+
+      return $http.put(url, data);
+    };
+
     var stream = null;
 
     var startListening = function () {
@@ -208,12 +216,24 @@ angular.module('hipFlowApp')
       apiPost(method, messageData);
     };
 
+    var leaveRoom = function (room) {
+      var method;
+      if (room.access_mode) {
+        // flow
+      } else {
+        method = 'private/' + room.id;
+      }
+
+      apiPut(method, { open: false });
+    };
+
     return {
       data: data,
       connect: connect,
       getUserById: getUserById,
       getRoomById: getRoomById,
       getMessagesForRoom: getMessagesForRoom,
-      sendMessageToRoom: sendMessageToRoom
+      sendMessageToRoom: sendMessageToRoom,
+      leaveRoom: leaveRoom
     };
   });

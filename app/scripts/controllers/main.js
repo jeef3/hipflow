@@ -20,7 +20,7 @@ angular.module('hipFlowApp')
     };
 
     $scope.leaveRoom = function (room) {
-      // TODO: Leave room
+      Flowdock.leaveRoom(room);
     };
 
     $scope.user = function (userId) {
