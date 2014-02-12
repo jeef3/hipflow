@@ -18,7 +18,12 @@ angular.module('hipFlowApp')
         params: angular.extend({}, params, { access_token: token })
       };
 
-      return $http.get(url, options);
+      return $http.get(url, options)
+        .error(function (data, status) {
+          if (status === 401) {
+            FlowdockAuth.logout();
+          }
+        });
     };
 
     var apiPost = function (path, params) {

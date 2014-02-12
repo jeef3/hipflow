@@ -16,6 +16,11 @@ angular.module('hipFlowApp')
       return !!tokens.access && !!streamTokens.access;
     };
 
+    this.logout = function () {
+      delete $cookies.flowauth;
+      delete $cookies.flowauthStream;
+    };
+
     this.token = function () {
       return tokens.access;
     };
