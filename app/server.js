@@ -19,10 +19,10 @@ app.get('/login', passport.authenticate('flowdock'));
 app.get('/oauth/callback',
   passport.authenticate('flowdock', { session: false }),
   function (req, res) {
-    res.cookie('flowauth', {
-      accessToken: req.user.accessToken,
-      refreshToken: req.user.refreshToken
-    });
+    res.cookie('flowauth', JSON.stringify({
+      access: req.user.accessToken,
+      refresh: req.user.refreshToken
+    }));
     res.redirect('/');
   });
 

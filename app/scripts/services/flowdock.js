@@ -1,9 +1,7 @@
 'use strict';
 
 angular.module('hipFlowApp')
-  .service('Flowdock', function Flowdock($q, $http, $rootScope, localStorageService, Uuid) {
-
-    var authToken = null;
+  .service('Flowdock', function Flowdock($q, $http, $rootScope, FlowdockAuth, localStorageService, Uuid) {
 
     var data = {
       users: localStorageService.get('users') || [],
@@ -15,8 +13,9 @@ angular.module('hipFlowApp')
 
     var apiGet = function (path, params) {
       var url = 'https://api.flowdock.com/' + path;
+      var token = FlowdockAuth.token();
       var options = {
-        params: angular.extend({}, params, { access_token: authToken })
+        params: angular.extend({}, params, { access_token: token })
       };
 
       return $http.get(url, options);
@@ -24,8 +23,9 @@ angular.module('hipFlowApp')
 
     var apiPost = function (path, params) {
       var url = 'https://api.flowdock.com/' + path;
+      var token = FlowdockAuth.token();
       var options = {
-        params: angular.extend({}, params, { access_token: authToken })
+        params: angular.extend({}, params, { access_token: token })
       };
 
       return $http.post(url, options);
@@ -100,9 +100,7 @@ angular.module('hipFlowApp')
 
     return {
       data: data,
-      connect: function (token) {
-        authToken = token;
-
+      connect: function () {
         updateData();
         startListening();
       },
