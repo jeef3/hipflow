@@ -2,8 +2,6 @@
 
 angular.module('hipFlowApp')
   .controller('MainCtrl', function ($scope, $rootScope, Flowdock, localStorageService) {
-    $scope.email = localStorageService.get('email') || '';
-    $scope.password = localStorageService.get('password') || '';
 
     var connect = function () {
       Flowdock.connect({
@@ -21,14 +19,7 @@ angular.module('hipFlowApp')
         null;
     };
 
-    if ($scope.email && $scope.password) {
-      connect();
-    }
-
     $scope.login = function () {
-      localStorageService.set('email', this.email);
-      localStorageService.set('password', this.password);
-
       connect();
     };
 

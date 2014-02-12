@@ -1,7 +1,6 @@
 'use strict';
 
-var mongo = require('mongoskin'),
-  passport = require('passport'),
+var passport = require('passport'),
   OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
 
 module.exports = function () {
@@ -10,10 +9,15 @@ module.exports = function () {
       tokenURL: 'https://api.flowdock.com/oauth/token',
       clientID: process.env.FLOWDOCK_APPLICATION_ID,
       clientSecret: process.env.FLOWDOCK_SECRET,
-      callbackURL: process.env.APPLICATION_BASE_URL + '/oauth/callback'
+      callbackURL: process.env.FLOWDOCK_CALLBACK_URI,
+      // callbackURL: process.env.APPLICATION_BASE_URL + '/oauth/callback'
     },
     function (accessToken, refreshToken, profile, done) {
       // User.findOrCreate(...)
+      done(null, {
+        accessToken: accessToken,
+        refreshToken: refreshToken
+      });
     })
   );
 };
