@@ -24,11 +24,9 @@ angular.module('hipFlowApp')
     var apiPost = function (path, params) {
       var url = 'https://api.flowdock.com/' + path;
       var token = FlowdockAuth.token();
-      var options = {
-        params: angular.extend({}, params, { access_token: token })
-      };
+      var data = angular.extend({}, params, { access_token: token });
 
-      return $http.post(url, options);
+      return $http.post(url, data);
     };
 
     var stream = null;
