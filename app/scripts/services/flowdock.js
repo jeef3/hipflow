@@ -58,6 +58,9 @@ angular.module('hipFlowApp')
           case 'message':
             handleMessage(message);
             break;
+          case 'activity.user':
+            handleUserHeartbeat(message);
+            break;
         }
 
         $rootScope.$apply();
@@ -79,6 +82,16 @@ angular.module('hipFlowApp')
       localStorageService.add('chatLogs', data.chatLogs);
     };
 
+    var handleUserHeartbeat = function (message) {
+      var room = getRoomById(message.flow ? message.flow : message.to);
+
+      var user = room.users.filter(function (u) {
+        return u.id === parseInt(message.user);
+      });
+
+      user.last_ping = message.sent;
+    };
+
     var updateData = function () {
       apiGet('users').success(function (users) {
         data.users = users;
@@ -96,88 +109,94 @@ angular.module('hipFlowApp')
       });
     };
 
-    return {
-      data: data,
-      connect: function () {
-        updateData();
-        startListening();
-      },
-      me: function () {
-        return { id: '58790' };
-      },
-      getUserById: function (userId) {
-        var user = data.users.filter(function (user) {
-          return user.id === parseInt(userId, 10);
-        });
+    var connect = function () {
+      updateData();
+      startListening();
+    };
+    var me = function () {
+      return { id: '58790' };
+    };
+    var getUserById = function (userId) {
+      var user = data.users.filter(function (user) {
+        return user.id === parseInt(userId, 10);
+      });
 
-        return user[0];
-      },
-      getRoomById: function (roomId) {
-        var room = data.rooms.filter(function (room) {
-          return room.id === roomId;
-        });
+      return user[0];
+    };
+    var getRoomById = function (roomId) {
+      var room = data.rooms.filter(function (room) {
+        return room.id === roomId;
+      });
 
-        if (room && room.length) {
-          return room[0];
-        }
-
-        room = data.queries.filter(function (query) {
-          return query.id === parseInt(roomId, 10);
-        });
-
+      if (room && room.length) {
         return room[0];
-      },
-      getMessagesForRoom: function (room, sinceId) {
-        var method;
-        if (room.access_mode) {
-          method = 'flows/' +
-            room.organization.parameterized_name + '/' +
-            room.parameterized_name +
-            '/messages';
-        } else {
-          method = 'private/' + room.id + '/messages';
-        }
+      }
 
-        apiGet(method, { since_id: sinceId })
-          .success(function (messages) {
-            if (!data.chatLogs[room.id]) {
-              data.chatLogs[room.id] = [];
-            }
+      room = data.queries.filter(function (query) {
+        return query.id === parseInt(roomId, 10);
+      });
 
-            messages.forEach(function (message) {
-              var exists = data.chatLogs[room.id].filter(function (m) {
-                return (typeof m.uuid !== 'undefined' && m.uuid === message.uuid) ||
-                  m.id === message.id;
-              });
+      return room[0];
+    };
+    var getMessagesForRoom = function (room, sinceId) {
+      var method;
+      if (room.access_mode) {
+        method = 'flows/' +
+          room.organization.parameterized_name + '/' +
+          room.parameterized_name +
+          '/messages';
+      } else {
+        method = 'private/' + room.id + '/messages';
+      }
 
-              if (exists.length) {
-                return;
-              }
+      apiGet(method, { since_id: sinceId })
+        .success(function (messages) {
+          if (!data.chatLogs[room.id]) {
+            data.chatLogs[room.id] = [];
+          }
 
-              data.chatLogs[room.id].push(message);
+          messages.forEach(function (message) {
+            var exists = data.chatLogs[room.id].filter(function (m) {
+              return (typeof m.uuid !== 'undefined' && m.uuid === message.uuid) ||
+                m.id === message.id;
             });
 
-            localStorageService.add('chatLogs', data.chatLogs);
+            if (exists.length) {
+              return;
+            }
+
+            data.chatLogs[room.id].push(message);
           });
-      },
-      sendMessageToRoom: function (message, room) {
-        var method,
-          messageData = {
-            event: 'message',
-            content: message
-          };
 
-        if (room.access_mode) {
-          method = 'messages';
-          messageData.flow = room.id;
-        } else {
-          method = 'private/' + room.id + '/messages';
-        }
+          localStorageService.add('chatLogs', data.chatLogs);
+        });
+    };
+    var sendMessageToRoom = function (message, room) {
+      var method,
+        messageData = {
+          event: 'message',
+          content: message
+        };
 
-        messageData.uuid = Uuid.generate();
-
-        data.chatLogs[room.id].push(messageData);
-        apiPost(method, messageData);
+      if (room.access_mode) {
+        method = 'messages';
+        messageData.flow = room.id;
+      } else {
+        method = 'private/' + room.id + '/messages';
       }
+
+      messageData.uuid = Uuid.generate();
+
+      data.chatLogs[room.id].push(messageData);
+      apiPost(method, messageData);
+    };
+
+    return {
+      data: data,
+      connect: connect,
+      getUserById: getUserById,
+      getRoomById: getRoomById,
+      getMessagesForRoom: getMessagesForRoom,
+      sendMessageToRoom: sendMessageToRoom
     };
   });
