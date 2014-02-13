@@ -287,7 +287,6 @@ module.exports = function (grunt) {
             'bower_components/**/*',
             'images/{,*/}*.{webp}',
             'fonts/*',
-            'package.json',
             'Procfile',
             'server.js'
           ]
@@ -296,6 +295,10 @@ module.exports = function (grunt) {
           cwd: '.tmp/images',
           dest: '<%= yeoman.dist %>/images',
           src: ['generated/*']
+        }, {
+          expand: true,
+          dest: '<%= yeoman.dist %>',
+          src: 'package.json'
         }]
       },
       styles: {
