@@ -65,15 +65,17 @@ angular.module('hipFlowApp')
       stream.onmessage = function (e) {
         var message = JSON.parse(e.data);
 
-        console.log(message);
-
         switch (message.event) {
           case 'message':
+          case 'comment':
+          case 'vcs':
             handleMessage(message);
             break;
           case 'activity.user':
             handleUserHeartbeat(message);
             break;
+          default:
+            console.log(message);
         }
 
         $rootScope.$apply();
