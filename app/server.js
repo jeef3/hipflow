@@ -21,19 +21,13 @@ app.get('/login/stream', passport.authenticate('flowdock-stream'));
 app.get('/oauth/callback',
   passport.authenticate('flowdock', { session: false }),
   function (req, res) {
-    res.cookie('flowauth', JSON.stringify({
-      access: req.user.accessToken,
-      refresh: req.user.refreshToken
-    }));
+    res.cookie('flowauth', req.user);
     res.redirect('/login/stream');
   });
 app.get('/oauth/stream/callback',
   passport.authenticate('flowdock-stream', { session: false }),
   function (req, res) {
-    res.cookie('flowauthStream', JSON.stringify({
-      access: req.user.accessToken,
-      refresh: req.user.refreshToken
-    }));
+    res.cookie('flowauthStream', req.user);
     res.redirect('/');
   });
 

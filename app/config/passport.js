@@ -4,10 +4,12 @@ var passport = require('passport'),
   OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
 
 module.exports = function () {
-  var doneCallback = function (accessToken, refreshToken, profile, done) {
+  var doneCallback = function (accessToken, refreshToken, params, profile, done) {
     done(null, {
       accessToken: accessToken,
-      refreshToken: refreshToken
+      refreshToken: refreshToken,
+      expiresIn: params.expires_in,
+      scope: params.scope
     });
   };
 

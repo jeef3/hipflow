@@ -2,18 +2,18 @@
 
 angular.module('hipFlowApp')
   .service('FlowdockAuth', function FlowdockAuth($cookies) {
-    var tokens = {},
-      streamTokens = {};
+    var auth = {},
+      streamAuth = {};
 
     this.isAuthenticated = function () {
       try {
-        tokens = JSON.parse($cookies.flowauth);
-        streamTokens = JSON.parse($cookies.flowauthStream);
+        auth = JSON.parse($cookies.flowauth);
+        streamAuth = JSON.parse($cookies.flowauthStream);
       } catch (err) {
         return false;
       }
 
-      return !!tokens.access && !!streamTokens.access;
+      return !!auth.accessToken && !!streamAuth.accessToken;
     };
 
     this.logout = function () {
@@ -22,10 +22,18 @@ angular.module('hipFlowApp')
     };
 
     this.token = function () {
-      return tokens.access;
+      return auth.accessToken;
     };
 
     this.streamToken = function () {
-      return streamTokens.access;
+      return streamAuth.accessToken;
+    };
+
+    this.refreshToken = function () {
+
+    };
+
+    this.refreshStreamToken = function () {
+
     };
   });
