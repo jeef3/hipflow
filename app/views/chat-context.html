@@ -2,13 +2,11 @@
   <div>
     <ul class="users">
       <li class="user"
-          ng-repeat="user in currentRoom.users"
+          style="background-image:url({{user.avatar}})"
+          title="{{user.name}}"
+          ng-repeat="user in currentRoom.users | orderBy:'-last_ping'"
           ng-class="{'user-online': isOnline(user),
                      'user-offline': !isOnline(user)}">
-        <i class="fa fa-fw user__online-status-icon"
-            ng-class="{'fa-circle': isOnline(user),
-                       'fa-circle-o': !isOnline(user)}"></i>
-        <span ng-bind="user.nick"></span>
       </li>
     </ul>
   </div>

@@ -6,11 +6,29 @@
 }
 
 .user {
+  float: left;
+  width: 1.875em;
+  height: 1.875em;
+  margin: 0.313em;
 
-}
+  cursor: pointer;
 
-.user__online-status-icon {
-  .user-online & {
-    color: green;
+  border-radius: 0.313em;
+
+  transition: all 300ms ease-in-out;
+
+  &.user-online {
+    box-shadow: 0 0 2px 1px rgba(50, 190, 50, 0.75);
+  }
+
+  &.user-offline {
+    opacity: 0.75;
+    filter: grayscale(100%);
+
+    &:hover {
+      opacity: 1;
+      filter: grayscale(0);
+    }
   }
 }
+

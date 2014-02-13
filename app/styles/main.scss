@@ -19,8 +19,8 @@ body {
   margin: 0;
 }
 
-$sidebar-width: 180px;
-$chat-context-width: 180px;
+$sidebar-width: 12.5em;
+$chat-context-width: 12.5em;
 
 .container {
   position: relative;
@@ -51,6 +51,8 @@ $chat-context-width: 180px;
   top: 0;
   right: 0;
   bottom: 0;
+
+  background: #e6e6e6;
 }
 
 code,
