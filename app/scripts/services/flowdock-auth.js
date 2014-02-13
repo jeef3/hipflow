@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hipFlowApp')
-  .service('FlowdockAuth', function FlowdockAuth($cookies) {
+  .service('FlowdockAuth', function FlowdockAuth($http, $cookies) {
     var auth = {},
       streamAuth = {};
 
@@ -13,7 +13,7 @@ angular.module('hipFlowApp')
         return false;
       }
 
-      return !!auth.accessToken && !!streamAuth.accessToken;
+      return !!auth.access_token && !!streamAuth.access_token;
     };
 
     this.logout = function () {
@@ -22,18 +22,28 @@ angular.module('hipFlowApp')
     };
 
     this.token = function () {
-      return auth.accessToken;
+      return auth.access_token;
     };
 
     this.streamToken = function () {
-      return streamAuth.accessToken;
+      return streamAuth.access_token;
     };
 
     this.refreshToken = function () {
-
+      $http.post('/oauth/refresh', {
+          params: { refresh_token: auth.refresh_token }
+        })
+        .success(function (authResponse) {
+          auth = authResponse;
+        });
     };
 
     this.refreshStreamToken = function () {
-
+      $http.post('/oauth/stream/refresh', {
+          params: { refresh_token: streamAuth.refresh_token }
+        })
+        .success(function (authResponse) {
+          streamAuth = authResponse;
+        });
     };
   });

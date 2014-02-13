@@ -5,12 +5,7 @@ var passport = require('passport'),
 
 module.exports = function () {
   var doneCallback = function (accessToken, refreshToken, params, profile, done) {
-    done(null, {
-      accessToken: accessToken,
-      refreshToken: refreshToken,
-      expiresIn: params.expires_in,
-      scope: params.scope
-    });
+    done(null, params);
   };
 
   passport.use('flowdock',
