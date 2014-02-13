@@ -22,8 +22,8 @@ module.exports = function () {
     new OAuth2Strategy({
       authorizationURL: 'https://stream.flowdock.com/oauth/authorize',
       tokenURL: 'https://stream.flowdock.com/oauth/token',
-      clientID: process.env.FLOWDOCK_APPLICATION_ID,
-      clientSecret: process.env.FLOWDOCK_SECRET,
+      clientID: process.env.FLOWDOCK_STREAM_APPLICATION_ID,
+      clientSecret: process.env.FLOWDOCK_STREAM_SECRET,
       callbackURL: process.env.FLOWDOCK_STREAM_CALLBACK_URI
     },
     doneCallback));

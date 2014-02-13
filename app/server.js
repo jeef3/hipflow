@@ -1,9 +1,12 @@
 'use strict';
 
-var express = require('express'),
-  passport = require('passport'),
-  request = require('request'),
-  app = express();
+var express = require('express');
+var path = require('path');
+var passport = require('passport');
+var request = require('request');
+var app = express();
+
+var index;
 
 app.set('port', process.env.PORT || 9000);
 
@@ -11,6 +14,26 @@ app.configure(function () {
   app.use(express.methodOverride());
   app.use(express.urlencoded());
   app.use(express.cookieParser());
+});
+
+app.configure('development', function () {
+  index = path.join(__dirname, 'index.html');
+
+  app.use('/images', express.static(path.join(__dirname, 'images')));
+  app.use('/scripts', express.static(path.join(__dirname, 'scripts')));
+  app.use('/styles', express.static(path.join(__dirname, '..', '.tmp', 'styles')));
+  app.use('/views', express.static(path.join(__dirname, 'views')));
+  app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
+});
+
+app.configure('production', function () {
+  index = path.join(__dirname, 'index.html');
+
+  app.use('/images', express.static(path.join(__dirname, 'images')));
+  app.use('/scripts', express.static(path.join(__dirname, 'scripts')));
+  app.use('/styles', express.static(path.join(__dirname, 'styles')));
+  app.use('/views', express.static(path.join(__dirname, 'views')));
+  app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
 });
 
 require('./config/passport')();
@@ -62,14 +85,8 @@ app.get('/oauth/stream/callback',
     res.redirect('/');
   });
 
-app.use('/images', express.static('app/images'));
-app.use('/scripts', express.static('app/scripts'));
-app.use('/styles', express.static('.tmp/styles'));
-app.use('/views', express.static('app/views'));
-app.use('/bower_components', express.static('app/bower_components'));
-
 app.get('/', function (req, res) {
-  res.sendfile('app/index.html');
+  res.sendfile(index);
 });
 
 app.listen(app.get('port'), function () {
