@@ -28,7 +28,7 @@ angular.module('hipFlowApp')
 
     $scope.send = function (message) {
       Flowdock.sendMessageToRoom(message, $scope.currentRoom);
-      // $scope.sendMessageForm.$setPristine();
+      this.message = null;
     };
 
     $scope.isOnline = function (user) {
