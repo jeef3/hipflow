@@ -1,7 +1,7 @@
 'use strict';
 
 var passport = require('passport'),
-  OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
+  OAuth2Strategy = require('passport-oauth2');
 
 module.exports = function () {
   var doneCallback = function (accessToken, refreshToken, params, profile, done) {
