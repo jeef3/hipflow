@@ -1,4 +1,5 @@
 .users {
+  overflow: auto;
   margin: 0;
   padding: 0;
 
@@ -32,3 +33,23 @@
   }
 }
 
+.discussions {
+  padding: 0.313em;
+  margin: 2em 0 0;
+
+  list-style: none;
+}
+
+.discussion {
+  overflow: hidden;
+  margin: 0.313em 0;
+
+  font-size: 0.813em;
+  color: #666;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.discussion-muted {
+  color: #999;
+}
