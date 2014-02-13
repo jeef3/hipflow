@@ -2,8 +2,7 @@
 
 angular.module('hipFlowApp')
   .controller('MainCtrl', function ($scope, $rootScope, Flowdock, localStorageService) {
-    var token = '';
-    Flowdock.connect(token);
+    Flowdock.connect();
 
     $scope.flowdock = Flowdock.data;
 
