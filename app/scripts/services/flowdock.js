@@ -99,6 +99,10 @@ angular.module('hipFlowApp')
     var handleUserHeartbeat = function (message) {
       var room = getRoomById(message.flow ? message.flow : message.user);
 
+      if (!room) {
+        return;
+      }
+
       var user = room.users.filter(function (u) {
         return u.id === parseInt(message.user);
       })[0];
