@@ -3,6 +3,6 @@
 angular.module('hipFlowApp')
   .filter('localBranchName', function () {
     return function (input) {
-      return input.replace(/^refs\/heads\//, '');
+      return input ? input.replace(/^refs\/heads\//, '') : input;
     };
   });
