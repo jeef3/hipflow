@@ -1,7 +1,7 @@
 <aside class="chat-context" ng-controller="ChatContextCtrl">
 
   <ul class="users">
-    <li class="user"
+    <li class="user avatar"
         style="background-image:url({{user.avatar}})"
         title="{{user.name}}"
         ng-repeat="user in currentRoom.users | orderBy:'-last_ping'"

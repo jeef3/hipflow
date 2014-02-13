@@ -39,6 +39,10 @@
 
   border-top: solid 1px rgb(225, 225, 225);
 
+  &.continuous {
+    border-top: 0;
+  }
+
   &.notify {
     border-top-color: rgb(236, 220, 191);
     background: rgb(255, 251, 233);
@@ -72,10 +76,12 @@
 }
 
 .message__user {
-  position: relative;
-  display: table-cell;
-  width: 140px;
+  position: absolute;
+  width: 3.188em;
   padding: 0.313em 0.625em;
+  top: 0;
+  bottom: 0;
+  left: 0;
 
   font-weight: 600;
   text-align: right;
@@ -83,6 +89,12 @@
   background: rgb(247, 247, 247);
   border-right: solid 1px rgb(225, 225, 225);
   box-shadow: inset -1px 1px 0 0 #ffffff;
+
+  .continuous & {
+    .avatar {
+      display: none;
+    }
+  }
 
   .notify & {
     background: rgb(253, 235, 200);
@@ -108,8 +120,8 @@
 }
 
 .message__content {
-  display: table-cell;
   padding: 0.313em 0.625em;
+  margin-left: 3.188em;
 
   word-break: break-word;
 
@@ -127,6 +139,18 @@
       border-radius: 0.313em;
       background: #eeeeee;
     }
+  }
+}
+
+.message__content-user {
+  margin: 0 0 0.313em;
+
+  font-weight: 600;
+  font-size: 0.813em;
+  color: #aaa;
+
+  .continuous & {
+    display: none;
   }
 }
 
