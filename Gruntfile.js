@@ -288,7 +288,8 @@ module.exports = function (grunt) {
             'images/{,*/}*.{webp}',
             'fonts/*',
             'Procfile',
-            'server.js'
+            'server.js',
+            'config/**/*'
           ]
         }, {
           expand: true,
