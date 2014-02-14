@@ -69,7 +69,10 @@
  <path id="drop" fill="#9CDAF1" d="m69.369 186.12l-3.066 10.683s-.8 3.861 2.84 4.546c3.8-.074 3.486-3.627 3.223-4.781z"/>
 </svg></div>
         </div>
-        <div class="message__content" ng-include="'views/github-' + message.content.event + '.html'"></div>
+        <div class="message__content">
+          <p class="message__content-user">GitHub</p>
+          <div ng-include="'views/github-' + message.content.event + '.html'"></div>
+        </div>
         <div class="message__time" am-time-ago="message.sent"></div>
       </div>
     </li>
