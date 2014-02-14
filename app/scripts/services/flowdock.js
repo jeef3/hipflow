@@ -199,7 +199,7 @@ angular.module('hipFlowApp')
         }
       });
 
-      localStorageService.add('chatLogs', data.chatLogs);
+      localStorageService.set('chatLogs', data.chatLogs);
     };
     var sendMessageToRoom = function (message, room) {
       var method,
