@@ -36,6 +36,7 @@
 .message {
   position: relative;
   width: 100%;
+  min-height: 3.125em;
 
   border-top: solid 1px rgb(225, 225, 225);
 
@@ -77,8 +78,8 @@
 
 .message__user {
   position: absolute;
-  width: 3.188em;
-  padding: 0.313em 0.625em;
+  width: 3.125em;
+  padding: 0.625em 0.625em;
   top: 0;
   bottom: 0;
   left: 0;
