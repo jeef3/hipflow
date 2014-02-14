@@ -10,7 +10,8 @@
     <li ng-repeat="message in flowdock.chatLogs[room.id] | orderBy:'sent'"
         ng-init="messageUser = user(message.user)"
         class="message"
-        ng-class="{'notify': message.event === 'vcs'}">
+        ng-class="{'notify': message.event === 'vcs',
+                   'mentioned': mentionsMe(message)}">
 
       <!-- Regular Message -->
       <div ng-if="message.event === 'message'">

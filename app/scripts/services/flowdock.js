@@ -236,6 +236,7 @@ angular.module('hipFlowApp')
     return {
       data: data,
       connect: connect,
+      me: me,
       getUserById: getUserById,
       getRoomById: getRoomById,
       getMessagesForRoom: getMessagesForRoom,

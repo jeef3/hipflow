@@ -42,4 +42,29 @@ angular.module('hipFlowApp')
         return false;
       }
     };
+
+    $scope.mentionsMe = function (message) {
+      if (!message.tags || !message.tags.length) {
+        return false;
+      }
+
+      var mentionRegex = new RegExp(/^:(user|highlight):(\d+)$/);
+      var mentions = message.tags
+        .filter(function (tag) {
+          return mentionRegex.test(tag);
+        })
+        .map(function (tag) {
+          return mentionRegex.exec(tag)[2];
+        });
+
+      if (!mentions.length) {
+        return false;
+      }
+
+      var me = mentions.filter(function (mention) {
+        return mention === Flowdock.me().id;
+      });
+
+      return me.length > 0;
+    };
   });

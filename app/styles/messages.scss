@@ -44,7 +44,7 @@
     border-top: 0;
   }
 
-  &.notify {
+  &.notify, &.mentioned {
     border-top-color: rgb(236, 220, 191);
     background: rgb(255, 251, 233);
   }
@@ -97,7 +97,7 @@
     }
   }
 
-  .notify & {
+  .notify &, .mentioned & {
     background: rgb(253, 235, 200);
     border-right-color: rgb(229, 207, 172);
     box-shadow: inset -1px 1px 0 0 rgb(255, 250, 235);
