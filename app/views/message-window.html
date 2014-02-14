@@ -3,15 +3,14 @@
 </div>
 
 <div class="messages-container" ui-scroll-bottom>
-  <ul class="messages" ng-init="messages = flowdock.chatLogs[room.id] | orderBy:'sent'">
+  <ul class="messages" ng-init="">
     <li class="messages-loading" ng-show="isLoadingOlder">
       <i class="fa fa-fw fa-refresh fa-spin"></i>
     </li>
-    <li ng-repeat="message in messages"
+    <li ng-repeat="message in flowdock.chatLogs[room.id] | orderBy:'sent'"
         ng-init="messageUser = user(message.user)"
         class="message"
-        ng-class="{'notify': message.event === 'vcs',
-                   'continuous': !$first && messages[$index - 1].user === messages[$index].user}">
+        ng-class="{'notify': message.event === 'vcs'}">
 
       <!-- Regular Message -->
       <div ng-if="message.event === 'message'">
