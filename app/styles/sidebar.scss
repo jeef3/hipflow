@@ -39,10 +39,6 @@
     background: rgb(36, 43, 55);
   }
 
-  .unread & {
-    color: #ffffff;
-  }
-
   .active &,
   &:hover,
   &:active,
@@ -73,5 +69,18 @@
 .room__type-icon {
   .query-online & {
     color: #32BE32;
+  }
+}
+
+.unread-marker {
+  display: none;
+
+  line-height: 1em;
+  font-size: 0.313em;
+  color: rgb(50, 200, 50);
+  text-shadow: 0 0 10px rgba(50, 200, 50, 0.5);
+
+  .unread & {
+    display: inline-block;
   }
 }
