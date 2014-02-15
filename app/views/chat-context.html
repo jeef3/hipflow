@@ -15,7 +15,8 @@
     <li class="discussion"
         title="{{discussion.content}}"
         ng-repeat="discussion in flowdock.discussions[currentRoom.id]"
-        ng-class="{'discussion-muted': discussion.muted}">
+        ng-class="{'discussion-muted': discussion.muted}"
+        ng-click="discussion.muted = !discussion.muted">
       <i class="fa fa-fw"
           ng-class="{'fa-volume-up': !discussion.muted,
                      'fa-volume-off': discussion.muted}"></i>

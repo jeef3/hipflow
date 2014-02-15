@@ -41,11 +41,22 @@
   margin: 0.313em 0;
 
   font-size: 0.813em;
+  font-weight: 500;
   color: #666;
   white-space: nowrap;
   text-overflow: ellipsis;
+  cursor: pointer;
+
+  &:hover {
+    color: #000;
+  }
 }
 
-.discussion-muted {
+.discussion.discussion-muted {
   color: #999;
+  font-weight: 100;
+
+  &:hover {
+    color: #333;
+  }
 }

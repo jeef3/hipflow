@@ -225,6 +225,9 @@ angular.module('hipFlowApp')
         if (message.event === 'comment') {
           var discussionRegex = new RegExp(/^influx:(\d+)$/);
           var discussionId = message.tags
+            .filter(function (tag) {
+              return discussionRegex.test(tag);
+            })
             .map(function (tag) {
               return discussionRegex.exec(tag)[1];
             })[0];
