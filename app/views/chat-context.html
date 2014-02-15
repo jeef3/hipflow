@@ -13,12 +13,13 @@
   <!-- <h3 class="small-title">Discussions</h3> -->
   <ul class="discussions">
     <li class="discussion"
-        ng-repeat="discussion in discussions"
+        title="{{discussion.content}}"
+        ng-repeat="discussion in flowdock.discussions[currentRoom.id]"
         ng-class="{'discussion-muted': discussion.muted}">
       <i class="fa fa-fw"
           ng-class="{'fa-volume-up': !discussion.muted,
                      'fa-volume-off': discussion.muted}"></i>
-      {{discussion.title}}
+      {{discussion.content}}
     </li>
   </ul>
 

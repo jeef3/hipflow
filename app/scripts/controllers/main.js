@@ -44,24 +44,11 @@ angular.module('hipFlowApp')
     };
 
     $scope.mentionsMe = function (message) {
-      if (!message.tags || !message.tags.length) {
+      if (!message.mentions || !message.mentions.length) {
         return false;
       }
 
-      var mentionRegex = new RegExp(/^:(user|highlight):(\d+)$/);
-      var mentions = message.tags
-        .filter(function (tag) {
-          return mentionRegex.test(tag);
-        })
-        .map(function (tag) {
-          return mentionRegex.exec(tag)[2];
-        });
-
-      if (!mentions.length) {
-        return false;
-      }
-
-      var me = mentions.filter(function (mention) {
+      var me = message.mentions.filter(function (mention) {
         return mention === Flowdock.me().id;
       });
 
