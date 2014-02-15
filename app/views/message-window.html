@@ -9,7 +9,7 @@
     </li>
     <li ng-repeat="message in flowdock.chatLogs[room.id] | orderBy:'sent'"
         ng-init="messageUser = user(message.user)"
-        class="message"
+        class="message message--{{message.event}}"
         ng-class="{'notify': message.event === 'vcs',
                    'mentioned': mentionsMe(message)}">
 
