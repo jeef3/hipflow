@@ -425,11 +425,7 @@ module.exports = function (grunt) {
     'compress'
   ]);
 
-  grunt.registerTask('heroku:development', [
-    'build'
-  ]);
-
-  grunt.registerTask('heroku:production', [
+  grunt.registerTask('heroku', [
     'build'
   ]);
 
