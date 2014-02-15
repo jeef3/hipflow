@@ -13,14 +13,16 @@
   <!-- <h3 class="small-title">Discussions</h3> -->
   <ul class="discussions">
     <li class="discussion"
-        title="{{discussion.content}}"
         ng-repeat="discussion in flowdock.discussions[currentRoom.id]"
         ng-class="{'discussion-muted': discussion.muted}"
         ng-click="discussion.muted = !discussion.muted">
       <i class="fa fa-fw"
           ng-class="{'fa-volume-up': !discussion.muted,
                      'fa-volume-off': discussion.muted}"></i>
-      {{discussion.content}}
+      <span ng-if="discussion.event === 'file'"
+          title="{{discussion.content.file_name}}">{{discussion.content.file_name}}</span>
+      <span ng-if="discussion.event === 'message'"
+          title="{{discussion.content}}">{{discussion.content}}</span>
     </li>
   </ul>
 
