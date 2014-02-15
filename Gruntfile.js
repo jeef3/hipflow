@@ -288,7 +288,6 @@ module.exports = function (grunt) {
             'bower_components/**/*',
             'images/{,*/}*.{webp}',
             'fonts/*',
-            'Procfile',
             'server.js',
             'config/**/*'
           ]
@@ -299,8 +298,9 @@ module.exports = function (grunt) {
           src: ['generated/*']
         }, {
           expand: true,
-          dest: '<%= yeoman.dist %>',
-          src: 'package.json'
+          cwd: '<%= yeoman.app %>/bower_components/font-awesome/fonts',
+          dest: '<%= yeoman.dist %>/fonts',
+          src: '*'
         }]
       },
       styles: {
