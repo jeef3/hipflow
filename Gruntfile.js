@@ -425,9 +425,17 @@ module.exports = function (grunt) {
     'compress'
   ]);
 
+  grunt.registerTask('heroku:development', [
+    'build'
+  ]);
+
+  grunt.registerTask('heroku:production', [
+    'build'
+  ]);
+
   grunt.registerTask('default', [
-    // 'newer:jshint',
-    // 'test',
+    'newer:jshint',
+    'test',
     'build'
   ]);
 };
