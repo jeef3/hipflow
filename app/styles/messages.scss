@@ -35,12 +35,12 @@
 
 .message {
   position: relative;
-  width: 100%;
   min-height: 3.125em;
 
-  border-top: solid 1px rgb(225, 225, 225);
+  border-top: solid 1px #f0f0f0;
 
   &.continuous {
+    min-height: 0;
     border-top: 0;
   }
 
@@ -87,9 +87,9 @@
   font-weight: 600;
   text-align: right;
 
-  background: rgb(247, 247, 247);
-  border-right: solid 1px rgb(225, 225, 225);
-  box-shadow: inset -1px 1px 0 0 #ffffff;
+  // background: rgb(247, 247, 247);
+  // border-right: solid 1px rgb(225, 225, 225);
+  // box-shadow: inset -1px 1px 0 0 #ffffff;
 
   .continuous & {
     .avatar {
@@ -97,21 +97,21 @@
     }
   }
 
-  .notify &, .mentioned & {
-    background: rgb(253, 235, 200);
-    border-right-color: rgb(229, 207, 172);
-    box-shadow: inset -1px 1px 0 0 rgb(255, 250, 235);
-  }
-  .success & {
-    background: rgb(223, 242, 206);
-    border-right-color: rgb(190, 224, 144);
-    box-shadow: inset -1px 1px 0 0 rgb(255, 250, 235);
-  }
-  .failure & {
-    background: rgb(243, 208, 208);
-    border-right-color: rgb(225, 175, 176);
-    box-shadow: inset -1px 1px 0 0 rgb(247, 222, 222);
-  }
+  // .notify &, .mentioned & {
+  //   background: rgb(253, 235, 200);
+  //   border-right-color: rgb(229, 207, 172);
+  //   box-shadow: inset -1px 1px 0 0 rgb(255, 250, 235);
+  // }
+  // .success & {
+  //   background: rgb(223, 242, 206);
+  //   border-right-color: rgb(190, 224, 144);
+  //   box-shadow: inset -1px 1px 0 0 rgb(255, 250, 235);
+  // }
+  // .failure & {
+  //   background: rgb(243, 208, 208);
+  //   border-right-color: rgb(225, 175, 176);
+  //   box-shadow: inset -1px 1px 0 0 rgb(247, 222, 222);
+  // }
 }
 
 .message__comment {
@@ -141,14 +141,18 @@
       background: #eeeeee;
     }
   }
+
+  .continuous & {
+    border-top: solid 1px #f0f0f0;
+  }
 }
 
 .message__content-user {
-  margin: 0 0 0.313em;
+  margin: 0;
 
-  font-weight: 600;
-  font-size: 0.813em;
-  color: #aaa;
+  font-weight: 100;
+  font-size: 0.750em;
+  color: #ccc;
 
   .continuous & {
     display: none;

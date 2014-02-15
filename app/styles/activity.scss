@@ -2,6 +2,27 @@
 .message--vcs {
   @extend .message;
 
+  margin: 0.313em;
+
+  border: solid 1px rgb(229, 207, 172);
+  border-radius: 0.313em;
+
   background: rgb(255, 251, 233);
+
+  .message__content-user {
+    color: rgb(229, 207, 172);
+  }
+
+  &.continuous {
+    margin-top: 0;
+
+    border-top: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+
+    & + .continuous {
+      border-left: solid 1px red;
+    }
+  }
 }
 
