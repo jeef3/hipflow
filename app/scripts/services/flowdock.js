@@ -248,6 +248,17 @@ angular.module('hipFlowApp')
 
           if (!discussionHead) {
             // TODO: API call to get the head message
+            var room = getRoomById(roomId);
+            var method = 'flows/' +
+              room.organization.parameterized_name + '/' +
+              room.parameterized_name +
+              '/messages/' +
+              discussionId;
+
+            apiGet(method)
+              .success(function (m) {
+                updateRoomDiscussion(roomId, m, message);
+              });
 
           } else {
             updateRoomDiscussion(roomId, discussionHead, message);
