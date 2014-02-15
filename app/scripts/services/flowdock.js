@@ -274,7 +274,10 @@ angular.module('hipFlowApp')
         discussion.lastUpdate = message.sent;
       }
 
-      if (data.discussions[roomId].indexOf(discussion) === -1) {
+      var exists = data.discussions[roomId].filter(function (d) {
+        return d.id === discussion.id;
+      });
+      if (!exists.length) {
         data.discussions[roomId].push(discussion);
       }
 
