@@ -25,8 +25,13 @@
 
   <div class="chat-bar">
     <form name="sendMessageForm" ng-submit="send(message)">
-      <input type="text" ng-model="message">
-      <button type="submit" class="btn">Send</button>
+      <div class="chat-input-container">
+        <textarea
+            placeholder="Chat..."
+            class="chat-input"
+            ng-model="message"></textarea>
+      </div>
+      <button type="submit" class="btn send-message-btn">Send</button>
     </form>
   </div>
 </section>
