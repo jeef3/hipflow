@@ -1,6 +1,4 @@
 'use strict';
 
 angular.module('hipFlowApp')
-  .controller('ChatContextCtrl', function ($scope) {
-
-  });
+  .controller('ChatContextCtrl', function () {});

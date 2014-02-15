@@ -99,7 +99,8 @@ module.exports = function (grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= yeoman.app %>/scripts/{,*/}*.js'
+        '<%= yeoman.app %>/scripts/{,*/}*.js',
+        '!<%= yeoman.app %>/scripts/vendor/**'
       ],
       test: {
         options: {
@@ -425,13 +426,9 @@ module.exports = function (grunt) {
     'compress'
   ]);
 
-  grunt.registerTask('heroku', [
-    'build'
-  ]);
-
   grunt.registerTask('default', [
     'newer:jshint',
-    'test',
+    // 'test',
     'build'
   ]);
 };
