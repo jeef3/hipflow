@@ -39,7 +39,7 @@
 
   border-top: solid 1px #f0f0f0;
 
-  &.continuous {
+  &.has-previous-continuous {
     min-height: 0;
     border-top: 0;
   }
@@ -91,7 +91,7 @@
   // border-right: solid 1px rgb(225, 225, 225);
   // box-shadow: inset -1px 1px 0 0 #ffffff;
 
-  .continuous & {
+  .has-previous-continuous & {
     .avatar {
       display: none;
     }
@@ -142,7 +142,7 @@
     }
   }
 
-  .continuous & {
+  .has-previous-continuous & {
     border-top: solid 1px #f0f0f0;
   }
 }
@@ -154,7 +154,7 @@
   font-size: 0.750em;
   color: #ccc;
 
-  .continuous & {
+  .has-previous-continuous & {
     display: none;
   }
 }

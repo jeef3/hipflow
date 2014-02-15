@@ -13,16 +13,20 @@
     color: rgb(229, 207, 172);
   }
 
-  &.continuous {
+  &.has-next-continuous {
+    margin-bottom: 0;
+
+    border-bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &.has-previous-continuous {
     margin-top: 0;
 
     border-top: 0;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-
-    & + .continuous {
-      border-left: solid 1px red;
-    }
   }
 }
 
