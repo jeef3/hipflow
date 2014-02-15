@@ -44,22 +44,22 @@
     border-top: 0;
   }
 
-  &.notify, &.mentioned {
-    border-top-color: rgb(236, 220, 191);
-    background: rgb(255, 251, 233);
-  }
-  &.success {
-    border-top-color: rgb(190, 224, 144);
-    background: rgb(245, 248, 232);
-  }
-  &.failure {
-    border-top-color: rgb(225, 175, 176);
-    background: rgb(249, 230, 230);
-  }
+  // &.notify, &.mentioned {
+  //   border-top-color: rgb(236, 220, 191);
+  //   background: rgb(255, 251, 233);
+  // }
+  // &.success {
+  //   border-top-color: rgb(190, 224, 144);
+  //   background: rgb(245, 248, 232);
+  // }
+  // &.failure {
+  //   border-top-color: rgb(225, 175, 176);
+  //   background: rgb(249, 230, 230);
+  // }
 
   a {
     font-weight: 600;
-    // color: rgb(62, 116, 173);
+    color: rgb(62, 116, 173);
     color: #000000;
     text-decoration: none;
   }
