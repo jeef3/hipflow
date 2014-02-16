@@ -21,7 +21,7 @@
         </div>
         <div class="message__content">
           <p class="message__content-user">{{messageUser.name}}</p>
-          <div ng-bind-html="message.content | codeFormat | messageLinks"></div>
+          <div ng-bind-html="message.content | nl2br | codeFormat | messageLinks"></div>
         </div>
         <div class="message__time" am-time-ago="message.sent"></div>
       </div>
