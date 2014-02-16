@@ -1,11 +1,12 @@
-<div class="sidebar">
+<div class="sidebar" ng-controller="SidebarCtrl">
   <button type="button" class="sidebar-btn">Lobby</button>
 
   <nav>
     <ul class="room-list">
       <li class="room"
           ng-repeat="room in flowdock.rooms | filter:{open:true}"
-          ng-class="{'active': room === currentRoom}">
+          ng-class="{'active': room.id === currentRoom.id,
+                     'unread': room.unread > 0}">
         <button type="button"
             class="sidebar-btn room__join-btn"
             ng-click="showRoom(room)">
@@ -25,7 +26,8 @@
           ng-repeat="query in flowdock.queries | filter:{open:true}"
           ng-class="{'query-online': query.online,
                      'query-offline': !query.online,
-                     'active': query === currentRoom}">
+                     'active': query === currentRoom,
+                     'unread': room.unread > 0}">
         <button type="button"
             class="sidebar-btn room__join-btn"
             ng-click="showRoom(query)">

@@ -71,6 +71,7 @@ angular.module('hipFlowApp')
           case 'comment':
           case 'vcs':
             handleMessage(message);
+            $rootScope.$broadcast('NEW_MESSAGE', message);
             break;
           case 'activity.user':
             handleUserHeartbeat(message);
@@ -89,7 +90,7 @@ angular.module('hipFlowApp')
       if (message.flow) {
         roomId = message.flow;
       } else if (message.to) {
-        roomId = message.to === '58790' ?
+        roomId = message.to === me().id ?
           message.user :
           message.to;
       }
