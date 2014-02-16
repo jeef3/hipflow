@@ -57,6 +57,6 @@ angular.module('hipFlowApp')
     };
 
     $scope.isDiscussionHead = function (message) {
-      return true;
-    }
+      return !!message.lastUpdate;
+    };
   });

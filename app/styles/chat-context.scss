@@ -29,14 +29,14 @@
   }
 }
 
-.discussions {
+.discussion-list {
   padding: 0.313em;
   margin: 2em 0 0;
 
   list-style: none;
 }
 
-.discussion {
+.discussion-list__item {
   overflow: hidden;
   margin: 0.313em 0;
 
@@ -53,7 +53,8 @@
   }
 }
 
-.discussion.discussion-muted {
+.discussion-list__item--muted,
+.discussion-list__item.discussion-muted {
   color: #999;
   font-weight: 100;
 

@@ -17,7 +17,10 @@
 
       <!-- Regular Message -->
       <div ng-if="message.event === 'message'">
-        <button type="button" class="btn message__discussion-marker">
+        <button
+            type="button"
+            class="btn message__discussion-marker"
+            ng-show="isDiscussionHead(message)">
           <i class="fa fa-fw fa-comment-o"></i>
         </button>
         <div class="message__user">
@@ -47,7 +50,9 @@
 
       <!-- File -->
       <div ng-if="message.event === 'file'">
-        <button type="button" class="btn message__discussion-marker">
+        <button type="button"
+            class="btn message__discussion-marker"
+            ng-show="isDiscussion(message)">>
           <i class="fa fa-fw fa-comments-o"></i>
         </button>
         <div class="message__user" ng-bind="user(message.user).nick"></div>
@@ -59,7 +64,9 @@
 
       <!-- VCS (GitHub) -->
       <div ng-if="message.event === 'vcs'" ng-init="github = message.content">
-        <button type="button" class="btn message__discussion-marker">
+        <button type="button"
+            class="btn message__discussion-marker"
+            ng-show="isDiscussion(message)">
           <i class="fa fa-fw fa-comments-o"></i>
         </button>
         <div class="message__user">
