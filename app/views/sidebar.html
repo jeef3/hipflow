@@ -27,7 +27,7 @@
           ng-class="{'query-online': query.online,
                      'query-offline': !query.online,
                      'active': query === currentRoom,
-                     'unread': room.unread > 0}">
+                     'unread': query.unread > 0}">
         <button type="button"
             class="sidebar-btn room__join-btn"
             ng-click="showRoom(query)">

@@ -149,7 +149,6 @@ angular.module('hipFlowApp')
     };
 
     var getRoomById = function (roomId) {
-
       // TODO: What to do if looking for me?
 
       var room = data.rooms.filter(function (room) {
