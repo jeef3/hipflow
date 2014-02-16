@@ -13,7 +13,7 @@
   <!-- <h3 class="small-title">Discussions</h3> -->
   <ul class="discussions">
     <li class="discussion"
-        ng-repeat="discussion in flowdock.discussions[currentRoom.id]"
+        ng-repeat="discussion in flowdock.discussions[currentRoom.id] | orderBy:'-lastUpdate'"
         ng-class="{'discussion-muted': discussion.muted}"
         ng-click="discussion.muted = !discussion.muted">
       <i class="fa fa-fw"
