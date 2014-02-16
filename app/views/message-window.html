@@ -12,10 +12,14 @@
         class="message message--{{message.event}}"
         ng-class="{'has-next-continuous': continuous.hasNext,
                    'has-previous-continuous': continuous.hasPrevious,
-                   'mentioned': mentionsMe(message)}">
+                   'mentioned': mentionsMe(message),
+                   'discussion': isDiscussionHead(message)}">
 
       <!-- Regular Message -->
       <div ng-if="message.event === 'message'">
+        <button type="button" class="btn message__discussion-marker">
+          <i class="fa fa-fw fa-comment-o"></i>
+        </button>
         <div class="message__user">
           <span class="avatar" style="background-image:url({{messageUser.avatar}})"></span>
         </div>
@@ -28,19 +32,24 @@
 
       <!-- Comment -->
       <div ng-if="message.event === 'comment'">
+        <button type="button" class="btn message__discussion-marker">
+          <i class="fa fa-fw fa-comments-o"></i>
+        </button>
         <div class="message__user">
           <span class="avatar" style="background-image:url({{messageUser.avatar}})"></span>
         </div>
         <div class="message__content">
           <p class="message__content-user">{{messageUser.name}}</p>
-          <div ng-bind-html="message.content.text | codeFormat | messageLinks"></div>
+          <div ng-bind-html="message.content.text | nl2br | codeFormat | messageLinks"></div>
         </div>
         <div class="message__time" am-time-ago="message.sent"></div>
-        <!-- TODO: Link via tags[]influx:id -->
       </div>
 
       <!-- File -->
       <div ng-if="message.event === 'file'">
+        <button type="button" class="btn message__discussion-marker">
+          <i class="fa fa-fw fa-comments-o"></i>
+        </button>
         <div class="message__user" ng-bind="user(message.user).nick"></div>
         <div class="message__content">
           TODO: Display image {{message.content.file_name}}
@@ -50,6 +59,9 @@
 
       <!-- VCS (GitHub) -->
       <div ng-if="message.event === 'vcs'" ng-init="github = message.content">
+        <button type="button" class="btn message__discussion-marker">
+          <i class="fa fa-fw fa-comments-o"></i>
+        </button>
         <div class="message__user">
           <div class="avatar">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.2 -1 379 334" width="30" height="30">

@@ -60,6 +60,7 @@
 .message {
   position: relative;
   min-height: 3.125em;
+  padding-left: 1.5em;
   margin: 0.313em;
 
   border-top: solid 1px #f0f0f0;
@@ -107,7 +108,7 @@
   padding: 0.625em 0.625em;
   top: 0;
   bottom: 0;
-  left: 0;
+  left: 1.5em;
 
   font-weight: 600;
   text-align: right;
@@ -146,7 +147,7 @@
 }
 
 .message__content {
-  padding: 0.313em 0.625em;
+  padding: 0.313em 0.625em 0.313em 0;
   margin-left: 3.188em;
 
   word-break: break-word;
@@ -216,4 +217,24 @@
 
 .strong {
   font-weight: 600;
+}
+
+.message__discussion-marker {
+  position: absolute;
+  width: 1.5em;
+  top: 0;
+  bottom: 0;
+  left: 0;
+
+  i {
+
+  }
+
+  &:hover {
+    background: #e0e0e0;
+  }
+
+  .message-comment {
+
+  }
 }
