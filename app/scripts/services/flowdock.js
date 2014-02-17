@@ -197,6 +197,7 @@ angular.module('hipFlowApp')
       }
 
       messages.forEach(function (message) {
+
         // Look to see if it exists
         var exists = data.chatLogs[roomId].filter(function (m) {
           return (typeof m.uuid !== 'undefined' && m.uuid === message.uuid) ||
@@ -207,6 +208,7 @@ angular.module('hipFlowApp')
         // If it exists, update it
         if (exists) {
           angular.copy(message, exists);
+          message = exists;
         } else {
           data.chatLogs[roomId].push(message);
         }
@@ -266,6 +268,30 @@ angular.module('hipFlowApp')
         }
       });
 
+      // Ensure the list is sorted after adding the message(s)
+      data.chatLogs[roomId].sort(function (m1, m2) {
+        return m1.sent - m2.sent;
+      });
+
+      var continuity = function (message, next, previous) {
+        return {
+          hasNext: (next && next.user === message.user) || false,
+          hasPrevious: (previous && previous.user === message.user) || false
+        };
+      };
+
+      // Scan the new messages for continuity
+      data.chatLogs[roomId].forEach(function (message, i, messages) {
+        message.continuity = continuity(message, messages[i + 1], messages[i - 1]);
+      });
+
+      // I'm assuming that the existing messages were in order, and that the
+      // messages param is also in order
+      // var firstMessage = messages[0];
+      // var firstMessageIndex = data.chatLogs[roomId].indexOf(firstMessage);
+
+      // if (firstMessageIndex === 0)
+
       localStorageService.set('chatLogs', data.chatLogs);
     };
 
@@ -298,10 +324,15 @@ angular.module('hipFlowApp')
         method = 'private/' + room.id + '/messages';
       }
 
-      messageData.user = me().id;
       messageData.uuid = Uuid.generate();
 
-      data.chatLogs[room.id].push(messageData);
+      var stub = angular.extend(messageData, {
+        iser: me().id,
+        tags: [],
+        sent: new Date().getTime()
+      });
+
+      addMessagesToRoom(stub, room.id);
       apiPost(method, messageData);
     };
 

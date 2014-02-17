@@ -2,25 +2,9 @@
 <div ng-include="'views/sidebar.html'"></div>
 
 <section class="chat">
-  <div class="message-windows">
-    <!-- Rooms -->
-    <div class="message-window"
-        ng-controller="MessageWindowCtrl"
-        ng-class="{'is-loading': isLoading}"
-        ng-repeat="room in flowdock.rooms"
-        ng-init="room = room"
-        ng-show="room.id === currentRoom.id">
-      <div ng-include="'views/message-window.html'"></div>
-    </div>
-    <!-- Queries -->
-    <div class="message-window"
-        ng-controller="MessageWindowCtrl"
-        ng-class="{'is-loading': isLoading}"
-        ng-repeat="room in flowdock.queries"
-        ng-init="room = room"
-        ng-show="room.id === currentRoom.id">
-      <div ng-include="'views/message-window.html'"></div>
-    </div>
+  <div class="message-windows"
+      ng-controller="MessageWindowCtrl"
+      ng-include="'views/message-window.html'">
   </div>
 
   <div class="chat-bar">

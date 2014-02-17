@@ -7,11 +7,11 @@
     <li class="messages-loading" ng-show="isLoadingOlder">
       <i class="fa fa-fw fa-refresh fa-spin"></i>
     </li>
-    <li ng-repeat="message in flowdock.chatLogs[room.id] | orderBy:'sent'"
-        ng-init="messageUser = user(message.user); continuous = isContinuous(message)"
+    <li ng-repeat="message in messages"
+        ng-init="messageUser = user(message.user)"
         class="message message--{{message.event}}"
-        ng-class="{'has-next-continuous': continuous.hasNext,
-                   'has-previous-continuous': continuous.hasPrevious,
+        ng-class="{'has-next-continuous': isContinuousNext(message),
+                   'has-previous-continuous': isContinuousPrevious(message),
                    'mentioned': mentionsMe(message),
                    'discussion': isDiscussionHead(message)}">
 

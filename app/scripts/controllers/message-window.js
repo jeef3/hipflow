@@ -1,29 +1,21 @@
 'use strict';
 
 angular.module('hipFlowApp')
-  .controller('MessageWindowCtrl', function ($scope, Flowdock) {
+  .controller('MessageWindowCtrl', function ($scope, $filter, Flowdock) {
     $scope.isLoadingOlder = false;
     $scope.isLoadingNewer = false;
 
-    $scope.messages = Flowdock.data.chatLogs[$scope.room.id]; //| orderBy:'sent';
+    $scope.messages = [];
 
-    $scope.isContinuous = function (message) {
-      var index = $scope.messages.indexOf(message);
-      var previousUser;
-      var nextUser;
+    $scope.$watch('currentRoom', function (room) {
+      $scope.messages = Flowdock.data.chatLogs[room.id];
+    });
 
-      if (index !== 0) {
-        previousUser = $scope.messages[index - 1].user;
-      }
-
-      if (index !== $scope.messages.length - 1) {
-        nextUser = $scope.messages[index + 1].user;
-      }
-
-      var continuous = {};
-      continuous.hasPrevious = previousUser === message.user;
-      continuous.hasNext = nextUser === message.user;
-
-      return continuous;
+    $scope.isContinuousNext = function (message) {
+      return message.continuity && message.continuity.hasNext;
     };
+
+    $scope.isContinuousPrevious = function (message) {
+      return message.continuity && message.continuity.hasPrevious;
+    }
   });
