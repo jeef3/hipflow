@@ -61,7 +61,7 @@
   position: relative;
   min-height: 3.125em;
   padding-left: 1.5em;
-  margin: 0.313em;
+  margin: 0 0.313em;
 
   border-top: solid 1px #f0f0f0;
 
@@ -70,10 +70,9 @@
     border-top: 0;
   }
 
-  // &.notify, &.mentioned {
-  //   border-top-color: rgb(236, 220, 191);
-  //   background: rgb(255, 251, 233);
-  // }
+  &.mentioned {
+    background: rgb(255, 251, 233);
+  }
   // &.success {
   //   border-top-color: rgb(190, 224, 144);
   //   background: rgb(245, 248, 232);
@@ -123,11 +122,6 @@
     }
   }
 
-  // .notify &, .mentioned & {
-  //   background: rgb(253, 235, 200);
-  //   border-right-color: rgb(229, 207, 172);
-  //   box-shadow: inset -1px 1px 0 0 rgb(255, 250, 235);
-  // }
   // .success & {
   //   background: rgb(223, 242, 206);
   //   border-right-color: rgb(190, 224, 144);
