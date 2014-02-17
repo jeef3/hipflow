@@ -17,5 +17,5 @@ angular.module('hipFlowApp')
 
     $scope.isContinuousPrevious = function (message) {
       return message.continuity && message.continuity.hasPrevious;
-    }
+    };
   });
