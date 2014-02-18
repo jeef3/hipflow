@@ -1,0 +1,13 @@
+<!-- Jeff Knaggs assigned [NAP-17] - This is the comment to Alan Christensen  -->
+
+{{jira.user_name}} assigned
+<a ng-href="{{jira.issue_url}}" target="_blank">{{jira.issue_key}}</a> to
+{{jira.issue_summary}}
+
+<span ng-if="jira.comment_body">
+    <button class="show-more-btn"
+        ng-click="commentVisible = !commentVisible">
+      <i class="fa fa-fw fa-ellipsis-h"></i>
+    </button>
+    <div class="comment" ng-show="commentVisible" ng-bind-html="jira.comment_body_html"></div>
+</span>

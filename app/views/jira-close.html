@@ -1,0 +1,13 @@
+<!-- Jeff Knaggs closed [NAP-17]: This is the summary  -->
+
+{{jira.user_name}} closed
+<a ng-href="{{jira.issue_url}}" target="_blank">{{jira.issue_key}}</a> &mdash;
+{{jira.issue_summary}}
+
+<span ng-if="jira.comment_body">
+    <button class="show-more-btn"
+        ng-click="commentVisible = !commentVisible">
+      <i class="fa fa-fw fa-ellipsis-h"></i>
+    </button>
+    <div class="comment" ng-show="commentVisible" ng-bind-html="jira.comment_body_html"></div>
+</span>

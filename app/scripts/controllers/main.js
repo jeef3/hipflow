@@ -80,4 +80,8 @@ angular.module('hipFlowApp')
           $scope.authError = true;
         });
     };
+
+    $scope.hasJiraType = function (issue, type) {
+
+    };
   });

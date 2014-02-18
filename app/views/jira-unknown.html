@@ -1,0 +1,19 @@
+<!-- Jeff Knaggs set [NAP-17] to Resolved  -->
+<!-- Jeff Knaggs set [NAP-17] to Resolved and assigned it to Jeff Knaggs  -->
+
+Unknown:
+<span ng-if="hasJiraType(jira.issue_changelog, 'Status')">
+    {{jira.user_name}} set
+    <a ng-href="{{jira.issue_url}}" target="_blank" title="{{jira.issue_summary}}">{{jira.issue_key}}</a>
+    to {{jira.issue_status}}
+
+    <span ng-if="hasJiraType(jira.issue_changelog, 'Assignee')">
+        and assigned it to {{assignee}}
+    </span>
+</span>
+
+<button class="show-more-btn"
+    ng-click="commentVisible = !commentVisible">
+  <i class="fa fa-fw fa-ellipsis-h"></i>
+</button>
+<div class="comment" ng-show="commentVisible" ng-bind-html="jira.comment_body_html"></div>

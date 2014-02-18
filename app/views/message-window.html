@@ -60,7 +60,24 @@
         </div>
         <div class="message__content">
           <p class="message__content-user">{{messageUser.name}}</p>
-          <img alt="{{message.content.file_name}}" src="https://api.flowdock.com{{message.content.path}}">
+          <img alt="{{message.content.file_name}}" ng-src="https://api.flowdock.com{{message.content.path}}">
+        </div>
+        <div class="message__time" am-time-ago="message.sent"></div>
+      </div>
+
+      <!-- JIRA -->
+      <div ng-if="message.event === 'jira'" ng-init="jira = message.content">
+        <button type="button"
+            class="btn message__discussion-marker"
+            ng-show="isDiscussion(message)">
+          <i class="fa fa-fw fa-comments-o"></i>
+        </button>
+        <div class="message__user">
+          <span class="avatar"></span>
+        </div>
+        <div class="message__content">
+          <p class="message__content-user">JIRA</p>
+          <div ng-include="'views/jira-' + message.content.event_type + '.html'"></div>
         </div>
         <div class="message__time" am-time-ago="message.sent"></div>
       </div>
