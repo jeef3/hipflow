@@ -63,7 +63,7 @@ angular.module('hipFlowApp')
 
     this.refreshToken = function () {
       return $http.post('/oauth/refresh', {
-          params: { refresh_token: auth.refresh_token }
+          refresh_token: auth.refresh_token
         })
         .success(function (authResponse) {
           auth = authResponse;
@@ -73,7 +73,7 @@ angular.module('hipFlowApp')
 
     this.refreshStreamToken = function () {
       return $http.post('/oauth/stream/refresh', {
-          params: { refresh_token: streamAuth.refresh_token }
+          refresh_token: streamAuth.refresh_token
         })
         .success(function (authResponse) {
           streamAuth = authResponse;
