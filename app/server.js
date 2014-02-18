@@ -60,8 +60,8 @@ app.post('/oauth/stream/refresh', function (req, res) {
   request.post('https://stream.flowdock.com/oauth/token', {
     json: {
       refresh_token: auth.refresh_token,
-      client_id: process.env.FLOWDOCK_APPLICATION_ID,
-      client_secret: process.env.FLOWDOCK_SECRET,
+      client_id: process.env.FLOWDOCK_STREAM_APPLICATION_ID,
+      client_secret: process.env.FLOWDOCK_STREAM_SECRET,
       grant_type: 'refresh_token'
     }
   }, function (error, response, body) {
