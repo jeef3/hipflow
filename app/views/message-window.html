@@ -55,9 +55,12 @@
             ng-show="isDiscussion(message)">>
           <i class="fa fa-fw fa-comments-o"></i>
         </button>
-        <div class="message__user" ng-bind="user(message.user).nick"></div>
+        <div class="message__user">
+          <span class="avatar" style="background-image:url({{messageUser.avatar}})"></span>
+        </div>
         <div class="message__content">
-          TODO: Display image {{message.content.file_name}}
+          <p class="message__content-user">{{messageUser.name}}</p>
+          <img alt="{{message.content.file_name}}" src="https://api.flowdock.com{{message.content.path}}">
         </div>
         <div class="message__time" am-time-ago="message.sent"></div>
       </div>
