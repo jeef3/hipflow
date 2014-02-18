@@ -9,6 +9,7 @@ var app = express();
 app.set('port', process.env.PORT || 9000);
 
 app.configure(function () {
+  app.use(express.json());
   app.use(express.methodOverride());
   app.use(express.urlencoded());
   app.use(express.cookieParser());
