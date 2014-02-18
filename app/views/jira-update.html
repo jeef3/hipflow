@@ -1,7 +1,7 @@
 <!-- Jeff Knaggs updated on [NAP-17]: This is the comment  -->
 
 {{jira.user_name}} updated
-<a ng-href="{{jira.issue_url}}" target="_blank">{{jira.issue_key}}</a> &mdash;
+<a ng-href="{{jira.issue_url}}" target="_blank" class="jira-issue-{{jira.issue_type}}">{{jira.issue_key}}</a> &mdash;
 {{jira.issue_summary}}
 
 <span ng-if="jira.comment_body">

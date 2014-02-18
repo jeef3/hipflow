@@ -31,3 +31,27 @@
   }
 }
 
+[class^="jira-issue-"]:before {
+  content: '';
+
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 0.313em;
+
+  vertical-align: middle;
+
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+}
+
+.jira-issue-Task:before,
+.jira-issue-Subtask:before {
+  background-image: url("/images/jira/task_agile.png");
+}
+.jira-issue-Story:before {
+  background-image: url("/images/jira/story.png");
+}
+.jira-issue-Bug:before {
+  background-image: url("/images/jira/bug.png");
+}
