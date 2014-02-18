@@ -68,11 +68,15 @@ angular.module('hipFlowApp')
     });
 
     $scope.refreshToken = function () {
+      $scope.refreshStatus = ' refreshing';
+
       FlowdockAuth.refreshTokens()
         .then(function () {
+          $scope.refreshStatus = '';
           $scope.tokenExpired = false;
           $scope.authError = false;
         }, function () {
+          $scope.refreshStatus = ' error';
           $scope.authError = true;
         });
     };
