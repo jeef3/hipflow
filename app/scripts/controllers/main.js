@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hipFlowApp')
-  .controller('MainCtrl', function ($scope, $rootScope, Flowdock, localStorageService) {
+  .controller('MainCtrl', function ($scope, $rootScope, Flowdock, FlowdockAuth, localStorageService) {
     Flowdock.connect();
 
     $scope.flowdock = Flowdock.data;
@@ -58,5 +58,22 @@ angular.module('hipFlowApp')
 
     $scope.isDiscussionHead = function (message) {
       return !!message.lastUpdate;
+    };
+
+    $scope.tokenExpired = false;
+    $scope.authError = false;
+
+    $scope.$on('TOKEN_EXPIRED', function () {
+      $scope.tokenExpired = true;
+    });
+
+    $scope.refreshToken = function () {
+      FlowdockAuth.refreshTokens()
+        .then(function () {
+          $scope.tokenExpired = false;
+          $scope.authError = false;
+        }, function () {
+          $scope.authError = true;
+        });
     };
   });

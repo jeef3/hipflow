@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hipFlowApp')
-  .service('FlowdockAuth', function FlowdockAuth($http, $cookies) {
+  .service('FlowdockAuth', function FlowdockAuth($http, $cookies, $q) {
     var auth = {},
       streamAuth = {};
 
@@ -29,21 +29,55 @@ angular.module('hipFlowApp')
       return streamAuth.access_token;
     };
 
+    this.refreshTokens = function () {
+      var deferred = $q.defer();
+      var finished = {
+        token: false,
+        streamToken: false
+      };
+
+      this.refreshToken()
+        .success(function () {
+          finished.token = true;
+          if (finished.streamToken) {
+            deferred.resolve();
+          }
+        })
+        .error(function (err) {
+          deferred.reject(err);
+        });
+
+      this.refreshStreamToken()
+        .success(function () {
+          finished.streamToken = true;
+          if (finished.token) {
+            deferred.resolve();
+          }
+        })
+        .error(function (err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    };
+
     this.refreshToken = function () {
-      $http.post('/oauth/refresh', {
+      return $http.post('/oauth/refresh', {
           params: { refresh_token: auth.refresh_token }
         })
         .success(function (authResponse) {
           auth = authResponse;
+          $cookies.flowauth = JSON.stringify(auth);
         });
     };
 
     this.refreshStreamToken = function () {
-      $http.post('/oauth/stream/refresh', {
+      return $http.post('/oauth/stream/refresh', {
           params: { refresh_token: streamAuth.refresh_token }
         })
         .success(function (authResponse) {
           streamAuth = authResponse;
+          $cookies.flowauthStream = JSON.stringify(streamAuth);
         });
     };
   });

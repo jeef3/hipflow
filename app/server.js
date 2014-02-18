@@ -38,6 +38,8 @@ app.get('/login/stream', passport.authenticate('flowdock-stream'));
 app.post('/oauth/refresh', function (req, res) {
   var auth = req.body;
 
+  console.log('Refreshing token');
+
   request.post('https://api.flowdock.com/oauth/token', {
     json: {
       refresh_token: auth.refresh_token,
@@ -51,6 +53,8 @@ app.post('/oauth/refresh', function (req, res) {
 });
 app.post('/oauth/stream/refresh', function (req, res) {
   var auth = req.body;
+
+  console.log('Refreshing stream token');
 
   request.post('https://stream.flowdock.com/oauth/token', {
     json: {
