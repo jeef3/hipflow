@@ -22,7 +22,7 @@ angular.module('hipFlowApp')
       return $http.get(url, options)
         .error(function (data, status) {
           if (status === 401) {
-            FlowdockAuth.logout();
+            $rootScope.$broadcast('TOKEN_EXPIRED');
           }
         });
     };
@@ -32,7 +32,12 @@ angular.module('hipFlowApp')
       var token = FlowdockAuth.token();
       var data = angular.extend({}, params, { access_token: token });
 
-      return $http.post(url, data);
+      return $http.post(url, data)
+        .error(function (data, status) {
+          if (status === 401) {
+            $rootScope.$broadcast('TOKEN_EXPIRED');
+          }
+        });
     };
 
     var apiPut = function (path, params) {
@@ -40,7 +45,12 @@ angular.module('hipFlowApp')
       var token = FlowdockAuth.token();
       var data = angular.extend({}, params, { access_token: token });
 
-      return $http.put(url, data);
+      return $http.put(url, data)
+        .error(function (data, status) {
+          if (status === 401) {
+            $rootScope.$broadcast('TOKEN_EXPIRED');
+          }
+        });
     };
 
     var stream = null;

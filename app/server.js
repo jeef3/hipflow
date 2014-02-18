@@ -9,6 +9,7 @@ var app = express();
 app.set('port', process.env.PORT || 9000);
 
 app.configure(function () {
+  app.use(express.json());
   app.use(express.methodOverride());
   app.use(express.urlencoded());
   app.use(express.cookieParser());
@@ -38,6 +39,8 @@ app.get('/login/stream', passport.authenticate('flowdock-stream'));
 app.post('/oauth/refresh', function (req, res) {
   var auth = req.body;
 
+  console.log('Refreshing token');
+
   request.post('https://api.flowdock.com/oauth/token', {
     json: {
       refresh_token: auth.refresh_token,
@@ -52,11 +55,13 @@ app.post('/oauth/refresh', function (req, res) {
 app.post('/oauth/stream/refresh', function (req, res) {
   var auth = req.body;
 
+  console.log('Refreshing stream token');
+
   request.post('https://stream.flowdock.com/oauth/token', {
     json: {
       refresh_token: auth.refresh_token,
-      client_id: process.env.FLOWDOCK_APPLICATION_ID,
-      client_secret: process.env.FLOWDOCK_SECRET,
+      client_id: process.env.FLOWDOCK_STREAM_APPLICATION_ID,
+      client_secret: process.env.FLOWDOCK_STREAM_SECRET,
       grant_type: 'refresh_token'
     }
   }, function (error, response, body) {

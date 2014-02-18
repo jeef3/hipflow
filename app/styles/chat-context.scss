@@ -62,3 +62,24 @@
     color: #333;
   }
 }
+
+.refresh-token-btn {
+  position: absolute;
+  right: 1em;
+  bottom: 1em;
+  left: 1em;
+
+  text-align: center;
+
+  border: solid 1px #999;
+
+  &.is-expired {
+    border-color: rgb(255, 251, 133);
+    box-shadow: 0 0 4px rgb(255, 255, 0);
+  }
+
+  &.has-refresh-error {
+    border-color: rgb(255, 133, 133);
+    box-shadow: 0 0 4px rgb(255, 0, 0);
+  }
+}

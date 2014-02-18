@@ -5,7 +5,13 @@ var passport = require('passport'),
 
 module.exports = function () {
   var doneCallback = function (accessToken, refreshToken, params, profile, done) {
-    done(null, params);
+    done(null, {
+      access_token: params.access_token,
+      expires_in: params.expires_in,
+      scope: params.scope,
+      token_type: params.token_type,
+      refresh_token: refreshToken
+    });
   };
 
   passport.use('flowdock',
