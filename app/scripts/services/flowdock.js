@@ -283,25 +283,6 @@ angular.module('hipFlowApp')
         return m1.sent - m2.sent;
       });
 
-      var continuity = function (message, next, previous) {
-        return {
-          hasNext: (next && next.user === message.user) || false,
-          hasPrevious: (previous && previous.user === message.user) || false
-        };
-      };
-
-      // Scan the new messages for continuity
-      data.chatLogs[roomId].forEach(function (message, i, messages) {
-        message.continuity = continuity(message, messages[i + 1], messages[i - 1]);
-      });
-
-      // I'm assuming that the existing messages were in order, and that the
-      // messages param is also in order
-      // var firstMessage = messages[0];
-      // var firstMessageIndex = data.chatLogs[roomId].indexOf(firstMessage);
-
-      // if (firstMessageIndex === 0)
-
       localStorageService.set('chatLogs', data.chatLogs);
     };
 
