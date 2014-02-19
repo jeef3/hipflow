@@ -68,4 +68,8 @@ angular.module('hipFlowApp')
     $scope.hasJiraType = function (issue, type) {
 
     };
+
+    $scope.getFileUrl = function (path) {
+      return Flowdock.url(path);
+    };
   });

@@ -12,6 +12,20 @@ angular.module('hipFlowApp')
       discussions: localStorageService.get('discussions') || {}
     };
 
+    var apiUrl = function (path, params) {
+      var url = 'https://api.flowdock.com/' + path;
+      var token = FlowdockAuth.token();
+      var options = angular.extend({}, params, { access_token: token });
+
+      var firstParam = true;
+      Object.keys(options).forEach(function (key) {
+        url = url + (firstParam ? '?' : '&') + key + '=' + options[key];
+        firstParam = false;
+      });
+
+      return url;
+    };
+
     var apiGet = function (path, params) {
       var url = 'https://api.flowdock.com/' + path;
       var token = FlowdockAuth.token();
@@ -342,6 +356,7 @@ angular.module('hipFlowApp')
     return {
       data: data,
       connect: connect,
+      url: apiUrl,
       me: me,
       getUserById: getUserById,
       getRoomById: getRoomById,

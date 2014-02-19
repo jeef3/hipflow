@@ -62,7 +62,7 @@
         </div>
         <div class="message__content">
           <p class="message__content-user">{{messageUser.name}}</p>
-          <img alt="{{message.content.file_name}}" ng-src="https://api.flowdock.com{{message.content.path}}">
+          <img alt="{{message.content.file_name}}" ng-src="{{getFileUrl(message.content.path)}}">
         </div>
         <div class="message__time" am-time-ago="message.sent"></div>
       </div>
