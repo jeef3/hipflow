@@ -16,11 +16,10 @@
 
       <!-- Regular Message -->
       <div ng-if="message.event === 'message'">
-        <button
-            type="button"
+        <button type="button"
             class="btn message__discussion-marker"
-            ng-show="isDiscussionHead(message)">
-          <i class="fa fa-fw fa-comment-o"></i>
+            ng-click="addComment(message)">
+          <i class="fa fa-fw fa-comment"></i>
         </button>
         <div class="message__user">
           <span class="avatar" style="background-image:url({{messageUser.avatar}})"></span>
@@ -34,8 +33,10 @@
 
       <!-- Comment -->
       <div ng-if="message.event === 'comment'">
-        <button type="button" class="btn message__discussion-marker">
-          <i class="fa fa-fw fa-comments-o"></i>
+        <button type="button"
+            ng-click="addComment(message)"
+            class="btn message__discussion-marker">
+          <i class="fa fa-fw fa-comments"></i>
         </button>
         <div class="message__user">
           <span class="avatar" style="background-image:url({{messageUser.avatar}})"></span>
@@ -51,8 +52,8 @@
       <div ng-if="message.event === 'file'">
         <button type="button"
             class="btn message__discussion-marker"
-            ng-show="isDiscussion(message)">>
-          <i class="fa fa-fw fa-comments-o"></i>
+            ng-click="addComment(message)">
+          <i class="fa fa-fw fa-comment"></i>
         </button>
         <div class="message__user">
           <span class="avatar" style="background-image:url({{messageUser.avatar}})"></span>
@@ -68,8 +69,8 @@
       <div ng-if="message.event === 'jira'" ng-init="jira = message.content">
         <button type="button"
             class="btn message__discussion-marker"
-            ng-show="isDiscussion(message)">
-          <i class="fa fa-fw fa-comments-o"></i>
+            ng-click="addComment(message)">
+          <i class="fa fa-fw fa-comment"></i>
         </button>
         <div class="message__user">
           <span class="avatar"></span>
@@ -85,8 +86,8 @@
       <div ng-if="message.event === 'vcs'" ng-init="github = message.content">
         <button type="button"
             class="btn message__discussion-marker"
-            ng-show="isDiscussion(message)">
-          <i class="fa fa-fw fa-comments-o"></i>
+            ng-click="addComment(message)">
+          <i class="fa fa-fw fa-comment"></i>
         </button>
         <div class="message__user">
           <div class="avatar">
