@@ -318,13 +318,14 @@ angular.module('hipFlowApp')
       messageData.uuid = Uuid.generate();
 
       var stub = angular.extend(messageData, {
-        iser: me().id,
+        user: me().id,
         tags: [],
         sent: new Date().getTime()
       });
 
       addMessagesToRoom(stub, room.id);
-      apiPost(method, messageData);
+      apiPost(method, messageData)
+        .success(handleMessage);
     };
 
     var leaveRoom = function (room) {
