@@ -33,10 +33,8 @@ angular.module('hipFlowApp')
     $scope.isMonologue = function (message, index) {
       var previous = $scope.messages[index - 1];
 
-      if (!previous) {
-        return false;
-      }
-
-      return message.user === previous.user;
+      return previous &&
+        message.user === previous.user &&
+        message.event === previous.event;
     };
   });
