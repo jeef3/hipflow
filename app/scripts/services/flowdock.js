@@ -94,6 +94,7 @@ angular.module('hipFlowApp')
           case 'message':
           case 'comment':
           case 'vcs':
+          case 'jira':
             handleMessage(message);
             $rootScope.$broadcast('NEW_MESSAGE', message);
             break;
