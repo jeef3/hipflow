@@ -65,6 +65,10 @@
 
   border-top: solid 1px #f0f0f0;
 
+  &.monologue {
+    border-top-color: transparent;
+  }
+
   &.mentioned {
     background: rgb(255, 251, 233);
   }
