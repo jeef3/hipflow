@@ -1,10 +1,12 @@
 <!-- Jeff Knaggs commented on [NAP-17]: This is the comment  -->
 
 {{jira.user_name}} commented on
-<a ng-href="{{jira.issue_url}}" target="_blank" class="jira-issue-{{jira.issue_type}}">{{jira.issue_key}}</a> &mdash;
-{{jira.issue_summary}}
+<a target="_blank"
+    ng-href="{{jira.issue_url}}"
+    class="jira-issue-{{jira.issue_type}}">{{jira.issue_key}} &mdash; {{jira.issue_summary}}</a>
 
 <button class="show-more-btn"
+    ng-show="jira.comment_body"
     ng-click="commentVisible = !commentVisible">
   <i class="fa fa-fw fa-ellipsis-h"></i>
 </button>
