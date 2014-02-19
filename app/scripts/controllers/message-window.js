@@ -30,4 +30,15 @@ angular.module('hipFlowApp')
         message.user === previous.user &&
         message.event === previous.event;
     };
+
+    $scope.isSameDay = function (message, index) {
+      var previous = $scope.messages[index - 1];
+
+      if (!previous) {
+        return true;
+      }
+
+      return new Date(message.sent).getDate() ===
+        new Date(previous.sent).getDate();
+    };
   });

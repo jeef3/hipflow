@@ -7,12 +7,14 @@
     <li class="messages-loading" ng-show="isLoadingOlder">
       <i class="fa fa-fw fa-refresh fa-spin"></i>
     </li>
-    <li ng-repeat="message in messages"
+    <li class="message message--{{message.event}}"
+        data-timestamp="{{message.sent | date:'fullDate'}}"
+        ng-repeat="message in messages"
         ng-init="messageUser = user(message.user)"
-        class="message message--{{message.event}}"
         ng-class="{'mentioned': mentionsMe(message),
                    'discussion': isDiscussionHead(message),
-                   'monologue': isMonologue(message, $index)}">
+                   'monologue': isMonologue(message, $index),
+                   'date-separator': !isSameDay(message, $index)}">
 
       <!-- Regular Message -->
       <div ng-if="message.event === 'message'">

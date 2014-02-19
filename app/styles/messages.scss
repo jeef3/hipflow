@@ -72,6 +72,30 @@
   &.mentioned {
     background: rgb(255, 251, 233);
   }
+
+  &.date-separator {
+    $date-separator-height: 2em;
+    margin-top: $date-separator-height;
+
+    &:before {
+      content: attr(data-timestamp);
+
+      position: absolute;
+      width: 100%;
+      height: $date-separator-height;
+      top: -$date-separator-height;
+      left: 0;
+
+      line-height: $date-separator-height;
+      font-size: 0.813em;
+      text-align: center;
+      color: #aaa;
+
+      border-top: solid 1px #e0e0e0;
+      background: #efefef;
+    }
+  }
+
   // &.success {
   //   border-top-color: rgb(190, 224, 144);
   //   background: rgb(245, 248, 232);
