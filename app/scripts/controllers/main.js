@@ -44,6 +44,13 @@ angular.module('hipFlowApp')
       }
     };
 
+    $scope.tokenExpired = false;
+    $scope.authError = false;
+
+    $scope.$on('TOKEN_EXPIRED', function () {
+      $scope.tokenExpired = true;
+    });
+
     $scope.refreshToken = function () {
       $scope.refreshStatus = ' refreshing';
 

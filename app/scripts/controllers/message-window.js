@@ -23,13 +23,6 @@ angular.module('hipFlowApp')
       return !!message.lastUpdate;
     };
 
-    $scope.tokenExpired = false;
-    $scope.authError = false;
-
-    $scope.$on('TOKEN_EXPIRED', function () {
-      $scope.tokenExpired = true;
-    });
-
     $scope.isMonologue = function (message, index) {
       var previous = $scope.messages[index - 1];
 
