@@ -5,11 +5,7 @@ angular.module('hipFlowApp')
     $scope.isLoadingOlder = false;
     $scope.isLoadingNewer = false;
 
-    $scope.messages = [];
-
-    $scope.$watch('currentRoom', function (room) {
-      $scope.messages = Flowdock.data.chatLogs[room.id];
-    });
+    $scope.messages = Flowdock.data.chatLogs[$scope.room.id];
 
     $scope.isContinuousNext = function (message) {
       return message.continuity && message.continuity.hasNext;
