@@ -9,8 +9,8 @@
         ng-class="{'is-loading': isLoading}"
         ng-repeat="room in flowdock.rooms"
         ng-init="room = room"
-        ng-show="room.id === currentRoom.id">
-      <div ng-include="'views/message-window.html'"></div>
+        ng-show="room.id === currentRoom.id"
+        ng-include="'views/message-window.html'">
     </div>
     <!-- Queries -->
     <div class="message-window"
@@ -18,8 +18,8 @@
         ng-class="{'is-loading': isLoading}"
         ng-repeat="room in flowdock.queries"
         ng-init="room = room"
-        ng-show="room.id === currentRoom.id">
-      <div ng-include="'views/message-window.html'"></div>
+        ng-show="room.id === currentRoom.id"
+        ng-include="'views/message-window.html'">
     </div>
   </div>
 

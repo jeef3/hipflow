@@ -10,10 +10,9 @@
     <li ng-repeat="message in messages"
         ng-init="messageUser = user(message.user)"
         class="message message--{{message.event}}"
-        ng-class="{'has-next-continuous': isContinuousNext(message),
-                   'has-previous-continuous': isContinuousPrevious(message),
-                   'mentioned': mentionsMe(message),
-                   'discussion': isDiscussionHead(message)}">
+        ng-class="{'mentioned': mentionsMe(message),
+                   'discussion': isDiscussionHead(message),
+                   'monologue': isMonologue(message, $index)}">
 
       <!-- Regular Message -->
       <div ng-if="message.event === 'message'">

@@ -7,11 +7,36 @@ angular.module('hipFlowApp')
 
     $scope.messages = Flowdock.data.chatLogs[$scope.room.id];
 
-    $scope.isContinuousNext = function (message) {
-      return message.continuity && message.continuity.hasNext;
+    $scope.mentionsMe = function (message) {
+      if (!message.mentions || !message.mentions.length) {
+        return false;
+      }
+
+      var me = message.mentions.filter(function (mention) {
+        return mention === Flowdock.me().id;
+      });
+
+      return me.length > 0;
     };
 
-    $scope.isContinuousPrevious = function (message) {
-      return message.continuity && message.continuity.hasPrevious;
+    $scope.isDiscussionHead = function (message) {
+      return !!message.lastUpdate;
+    };
+
+    $scope.tokenExpired = false;
+    $scope.authError = false;
+
+    $scope.$on('TOKEN_EXPIRED', function () {
+      $scope.tokenExpired = true;
+    });
+
+    $scope.isMonologue = function (message, index) {
+      var previous = $scope.messages[index - 1];
+
+      if (!previous) {
+        return false;
+      }
+
+      return message.user === previous.user;
     };
   });

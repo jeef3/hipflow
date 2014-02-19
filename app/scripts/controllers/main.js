@@ -44,29 +44,6 @@ angular.module('hipFlowApp')
       }
     };
 
-    $scope.mentionsMe = function (message) {
-      if (!message.mentions || !message.mentions.length) {
-        return false;
-      }
-
-      var me = message.mentions.filter(function (mention) {
-        return mention === Flowdock.me().id;
-      });
-
-      return me.length > 0;
-    };
-
-    $scope.isDiscussionHead = function (message) {
-      return !!message.lastUpdate;
-    };
-
-    $scope.tokenExpired = false;
-    $scope.authError = false;
-
-    $scope.$on('TOKEN_EXPIRED', function () {
-      $scope.tokenExpired = true;
-    });
-
     $scope.refreshToken = function () {
       $scope.refreshStatus = ' refreshing';
 
