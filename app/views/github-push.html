@@ -1,17 +1,15 @@
 {{github.pusher.name}} <span ng-if="github.forced">force</span> pushed
 <ng-pluralize
     count="github.commits.length"
-    when="{'0': 'no commits',
-           'one': 'one commit',
-           'other': '{} commits'}"></ng-pluralize>
-
-to
+    when="{'0': '',
+           'one': 'one commit to',
+           'other': '{} commits to'}"></ng-pluralize>
 <a target="_blank"
     ng-if="!github.forced"
     ng-href="{{github.compare}}">{{github.ref | localBranchName}}</a>
 <span
     ng-if="github.forced">{{github.ref | localBranchName}}</span>
-for
+on
 <a ng-href="{{github.repository.url}}" target="_blank">{{github.repository.owner.name}}/{{github.repository.name}}</a>
 
 <button class="show-more-btn"

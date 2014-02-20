@@ -1,8 +1,10 @@
 <!-- Jeff Knaggs closed [NAP-17]: This is the summary  -->
 
 {{jira.user_name}} closed
-<a ng-href="{{jira.issue_url}}" target="_blank" class="jira-issue-{{jira.issue_type}}">{{jira.issue_key}}</a> &mdash;
-{{jira.issue_summary}}
+<a target="_blank"
+    title="{{jira.issue_summary}}"
+    ng-href="{{jira.issue_url}}"
+    class="jira-issue-{{jira.issue_type}}">{{jira.issue_key}} &mdash; {{jira.issue_summary | limitWithEllipsis:30}}</a>
 
 <span ng-if="jira.comment_body">
     <button class="show-more-btn"
