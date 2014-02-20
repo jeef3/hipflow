@@ -22,7 +22,8 @@
       <span ng-if="discussion.event === 'file'"
           title="{{discussion.content.file_name}}">{{discussion.content.file_name}}</span>
       <span ng-if="discussion.event === 'message'"
-          title="{{discussion.content}}">{{discussion.content}}</span>
+          ng-bind-html="discussion.content | emoji"
+          title="{{discussion.content}}"></span>
     </li>
   </ul>
 
