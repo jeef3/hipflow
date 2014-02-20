@@ -65,7 +65,7 @@ angular.module('hipFlowApp')
         });
     };
 
-    $scope.hasJiraType = function (issue, type) {
+    $scope.hasJiraType = function () {
 
     };
 
