@@ -24,6 +24,12 @@
   </div>
 
   <div class="chat-bar">
+    <div class="current-discussion" ng-show="currentDiscussion.id">
+      <span ng-bind-html="currentDiscussion.title | emoji"></span>
+      <button class="btn close" ng-click="setCurrentDiscussion()">
+        <i class="fa fa-fw fa-times"></i>
+      </button>
+    </div>
     <form name="sendMessageForm" ng-submit="send(message)">
       <div class="chat-input-container">
         <textarea

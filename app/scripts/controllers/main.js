@@ -72,4 +72,37 @@ angular.module('hipFlowApp')
     $scope.getFileUrl = function (path) {
       return Flowdock.url(path);
     };
+
+    $scope.currentDiscussion = {};
+    $scope.setCurrentDiscussion = function (message) {
+      if (!message) {
+        angular.copy({
+          id: null,
+          title: null
+        }, $scope.currentDiscussion);
+        return;
+      }
+
+      switch (message.event) {
+        case 'comment':
+          angular.copy({
+            id: Flowdock.getCommentTitleMessageId(message),
+            title: message.content.title
+          }, $scope.currentDiscussion);
+          break;
+
+        case 'file':
+          break;
+
+        case 'message':
+          angular.copy({
+            id: message.id,
+            title: message.content
+          }, $scope.currentDiscussion);
+          break;
+
+        default:
+          throw new Error('Don\'t know how to reply to ' + message.event);
+      }
+    };
   });

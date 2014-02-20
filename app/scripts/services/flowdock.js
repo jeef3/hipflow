@@ -208,6 +208,19 @@ angular.module('hipFlowApp')
         });
     };
 
+    var getCommentTitleMessageId = function (comment) {
+      var discussionRegex = new RegExp(/^influx:(\d+)$/);
+      var discussionId = comment.tags
+        .filter(function (tag) {
+          return discussionRegex.test(tag);
+        })
+        .map(function (tag) {
+          return discussionRegex.exec(tag)[1];
+        })[0];
+
+      return parseInt(discussionId, 10);
+    };
+
     var addMessagesToRoom = function (messages, roomId) {
       if (!(messages instanceof Array)) {
         messages = [messages];
@@ -250,16 +263,7 @@ angular.module('hipFlowApp')
 
         // 'comments' belong to discussions
         if (message.event === 'comment') {
-          var discussionRegex = new RegExp(/^influx:(\d+)$/);
-          var discussionId = message.tags
-            .filter(function (tag) {
-              return discussionRegex.test(tag);
-            })
-            .map(function (tag) {
-              return discussionRegex.exec(tag)[1];
-            })[0];
-
-          discussionId = parseInt(discussionId, 10);
+          var discussionId = getCommentTitleMessageId(message);
 
           var discussionHead = data.discussions[roomId].filter(function (m) {
             return m.id === discussionId;
@@ -362,6 +366,7 @@ angular.module('hipFlowApp')
       getUserById: getUserById,
       getRoomById: getRoomById,
       getMessagesForRoom: getMessagesForRoom,
+      getCommentTitleMessageId: getCommentTitleMessageId,
       sendMessageToRoom: sendMessageToRoom,
       leaveRoom: leaveRoom
     };
