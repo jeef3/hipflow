@@ -11,4 +11,4 @@ of
     ng-click="commentVisible = !commentVisible">
   <i class="fa fa-fw fa-ellipsis-h"></i>
 </button>
-<div class="comment" ng-show="commentVisible" ng-bind-html="github.comment.body_html"></div>
+<div class="comment" ng-show="commentVisible" ng-bind-html="github.comment.body_html | emoji"></div>
