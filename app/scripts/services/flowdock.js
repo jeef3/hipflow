@@ -209,6 +209,10 @@ angular.module('hipFlowApp')
     };
 
     var getCommentTitleMessageId = function (comment) {
+      if (comment.message) {
+        return comment.message;
+      }
+
       var discussionRegex = new RegExp(/^influx:(\d+)$/);
       var discussionId = comment.tags
         .filter(function (tag) {
@@ -320,18 +324,26 @@ angular.module('hipFlowApp')
       localStorageService.set('discussions', data.discussions);
     };
 
-    var sendMessageToRoom = function (message, room) {
+    var sendMessageToRoom = function (message, room, discussionId) {
       var method,
         messageData = {
-          event: 'message',
           content: message
         };
 
       if (room.access_mode) {
-        method = 'messages';
         messageData.flow = room.id;
+
+        if (discussionId) {
+          method = 'comments';
+          messageData.event = 'comment';
+          messageData.message = discussionId;
+        } else {
+          method = 'messages';
+          messageData.event = 'message';
+        }
       } else {
         method = 'private/' + room.id + '/messages';
+        messageData.event = 'message';
       }
 
       messageData.uuid = Uuid.generate();

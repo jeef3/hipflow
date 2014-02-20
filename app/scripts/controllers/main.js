@@ -28,7 +28,14 @@ angular.module('hipFlowApp')
     };
 
     $scope.send = function (message) {
-      Flowdock.sendMessageToRoom(message, $scope.currentRoom);
+      if ($scope.currentDiscussion.id) {
+        Flowdock.sendMessageToRoom(message,
+          $scope.currentRoom,
+          $scope.currentDiscussion.id);
+      } else {
+        Flowdock.sendMessageToRoom(message, $scope.currentRoom);
+      }
+
       this.message = null;
     };
 
