@@ -43,11 +43,25 @@
   right: 0;
   bottom: 3em;
   left: 0;
+
+  &:after {
+    content: '';
+
+    position: absolute;
+    z-index: 1;
+    height: 2em;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+  }
 }
 
 .messages {
+  overflow: auto;
   position: absolute;
-  padding: 0;
+  padding: 0 0 2em;
   margin: 0;
   max-height: 100%;
   right: 0;
