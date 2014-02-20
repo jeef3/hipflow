@@ -111,5 +111,7 @@ angular.module('hipFlowApp')
         default:
           throw new Error('Don\'t know how to reply to ' + message.event);
       }
+
+      $rootScope.$broadcast('CURRENT_DISCUSSION_SET');
     };
   });
