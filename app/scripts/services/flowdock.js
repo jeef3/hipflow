@@ -356,10 +356,11 @@ angular.module('hipFlowApp')
 
       messageData.uuid = Uuid.generate();
 
-      var stub = angular.extend(messageData, {
+      var stub = angular.extend({}, messageData, {
         user: me().id,
         tags: [],
-        sent: new Date().getTime()
+        sent: new Date().getTime(),
+        content: discussionId ? { text: message } : message
       });
 
       addMessagesToRoom(stub, room.id);
