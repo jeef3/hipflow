@@ -67,7 +67,7 @@
 }
 
 .messages-container {
-  overflow-y: scroll;
+  // overflow-y: scroll;
   position: absolute;
   top: 0;
   right: 0;
@@ -89,7 +89,8 @@
 }
 
 .messages {
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
   position: absolute;
   padding: 0 0 2em;
   margin: 0;
