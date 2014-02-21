@@ -135,7 +135,15 @@ angular.module('hipFlowApp')
       })[0];
 
       if (user) {
-        user.last_ping = message.sent;
+        if (message.content.last_activity) {
+          user.last_ping = message.content.last_activity;
+        } else {
+          user.last_ping = message.sent;
+
+          if (Object.keys(message.content).length) {
+            console.log('Unknown user.activity', message.content);
+          }
+        }
       }
     };
 
