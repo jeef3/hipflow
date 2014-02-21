@@ -181,7 +181,12 @@ angular.module('hipFlowApp')
       '😢': 'cry',
       '😇': 'innocent',
       '😝': 'stuck_out_tongue_closed_eyes',
-      '😃': 'smiley'
+      '😃': 'smiley',
+      '😉': 'wink',
+      '💃': 'dancer',
+      '👯': 'dancers',
+      '🍺': 'beer',
+      '🍻': 'beers'
     };
 
     var makeImg = function (emoji) {
