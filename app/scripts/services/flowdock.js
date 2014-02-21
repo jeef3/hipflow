@@ -84,7 +84,7 @@ angular.module('hipFlowApp')
         .join(',');
 
       stream = new EventSource(
-        'https://stream.flowdock.com/flows?active=true&filter=' + rooms + '&user=1&access_token=' + FlowdockAuth.streamToken(),
+        'https://stream.flowdock.com/flows?active=true&filter=' + rooms + '&user=1&access_token=' + FlowdockAuth.token(),
         { withCredentials: false });
 
       stream.onmessage = function (e) {

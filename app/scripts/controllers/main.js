@@ -61,7 +61,7 @@ angular.module('hipFlowApp')
     $scope.refreshToken = function () {
       $scope.refreshStatus = ' refreshing';
 
-      FlowdockAuth.refreshTokens()
+      FlowdockAuth.refreshToken()
         .then(function () {
           $scope.refreshStatus = '';
           $scope.tokenExpired = false;

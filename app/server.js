@@ -34,7 +34,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/login', passport.authenticate('flowdock'));
-app.get('/login/stream', passport.authenticate('flowdock-stream'));
 
 app.post('/oauth/refresh', function (req, res) {
   var auth = req.body;
@@ -52,33 +51,11 @@ app.post('/oauth/refresh', function (req, res) {
     res.send(response.statusCode, body);
   });
 });
-app.post('/oauth/stream/refresh', function (req, res) {
-  var auth = req.body;
-
-  console.log('Refreshing stream token');
-
-  request.post('https://stream.flowdock.com/oauth/token', {
-    json: {
-      refresh_token: auth.refresh_token,
-      client_id: process.env.FLOWDOCK_STREAM_APPLICATION_ID,
-      client_secret: process.env.FLOWDOCK_STREAM_SECRET,
-      grant_type: 'refresh_token'
-    }
-  }, function (error, response, body) {
-    res.send(response.statusCode, body);
-  });
-});
 
 app.get('/oauth/callback',
   passport.authenticate('flowdock', { session: false }),
   function (req, res) {
     res.cookie('flowauth', JSON.stringify(req.user));
-    res.redirect('/login/stream');
-  });
-app.get('/oauth/stream/callback',
-  passport.authenticate('flowdock-stream', { session: false }),
-  function (req, res) {
-    res.cookie('flowauthStream', JSON.stringify(req.user));
     res.redirect('/');
   });
 

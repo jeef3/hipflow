@@ -23,14 +23,4 @@ module.exports = function () {
       callbackURL: process.env.FLOWDOCK_CALLBACK_URI
     },
     doneCallback));
-
-  passport.use('flowdock-stream',
-    new OAuth2Strategy({
-      authorizationURL: 'https://stream.flowdock.com/oauth/authorize',
-      tokenURL: 'https://stream.flowdock.com/oauth/token',
-      clientID: process.env.FLOWDOCK_STREAM_APPLICATION_ID,
-      clientSecret: process.env.FLOWDOCK_STREAM_SECRET,
-      callbackURL: process.env.FLOWDOCK_STREAM_CALLBACK_URI
-    },
-    doneCallback));
 };
