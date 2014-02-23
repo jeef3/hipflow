@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hipFlowApp')
-  .service('FlowdockAuth', function FlowdockAuth($http, $cookies, $q) {
+  .service('FlowdockAuth', function FlowdockAuth($http, $cookies) {
     var auth = {};
 
     this.isAuthenticated = function () {
