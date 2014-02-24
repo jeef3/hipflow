@@ -13,6 +13,7 @@ angular.module('hipFlowApp')
 
     $scope.showRoom = function (room) {
       $scope.currentRoom = room;
+      $scope.setCurrentDiscussion();
       room.unread = 0;
       localStorageService.add('currentRoomId', room.id);
 
