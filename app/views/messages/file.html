@@ -1,6 +1,7 @@
 <div class="plain-message">
   <!-- TODO: General attachments[] template -->
-  <img ng-if="message.content.content_type === 'image/jpeg'"
+  <img ng-if="message.content.content_type === 'image/jpeg' ||
+              message.content.content_type === 'image/png'"
       alt="{{message.content.file_name}}"
       ng-src="{{getFileUrl(message.content.path)}}">
 
