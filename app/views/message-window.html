@@ -101,6 +101,43 @@
         </div>
         <div class="message__time" am-time-ago="message.sent"></div>
       </div>
+
+      <!-- Trello -->
+      <div ng-if="message.event === 'trello'">
+        <button type="button"
+            class="btn message__discussion-marker"
+            ng-click="setCurrentDiscussion(message)">
+          <i class="fa fa-fw fa-comment"></i>
+        </button>
+        <div class="message__user">
+          <div class="avatar">
+          </div>
+        </div>
+        <div class="message__content">
+          <p class="message__content-user">Trello</p>
+          <div ng-include="'views/trello-' + message.content.event + '.html'"></div>
+        </div>
+        <div class="message__time" am-time-ago="message.sent"></div>
+      </div>
+
+      <!-- Mail -->
+      <div ng-if="message.event === 'mail'">
+        <button type="button"
+            class="btn message__discussion-marker"
+            ng-click="setCurrentDiscussion(message)">
+          <i class="fa fa-fw fa-comment"></i>
+        </button>
+        <div class="message__user">
+          <div class="avatar">
+            <!-- Gravatar for {{message.content.from[0].address}} -->
+          </div>
+        </div>
+        <div class="message__content">
+          <p class="message__content-user">{{message.content.from[0].name}}</p>
+          <div ng-bind-html="message.content.content"></div>
+        </div>
+        <div class="message__time" am-time-ago="message.sent"></div>
+      </div>
     </li>
   </ul>
 </div>
