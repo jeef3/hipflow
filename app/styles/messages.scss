@@ -110,7 +110,7 @@
 
   border-top: solid 1px #f0f0f0;
 
-  &.monologue {
+  &.monologue:not(.date-separator) {
     border-top-color: transparent;
   }
 
@@ -188,7 +188,7 @@
   // border-right: solid 1px rgb(225, 225, 225);
   // box-shadow: inset -1px 1px 0 0 #ffffff;
 
-  .monologue & {
+  .monologue:not(.date-separator) & {
     .avatar {
       display: none;
     }
@@ -234,7 +234,7 @@
     }
   }
 
-  .monologue & {
+  .monologue:not(.date-separator) & {
     border-top: solid 1px #f0f0f0;
   }
 }
@@ -246,7 +246,7 @@
   font-size: 0.750em;
   color: #ccc;
 
-  .monologue & {
+  .monologue:not(.date-separator) & {
     display: none;
   }
 }
