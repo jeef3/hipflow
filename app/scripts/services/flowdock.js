@@ -93,6 +93,7 @@ angular.module('hipFlowApp')
         switch (message.event) {
           case 'message':
           case 'comment':
+          case 'file':
           case 'vcs':
           case 'jira':
             handleMessage(message);
