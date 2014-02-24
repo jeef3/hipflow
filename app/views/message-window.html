@@ -4,139 +4,46 @@
 
 <div class="messages-container">
   <ul class="messages" ui-scroll-bottom>
-    <li class="messages-loading" ng-show="isLoadingOlder">
-      <i class="fa fa-fw fa-refresh fa-spin"></i>
-    </li>
-    <li class="message message--{{message.event}}"
+    <li class="message"
         data-timestamp="{{message.sent | date:'fullDate'}}"
         ng-repeat="message in messages"
-        ng-init="messageUser = user(message.user)"
-        ng-class="{'mentioned': mentionsMe(message),
-                   'discussion': isDiscussionHead(message),
-                   'monologue': isMonologue(message, $index),
-                   'date-separator': !isSameDay(message, $index)}">
+        ng-init="meta = getMessageMeta(message)"
+        ng-class="{'message--highlight': mentionsMe(message),
+                   'message--thread': message.event === 'comment' || isDiscussionHead(message),
+                   'message--monologue': isMonologue(message, $index),
+                   'message--date-separator': !isSameDay(message, $index)}">
 
-      <!-- Regular Message -->
-      <div ng-if="message.event === 'message'">
-        <button type="button"
-            class="btn message__discussion-marker"
-            ng-click="setCurrentDiscussion(message)">
-          <i class="fa fa-fw fa-comment"></i>
-        </button>
-        <div class="message__user">
-          <span class="avatar" style="background-image:url({{messageUser.avatar}})"></span>
-        </div>
-        <div class="message__content">
-          <p class="message__content-user">{{messageUser.name}}</p>
-          <div ng-bind-html="message.content | nl2br | emoji | codeFormat | messageLinks"></div>
-        </div>
-        <div class="message__time" am-time-ago="message.sent"></div>
+      <button type="button"
+          class="btn message__discussion-marker"
+          ng-click="setCurrentDiscussion(message)">
+        <i class="fa fa-fw"
+            ng-class="{'fa-comments': message.event === 'comment',
+                       'fa-comments': message.event !== 'comment'}"></i>
+      </button>
+
+      <div class="message__author-avatar"
+          style="background-image:url('{{meta.avatar}}')"
+          aria-hidden>
       </div>
+      <div class="message__author">{{meta.author}}</div>
 
-      <!-- Comment -->
-      <div ng-if="message.event === 'comment'">
-        <button type="button"
-            ng-click="setCurrentDiscussion(message)"
-            class="btn message__discussion-marker">
-          <i class="fa fa-fw fa-comments"></i>
-        </button>
-        <div class="message__user">
-          <span class="avatar" style="background-image:url({{messageUser.avatar}})"></span>
-        </div>
-        <div class="message__content">
-          <p class="message__content-user">{{messageUser.name}}</p>
-          <div ng-bind-html="message.content.text | nl2br | emoji | codeFormat | messageLinks"></div>
-        </div>
-        <div class="message__time" am-time-ago="message.sent"></div>
-      </div>
+      <a href="{{meta.permalink}}" title="Permalink">
+        <time datetime=""
+            title="{{message.sent | date:'fullDate'}}"
+            class="message__timestamp"
+            am-time-ago="message.sent"></time>
+      </a>
 
-      <!-- File -->
-      <div ng-if="message.event === 'file'">
-        <button type="button"
-            class="btn message__discussion-marker"
-            ng-click="setCurrentDiscussion(message)">
-          <i class="fa fa-fw fa-comment"></i>
-        </button>
-        <div class="message__user">
-          <span class="avatar" style="background-image:url({{messageUser.avatar}})"></span>
-        </div>
-        <div class="message__content">
-          <p class="message__content-user">{{messageUser.name}}</p>
-          <img alt="{{message.content.file_name}}" ng-src="{{getFileUrl(message.content.path)}}">
-        </div>
-        <div class="message__time" am-time-ago="message.sent"></div>
-      </div>
+      <div class="message__content">
+        <div ng-if="message.event === 'message'" ng-include="'views/messages/plain.html'"></div>
+        <div ng-if="message.event === 'comment'" ng-include="'views/messages/comment.html'"></div>
+        <div ng-if="message.event === 'file'" ng-include="'views/messages/file.html'"></div>
 
-      <!-- JIRA -->
-      <div ng-if="message.event === 'jira'" ng-init="jira = message.content">
-        <button type="button"
-            class="btn message__discussion-marker"
-            ng-click="setCurrentDiscussion(message)">
-          <i class="fa fa-fw fa-comment"></i>
-        </button>
-        <div class="message__user">
-          <span class="avatar"></span>
-        </div>
-        <div class="message__content">
-          <p class="message__content-user">JIRA</p>
-          <div ng-include="'views/jira-' + message.content.event_type + '.html'"></div>
-        </div>
-        <div class="message__time" am-time-ago="message.sent"></div>
-      </div>
+        <div ng-if="message.event === 'mail'" ng-include="'views/messages/mail.html'"></div>
 
-      <!-- VCS (GitHub) -->
-      <div ng-if="message.event === 'vcs'" ng-init="github = message.content">
-        <button type="button"
-            class="btn message__discussion-marker"
-            ng-click="setCurrentDiscussion(message)">
-          <i class="fa fa-fw fa-comment"></i>
-        </button>
-        <div class="message__user">
-          <div class="avatar">
-          </div>
-        </div>
-        <div class="message__content">
-          <p class="message__content-user">GitHub</p>
-          <div ng-include="'views/github-' + message.content.event + '.html'"></div>
-        </div>
-        <div class="message__time" am-time-ago="message.sent"></div>
-      </div>
-
-      <!-- Trello -->
-      <div ng-if="message.event === 'trello'">
-        <button type="button"
-            class="btn message__discussion-marker"
-            ng-click="setCurrentDiscussion(message)">
-          <i class="fa fa-fw fa-comment"></i>
-        </button>
-        <div class="message__user">
-          <div class="avatar">
-          </div>
-        </div>
-        <div class="message__content">
-          <p class="message__content-user">Trello</p>
-          <div ng-include="'views/trello-' + message.content.event + '.html'"></div>
-        </div>
-        <div class="message__time" am-time-ago="message.sent"></div>
-      </div>
-
-      <!-- Mail -->
-      <div ng-if="message.event === 'mail'">
-        <button type="button"
-            class="btn message__discussion-marker"
-            ng-click="setCurrentDiscussion(message)">
-          <i class="fa fa-fw fa-comment"></i>
-        </button>
-        <div class="message__user">
-          <div class="avatar">
-            <!-- Gravatar for {{message.content.from[0].address}} -->
-          </div>
-        </div>
-        <div class="message__content">
-          <p class="message__content-user">{{message.content.from[0].name}}</p>
-          <div ng-bind-html="message.content.content"></div>
-        </div>
-        <div class="message__time" am-time-ago="message.sent"></div>
+        <div ng-if="message.event === 'jira'" ng-include="'views/messages/jira-' + message.content.event_type + '.html'"></div>
+        <div ng-if="message.event === 'vcs'" ng-include="'views/messages/github-' + message.content.event + '.html'"></div>
+        <div ng-if="message.event === 'trello'" ng-include="'views/messages/trello-' + message.content.event + '.html'"></div>
       </div>
     </li>
   </ul>

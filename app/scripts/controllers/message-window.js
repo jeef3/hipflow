@@ -41,4 +41,19 @@ angular.module('hipFlowApp')
       return new Date(message.sent).getDate() ===
         new Date(previous.sent).getDate();
     };
+
+    $scope.getMessageMeta = function (message) {
+      if (message.event === 'message' || message.event === 'comment') {
+        var user = Flowdock.getUserById(message.user);
+        return {
+          author: user.nick,
+          avatar: user.avatar
+        };
+      } else {
+        return {
+          author: '',
+          avatar: ''
+        };
+      }
+    };
   });

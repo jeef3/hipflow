@@ -102,6 +102,10 @@
   list-style: none;
 }
 
+$notify-background: rgb(255, 251, 233);
+$success-background: rgb(245, 248, 232);
+$fail-background: rgb(249, 230, 230);
+
 .message {
   position: relative;
   min-height: 3.125em;
@@ -110,15 +114,15 @@
 
   border-top: solid 1px #f0f0f0;
 
-  &.monologue:not(.date-separator) {
+  &.message--monologue:not(.message--date-separator) {
     border-top-color: transparent;
   }
 
-  &.mentioned {
-    background: rgb(255, 251, 233);
+  &.message--highlight {
+    background: $notify-background;
   }
 
-  &.date-separator {
+  &.message--date-separator {
     $date-separator-height: 2em;
     margin-top: $date-separator-height;
 
@@ -140,15 +144,6 @@
       background: #efefef;
     }
   }
-
-  // &.success {
-  //   border-top-color: rgb(190, 224, 144);
-  //   background: rgb(245, 248, 232);
-  // }
-  // &.failure {
-  //   border-top-color: rgb(225, 175, 176);
-  //   background: rgb(249, 230, 230);
-  // }
 
   a {
     font-weight: 600;
@@ -173,39 +168,35 @@
   }
 }
 
-.message__user {
-  position: absolute;
-  width: 3.125em;
-  padding: 0.625em 0.625em;
-  top: 0;
-  bottom: 0;
-  left: 1.5em;
+.message__author {
+  margin: 0.5em 0 0 4.167em;
 
-  font-weight: 600;
-  text-align: right;
+  font-weight: 100;
+  font-size: 0.750em;
+  color: #ccc;
 
-  // background: rgb(247, 247, 247);
-  // border-right: solid 1px rgb(225, 225, 225);
-  // box-shadow: inset -1px 1px 0 0 #ffffff;
-
-  .monologue:not(.date-separator) & {
-    .avatar {
-      display: none;
-    }
+  .message--monologue:not(.message--date-separator) & {
+    display: none;
   }
-
-  // .success & {
-  //   background: rgb(223, 242, 206);
-  //   border-right-color: rgb(190, 224, 144);
-  //   box-shadow: inset -1px 1px 0 0 rgb(255, 250, 235);
-  // }
-  // .failure & {
-  //   background: rgb(243, 208, 208);
-  //   border-right-color: rgb(225, 175, 176);
-  //   box-shadow: inset -1px 1px 0 0 rgb(247, 222, 222);
-  // }
 }
 
+.message__author-avatar {
+  // $avatar-size: em(30px);
+  $avatar-size: 1.875em;
+
+  float: left;
+  width: $avatar-size;
+  height: $avatar-size;
+  margin: 0.625em;
+
+  border-radius: 0.313em;
+
+  .message--monologue:not(.message--date-separator) & {
+    display: none;
+  }
+}
+
+// TODO: Needed?
 .message__comment {
   position: absolute;
   padding: 0.313em;
@@ -213,8 +204,8 @@
 }
 
 .message__content {
-  padding: 0.313em 0.625em 0.313em 0;
-  margin-left: 3.188em;
+  padding: 0 0.625em 0.313em 0;
+  margin: -0.25em 0 0 3.188em;
 
   word-break: break-word;
 
@@ -234,25 +225,14 @@
     }
   }
 
-  .monologue:not(.date-separator) & {
+  .message--monologue:not(.message--date-separator) & {
     border-top: solid 1px #f0f0f0;
   }
 }
 
-.message__content-user {
-  margin: 0;
-
-  font-weight: 100;
-  font-size: 0.750em;
-  color: #ccc;
-
-  .monologue:not(.date-separator) & {
-    display: none;
-  }
-}
-
-.message__time {
-  display: none;
+.message__timestamp {
+  display: block;
+  visibility: hidden;
   position: absolute;
   padding: 0 0.626em;
   right: 0.625em;
@@ -267,18 +247,18 @@
   background: #ffffff;
   border-radius: 0.313em;
 
+  .message--highlight & {
+    background: $notify-background;
+  }
+
   .message:last-child &,
   .message:hover & {
-    display: block;
+    visibility: visible;
   }
 }
 
-.messages-loading {
-  padding: 0.313em;
-
-  font-size: 3em;
-  color: #dddddd;
-  text-align: center;
+.plain-message {
+  margin: 0;
 }
 
 .strong {
