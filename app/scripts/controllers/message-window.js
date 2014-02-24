@@ -44,7 +44,9 @@ angular.module('hipFlowApp')
     };
 
     $scope.getMessageMeta = function (message) {
-      if (message.event === 'message' || message.event === 'comment') {
+      if (message.event === 'message' ||
+          message.event === 'comment' ||
+          message.event === 'file') {
         var user = Flowdock.getUserById(message.user);
         return {
           author: user.name,

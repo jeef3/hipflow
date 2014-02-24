@@ -1,4 +1,10 @@
 <div class="plain-message">
-  <img alt="{{message.content.file_name}}"
+  <!-- TODO: General attachments[] template -->
+  <img ng-if="message.content.content_type === 'image/jpeg'"
+      alt="{{message.content.file_name}}"
       ng-src="{{getFileUrl(message.content.path)}}">
+
+  <a ng-if="message.content.content_type === 'application/pdf'"
+      target="_blank"
+      href="{{getFileUrl(message.content.path)}}">{{message.content.file_name}}</a>
 </div>
