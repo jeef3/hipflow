@@ -189,7 +189,8 @@ angular.module('hipFlowApp')
       '🍻': 'beers',
       '😸': 'smile_cat',
       '😺': 'smiley_cat',
-      '☝': 'point_up'
+      '☝': 'point_up',
+      '🎱': '8ball'
     };
 
     var makeImg = function (emoji) {
