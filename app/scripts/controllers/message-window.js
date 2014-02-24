@@ -46,14 +46,16 @@ angular.module('hipFlowApp')
       if (message.event === 'message' || message.event === 'comment') {
         var user = Flowdock.getUserById(message.user);
         return {
-          author: user.nick,
+          author: user.name,
           avatar: user.avatar
         };
-      } else {
-        return {
-          author: '',
-          avatar: ''
-        };
+      }
+
+      switch (message.event) {
+        case 'jira':
+          return { author: 'JIRA' };
+        case 'vcs':
+          return { author: 'GitHub' };
       }
     };
   });

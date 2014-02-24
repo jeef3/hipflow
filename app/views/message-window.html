@@ -8,7 +8,8 @@
         data-timestamp="{{message.sent | date:'fullDate'}}"
         ng-repeat="message in messages"
         ng-init="meta = getMessageMeta(message)"
-        ng-class="{'message--highlight': mentionsMe(message),
+        ng-class="{'message--me': message.user === me().id,
+                   'message--highlight': mentionsMe(message) || message.event === 'jira' || message.event === 'vcs',
                    'message--thread': message.event === 'comment' || isDiscussionHead(message),
                    'message--monologue': isMonologue(message, $index),
                    'message--date-separator': !isSameDay(message, $index)}">
@@ -41,9 +42,17 @@
 
         <div ng-if="message.event === 'mail'" ng-include="'views/messages/mail.html'"></div>
 
-        <div ng-if="message.event === 'jira'" ng-include="'views/messages/jira-' + message.content.event_type + '.html'"></div>
-        <div ng-if="message.event === 'vcs'" ng-include="'views/messages/github-' + message.content.event + '.html'"></div>
-        <div ng-if="message.event === 'trello'" ng-include="'views/messages/trello-' + message.content.event + '.html'"></div>
+        <div ng-if="message.event === 'jira'"
+            ng-init="jira = message.content"
+            ng-include="'views/messages/jira-' + message.content.event_type + '.html'"></div>
+
+        <div ng-if="message.event === 'vcs'"
+            ng-init="github = message.content"
+            ng-include="'views/messages/github-' + message.content.event + '.html'"></div>
+
+        <div ng-if="message.event === 'trello'"
+            ng-init="trello = message.content"
+            ng-include="'views/messages/trello-' + message.content.event + '.html'"></div>
       </div>
     </li>
   </ul>
