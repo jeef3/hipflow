@@ -25,6 +25,7 @@
 
   <div class="chat-bar">
     <div class="current-discussion" ng-show="currentDiscussion.id">
+      <i class="fa fa-fw fa-angle-double-right"></i>
       <span ng-bind-html="currentDiscussion.title | emoji"></span>
       <button class="btn close" ng-click="setCurrentDiscussion()">
         <i class="fa fa-fw fa-times"></i>
