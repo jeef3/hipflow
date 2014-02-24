@@ -83,6 +83,11 @@ angular.module('hipFlowApp')
 
     $scope.currentDiscussion = {};
     $scope.setCurrentDiscussion = function (message) {
+      // No discussion in 1-on-1
+      if (!$scope.currentRoom.access_mode) {
+        return;
+      }
+
       if (!message) {
         angular.copy({
           id: null,
