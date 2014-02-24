@@ -24,6 +24,10 @@ angular.module('hipFlowApp')
       Flowdock.leaveRoom(room);
     };
 
+    $scope.me = function () {
+      return Flowdock.me();
+    };
+
     $scope.user = function (userId) {
       return Flowdock.getUserById(userId);
     };
