@@ -108,7 +108,6 @@ $fail-background: rgb(249, 230, 230);
 
 .message {
   position: relative;
-  min-height: 3.125em;
   padding-left: 1.5em;
   margin: 0 0.313em;
 
@@ -209,6 +208,13 @@ $fail-background: rgb(249, 230, 230);
 
   word-break: break-word;
 
+  .message--monologue:not(.message--date-separator) & {
+    margin-top: 0;
+    padding-top: 0.313em;
+
+    border-top: solid 1px #f0f0f0;
+  }
+
   .comment {
     padding: 0 1em;
     margin-top: 0.313em;
@@ -223,10 +229,6 @@ $fail-background: rgb(249, 230, 230);
       border-radius: 0.313em;
       background: #eeeeee;
     }
-  }
-
-  .message--monologue:not(.message--date-separator) & {
-    border-top: solid 1px #f0f0f0;
   }
 }
 
