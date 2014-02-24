@@ -92,6 +92,7 @@ angular.module('hipFlowApp')
 
         switch (message.event) {
           case 'message':
+          case 'message-edit':
           case 'comment':
           case 'file':
           case 'vcs':
@@ -248,6 +249,12 @@ angular.module('hipFlowApp')
       }
 
       messages.forEach(function (message) {
+
+        // haxor
+        if (message.event === 'message-edit') {
+          message.id = message.content.message;
+          message.content = message.content.updated_content;
+        }
 
         // Look to see if it exists
         var exists = data.chatLogs[roomId].filter(function (m) {
