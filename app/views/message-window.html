@@ -10,7 +10,8 @@
         ng-init="meta = getMessageMeta(message)"
         ng-class="{'message--me': message.user === me().id,
                    'message--highlight': mentionsMe(message) || message.event === 'jira' || message.event === 'vcs',
-                   'message--thread': message.event === 'comment' || isDiscussionHead(message),
+                   'message--thread-start': isThreadStart(message),
+                   'message--thread': message.event === 'comment',
                    'message--monologue': isMonologue(message, $index),
                    'message--date-separator': !isSameDay(message, $index)}">
 
@@ -19,7 +20,7 @@
           ng-click="setCurrentDiscussion(message)">
         <i class="fa fa-fw"
             ng-class="{'fa-comments': message.event === 'comment',
-                       'fa-comments': message.event !== 'comment'}"></i>
+                       'fa-comment': message.event !== 'comment'}"></i>
       </button>
 
       <div class="message__author-avatar"

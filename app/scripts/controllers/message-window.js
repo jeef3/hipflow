@@ -19,7 +19,8 @@ angular.module('hipFlowApp')
       return me.length > 0;
     };
 
-    $scope.isDiscussionHead = function (message) {
+    $scope.isThreadStart = function (message) {
+      // TODO: This needs some more work
       return !!message.lastUpdate;
     };
 
