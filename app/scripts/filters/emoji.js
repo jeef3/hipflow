@@ -193,7 +193,8 @@ angular.module('hipFlowApp')
       '🎱': '8ball',
       '🏊': 'swimmer',
       '😮': 'open_mouth',
-      '😱': 'scream'
+      '😱': 'scream',
+      '😅': 'sweat_smile'
     };
 
     var makeImg = function (emoji) {
