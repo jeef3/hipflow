@@ -99,12 +99,14 @@ angular.module('hipFlowApp')
           case 'jira':
             handleMessage(message);
             $rootScope.$broadcast('NEW_MESSAGE', message);
+            console.log('Handled', message);
             break;
           case 'activity.user':
             handleUserHeartbeat(message);
+            console.log('Heartbeat');
             break;
           default:
-            console.log(message);
+            console.log('Unhandled', message);
         }
 
         $rootScope.$apply();
