@@ -5,7 +5,7 @@ describe('Directive: uiScrollBottom', function () {
   // load the directive's module
   beforeEach(module('hipFlowApp'));
 
-  var element,
+  var
     scope;
 
   beforeEach(inject(function ($rootScope) {
