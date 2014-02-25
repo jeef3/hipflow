@@ -4,9 +4,24 @@ angular.module('hipFlowApp')
   .service('FlowdockMessage', function FlowdockMessage(FlowdockData) {
 
     return {
-      // addOrUpdate: function (message, roomId) {
+      d: FlowdockData,
+      addOrUpdate: function (message, append) {
+        var roomChatLogs = FlowdockData.chatLogs[message.flow];
 
-      // },
+        var existing = roomChatLogs.filter(function (m) {
+          return (typeof m.uuid !== 'undefined' && m.uuid === message.uuid) ||
+            m.id === message.id;
+        });
+
+        if (existing) {
+          angular.copy(message, existing);
+          message = existing;
+        }
+
+        if (!existing && append) {
+          roomChatLogs.push(message);
+        }
+      },
 
       edit: function (message) {
         if (message.event !== 'message-edit') {
@@ -20,7 +35,7 @@ angular.module('hipFlowApp')
         }
       },
 
-      get: function (roomId, messageId) {
+      get: function (roomId, messageId, byUuid) {
         var roomChatLogs = FlowdockData.chatLogs[roomId];
 
         if (!roomChatLogs) {
@@ -28,7 +43,7 @@ angular.module('hipFlowApp')
         }
 
         return roomChatLogs.filter(function (m) {
-          return m.id === messageId;
+          return byUuid ? m.uuid === messageId : m.id === messageId;
         })[0];
       }
     };
