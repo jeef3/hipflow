@@ -194,7 +194,10 @@ angular.module('hipFlowApp')
       '🏊': 'swimmer',
       '😮': 'open_mouth',
       '😱': 'scream',
-      '😅': 'sweat_smile'
+      '😅': 'sweat_smile',
+      '👭': 'two_women_holding_hands',
+      '👬': 'two_men_holding_hands',
+      '👫': 'couple'
     };
 
     var makeImg = function (emoji) {
