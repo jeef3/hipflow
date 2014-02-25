@@ -11,8 +11,4 @@ describe('Service: flowdock', function () {
     flowdock = _flowdock_;
   }));
 
-  it('should do something', function () {
-    expect(!!flowdock).toBe(true);
-  });
-
 });

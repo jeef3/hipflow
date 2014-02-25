@@ -11,9 +11,4 @@ describe('Filter: emoji', function () {
     emoji = $filter('emoji');
   }));
 
-  it('should return the input prefixed with "emoji filter:"', function () {
-    var text = 'angularjs';
-    expect(emoji(text)).toBe('emoji filter: ' + text);
-  });
-
 });

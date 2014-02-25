@@ -12,9 +12,4 @@ describe('Directive: uiScrollBottom', function () {
     scope = $rootScope.$new();
   }));
 
-  it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<ui-scroll-bottom></ui-scroll-bottom>');
-    element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the uiScrollBottom directive');
-  }));
 });

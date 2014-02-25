@@ -11,9 +11,5 @@ describe('Filter: nl2br', function () {
     nl2br = $filter('nl2br');
   }));
 
-  it('should return the input prefixed with "nl2br filter:"', function () {
-    var text = 'angularjs';
-    expect(nl2br(text)).toBe('nl2br filter: ' + text);
-  });
 
 });

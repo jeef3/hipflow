@@ -11,9 +11,4 @@ describe('Filter: localBranchName', function () {
     localBranchName = $filter('localBranchName');
   }));
 
-  it('should return the input prefixed with "localBranchName filter:"', function () {
-    var text = 'angularjs';
-    expect(localBranchName(text)).toBe('localBranchName filter: ' + text);
-  });
-
 });

@@ -11,8 +11,4 @@ describe('Service: FlowdockText', function () {
     FlowdockText = _FlowdockText_;
   }));
 
-  it('should do something', function () {
-    expect(!!FlowdockText).toBe(true);
-  });
-
 });

@@ -11,9 +11,4 @@ describe('Filter: inlineCode', function () {
     inlineCode = $filter('inlineCode');
   }));
 
-  it('should return the input prefixed with "inlineCode filter:"', function () {
-    var text = 'angularjs';
-    expect(inlineCode(text)).toBe('inlineCode filter: ' + text);
-  });
-
 });

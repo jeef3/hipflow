@@ -11,9 +11,4 @@ describe('Filter: limitWithEllipsis', function () {
     limitWithEllipsis = $filter('limitWithEllipsis');
   }));
 
-  it('should return the input prefixed with "limitWithEllipsis filter:"', function () {
-    var text = 'angularjs';
-    expect(limitWithEllipsis(text)).toBe('limitWithEllipsis filter: ' + text);
-  });
-
 });

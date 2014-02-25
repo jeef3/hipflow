@@ -11,9 +11,4 @@ describe('Filter: messageLinks', function () {
     messageLinks = $filter('messageLinks');
   }));
 
-  it('should return the input prefixed with "messageLinks filter:"', function () {
-    var text = 'angularjs';
-    expect(messageLinks(text)).toBe('messageLinks filter: ' + text);
-  });
-
 });

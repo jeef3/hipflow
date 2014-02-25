@@ -11,9 +11,4 @@ describe('Filter: codeFormat', function () {
     codeFormat = $filter('codeFormat');
   }));
 
-  it('should return the input prefixed with "codeFormat filter:"', function () {
-    var text = 'angularjs';
-    expect(codeFormat(text)).toBe('codeFormat filter: ' + text);
-  });
-
 });

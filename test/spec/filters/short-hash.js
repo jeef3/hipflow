@@ -11,9 +11,4 @@ describe('Filter: shortHash', function () {
     shortHash = $filter('shortHash');
   }));
 
-  it('should return the input prefixed with "shortHash filter:"', function () {
-    var text = 'angularjs';
-    expect(shortHash(text)).toBe('shortHash filter: ' + text);
-  });
-
 });
