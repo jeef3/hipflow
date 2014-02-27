@@ -42,8 +42,31 @@ describe('Service: FlowdockMessage', function () {
   }));
 
   describe('addOrUpdate()', function () {
+    describe('given a new client-side message', function () {
+      var newMessage;
 
-    describe('given a saved client-side message for updating', function () {
+      beforeEach(function () {
+        newMessage = {
+          app: 'influx',
+          attachments: [],
+          content: 'This is a new message that was just sent',
+          event: 'message',
+          flow: flow,
+          tags: [],
+          user: '58790',
+          uuid: 'client-side-uuid-3'
+        };
+      });
+
+      it('should add the message to the room', function () {
+        FlowdockMessage.addOrUpdate(newMessage, true);
+
+        var newlyAdded = FlowdockMessage.get(newMessage.uuid, flow);
+        expect(newlyAdded).toBe(newMessage);
+      });
+    });
+
+    describe('given a newly saved message', function () {
       var existingMessage;
 
       beforeEach(function () {
@@ -56,41 +79,17 @@ describe('Service: FlowdockMessage', function () {
           id: 32596,
           sent: 1393316867967,
           tags: [],
-          uuid: 'client-side-uuid-2'
+          uuid: 'client-side-uuid-2' // Already exists
         };
       });
 
-      it('should update the message', function () {
+      it('should update the client-side message', function () {
         FlowdockMessage.addOrUpdate(existingMessage);
 
-        var updated = FlowdockMessage.get(flow, existingMessage.id);
+        var updated = FlowdockMessage.get(existingMessage.id, flow);
         expect(updated).not.toBe(existingMessage);
         expect(updated.content).toBe('This is a new message that has just saved');
         expect(updated.id).toBe(32596);
-      });
-    });
-
-    describe('given a new client-side message', function () {
-      var newMessage;
-
-      beforeEach(function () {
-        newMessage = {
-          app: 'influx',
-          attachments: [],
-          content: 'This is a new message that was just typed',
-          event: 'message',
-          flow: flow,
-          tags: [],
-          user: '58790',
-          uuid: 'client-side-uuid-3'
-        };
-      });
-
-      it('should add the message to the room', function () {
-        FlowdockMessage.addOrUpdate(newMessage, true);
-
-        var newlyAdded = FlowdockMessage.get(flow, newMessage.uuid, true);
-        expect(newlyAdded).toBe(newMessage);
       });
     });
   });
@@ -112,7 +111,7 @@ describe('Service: FlowdockMessage', function () {
     it('should update the message content', function () {
       FlowdockMessage.edit(messageEdit);
 
-      var edited = FlowdockMessage.get(flow, 32594);
+      var edited = FlowdockMessage.get(32594, flow);
       expect(edited.content).toBe('An edited message');
     });
 
@@ -121,7 +120,7 @@ describe('Service: FlowdockMessage', function () {
         messageEdit.content.message = 666;
         FlowdockMessage.edit(messageEdit);
 
-        var original = FlowdockMessage.get(flow, 32594);
+        var original = FlowdockMessage.get(32594, flow);
         expect(original.content).toBe('This is a normal message :smile:');
       });
     });
@@ -133,8 +132,36 @@ describe('Service: FlowdockMessage', function () {
           FlowdockMessage.edit(messageEdit);
         }).toThrow('Expected event "message-edit" but found "message"');
 
-        var edited = FlowdockMessage.get(flow, 32594);
+        var edited = FlowdockMessage.get(32594, flow);
         expect(edited.content).toBe('This is a normal message :smile:');
+      });
+    });
+  });
+
+  describe('get()', function () {
+    describe('given a valid message and room ID', function () {
+      it('should return the message', function () {
+        var got = FlowdockMessage.get(32594, flow);
+        expect(got).toBe(FlowdockData.chatLogs[flow][0]);
+      });
+    });
+
+    describe('given a valid UUID and room ID', function () {
+      it('should return the message', function () {
+        var got = FlowdockMessage.get('client-side-uuid-1', flow);
+        expect(got).toBe(FlowdockData.chatLogs[flow][0]);
+      });
+    });
+
+    describe('given an empty or invalid messageId', function () {
+      it('should return null', function () {
+        expect(FlowdockMessage.get(0, flow)).toBeNull();
+      });
+    });
+
+    describe('given an empty or invalid roomId', function () {
+      it('should return null', function () {
+        expect(FlowdockMessage.get(32596, '')).toBeNull();
       });
     });
   });

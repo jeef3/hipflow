@@ -7,11 +7,7 @@ angular.module('hipFlowApp')
       d: FlowdockData,
       addOrUpdate: function (message, append) {
         var roomChatLogs = FlowdockData.chatLogs[message.flow];
-
-        var existing = roomChatLogs.filter(function (m) {
-          return (typeof m.uuid !== 'undefined' && m.uuid === message.uuid) ||
-            m.id === message.id;
-        });
+        var existing = this.get(message.uuid || message.id, message.flow);
 
         if (existing) {
           angular.copy(message, existing);
@@ -28,14 +24,14 @@ angular.module('hipFlowApp')
           throw new Error('Expected event "message-edit" but found "' + message.event + '"');
         }
 
-        var messageToEdit = this.get(message.flow, message.content.message);
+        var messageToEdit = this.get(message.content.message, message.flow);
 
         if (messageToEdit) {
           messageToEdit.content = message.content.updated_content;
         }
       },
 
-      get: function (roomId, messageId, byUuid) {
+      get: function (messageId, roomId) {
         var roomChatLogs = FlowdockData.chatLogs[roomId];
 
         if (!roomChatLogs) {
@@ -43,8 +39,8 @@ angular.module('hipFlowApp')
         }
 
         return roomChatLogs.filter(function (m) {
-          return byUuid ? m.uuid === messageId : m.id === messageId;
-        })[0];
+          return m.id === messageId || m.uuid === messageId;
+        })[0] || null;
       }
     };
   });
