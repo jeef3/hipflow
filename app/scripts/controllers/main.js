@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('hipFlowApp')
-  .controller('MainCtrl', function ($scope, $rootScope, Flowdock, FlowdockAuth, localStorageService) {
+  .controller('MainCtrl', function ($scope, $rootScope, Flowdock, FlowdockAuth, FlowdockData, localStorageService) {
     Flowdock.connect();
 
-    $scope.flowdock = Flowdock.data;
+    $scope.flowdock = FlowdockData;
 
     var currentRoomId = localStorageService.get('currentRoomId') || null;
     $scope.currentRoom = currentRoomId ?
@@ -75,10 +75,6 @@ angular.module('hipFlowApp')
           $scope.refreshStatus = ' error';
           $scope.authError = true;
         });
-    };
-
-    $scope.hasJiraType = function () {
-
     };
 
     $scope.getFileUrl = function (path) {
