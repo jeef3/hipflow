@@ -371,11 +371,6 @@ module.exports = function (grunt) {
       unit: {
         configFile: 'karma.conf.js',
         singleRun: true
-      },
-      watch: {
-        configFile: 'karma.conf.js',
-        singleRun: false,
-        autoWatch: true
       }
     }
   });
@@ -433,7 +428,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'newer:jshint',
-    // 'test',
+    'test',
     'build'
   ]);
 };
