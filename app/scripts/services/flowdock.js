@@ -1,62 +1,62 @@
-// 'use strict';
+'use strict';
 
-// angular.module('hipFlowApp')
-//   .service('Flowdock', function Flowdock($q, $http, $rootScope, FlowdockAuth, FlowdockData, FlowdockMessage, Uuid) {
+angular.module('hipFlowApp')
+  .service('Flowdock', function Flowdock($q, $http, $rootScope, FlowdockAuth, FlowdockData, FlowdockMessage, Uuid) {
 
-//     var apiUrl = function (path, params) {
-//       var url = 'https://api.flowdock.com/' + path;
-//       var token = FlowdockAuth.token();
-//       var options = angular.extend({}, params, { access_token: token });
+    var apiUrl = function (path, params) {
+      var url = 'https://api.flowdock.com/' + path;
+      var token = FlowdockAuth.token();
+      var options = angular.extend({}, params, { access_token: token });
 
-//       var firstParam = true;
-//       Object.keys(options).forEach(function (key) {
-//         url = url + (firstParam ? '?' : '&') + key + '=' + options[key];
-//         firstParam = false;
-//       });
+      var firstParam = true;
+      Object.keys(options).forEach(function (key) {
+        url = url + (firstParam ? '?' : '&') + key + '=' + options[key];
+        firstParam = false;
+      });
 
-//       return url;
-//     };
+      return url;
+    };
 
-//     var apiGet = function (path, params) {
-//       var url = 'https://api.flowdock.com/' + path;
-//       var token = FlowdockAuth.token();
-//       var options = {
-//         params: angular.extend({}, params, { access_token: token })
-//       };
+    var apiGet = function (path, params) {
+      var url = 'https://api.flowdock.com/' + path;
+      var token = FlowdockAuth.token();
+      var options = {
+        params: angular.extend({}, params, { access_token: token })
+      };
 
-//       return $http.get(url, options)
-//         .error(function (data, status) {
-//           if (status === 401) {
-//             $rootScope.$broadcast('TOKEN_EXPIRED');
-//           }
-//         });
-//     };
+      return $http.get(url, options)
+        .error(function (data, status) {
+          if (status === 401) {
+            $rootScope.$broadcast('TOKEN_EXPIRED');
+          }
+        });
+    };
 
-//     var apiPost = function (path, params) {
-//       var url = 'https://api.flowdock.com/' + path;
-//       var token = FlowdockAuth.token();
-//       var data = angular.extend({}, params, { access_token: token });
+    var apiPost = function (path, params) {
+      var url = 'https://api.flowdock.com/' + path;
+      var token = FlowdockAuth.token();
+      var data = angular.extend({}, params, { access_token: token });
 
-//       return $http.post(url, data)
-//         .error(function (data, status) {
-//           if (status === 401) {
-//             $rootScope.$broadcast('TOKEN_EXPIRED');
-//           }
-//         });
-//     };
+      return $http.post(url, data)
+        .error(function (data, status) {
+          if (status === 401) {
+            $rootScope.$broadcast('TOKEN_EXPIRED');
+          }
+        });
+    };
 
-//     var apiPut = function (path, params) {
-//       var url = 'https://api.flowdock.com/' + path;
-//       var token = FlowdockAuth.token();
-//       var data = angular.extend({}, params, { access_token: token });
+    var apiPut = function (path, params) {
+      var url = 'https://api.flowdock.com/' + path;
+      var token = FlowdockAuth.token();
+      var data = angular.extend({}, params, { access_token: token });
 
-//       return $http.put(url, data)
-//         .error(function (data, status) {
-//           if (status === 401) {
-//             $rootScope.$broadcast('TOKEN_EXPIRED');
-//           }
-//         });
-//     };
+      return $http.put(url, data)
+        .error(function (data, status) {
+          if (status === 401) {
+            $rootScope.$broadcast('TOKEN_EXPIRED');
+          }
+        });
+    };
 
 //     var stream = null;
 
@@ -375,4 +375,79 @@
 //       sendMessageToRoom: sendMessageToRoom,
 //       leaveRoom: leaveRoom
 //     };
-//   });
+    var flow = function (id) {
+
+      return {
+        update: function (props, cb) {
+          var method = 'flows/:organization/' + id;
+          var promise = apiPut(method, props);
+
+          if (cb) {
+            promise.then(function (flow) {
+              cb(flow);
+            });
+          }
+        },
+        rename: function (name, cb) {
+          return this.update({ name: name }, cb);
+        },
+        open: function (cb) {
+          return this.update({ open: true }, cb);
+        },
+        close: function (cb) {
+          return this.update({ open: false }, cb);
+        },
+        join: function (cb) {
+          return this.update({ joined: true }, cb);
+        },
+        leave: function (cb) {
+          return this.update({ joined: false }, cb);
+        },
+        disable: function (cb) {
+          return this.update({ disabled: true }, cb);
+        },
+        enabled: function (cb) {
+          return this.update({ disabled: false }, cb);
+        },
+
+        access: function (mode, cb) {
+          var modes = ['invitation', 'link', 'organization'];
+
+          if (modes.indexOf(mode) === -1) {
+            throw new Error('\'' + mode +
+              '\' is an invalid access type. Please choose from; ' +
+              modes.join(', ') + '.');
+          }
+
+          return this.update({ access_mode: mode }, cb);
+        }
+      };
+    };
+
+    var flows = function (id, cb) {
+      if (cb) {
+        apiGet('flows/find?id=' + id).then(cb);
+      } else {
+        return flow(id);
+      }
+    };
+
+    flows.list = function (cb) {
+      apiGet('flows').then(cb);
+    };
+
+    flows.all = function (cb) {
+      apiGet('flows/all').then(cb);
+    };
+
+    flows.create = function (flow, cb) {
+      apiPost('flows/:organization').then(cb);
+    };
+
+    return {
+      connect: function () {},
+      stream: function (flows, options) {},
+
+      flows: flows
+    };
+  });
