@@ -10,6 +10,7 @@ angular.module('hipflowApp')
       me: {},
 
       heartbeat: function (heartbeat) {
+        return;
         // Update the user
         users[heartbeat.user].last_activity = heartbeat.content.last_activity;
 
@@ -40,9 +41,9 @@ angular.module('hipflowApp')
       },
 
       update: function () {
-        Flowdock.users.all(function (data) {
+        Flowdock.users.list(function (data) {
           users.splice(0);
-          data.forEach(users.push);
+          data.forEach(function (user) { users.push(user); });
         });
       }
     };

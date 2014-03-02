@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hipflowApp')
-  .controller('MainCtrl', function ($scope, $rootScope, Flowdock, Rooms, localStorageService) {
+  .controller('MainCtrl', function ($scope, $rootScope, FlowdockAuth, Users, Rooms, Messages, localStorageService) {
 
     var currentRoomId = localStorageService.get('currentRoomId') || null;
     $scope.currentRoom = currentRoomId ?
@@ -14,19 +14,19 @@ angular.module('hipflowApp')
       room.unread = 0;
       localStorageService.add('currentRoomId', room.id);
 
-      Flowdock.getMessagesForRoom(room);
+      Messages.update(room);
     };
 
     $scope.leaveRoom = function (room) {
-      Flowdock.leaveRoom(room);
+      Rooms.leave(room.id);
     };
 
     $scope.me = function () {
-      return Flowdock.me();
+      return Users.me;
     };
 
     $scope.user = function (userId) {
-      return Flowdock.getUserById(userId);
+      return Users.get(userId);
     };
 
     $scope.send = function (message) {

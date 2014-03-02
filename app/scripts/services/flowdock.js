@@ -42,7 +42,7 @@ angular.module('hipflowApp')
     };
 
     var apiGet = function (path, params) {
-      var url = 'https://api.flowdock.com/' + path;
+      var url = apiBase + path;
       var token = FlowdockAuth.token();
       var options = {
         params: angular.extend({}, params, { access_token: token })
@@ -57,7 +57,7 @@ angular.module('hipflowApp')
     };
 
     var apiPost = function (path, params) {
-      var url = 'https://api.flowdock.com/' + path;
+      var url = apiBase + path;
       var token = FlowdockAuth.token();
       var data = angular.extend({}, params, { access_token: token });
 
@@ -70,7 +70,7 @@ angular.module('hipflowApp')
     };
 
     var apiPut = function (path, params) {
-      var url = 'https://api.flowdock.com/' + path;
+      var url = apiBase + path;
       var token = FlowdockAuth.token();
       var data = angular.extend({}, params, { access_token: token });
 
@@ -351,6 +351,12 @@ angular.module('hipflowApp')
           }
 
           return this.update({ access_mode: mode }, cb);
+        },
+
+        messages: {
+          list: function (options, cb) {
+            apiGet('/flows/' + id + '/messages', options).success(cb);
+          }
         }
       };
     };
@@ -364,15 +370,31 @@ angular.module('hipflowApp')
     };
 
     flows.list = function (cb) {
-      apiGet('flows').then(cb);
+      apiGet('/flows').success(cb);
     };
 
     flows.all = function (cb) {
-      apiGet('flows/all').then(cb);
+      apiGet('/flows/all').success(cb);
     };
 
     flows.create = function (flow, cb) {
-      apiPost('flows/:organization').then(cb);
+      apiPost('/flows/:organization').success(cb);
+    };
+
+    var privateConversations = function () {
+
+    };
+
+    privateConversations.list = function () {
+      apiGet('/private');
+    };
+
+    var users = function (id, cb) {
+
+    };
+
+    users.list = function (cb) {
+      apiGet('/users').success(cb);
     };
 
     return {
@@ -393,6 +415,8 @@ angular.module('hipflowApp')
         };
       },
 
-      flows: flows
+      users: users,
+      flows: flows,
+      privateConversations: privateConversations
     };
   });

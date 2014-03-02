@@ -4,7 +4,7 @@
   <nav>
     <ul class="room-list">
       <li class="room"
-          ng-repeat="room in flowdock.rooms | filter:{open:true}"
+          ng-repeat="room in flows | filter:{open:true}"
           ng-class="{'active': room.id === currentRoom.id,
                      'unread': room.unread > 0}">
         <button type="button"
@@ -23,7 +23,7 @@
       </li>
 
       <li class="room"
-          ng-repeat="query in flowdock.queries | filter:{open:true}"
+          ng-repeat="query in privateConversations | filter:{open:true}"
           ng-class="{'query-online': query.online,
                      'query-offline': !query.online,
                      'active': query === currentRoom,

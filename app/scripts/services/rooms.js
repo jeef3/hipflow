@@ -30,7 +30,7 @@ angular.module('hipflowApp')
       update: function () {
         Flowdock.flows.all(function (data) {
           flows.splice(0);
-          data.forEach(flows.push);
+          data.forEach(function (flow) { flows.push(flow); });
 
           flows.sort(function (a, b) {
             return a.name > b.name;
@@ -39,7 +39,9 @@ angular.module('hipflowApp')
 
         Flowdock.privateConversations(function (data) {
           privateConversations.splice(0);
-          data.forEach(privateConversations.push);
+          data.forEach(function (privateConversation) {
+            privateConversations.push(privateConversation);
+          });
 
           privateConversations.sort(function (a, b) {
             return a.name > b.name;

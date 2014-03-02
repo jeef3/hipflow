@@ -56,8 +56,18 @@ angular.module('hipflowApp')
         })[0] || null;
       },
 
-      update: function () {
+      update: function (room, options) {
+        var _this = this;
 
+        var r = room.access_mode ?
+          Flowdock.flows(room.id) :
+          Flowdock.privateConversations(room.id);
+
+        r.messages.list(options, function (messages) {
+          messages.forEach(function (message) {
+            _this.addOrUpdate(message);
+          });
+        });
       }
     };
   });
