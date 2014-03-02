@@ -1,10 +1,14 @@
 'use strict';
 
 angular.module('hipflowApp')
-  .service('Flowdock', function Flowdock($q, $http, $rootScope, FlowdockAuth, FlowdockMessage, Uuid) {
+  .service('Flowdock', function Flowdock($q, $http, $rootScope, $window, FlowdockAuth) {
+    var EventSource = $window.EventSource;
 
-    var apiUrl = function (path, params) {
-      var url = 'https://api.flowdock.com/' + path;
+    var apiBase = 'https://api.flowdock.com';
+    var streamBase = 'https://stream.flowdock.com';
+
+    var url = function (base, path, params) {
+      var url = base + path;
       var token = FlowdockAuth.token();
       var options = angular.extend({}, params, { access_token: token });
 
@@ -15,6 +19,26 @@ angular.module('hipflowApp')
       });
 
       return url;
+    };
+
+    var streamUrl = function (flows, params) {
+      if (flows && flows.length) {
+        params.flows
+          .filter(function (flow) {
+            return flow.open;
+          })
+          .map(function (flow) {
+            return flow.organization.parameterized_name + '/' +
+              flow.parameterized_name;
+          })
+          .join(',');
+      }
+
+      return url(streamBase, '/flows', params);
+    };
+
+    var apiUrl = function (path, params) {
+      return url(apiBase, path, params);
     };
 
     var apiGet = function (path, params) {
@@ -58,55 +82,7 @@ angular.module('hipflowApp')
         });
     };
 
-//     var stream = null;
 
-//     var startListening = function () {
-//       if (stream) {
-//         stream.close();
-//       }
-
-//       var rooms = FlowdockData.rooms
-//         .filter(function (room) {
-//           return room.open;
-//         })
-//         .map(function (room) {
-//           return room.organization.parameterized_name + '/' + room.parameterized_name;
-//         })
-//         .join(',');
-
-//       stream = new EventSource(
-//         'https://stream.flowdock.com/flows?active=true&filter=' + rooms + '&user=1&access_token=' + FlowdockAuth.token(),
-//         { withCredentials: false });
-
-//       stream.onmessage = function (e) {
-//         var message = JSON.parse(e.data);
-
-//         switch (message.event) {
-//           case 'message':
-//           case 'comment':
-//           case 'file':
-//           case 'vcs':
-//           case 'jira':
-//             FlowdockMessage.addOrUpdate(message);
-//             $rootScope.$broadcast('NEW_MESSAGE', message);
-//             console.log('Handled', message);
-//             break;
-//           case 'message-edit':
-//             FlowdockMessage.edit(message);
-//             $rootScope.$broadcast('NEW_MESSAGE', message);
-//             console.log('Editing message', message);
-//             break;
-//           case 'activity.user':
-//             handleUserHeartbeat(message);
-//             console.log('Heartbeat');
-//             break;
-//           default:
-//             console.log('Unhandled', message);
-//         }
-
-//         $rootScope.$apply();
-//       };
-//     };
 
 //     var addMessages = function (messages, roomId, append) {
 //       messages = messages instanceof Array ? messages : [messages];
@@ -401,7 +377,21 @@ angular.module('hipflowApp')
 
     return {
       connect: function () {},
-      stream: function (flows, options) {},
+      stream: function (flows, options) {
+        var stream = new EventSource(streamUrl(flows, options),
+          { withCredentials: false });
+
+        return {
+          onmessage: function (fn) {
+            stream.onmessage = function (e) {
+              fn.call(this, JSON.parse(e.data));
+            };
+          },
+          close: function () {
+            stream.close();
+          }
+        };
+      },
 
       flows: flows
     };

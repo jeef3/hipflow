@@ -1,14 +1,11 @@
 'use strict';
 
 angular.module('hipflowApp')
-  .controller('MainCtrl', function ($scope, $rootScope, Flowdock, FlowdockAuth, FlowdockData, localStorageService) {
-    Flowdock.connect();
-
-    // $scope.flowdock = FlowdockData;
+  .controller('MainCtrl', function ($scope, $rootScope, Flowdock, Rooms, localStorageService) {
 
     var currentRoomId = localStorageService.get('currentRoomId') || null;
     $scope.currentRoom = currentRoomId ?
-      Flowdock.getRoomById(currentRoomId) :
+      Rooms.get(currentRoomId) :
       null;
 
     $scope.showRoom = function (room) {

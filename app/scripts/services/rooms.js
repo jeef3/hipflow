@@ -9,6 +9,22 @@ angular.module('hipflowApp')
       flows: flows,
       privateConversations: privateConversations,
 
+      get: function (id) {
+        var flow = flows.filter(function (f) {
+          return f.id === id;
+        })[0];
+
+        if (flow) {
+          return flow;
+        }
+
+        return privateConversations.filter(function (f) {
+          return f.id === id;
+        });
+
+        // TODO: Handle if the room isn't in the list
+      },
+
       open: [],
 
       update: function () {
