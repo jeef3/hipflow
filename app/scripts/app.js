@@ -10,8 +10,11 @@ angular.module('hipFlowApp', [
     $locationProvider.html5Mode(true);
     localStorageServiceProvider.setPrefix('hipflow');
   })
-  .run(function ($window, FlowdockAuth) {
+  .run(function ($window, Flowdock, FlowdockAuth, IncomingMessageHandler) {
     if (!FlowdockAuth.isAuthenticated()) {
       $window.location.href = '/login';
     }
+
+    Flowdock.connect();
+    IncomingMessageHandler.start();
   });

@@ -1,11 +1,13 @@
 'use strict';
 
 angular.module('hipFlowApp')
-  .controller('MessageWindowCtrl', function ($scope, $filter, Flowdock) {
+  .controller('MessageWindowCtrl', function ($scope, $filter, Flowdock, Messages, Rooms, Users) {
     $scope.isLoadingOlder = false;
     $scope.isLoadingNewer = false;
 
     $scope.messages = Flowdock.data.chatLogs[$scope.room.id];
+
+    $scope.messages = Messages.messages[$scope.room.id];
 
     $scope.mentionsMe = function (message) {
       if (!message.mentions || !message.mentions.length) {
@@ -47,7 +49,7 @@ angular.module('hipFlowApp')
       if (message.event === 'message' ||
           message.event === 'comment' ||
           message.event === 'file') {
-        var user = Flowdock.getUserById(message.user);
+        var user = Users.users[message.user];
         return {
           author: user.name,
           avatar: user.avatar

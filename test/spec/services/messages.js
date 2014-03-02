@@ -1,17 +1,17 @@
 'use strict';
 
-describe('Service: FlowdockMessage', function () {
+describe('Service: Messages', function () {
 
   // load the service's module
   beforeEach(module('hipFlowApp'));
 
   // instantiate service
-  var FlowdockMessage,
+  var Messages,
     FlowdockData,
     flow;
 
-  beforeEach(inject(function (_FlowdockMessage_, _FlowdockData_) {
-    FlowdockMessage = _FlowdockMessage_;
+  beforeEach(inject(function (_Messages_, _FlowdockData_) {
+    Messages = _Messages_;
     FlowdockData = _FlowdockData_;
 
     flow = 'ac44640e-c3cb-4fab-9b92-672c90e51a82';
@@ -59,9 +59,9 @@ describe('Service: FlowdockMessage', function () {
       });
 
       it('should add the message to the room', function () {
-        FlowdockMessage.addOrUpdate(newMessage, true);
+        Messages.addOrUpdate(newMessage, true);
 
-        var newlyAdded = FlowdockMessage.get(newMessage.uuid, flow);
+        var newlyAdded = Messages.get(newMessage.uuid, flow);
         expect(newlyAdded).toBe(newMessage);
       });
     });
@@ -84,9 +84,9 @@ describe('Service: FlowdockMessage', function () {
       });
 
       it('should update the client-side message', function () {
-        FlowdockMessage.addOrUpdate(existingMessage);
+        Messages.addOrUpdate(existingMessage);
 
-        var updated = FlowdockMessage.get(existingMessage.id, flow);
+        var updated = Messages.get(existingMessage.id, flow);
         expect(updated).not.toBe(existingMessage);
         expect(updated.content).toBe('This is a new message that has just saved');
         expect(updated.id).toBe(32596);
@@ -109,18 +109,18 @@ describe('Service: FlowdockMessage', function () {
     });
 
     it('should update the message content', function () {
-      FlowdockMessage.edit(messageEdit);
+      Messages.edit(messageEdit);
 
-      var edited = FlowdockMessage.get(32594, flow);
+      var edited = Messages.get(32594, flow);
       expect(edited.content).toBe('An edited message');
     });
 
     describe('when the message is not in the chat cache', function () {
       it('should do nothing', function () {
         messageEdit.content.message = 666;
-        FlowdockMessage.edit(messageEdit);
+        Messages.edit(messageEdit);
 
-        var original = FlowdockMessage.get(32594, flow);
+        var original = Messages.get(32594, flow);
         expect(original.content).toBe('This is a normal message :smile:');
       });
     });
@@ -129,10 +129,10 @@ describe('Service: FlowdockMessage', function () {
       it('should not alter the message', function () {
         messageEdit.event = 'message';
         expect(function () {
-          FlowdockMessage.edit(messageEdit);
+          Messages.edit(messageEdit);
         }).toThrow('Expected event "message-edit" but found "message"');
 
-        var edited = FlowdockMessage.get(32594, flow);
+        var edited = Messages.get(32594, flow);
         expect(edited.content).toBe('This is a normal message :smile:');
       });
     });
@@ -141,27 +141,27 @@ describe('Service: FlowdockMessage', function () {
   describe('get()', function () {
     describe('given a valid message and room ID', function () {
       it('should return the message', function () {
-        var got = FlowdockMessage.get(32594, flow);
+        var got = Messages.get(32594, flow);
         expect(got).toBe(FlowdockData.chatLogs[flow][0]);
       });
     });
 
     describe('given a valid UUID and room ID', function () {
       it('should return the message', function () {
-        var got = FlowdockMessage.get('client-side-uuid-1', flow);
+        var got = Messages.get('client-side-uuid-1', flow);
         expect(got).toBe(FlowdockData.chatLogs[flow][0]);
       });
     });
 
     describe('given an empty or invalid messageId', function () {
       it('should return null', function () {
-        expect(FlowdockMessage.get(0, flow)).toBeNull();
+        expect(Messages.get(0, flow)).toBeNull();
       });
     });
 
     describe('given an empty or invalid roomId', function () {
       it('should return null', function () {
-        expect(FlowdockMessage.get(32596, '')).toBeNull();
+        expect(Messages.get(32596, '')).toBeNull();
       });
     });
   });

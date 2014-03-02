@@ -1,12 +1,25 @@
 'use strict';
 
-angular.module('hipFlowApp')
-  .service('FlowdockMessage', function FlowdockMessage(FlowdockData) {
+angular.module('hipflowApp')
+  .service('Messages', function Messages($rootScope, Flowdock, localStorageService) {
+    var messages = localStorageService.get('messages') || {};
 
     return {
-      d: FlowdockData,
+      messages: messages,
+
+      send: function (room, message, tags) {
+        Flowdock.messages(room).send(message, tags);
+      },
+      sendPrivate: function (user, message, tags) {
+        Flowdock.privateMessages(user).send(message, tags);
+      },
+
+      add: function (message) {
+        this.addOrUpdate(message, true);
+      },
+
       addOrUpdate: function (message, append) {
-        var roomChatLogs = FlowdockData.chatLogs[message.flow];
+        var roomChatLogs = messages[message.flow];
         var existing = this.get(message.uuid || message.id, message.flow);
 
         if (existing) {
@@ -32,7 +45,7 @@ angular.module('hipFlowApp')
       },
 
       get: function (messageId, roomId) {
-        var roomChatLogs = FlowdockData.chatLogs[roomId];
+        var roomChatLogs = messages[roomId];
 
         if (!roomChatLogs) {
           return null;
@@ -41,6 +54,10 @@ angular.module('hipFlowApp')
         return roomChatLogs.filter(function (m) {
           return m.id === messageId || m.uuid === messageId;
         })[0] || null;
+      },
+
+      update: function () {
+
       }
     };
   });

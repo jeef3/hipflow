@@ -4,7 +4,7 @@ angular.module('hipFlowApp')
   .controller('MainCtrl', function ($scope, $rootScope, Flowdock, FlowdockAuth, FlowdockData, localStorageService) {
     Flowdock.connect();
 
-    $scope.flowdock = FlowdockData;
+    // $scope.flowdock = FlowdockData;
 
     var currentRoomId = localStorageService.get('currentRoomId') || null;
     $scope.currentRoom = currentRoomId ?

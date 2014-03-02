@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hipFlowApp')
-  .service('Flowdock', function Flowdock($q, $http, $rootScope, FlowdockAuth, FlowdockData, FlowdockMessage, Uuid) {
+  .service('Flowdock', function Flowdock($q, $http, $rootScope, FlowdockAuth, FlowdockMessage, Uuid) {
 
     var apiUrl = function (path, params) {
       var url = 'https://api.flowdock.com/' + path;
@@ -175,27 +175,7 @@ angular.module('hipFlowApp')
 //     };
 
 //     var handleUserHeartbeat = function (message) {
-//       var room = getRoomById(message.flow ? message.flow : message.user);
-
-//       if (!room) {
-//         return;
-//       }
-
-//       var user = room.users.filter(function (u) {
-//         return u.id === parseInt(message.user);
-//       })[0];
-
-//       if (user) {
-//         if (message.content.last_activity) {
-//           user.last_ping = message.content.last_activity;
-//         } else {
-//           user.last_ping = message.sent;
-
-//           if (Object.keys(message.content).length) {
-//             console.log('Unknown user.activity', message.content);
-//           }
-//         }
-//       }
+//
 //     };
 
 //     var getRoomIdFromMessage = function (message) {
@@ -236,31 +216,6 @@ angular.module('hipFlowApp')
 //       return { id: '58790' };
 //     };
 
-//     var getUserById = function (userId) {
-//       var user = data.users.filter(function (user) {
-//         return user.id === parseInt(userId, 10);
-//       });
-
-//       return user[0];
-//     };
-
-//     var getRoomById = function (roomId) {
-//       // TODO: What to do if looking for me?
-
-//       var room = data.rooms.filter(function (room) {
-//         return room.id === roomId;
-//       });
-
-//       if (room && room.length) {
-//         return room[0];
-//       }
-
-//       room = data.queries.filter(function (query) {
-//         return query.id === parseInt(roomId, 10);
-//       });
-
-//       return room[0];
-//     };
 
 //     var getMessagesForRoom = function (room, sinceId) {
 //       var method;
