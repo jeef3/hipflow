@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipFlowApp', [
+angular.module('hipflowApp', [
     'ngCookies',
     'ngSanitize',
     'LocalStorageModule',

@@ -3,7 +3,7 @@
 describe('Directive: chatInput', function () {
 
   // load the directive's module
-  beforeEach(module('hipFlowApp'));
+  beforeEach(module('hipflowApp'));
 
   var
     scope;

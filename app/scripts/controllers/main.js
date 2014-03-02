@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipFlowApp')
+angular.module('hipflowApp')
   .controller('MainCtrl', function ($scope, $rootScope, Flowdock, FlowdockAuth, FlowdockData, localStorageService) {
     Flowdock.connect();
 

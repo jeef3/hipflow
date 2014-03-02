@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('hipFlowApp')
-  .controller('SidebarCtrl', function ($scope, Flowdock) {
+angular.module('hipflowApp')
+  .controller('SidebarCtrl', function ($scope, Flowdock, Rooms) {
     $scope.$on('NEW_MESSAGE', function (e, message) {
       var messageRoomId;
 

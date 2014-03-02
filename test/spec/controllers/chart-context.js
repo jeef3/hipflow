@@ -3,7 +3,7 @@
 describe('Controller: ChartContextCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('hipFlowApp'));
+  beforeEach(module('hipflowApp'));
 
   var ChartContextCtrl,
     scope;

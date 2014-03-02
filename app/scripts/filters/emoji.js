@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipFlowApp')
+angular.module('hipflowApp')
   .filter('emoji', function () {
     var emojKeywords = [
       'bowtie', 'smile', 'laughing', 'blush', 'smiley', 'relaxed',

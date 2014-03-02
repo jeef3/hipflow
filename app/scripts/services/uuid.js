@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipFlowApp')
+angular.module('hipflowApp')
   .service('Uuid', function Uuid() {
     this.generate = function () {
       var d = new Date().getTime();
