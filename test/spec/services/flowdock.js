@@ -124,4 +124,43 @@ describe('Service: Flowdock', function () {
       }).toThrow('\'illegal\' is an invalid access type. Please choose from; invitation, link, organization.');
     });
   });
+
+  describe('stream', function () {
+
+    it('should be able to listen to a flow', function () {
+      var id = 1;
+      var stream = Flowdock.stream(id);
+
+      stream.onmessage = function (message) {
+        expect(message).toBeTruthy();
+      };
+    });
+
+    it('should be able to listen to multiple flows', function () {
+      var ids = [1, 2, 3];
+      var stream = Flowdock.stream(ids);
+
+      stream.onmessage = function (message) {
+        expect(message).toBeTruthy();
+      };
+    });
+
+    it('should be able to listen to private messages', function () {
+      var id = 1;
+      var stream = Flowdock.stream(id, { user: 1 });
+
+      stream.onmessage = function (message) {
+        expect(message).toBeTruthy();
+      };
+    });
+
+    it('should be able to set online status', function () {
+      var id = 1;
+      var stream = Flowdock.stream(id, { active: 'true' });
+
+      stream.onmessage = function (message) {
+        expect(message).toBeTruthy();
+      };
+    });
+  });
 });
