@@ -60,7 +60,7 @@ angular.module('hipflowApp')
         var _this = this;
 
         var r = room.access_mode ?
-          Flowdock.flows(room.id) :
+          Flowdock.flows('skilitics', room.id) :
           Flowdock.privateConversations(room.id);
 
         r.messages.list(options, function (messages) {

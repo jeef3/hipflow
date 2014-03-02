@@ -306,11 +306,11 @@ angular.module('hipflowApp')
 //       sendMessageToRoom: sendMessageToRoom,
 //       leaveRoom: leaveRoom
 //     };
-    var flow = function (id) {
+    var flow = function (organization, id) {
 
       return {
         update: function (props, cb) {
-          var method = 'flows/:organization/' + id;
+          var method = 'flows/' + organization + '/' + id;
           var promise = apiPut(method, props);
 
           if (cb) {
@@ -355,17 +355,18 @@ angular.module('hipflowApp')
 
         messages: {
           list: function (options, cb) {
-            apiGet('/flows/' + id + '/messages', options).success(cb);
+            apiGet('/flows/' + organization + '/' + id + '/messages', options)
+              .success(cb);
           }
         }
       };
     };
 
-    var flows = function (id, cb) {
+    var flows = function (organization, id, cb) {
       if (cb) {
         apiGet('flows/find?id=' + id).then(cb);
       } else {
-        return flow(id);
+        return flow(organization, id);
       }
     };
 
@@ -377,8 +378,8 @@ angular.module('hipflowApp')
       apiGet('/flows/all').success(cb);
     };
 
-    flows.create = function (flow, cb) {
-      apiPost('/flows/:organization').success(cb);
+    flows.create = function (organization, name, cb) {
+      apiPost('/flows/' + organization, { name: name }).success(cb);
     };
 
     var privateConversations = function () {
