@@ -7,17 +7,15 @@ describe('Service: Messages', function () {
 
   // instantiate service
   var Messages,
-    FlowdockData,
     flow;
 
-  beforeEach(inject(function (_Messages_, _FlowdockData_) {
+  beforeEach(inject(function (_Messages_) {
     Messages = _Messages_;
-    FlowdockData = _FlowdockData_;
 
     flow = 'ac44640e-c3cb-4fab-9b92-672c90e51a82';
 
-    FlowdockData.chatLogs[flow] = [];
-    FlowdockData.chatLogs[flow].push({
+    Messages.messages[flow] = [];
+    Messages.messages[flow].push({
       app: 'influx',
       attachments: [],
       content: 'This is a normal message :smile:',
@@ -29,7 +27,7 @@ describe('Service: Messages', function () {
       user: '58790',
       uuid: 'client-side-uuid-1'
     });
-    FlowdockData.chatLogs[flow].push({
+    Messages.messages[flow].push({
       app: 'influx',
       attachments: [],
       content: 'This is a message that hasn\'t been saved yet',
@@ -142,14 +140,14 @@ describe('Service: Messages', function () {
     describe('given a valid message and room ID', function () {
       it('should return the message', function () {
         var got = Messages.get(32594, flow);
-        expect(got).toBe(FlowdockData.chatLogs[flow][0]);
+        expect(got).toBe(Messages.messages[flow][0]);
       });
     });
 
     describe('given a valid UUID and room ID', function () {
       it('should return the message', function () {
         var got = Messages.get('client-side-uuid-1', flow);
-        expect(got).toBe(FlowdockData.chatLogs[flow][0]);
+        expect(got).toBe(Messages.messages[flow][0]);
       });
     });
 

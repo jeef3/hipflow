@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('hipflowApp')
-  .service('Flowdock', function Flowdock($q, $http, $rootScope, $window, FlowdockAuth) {
-    var EventSource = $window.EventSource;
+  .service('Flowdock', function Flowdock($q, $http, $rootScope, EventSource, FlowdockAuth) {
 
     var apiBase = 'https://api.flowdock.com';
     var streamBase = 'https://stream.flowdock.com';
@@ -23,7 +22,8 @@ angular.module('hipflowApp')
 
     var streamUrl = function (flows, params) {
       if (flows && flows.length) {
-        params.flows
+        params = params || {};
+        params.flows = flows
           .filter(function (flow) {
             return flow.open;
           })

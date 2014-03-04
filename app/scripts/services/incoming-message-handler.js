@@ -32,8 +32,6 @@ angular.module('hipflowApp')
 
     var stream;
 
-
-
     return {
       start: function () {
         stream = Flowdock.stream(Rooms.open, { user: 1, active: 'true' });
