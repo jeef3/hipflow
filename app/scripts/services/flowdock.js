@@ -263,7 +263,8 @@ angular.module('hipflowApp')
         }
       };
 
-      messages.list = function (cb) {
+      messages.list = function (options, cb) {
+        // TODO: Options for since_id etc
         apiGet('/flows/' + organization + '/' + flowName + '/messages').success(cb);
       };
 
@@ -359,7 +360,7 @@ angular.module('hipflowApp')
       apiGet('/private');
     };
 
-    var users = function (id, cb) {
+    var users = function (/*id, cb*/) {
 
     };
 

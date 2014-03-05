@@ -73,8 +73,8 @@ angular.module('hipflowApp')
         });
     };
 
-    $scope.getFileUrl = function (path) {
-      return Flowdock.url(path);
+    $scope.getFileUrl = function (/*path*/) {
+      // return Flowdock.url(path);
     };
 
     $scope.currentDiscussion = {};
@@ -95,7 +95,7 @@ angular.module('hipflowApp')
       switch (message.event) {
         case 'comment':
           angular.copy({
-            id: Flowdock.getCommentTitleMessageId(message),
+            // id: Flowdock.getCommentTitleMessageId(message),
             title: message.content.title
           }, $scope.currentDiscussion);
           break;
