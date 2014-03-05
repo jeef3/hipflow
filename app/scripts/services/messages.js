@@ -1,17 +1,37 @@
 'use strict';
 
 angular.module('hipflowApp')
-  .service('Messages', function Messages($rootScope, Flowdock, localStorageService) {
+  .service('Messages', function Messages($rootScope, Flowdock, localStorageService, Uuid) {
     var messages = localStorageService.get('messages') || {};
 
     return {
       messages: messages,
 
-      send: function (room, message, tags) {
-        Flowdock.messages(room).send(message, tags);
+      send: function (flowId, message, tags, messageId) {
+        var uuid = Uuid.generate();
+
+        this.add({
+          flow: flowId,
+          event: messageId ? 'comments' : 'message',
+          content: message,
+          message: messageId,
+          tags: tags,
+          uuid: uuid
+        });
+
+        if (messageId) {
+          Flowdock.flows('skilitics', flowId)
+            .messages(messageId)
+            .comments
+            .send(message, uuid, tags);
+        } else {
+          Flowdock.flows('skilitics', flowId)
+            .messages
+            .send(message, uuid, tags);
+        }
       },
-      sendPrivate: function (user, message, tags) {
-        Flowdock.privateMessages(user).send(message, tags);
+      sendPrivate: function (userId, message, tags) {
+        Flowdock.privateConversations(userId).send(message, tags);
       },
 
       add: function (message) {
@@ -60,7 +80,8 @@ angular.module('hipflowApp')
         var _this = this;
 
         var r = room.access_mode ?
-          Flowdock.flows('skilitics', room.id) :
+          Flowdock.flows(room.organization.parameterized_name,
+            room.parameterized_name) :
           Flowdock.privateConversations(room.id);
 
         r.messages.list(options, function (messages) {

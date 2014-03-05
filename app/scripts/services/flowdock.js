@@ -42,13 +42,9 @@ angular.module('hipflowApp')
     };
 
     var apiGet = function (path, params) {
-      var url = apiBase + path;
-      var token = FlowdockAuth.token();
-      var options = {
-        params: angular.extend({}, params, { access_token: token })
-      };
+      var url = apiUrl(path, params);
 
-      return $http.get(url, options)
+      return $http.get(url)
         .error(function (data, status) {
           if (status === 401) {
             $rootScope.$broadcast('TOKEN_EXPIRED');
@@ -56,12 +52,10 @@ angular.module('hipflowApp')
         });
     };
 
-    var apiPost = function (path, params) {
+    var apiPost = function (path, data) {
       var url = apiBase + path;
-      var token = FlowdockAuth.token();
-      var data = angular.extend({}, params, { access_token: token });
 
-      return $http.post(url, data)
+      return $http.post(url, { params: data })
         .error(function (data, status) {
           if (status === 401) {
             $rootScope.$broadcast('TOKEN_EXPIRED');
@@ -69,12 +63,10 @@ angular.module('hipflowApp')
         });
     };
 
-    var apiPut = function (path, params) {
+    var apiPut = function (path, data) {
       var url = apiBase + path;
-      var token = FlowdockAuth.token();
-      var data = angular.extend({}, params, { access_token: token });
 
-      return $http.put(url, data)
+      return $http.put(url, { params: data })
         .error(function (data, status) {
           if (status === 401) {
             $rootScope.$broadcast('TOKEN_EXPIRED');
@@ -150,9 +142,6 @@ angular.module('hipflowApp')
 //       localStorageService.set('chatLogs', data.chatLogs);
 //     };
 
-//     var handleUserHeartbeat = function (message) {
-//
-//     };
 
 //     var getRoomIdFromMessage = function (message) {
 //       var roomId;
@@ -166,31 +155,6 @@ angular.module('hipflowApp')
 //       }
 //     };
 
-//     var updateData = function () {
-//       apiGet('users').success(function (users) {
-//         data.users = users;
-//         localStorageService.add('users', users);
-//       });
-
-//       apiGet('flows/all', { users: 1 }).success(function (rooms) {
-//         data.rooms = rooms;
-//         localStorageService.add('rooms', rooms);
-//       });
-
-//       apiGet('private').success(function (queries) {
-//         data.queries = queries;
-//         localStorageService.add('queries', queries);
-//       });
-//     };
-
-//     var connect = function () {
-//       updateData();
-//       startListening();
-//     };
-
-//     var me = function () {
-//       return { id: '58790' };
-//     };
 
 
 //     var getMessagesForRoom = function (room, sinceId) {
@@ -227,10 +191,7 @@ angular.module('hipflowApp')
 //       return parseInt(discussionId, 10);
 //     };
 
-//     var initializeRoom = function (roomId) {
-//       data.chatLogs[roomId] = data.chatLogs[roomId] || [];
-//       data.discussions[roomId] = data.discussions[roomId] || [];
-//     };
+
 
 //     var updateRoomDiscussion = function (roomId, discussion, message) {
 //       if (message.sent > (discussion.lastUpdate || 0)) {
@@ -247,52 +208,7 @@ angular.module('hipflowApp')
 //       localStorageService.set('discussions', data.discussions);
 //     };
 
-//     var sendMessageToRoom = function (message, room, discussionId) {
-//       var method,
-//         messageData = {
-//           content: message
-//         };
 
-//       if (room.access_mode) {
-//         messageData.flow = room.id;
-
-//         if (discussionId) {
-//           method = 'comments';
-//           messageData.event = 'comment';
-//           messageData.message = discussionId;
-//         } else {
-//           method = 'messages';
-//           messageData.event = 'message';
-//         }
-//       } else {
-//         method = 'private/' + room.id + '/messages';
-//         messageData.event = 'message';
-//       }
-
-//       messageData.uuid = Uuid.generate();
-
-//       var stub = angular.extend({}, messageData, {
-//         user: me().id,
-//         tags: [],
-//         sent: new Date().getTime(),
-//         content: discussionId ? { text: message } : message
-//       });
-
-//       addMessagesToRoom(stub, room.id);
-//       apiPost(method, messageData)
-//         .success(handleMessage);
-//     };
-
-//     var leaveRoom = function (room) {
-//       var method;
-//       if (room.access_mode) {
-//         // flow
-//       } else {
-//         method = 'private/' + room.id;
-//       }
-
-//       apiPut(method, { open: false });
-//     };
 
 //     return {
 //       data: data,
@@ -306,17 +222,75 @@ angular.module('hipflowApp')
 //       sendMessageToRoom: sendMessageToRoom,
 //       leaveRoom: leaveRoom
 //     };
-    var flow = function (organization, id) {
+    var flow = function (organization, flowName) {
+
+      var message = function (messageId) {
+
+        var comments = function (commentId, cb) {
+          apiGet('/flows/' + organization + '/' + flowName + '/messages/' + messageId + '/comments/' + commentId)
+            .success(cb);
+        };
+
+        comments.send = function (comment, uuid, tags, cb) {
+          // TODO: Allow no uuid by checking to see if it is an array
+          var m = {
+            event: 'comment',
+            content: comments,
+            message: messageId,
+            tags: tags,
+            uuid: uuid
+          };
+
+          var method = '/flows/' + organization + '/' + flowName + '/messages/' + messageId + '/comments';
+          var promise = apiPost(method, m);
+
+          if (cb) {
+            promise.success(cb);
+          }
+        };
+
+        return {
+          comments: comments
+        };
+      };
+
+      var messages = function (messageId, cb) {
+        if (cb) {
+          apiGet('/flows/' + organization + '/' + flowName + '/messages/' + messageId)
+            .success(cb);
+        } else {
+          return message(messageId);
+        }
+      };
+
+      messages.list = function (cb) {
+        apiGet('/flows/' + organization + '/' + flowName + '/messages').success(cb);
+      };
+
+      messages.send = function (message, uuid, tags, cb) {
+        // TODO: Allow no uuid by checking to see if it is an array
+        var m = {
+          event: 'message',
+          content: message,
+          tags: tags,
+          uuid: uuid
+        };
+
+        var method = '/flows/' + organization + '/' + flowName + '/messages';
+        var promise = apiPost(method, m);
+
+        if (cb) {
+          promise.success(cb);
+        }
+      };
 
       return {
         update: function (props, cb) {
-          var method = 'flows/' + organization + '/' + id;
+          var method = '/flows/' + organization + '/' + flowName;
           var promise = apiPut(method, props);
 
           if (cb) {
-            promise.then(function (flow) {
-              cb(flow);
-            });
+            promise.success(cb);
           }
         },
         rename: function (name, cb) {
@@ -353,20 +327,15 @@ angular.module('hipflowApp')
           return this.update({ access_mode: mode }, cb);
         },
 
-        messages: {
-          list: function (options, cb) {
-            apiGet('/flows/' + organization + '/' + id + '/messages', options)
-              .success(cb);
-          }
-        }
+        messages: messages
       };
     };
 
-    var flows = function (organization, id, cb) {
+    var flows = function (organization, flowName, cb) {
       if (cb) {
-        apiGet('flows/find?id=' + id).then(cb);
+        apiGet('flows/' + organization + '/' + flowName).then(cb);
       } else {
-        return flow(organization, id);
+        return flow(organization, flowName);
       }
     };
 
