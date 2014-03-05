@@ -90,6 +90,35 @@ describe('Service: Messages', function () {
         expect(updated.id).toBe(32596);
       });
     });
+
+    describe('given a new server-side message', function () {
+      var newMessage;
+
+      beforeEach(function () {
+        newMessage = {
+          app: 'influx',
+          attachments: [],
+          content: 'Someone else sent this',
+          event: 'message',
+          flow: flow,
+          id: 32595,
+          tags: [],
+          user: '58791',
+          sent: 129331687967
+        };
+
+        Messages.addOrUpdate(newMessage);
+      });
+
+      it('should add the mesage to the room', function () {
+        var newlyAdded = Messages.get(newMessage.id, flow);
+        expect(newlyAdded).toBe(newMessage);
+      });
+
+      it('should keep the messages sorted by sent time', function () {
+        expect(Messages.messages[flow][0]).toBe(newMessage);
+      });
+    });
   });
 
   describe('edit()', function () {

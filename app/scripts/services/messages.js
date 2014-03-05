@@ -45,11 +45,18 @@ angular.module('hipflowApp')
         if (existing) {
           angular.copy(message, existing);
           message = existing;
+          return;
         }
 
+        roomChatLogs.push(message);
+
         if (!existing && append) {
-          roomChatLogs.push(message);
+          return;
         }
+
+        roomChatLogs.sort(function (m1, m2) {
+          return m1.sent - m2.sent;
+        });
       },
 
       edit: function (message) {

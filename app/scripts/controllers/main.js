@@ -31,11 +31,10 @@ angular.module('hipflowApp')
 
     $scope.send = function (message) {
       if ($scope.currentDiscussion.id) {
-        Flowdock.sendMessageToRoom(message,
-          $scope.currentRoom,
+        Messages.send($scope.currentRoom, message, [],
           $scope.currentDiscussion.id);
       } else {
-        Flowdock.sendMessageToRoom(message, $scope.currentRoom);
+        Messages.send($scope.currentRoom, message, []);
       }
 
       this.message = null;
