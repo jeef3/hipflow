@@ -21,7 +21,7 @@ angular.module('hipflowApp')
     };
 
     $scope.leaveRoom = function (room) {
-      Rooms.close(room.id);
+      Rooms.close(room);
     };
 
     $scope.me = function () {

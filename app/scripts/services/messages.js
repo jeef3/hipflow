@@ -60,7 +60,6 @@ angular.module('hipflowApp')
 
         if (existing) {
           angular.copy(message, existing);
-          message = existing;
           return;
         }
 

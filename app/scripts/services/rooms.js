@@ -9,6 +9,36 @@ angular.module('hipflowApp')
       flows: flows,
       privateConversations: privateConversations,
 
+      addOrUpdateFlow: function (flow) {
+        var existing = this.get(flow.id);
+
+        if (existing) {
+          angular.copy(flow, existing);
+          return;
+        }
+
+        flows.push(flow);
+
+        flows.sort(function (f1, f2) {
+          return f1.id < f2.id;
+        });
+      },
+
+      addOrUpdatePrivateConversation: function (privateConversation) {
+        var existing = this.get(privateConversation.id);
+
+        if (existing) {
+          angular.copy(privateConversation, existing);
+          return;
+        }
+
+        flows.push(privateConversation);
+
+        flows.sort(function (c1, c2) {
+          return c1.id < c2.id;
+        });
+      },
+
       get: function (id) {
         var flow = flows.filter(function (f) {
           return f.id === id;
@@ -25,24 +55,24 @@ angular.module('hipflowApp')
         // TODO: Handle if the room isn't in the list
       },
 
-      open: [],
+      close: function (room) {
+        var r = room.access_mode ?
+          Flowdock.flows(room.id) :
+          Flowdock.privateConversations(room.id);
+
+        r.close(this.update);
+      },
 
       update: function () {
-        Flowdock.flows.all(function (data) {
-          flows.splice(0);
-          data.forEach(function (flow) {
-            flows.push(flow);
-          });
+        var _this = this;
 
+        Flowdock.flows.all(function (data) {
+          data.forEach(_this.addOrUpdateFlow.bind(_this));
           localStorageService.set('flows', flows);
         });
 
         Flowdock.privateConversations.list(function (data) {
-          privateConversations.splice(0);
-          data.forEach(function (privateConversation) {
-            privateConversations.push(privateConversation);
-          });
-
+          data.forEach(_this.addOrUpdatePrivateConversation.bind(_this));
           localStorageService.set('privateConversations', privateConversations);
         });
       }
