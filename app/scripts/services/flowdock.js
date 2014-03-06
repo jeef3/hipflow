@@ -142,21 +142,6 @@ angular.module('hipflowApp')
 //       localStorageService.set('chatLogs', data.chatLogs);
 //     };
 
-
-//     var getRoomIdFromMessage = function (message) {
-//       var roomId;
-
-//       if (message.flow) {
-//         roomId = message.flow;
-//       } else if (message.to) {
-//         roomId = message.to === me().id ?
-//           message.user :
-//           message.to;
-//       }
-//     };
-
-
-
 //     var getMessagesForRoom = function (room, sinceId) {
 //       var method;
 //       if (room.access_mode) {
@@ -334,7 +319,7 @@ angular.module('hipflowApp')
 
     var flows = function (organization, flowName, cb) {
       if (cb) {
-        apiGet('flows/' + organization + '/' + flowName).then(cb);
+        apiGet('flows/' + organization + '/' + flowName).success(cb);
       } else {
         return flow(organization, flowName);
       }
@@ -352,12 +337,67 @@ angular.module('hipflowApp')
       apiPost('/flows/' + organization, { name: name }).success(cb);
     };
 
-    var privateConversations = function () {
+    var privateConversation = function (userId) {
 
+      var messages = function (messageId, cb) {
+        if (cb) {
+          apiGet('/private/' + userId + '/messages' + messageId)
+            .success(cb);
+        }
+      };
+
+      messages.list = function (options, cb) {
+        // TODO: Options for since_id etc
+        apiGet('/private/' + userId + '/messages').success(cb);
+      };
+
+      messages.send = function (message, uuid, tags, cb) {
+        // TODO: Allow no uuid by checking to see if it is an array
+        var m = {
+          event: 'message',
+          content: message,
+          tags: tags,
+          uuid: uuid
+        };
+
+        var method = '/private/' + userId + '/messages';
+        var promise = apiPost(method, m);
+
+        if (cb) {
+          promise.success(cb);
+        }
+      };
+
+      return {
+        update: function (props, cb) {
+          var method = '/private/' + userId;
+          var promise = apiPut(method, props);
+
+          if (cb) {
+            promise.success(cb);
+          }
+        },
+        open: function (cb) {
+          return this.update({ open: true }, cb);
+        },
+        close: function (cb) {
+          return this.update({ open: false }, cb);
+        },
+
+        messages: messages
+      };
     };
 
-    privateConversations.list = function () {
-      apiGet('/private');
+    var privateConversations = function (userId, cb) {
+      if (cb) {
+        apiGet('/private/' + userId).success(cb);
+      } else {
+        return privateConversation(userId);
+      }
+    };
+
+    privateConversations.list = function (cb) {
+      apiGet('/private').success(cb);
     };
 
     var users = function (/*id, cb*/) {

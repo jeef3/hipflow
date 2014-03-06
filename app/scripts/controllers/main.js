@@ -3,6 +3,9 @@
 angular.module('hipflowApp')
   .controller('MainCtrl', function ($scope, $rootScope, FlowdockAuth, Users, Rooms, Messages, localStorageService) {
 
+    $scope.flows = Rooms.flows;
+    $scope.privateConversations = Rooms.privateConversations;
+
     var currentRoomId = localStorageService.get('currentRoomId') || null;
     $scope.currentRoom = currentRoomId ?
       Rooms.get(currentRoomId) :
@@ -12,7 +15,7 @@ angular.module('hipflowApp')
       $scope.currentRoom = room;
       $scope.setCurrentDiscussion();
       room.unread = 0;
-      localStorageService.add('currentRoomId', room.id);
+      localStorageService.set('currentRoomId', room.id);
 
       Messages.update(room);
     };

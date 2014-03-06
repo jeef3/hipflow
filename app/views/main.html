@@ -7,7 +7,7 @@
     <div class="message-window"
         ng-controller="MessageWindowCtrl"
         ng-class="{'is-loading': isLoading}"
-        ng-repeat="room in flowdock.rooms"
+        ng-repeat="room in flows"
         ng-init="room = room"
         ng-show="room.id === currentRoom.id"
         ng-include="'views/message-window.html'">
@@ -16,7 +16,7 @@
     <div class="message-window"
         ng-controller="MessageWindowCtrl"
         ng-class="{'is-loading': isLoading}"
-        ng-repeat="room in flowdock.queries"
+        ng-repeat="room in privateConversations"
         ng-init="room = room"
         ng-show="room.id === currentRoom.id"
         ng-include="'views/message-window.html'">

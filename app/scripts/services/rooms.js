@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hipflowApp')
-  .service('Rooms', function Rooms(Flowdock, Messages, localStorageService) {
+  .service('Rooms', function Rooms(Flowdock, localStorageService) {
     var flows = localStorageService.get('flows') || [];
     var privateConversations = localStorageService.get('privateConversations') || [];
 
@@ -31,24 +31,19 @@ angular.module('hipflowApp')
         Flowdock.flows.all(function (data) {
           flows.splice(0);
           data.forEach(function (flow) {
-            Messages.messages[flow.id] = Messages.messages[flow.id] || [];
             flows.push(flow);
           });
 
-          // flows.sort(function (a, b) {
-          //   return a.name > b.name;
-          // });
+          localStorageService.set('flows', flows);
         });
 
-        Flowdock.privateConversations(function (data) {
+        Flowdock.privateConversations.list(function (data) {
           privateConversations.splice(0);
           data.forEach(function (privateConversation) {
             privateConversations.push(privateConversation);
           });
 
-          privateConversations.sort(function (a, b) {
-            return a.name > b.name;
-          });
+          localStorageService.set('privateConversations', privateConversations);
         });
       }
     };

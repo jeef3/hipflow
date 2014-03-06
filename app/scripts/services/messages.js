@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hipflowApp')
-  .service('Messages', function Messages($rootScope, Flowdock, localStorageService, Uuid) {
+  .service('Messages', function Messages($rootScope, Flowdock, Users, localStorageService, Uuid) {
     var messages = localStorageService.get('messages') || {};
 
     return {
@@ -10,6 +10,7 @@ angular.module('hipflowApp')
       send: function (flowId, message, tags, messageId) {
         var uuid = Uuid.generate();
 
+        // Add to the chat roomw straight away
         this.add({
           flow: flowId,
           event: messageId ? 'comments' : 'message',
@@ -19,6 +20,7 @@ angular.module('hipflowApp')
           uuid: uuid
         });
 
+        // Post to Flowdock
         if (messageId) {
           Flowdock.flows('skilitics', flowId)
             .messages(messageId)
@@ -39,7 +41,21 @@ angular.module('hipflowApp')
       },
 
       addOrUpdate: function (message, append) {
-        var roomChatLogs = messages[message.flow];
+        var roomId;
+        if (message.flow) {
+          roomId = message.flow;
+        } else if (message.to) {
+          roomId = message.to === Users.me.id ?
+            message.user :
+            message.to;
+        }
+
+        var roomChatLogs = messages[roomId];
+
+        if (!roomChatLogs) {
+          roomChatLogs = messages[roomId] = [];
+        }
+
         var existing = this.get(message.uuid || message.id, message.flow);
 
         if (existing) {
@@ -87,14 +103,13 @@ angular.module('hipflowApp')
         var _this = this;
 
         var r = room.access_mode ?
-          Flowdock.flows(room.organization.parameterized_name,
-            room.parameterized_name) :
+          Flowdock.flows(room.organization.parameterized_name, room.parameterized_name) :
           Flowdock.privateConversations(room.id);
 
         r.messages.list(options, function (messages) {
-          messages.forEach(function (message) {
-            _this.addOrUpdate(message);
-          });
+          messages.forEach(_this.addOrUpdate.bind(_this));
+
+          localStorageService.set('messages', _this.messages);
         });
       }
     };

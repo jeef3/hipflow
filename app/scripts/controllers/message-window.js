@@ -5,8 +5,6 @@ angular.module('hipflowApp')
     $scope.isLoadingOlder = false;
     $scope.isLoadingNewer = false;
 
-    $scope.messages = Flowdock.data.chatLogs[$scope.room.id];
-
     $scope.messages = Messages.messages[$scope.room.id];
 
     $scope.mentionsMe = function (message) {
@@ -49,7 +47,9 @@ angular.module('hipflowApp')
       if (message.event === 'message' ||
           message.event === 'comment' ||
           message.event === 'file') {
-        var user = Users.users[message.user];
+
+        var user = Users.get(message.user);
+
         return {
           author: user.name,
           avatar: user.avatar

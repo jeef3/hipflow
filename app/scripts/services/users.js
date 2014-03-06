@@ -1,13 +1,19 @@
 'use strict';
 
 angular.module('hipflowApp')
-  .service('Users', function Users(Flowdock, Rooms, localStorageService) {
-    var users = localStorageService.get('users') || {};
+  .service('Users', function Users(Flowdock, localStorageService) {
+    var users = localStorageService.get('users') || [];
 
     return {
       users: users,
 
       me: {},
+
+      get: function (userId) {
+        return users.filter(function (user) {
+          return user.id === parseInt(userId, 10);
+        })[0];
+      },
 
       heartbeat: function (/*heartbeat*/) {
         return;
@@ -44,6 +50,8 @@ angular.module('hipflowApp')
         Flowdock.users.list(function (data) {
           users.splice(0);
           data.forEach(function (user) { users.push(user); });
+
+          localStorageService.set('users', users);
         });
       }
     };
