@@ -400,6 +400,10 @@ angular.module('hipflowApp')
       apiGet('/private').success(cb);
     };
 
+    var user = function (cb) {
+      apiGet('/user').success(cb);
+    };
+
     var users = function (/*id, cb*/) {
 
     };
@@ -426,6 +430,7 @@ angular.module('hipflowApp')
         };
       },
 
+      user: user,
       users: users,
       flows: flows,
       privateConversations: privateConversations

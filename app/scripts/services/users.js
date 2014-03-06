@@ -2,15 +2,24 @@
 
 angular.module('hipflowApp')
   .service('Users', function Users(Flowdock, localStorageService) {
-    var users = localStorageService.get('users') || [];
-
     return {
-      users: users,
+      users: localStorageService.get('users') || [],
 
-      me: {},
+      me: localStorageService.get('me') || {},
+
+      addOrUpdate: function (user) {
+        var existing = this.get(user.id);
+
+        if (existing) {
+          angular.copy(user, existing);
+          return;
+        }
+
+        this.users.push(user);
+      },
 
       get: function (userId) {
-        return users.filter(function (user) {
+        return this.users.filter(function (user) {
           return user.id === parseInt(userId, 10);
         })[0];
       },
@@ -47,11 +56,18 @@ angular.module('hipflowApp')
       },
 
       update: function () {
-        Flowdock.users.list(function (data) {
-          users.splice(0);
-          data.forEach(function (user) { users.push(user); });
+        var _this = this;
 
-          localStorageService.set('users', users);
+        Flowdock.user(function (user) {
+          angular.copy(user, _this.me);
+
+          localStorageService.set('me', _this.me);
+        });
+
+        Flowdock.users.list(function (data) {
+          data.forEach(_this.addOrUpdate.bind(_this));
+
+          localStorageService.set('users', _this.users);
         });
       }
     };

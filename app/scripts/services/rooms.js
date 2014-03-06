@@ -17,9 +17,9 @@ angular.module('hipflowApp')
           return;
         }
 
-        flows.push(flow);
+        this.flows.push(flow);
 
-        flows.sort(function (f1, f2) {
+        this.flows.sort(function (f1, f2) {
           return f1.id < f2.id;
         });
       },
@@ -32,9 +32,9 @@ angular.module('hipflowApp')
           return;
         }
 
-        flows.push(privateConversation);
+        this.privateConversations.push(privateConversation);
 
-        flows.sort(function (c1, c2) {
+        this.privateConversations.sort(function (c1, c2) {
           return c1.id < c2.id;
         });
       },
@@ -50,7 +50,7 @@ angular.module('hipflowApp')
 
         return privateConversations.filter(function (f) {
           return f.id === id;
-        });
+        })[0];
 
         // TODO: Handle if the room isn't in the list
       },
@@ -66,14 +66,14 @@ angular.module('hipflowApp')
       update: function () {
         var _this = this;
 
-        Flowdock.flows.all(function (data) {
-          data.forEach(_this.addOrUpdateFlow.bind(_this));
-          localStorageService.set('flows', flows);
+        Flowdock.flows.all(function (flows) {
+          flows.forEach(_this.addOrUpdateFlow.bind(_this));
+          localStorageService.set('flows', _this.flows);
         });
 
-        Flowdock.privateConversations.list(function (data) {
-          data.forEach(_this.addOrUpdatePrivateConversation.bind(_this));
-          localStorageService.set('privateConversations', privateConversations);
+        Flowdock.privateConversations.list(function (privateConversations) {
+          privateConversations.forEach(_this.addOrUpdatePrivateConversation.bind(_this));
+          localStorageService.set('privateConversations', _this.privateConversations);
         });
       }
     };

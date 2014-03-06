@@ -45,7 +45,7 @@ angular.module('hipflowApp')
         if (message.flow) {
           roomId = message.flow;
         } else if (message.to) {
-          roomId = message.to === Users.me.id ?
+          roomId = parseInt(message.to) === Users.me.id ?
             message.user :
             message.to;
         }
@@ -56,7 +56,7 @@ angular.module('hipflowApp')
           roomChatLogs = messages[roomId] = [];
         }
 
-        var existing = this.get(message.uuid || message.id, message.flow);
+        var existing = this.get(message.uuid || message.id, roomId);
 
         if (existing) {
           angular.copy(message, existing);
