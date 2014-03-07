@@ -333,6 +333,10 @@ angular.module('hipflowApp')
       apiGet('/flows/all').success(cb);
     };
 
+    flows.allWithUsers = function (cb) {
+      apiGet('/flows/all', { users: 1 }).success(cb);
+    }
+
     flows.create = function (organization, name, cb) {
       apiPost('/flows/' + organization, { name: name }).success(cb);
     };

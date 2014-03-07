@@ -66,7 +66,7 @@ angular.module('hipflowApp')
       update: function () {
         var _this = this;
 
-        Flowdock.flows.all(function (flows) {
+        Flowdock.flows.allWithUsers(function (flows) {
           flows.forEach(_this.addOrUpdateFlow.bind(_this));
           localStorageService.set('flows', _this.flows);
         });
