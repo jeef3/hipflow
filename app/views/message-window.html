@@ -5,7 +5,7 @@
 <div class="messages-container">
   <ul class="messages" ui-scroll-bottom>
     <li class="message"
-        data-timestamp="{{message.sent | date:'fullDate'}}"
+        data-timestamp="{{message.sent | amCalendar}}"
         ng-repeat="message in messages"
         ng-init="meta = getMessageMeta(message)"
         ng-class="{'message--me': message.user === me().id,
