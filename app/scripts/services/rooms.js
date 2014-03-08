@@ -76,6 +76,9 @@ angular.module('hipflowApp')
 
         if (message.content.last_activity) {
           user.last_activity = message.content.last_activity;
+        } else if (message.content.typing) {
+          user.last_activity = message.sent;
+          user.typing = true;
         } else {
           user.last_ping = message.sent;
         }
