@@ -23,7 +23,7 @@ describe('Service: Messages', function () {
       flow: flow,
       id: 32594,
       sent: 1393316867967,
-      tags: [],
+      tags: [':unread:58806'],
       user: '58790',
       uuid: 'client-side-uuid-1'
     });
@@ -135,12 +135,45 @@ describe('Service: Messages', function () {
       };
     });
 
-    it('should update the message content', function () {
-      Messages.edit(messageEdit);
+    describe('message-edit', function () {
+      it('should update the message content', function () {
+        Messages.edit(messageEdit);
 
-      var edited = Messages.get(32594, flow);
-      expect(edited.content).toBe('An edited message');
+        var edited = Messages.get(32594, flow);
+        expect(edited.content).toBe('An edited message');
+      });
     });
+
+    describe('tag-change', function () {
+      it('should update the tags', function () {
+        var tagChange = {
+          content: {
+            add: [':thread:', ':something:'],
+            message: 32594,
+            remove: [':unread:58806']
+          },
+          event: 'tag-change',
+          flow: flow,
+          id: 45135,
+          sent: 1394309922272,
+          tags: [],
+          user: '58806',
+          uuid: null
+        };
+        Messages.edit(tagChange);
+
+        var tagChanged = Messages.get(32594, flow);
+        expect(tagChanged.tags.length).toBe(2);
+
+        // Add
+        expect(tagChanged.tags.indexOf(':thread:')).not.toBe(-1);
+        expect(tagChanged.tags.indexOf(':something:')).not.toBe(-1);
+
+        // Remove
+        expect(tagChanged.tags.indexOf(':unread:58806')).toBe(-1);
+      });
+    });
+
 
     describe('when the message is not in the chat cache', function () {
       it('should do nothing', function () {
@@ -149,18 +182,6 @@ describe('Service: Messages', function () {
 
         var original = Messages.get(32594, flow);
         expect(original.content).toBe('This is a normal message :smile:');
-      });
-    });
-
-    describe('when the event is not message-edit', function () {
-      it('should not alter the message', function () {
-        messageEdit.event = 'message';
-        expect(function () {
-          Messages.edit(messageEdit);
-        }).toThrow('Expected event "message-edit" but found "message"');
-
-        var edited = Messages.get(32594, flow);
-        expect(edited.content).toBe('This is a normal message :smile:');
       });
     });
   });

@@ -4,6 +4,14 @@ angular.module('hipflowApp')
   .service('Messages', function Messages($rootScope, Flowdock, Users, localStorageService, Uuid) {
     var messages = localStorageService.get('messages') || {};
 
+    var addTag = function (tag) {
+      this.tags.push(tag);
+    };
+
+    var removeTag = function (tag) {
+      this.tags.splice(this.tags.indexOf(tag), 1);
+    };
+
     return {
       messages: messages,
 
@@ -69,14 +77,17 @@ angular.module('hipflowApp')
       },
 
       edit: function (message) {
-        if (message.event !== 'message-edit') {
-          throw new Error('Expected event "message-edit" but found "' + message.event + '"');
-        }
-
         var messageToEdit = this.get(message.content.message, message.flow);
 
-        if (messageToEdit) {
+        if (!messageToEdit) {
+          return;
+        }
+
+        if (message.event === 'message-edit') {
           messageToEdit.content = message.content.updated_content;
+        } else if (message.event === 'tag-change') {
+          message.content.add.forEach(addTag.bind(messageToEdit));
+          message.content.remove.forEach(removeTag.bind(messageToEdit));
         }
       },
 

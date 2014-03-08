@@ -19,6 +19,10 @@ angular.module('hipflowApp')
           $rootScope.$broadcast('NEW_MESSAGE', message);
           console.log('Editing message', message);
           break;
+        case 'tag-change':
+          Messages.edit(message);
+          console.log('Tag Change');
+          break;
         case 'activity.user':
           Users.userActivity(message);
           Rooms.userActivity(message);
