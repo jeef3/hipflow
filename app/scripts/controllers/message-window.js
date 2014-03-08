@@ -29,7 +29,7 @@ angular.module('hipflowApp')
 
       return previous &&
         message.user === previous.user &&
-        message.event === previous.event;
+        message.app === previous.app;
     };
 
     $scope.isSameDay = function (message, index) {
