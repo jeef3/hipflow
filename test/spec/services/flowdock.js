@@ -137,8 +137,21 @@ describe('Service: Flowdock', function () {
     });
 
     it('should be able to listen to multiple flows', function () {
-      var ids = [1, 2, 3];
-      var stream = Flowdock.stream(ids);
+      var flows = [
+        {
+          parameterized_name: 'flow_one',
+          organization: {
+            parameterized_name: 'org_one'
+          }
+        },
+        {
+          parameterized_name: 'flow_two',
+          organization: {
+            parameterized_name: 'org_one'
+          }
+        }
+      ];
+      var stream = Flowdock.stream(flows);
 
       stream.onmessage = function (message) {
         expect(message).toBeTruthy();
