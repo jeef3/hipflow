@@ -7,27 +7,28 @@ angular.module('hipflowApp')
     return {
       messages: messages,
 
-      send: function (flowId, message, tags, messageId) {
+      send: function (flow, message, tags, messageId) {
         var uuid = Uuid.generate();
 
         // Add to the chat roomw straight away
         this.add({
-          flow: flowId,
+          flow: flow.id,
           event: messageId ? 'comments' : 'message',
           content: message,
           message: messageId,
           tags: tags,
+          user: Number(Users.me.id).toString(),
           uuid: uuid
         });
 
         // Post to Flowdock
         if (messageId) {
-          Flowdock.flows('skilitics', flowId)
+          Flowdock.flows(flow.organization.parameterized_name, flow.parameterized_name)
             .messages(messageId)
             .comments
             .send(message, uuid, tags);
         } else {
-          Flowdock.flows('skilitics', flowId)
+          Flowdock.flows(flow.organization.parameterized_name, flow.parameterized_name)
             .messages
             .send(message, uuid, tags);
         }
@@ -41,15 +42,7 @@ angular.module('hipflowApp')
       },
 
       addOrUpdate: function (message, append) {
-        var roomId;
-        if (message.flow) {
-          roomId = message.flow;
-        } else if (message.to) {
-          roomId = parseInt(message.to) === Users.me.id ?
-            message.user :
-            message.to;
-        }
-
+        var roomId = Flowdock.util.roomIdFromMessage(message, Users.me);
         var roomChatLogs = messages[roomId];
 
         if (!roomChatLogs) {

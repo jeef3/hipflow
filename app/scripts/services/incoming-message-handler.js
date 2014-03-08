@@ -20,8 +20,9 @@ angular.module('hipflowApp')
           console.log('Editing message', message);
           break;
         case 'activity.user':
-          Users.heartbeat(message);
-          console.log('Heartbeat', message);
+          Users.userActivity(message);
+          Rooms.userActivity(message);
+          console.log('User activity', message);
           break;
         default:
           console.log('Unhandled', message);

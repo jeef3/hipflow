@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hipflowApp')
-  .service('Rooms', function Rooms(Flowdock, localStorageService) {
+  .service('Rooms', function Rooms(Flowdock, Users, localStorageService) {
     var flows = localStorageService.get('flows') || [];
     var privateConversations = localStorageService.get('privateConversations') || [];
 
@@ -49,10 +49,30 @@ angular.module('hipflowApp')
         }
 
         return privateConversations.filter(function (f) {
-          return f.id === id;
+          return f.id === parseInt(id);
         })[0];
 
         // TODO: Handle if the room isn't in the list
+      },
+
+      userActivity: function (message) {
+        var roomId = Flowdock.util.roomIdFromMessage(message, Users.me);
+
+        var room = this.get(roomId);
+
+        var user = room.users.filter(function (user) {
+          return user.id === parseInt(message.user);
+        })[0];
+
+        if (!user) {
+          return;
+        }
+
+        if (message.content.last_activity) {
+          user.last_activity = message.content.last_activity;
+        } else {
+          user.last_ping = message.sent;
+        }
       },
 
       close: function (room) {

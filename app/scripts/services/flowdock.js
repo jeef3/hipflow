@@ -53,9 +53,9 @@ angular.module('hipflowApp')
     };
 
     var apiPost = function (path, data) {
-      var url = apiBase + path;
+      var url = apiUrl(path);
 
-      return $http.post(url, { params: data })
+      return $http.post(url, data)
         .error(function (data, status) {
           if (status === 401) {
             $rootScope.$broadcast('TOKEN_EXPIRED');
@@ -64,9 +64,9 @@ angular.module('hipflowApp')
     };
 
     var apiPut = function (path, data) {
-      var url = apiBase + path;
+      var url = apiUrl(path);
 
-      return $http.put(url, { params: data })
+      return $http.put(url, data)
         .error(function (data, status) {
           if (status === 401) {
             $rootScope.$broadcast('TOKEN_EXPIRED');
@@ -335,7 +335,7 @@ angular.module('hipflowApp')
 
     flows.allWithUsers = function (cb) {
       apiGet('/flows/all', { users: 1 }).success(cb);
-    }
+    };
 
     flows.create = function (organization, name, cb) {
       apiPost('/flows/' + organization, { name: name }).success(cb);
@@ -437,6 +437,22 @@ angular.module('hipflowApp')
       user: user,
       users: users,
       flows: flows,
-      privateConversations: privateConversations
+      privateConversations: privateConversations,
+
+      util: {
+        roomIdFromMessage: function (message, me) {
+          var roomId;
+
+          if (message.flow) {
+            roomId = message.flow;
+          } else if (message.to) {
+            roomId = parseInt(message.to) === me.id ?
+              message.user :
+              message.to;
+          }
+
+          return roomId;
+        }
+      }
     };
   });
