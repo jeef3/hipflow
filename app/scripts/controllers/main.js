@@ -48,7 +48,7 @@ angular.module('hipflowApp')
         ping = user.last_ping,
         diff = now - ping;
 
-      if (diff < 300000) {
+      if (diff < (1000 * 60 * 5)) {
         return true;
       } else {
         return false;
