@@ -124,24 +124,24 @@ $fail-background: rgb(249, 230, 230);
 
   &.message--date-separator {
     $date-separator-height: 2em;
+    padding-top: $date-separator-height;
     margin-top: $date-separator-height;
+
+    border-top: solid 1px #ccc;
 
     &:before {
       content: attr(data-timestamp);
 
       position: absolute;
-      width: 100%;
-      height: $date-separator-height;
-      top: -$date-separator-height;
-      left: 0;
+      top: -1em;
+      left: 50%;
+      padding: 0 1em;
 
-      line-height: $date-separator-height;
-      font-size: 0.813em;
-      text-align: center;
-      color: #aaa;
+      font-weight: 900;
 
-      border-top: solid 1px #e0e0e0;
-      background: #efefef;
+      transform: translate(-50%);
+
+      background: #ffffff;
     }
   }
 
