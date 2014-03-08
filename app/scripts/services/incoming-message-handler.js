@@ -35,7 +35,7 @@ angular.module('hipflowApp')
 
     return {
       start: function () {
-        stream = Flowdock.stream(Rooms.open, { user: 1, active: 'true' });
+        stream = Flowdock.stream(Rooms.open(), { user: 1, active: 'true' });
         stream.onmessage(handleMessage);
 
         // TODO: If Rooms.open changes, re-connect

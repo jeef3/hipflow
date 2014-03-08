@@ -9,6 +9,12 @@ angular.module('hipflowApp')
       flows: flows,
       privateConversations: privateConversations,
 
+      open: function () {
+        return flows.filter(function (room) {
+          return room.open;
+        });
+      },
+
       addOrUpdateFlow: function (flow) {
         var existing = this.get(flow.id);
 

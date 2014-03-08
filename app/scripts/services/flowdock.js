@@ -23,10 +23,7 @@ angular.module('hipflowApp')
     var streamUrl = function (flows, params) {
       if (flows && flows.length) {
         params = params || {};
-        params.flows = flows
-          .filter(function (flow) {
-            return flow.open;
-          })
+        params.filter = flows
           .map(function (flow) {
             return flow.organization.parameterized_name + '/' +
               flow.parameterized_name;
