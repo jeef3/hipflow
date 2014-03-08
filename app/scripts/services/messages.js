@@ -16,6 +16,7 @@ angular.module('hipflowApp')
           event: messageId ? 'comments' : 'message',
           content: message,
           message: messageId,
+          sent: new Date().getTime(),
           tags: tags,
           user: Number(Users.me.id).toString(),
           uuid: uuid
