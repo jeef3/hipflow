@@ -1,18 +1,18 @@
 'use strict';
 
-describe('Service: Uuid', function () {
+describe('Service: Threads', function () {
 
   // load the service's module
   beforeEach(module('hipflowApp'));
 
   // instantiate service
-  var Uuid;
-  beforeEach(inject(function (_Uuid_) {
-    Uuid = _Uuid_;
+  var Threads;
+  beforeEach(inject(function (_Threads_) {
+    Threads = _Threads_;
   }));
 
   it('should do something', function () {
-    expect(!!Uuid).toBe(true);
+    expect(!!Threads).toBe(true);
   });
 
 });

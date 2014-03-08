@@ -1,44 +1,43 @@
 'use strict';
 
-angular.module('hipFlowApp')
-  .controller('MainCtrl', function ($scope, $rootScope, Flowdock, FlowdockAuth, localStorageService) {
-    Flowdock.connect();
+angular.module('hipflowApp')
+  .controller('MainCtrl', function ($scope, $rootScope, FlowdockAuth, Users, Rooms, Messages, localStorageService) {
 
-    $scope.flowdock = Flowdock.data;
+    $scope.flows = Rooms.flows;
+    $scope.privateConversations = Rooms.privateConversations;
 
     var currentRoomId = localStorageService.get('currentRoomId') || null;
     $scope.currentRoom = currentRoomId ?
-      Flowdock.getRoomById(currentRoomId) :
+      Rooms.get(currentRoomId) :
       null;
 
     $scope.showRoom = function (room) {
       $scope.currentRoom = room;
       $scope.setCurrentDiscussion();
       room.unread = 0;
-      localStorageService.add('currentRoomId', room.id);
+      localStorageService.set('currentRoomId', room.id);
 
-      Flowdock.getMessagesForRoom(room);
+      Messages.update(room);
     };
 
     $scope.leaveRoom = function (room) {
-      Flowdock.leaveRoom(room);
+      Rooms.close(room);
     };
 
     $scope.me = function () {
-      return Flowdock.me();
+      return Users.me;
     };
 
     $scope.user = function (userId) {
-      return Flowdock.getUserById(userId);
+      return Users.get(userId);
     };
 
     $scope.send = function (message) {
       if ($scope.currentDiscussion.id) {
-        Flowdock.sendMessageToRoom(message,
-          $scope.currentRoom,
+        Messages.send($scope.currentRoom, message, [],
           $scope.currentDiscussion.id);
       } else {
-        Flowdock.sendMessageToRoom(message, $scope.currentRoom);
+        Messages.send($scope.currentRoom, message, []);
       }
 
       this.message = null;
@@ -77,12 +76,8 @@ angular.module('hipFlowApp')
         });
     };
 
-    $scope.hasJiraType = function () {
-
-    };
-
-    $scope.getFileUrl = function (path) {
-      return Flowdock.url(path);
+    $scope.getFileUrl = function (/*path*/) {
+      // return Flowdock.url(path);
     };
 
     $scope.currentDiscussion = {};
@@ -103,7 +98,7 @@ angular.module('hipFlowApp')
       switch (message.event) {
         case 'comment':
           angular.copy({
-            id: Flowdock.getCommentTitleMessageId(message),
+            // id: Flowdock.getCommentTitleMessageId(message),
             title: message.content.title
           }, $scope.currentDiscussion);
           break;

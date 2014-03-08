@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipFlowApp')
+angular.module('hipflowApp')
   .directive('uiScrollBottom', function () {
     return {
       restrict: 'A',

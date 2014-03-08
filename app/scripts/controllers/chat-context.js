@@ -1,4 +1,4 @@
 'use strict';
 
-angular.module('hipFlowApp')
+angular.module('hipflowApp')
   .controller('ChatContextCtrl', function () {});

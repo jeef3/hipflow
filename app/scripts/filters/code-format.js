@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipFlowApp')
+angular.module('hipflowApp')
   .filter('codeFormat', function () {
     return function (input) {
       if (input && input.match(/^    /)) {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipFlowApp', [
+angular.module('hipflowApp', [
     'ngCookies',
     'ngSanitize',
     'LocalStorageModule',
@@ -10,8 +10,13 @@ angular.module('hipFlowApp', [
     $locationProvider.html5Mode(true);
     localStorageServiceProvider.setPrefix('hipflow');
   })
-  .run(function ($window, FlowdockAuth) {
+  .run(function ($window, Flowdock, FlowdockAuth, Users, Rooms, IncomingMessageHandler) {
     if (!FlowdockAuth.isAuthenticated()) {
       $window.location.href = '/login';
     }
+
+    Flowdock.connect();
+    Users.update();
+    Rooms.update();
+    IncomingMessageHandler.start();
   });
