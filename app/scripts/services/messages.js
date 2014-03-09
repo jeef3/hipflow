@@ -12,6 +12,14 @@ angular.module('hipflowApp')
       this.tags.splice(this.tags.indexOf(tag), 1);
     };
 
+    var processTags = function (message) {
+      // Process information in tags
+      var tags = message.tags;
+      message.highlight = tags.indexOf(':highlight:' + Users.me.id) !== -1;
+      message.mentionsMe = tags.indexOf(':user:' + Users.me.id) !== -1;
+      message.thread = tags.indexOf(':thread') !== -1;
+    };
+
     return {
       messages: messages,
 
@@ -58,10 +66,7 @@ angular.module('hipflowApp')
           roomChatLogs = messages[roomId] = [];
         }
 
-        // Process information in tags
-        var tags = message.tags;
-        message.highlight = tags.indexOf(':highlight:' + Users.me.id) !== -1;
-        message.mentionsMe = tags.indexOf(':user:' + Users.me.id) !== -1;
+        processTags(message);
 
         var existing = this.get(message.uuid || message.id, roomId);
 
@@ -82,18 +87,20 @@ angular.module('hipflowApp')
       },
 
       edit: function (message) {
-        var messageToEdit = this.get(message.content.message, message.flow);
+        var existing = this.get(message.content.message, message.flow);
 
-        if (!messageToEdit) {
+        if (!existing) {
           return;
         }
 
         if (message.event === 'message-edit') {
-          messageToEdit.content = message.content.updated_content;
+          existing.content = message.content.updated_content;
         } else if (message.event === 'tag-change') {
-          message.content.add.forEach(addTag.bind(messageToEdit));
-          message.content.remove.forEach(removeTag.bind(messageToEdit));
+          message.content.add.forEach(addTag.bind(existing));
+          message.content.remove.forEach(removeTag.bind(existing));
         }
+
+        processTags(existing);
       },
 
       get: function (messageId, roomId) {

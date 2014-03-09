@@ -21,7 +21,7 @@ angular.module('hipflowApp')
           break;
         case 'tag-change':
           Messages.edit(message);
-          console.log('Tag Change');
+          console.log('Tag Change', message);
           break;
         case 'activity.user':
           Users.userActivity(message);

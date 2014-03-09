@@ -7,11 +7,6 @@ angular.module('hipflowApp')
 
     $scope.messages = Messages.messages[$scope.room.id];
 
-    $scope.isThreadStart = function (message) {
-      // TODO: This needs some more work
-      return !!message.lastUpdate;
-    };
-
     $scope.isMonologue = function (message, index) {
       var previous = $scope.messages[index - 1];
 

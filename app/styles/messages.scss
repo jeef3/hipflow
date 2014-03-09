@@ -297,14 +297,14 @@ $fail-background: rgb(249, 230, 230);
     opacity: 0.1;
   }
 
-  .message--thread-start &,
-  .message--thread & {
+  .message--thread &,
+  .message--comment & {
     opacity: 0.4;
   }
 
   .message &:hover,
-  .message--thread-start:hover &,
-  .message--thread:hover & {
+  .message--thread:hover &,
+  .message--comment:hover & {
     opacity: 1;
   }
 
