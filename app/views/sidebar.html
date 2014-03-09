@@ -1,5 +1,5 @@
 <div class="sidebar" ng-controller="SidebarCtrl">
-  <button type="button" class="sidebar-btn">Lobby</button>
+  <button type="button" class="btn btn--sidebar">Lobby</button>
 
   <nav>
     <ul class="room-list">
@@ -8,7 +8,7 @@
           ng-class="{'active': room.id === currentRoom.id,
                      'unread': room.unread > 0}">
         <button type="button"
-            class="sidebar-btn room__join-btn"
+            class="btn--sidebar room__join-btn"
             ng-click="showRoom(room)">
           <i class="fa fa-fw fa-comments-o room__type-icon"></i> {{room.name}}
 
@@ -16,7 +16,7 @@
         </button>
 
         <button type="button"
-            class="room__close-btn"
+            class="btn room__close-btn"
             ng-click="leaveRoom(room)">
           <i class="fa fa-fw fa-times"></i>
         </button>
@@ -29,7 +29,7 @@
                      'active': query === currentRoom,
                      'unread': query.unread > 0}">
         <button type="button"
-            class="sidebar-btn room__join-btn"
+            class="btn btn--sidebar room__join-btn"
             ng-click="showRoom(query)">
           <i class="fa fa-fw room__type-icon"
               ng-class="{'fa-circle': query.online,
@@ -39,7 +39,7 @@
         </button>
 
         <button type="button"
-            class="room__close-btn"
+            class="btn room__close-btn"
             ng-click="leaveRoom(query)">
           <i class="fa fa-fw fa-times"></i>
         </button>
