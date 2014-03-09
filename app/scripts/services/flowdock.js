@@ -232,6 +232,15 @@ angular.module('hipflowApp')
         };
 
         return {
+          update: function (props, cb) {
+            var method = '/flows/' + organization + '/' + flowName + '/messages/' + messageId;
+            var promise = apiPut(method, props);
+
+            if (cb) {
+              promise.success(cb);
+            }
+          },
+
           comments: comments
         };
       };
@@ -247,7 +256,7 @@ angular.module('hipflowApp')
 
       messages.list = function (options, cb) {
         // TODO: Options for since_id etc
-        apiGet('/flows/' + organization + '/' + flowName + '/messages').success(cb);
+        apiGet('/flows/' + organization + '/' + flowName + '/messages', options).success(cb);
       };
 
       messages.send = function (message, uuid, tags, cb) {
@@ -340,16 +349,30 @@ angular.module('hipflowApp')
 
     var privateConversation = function (userId) {
 
+      var message = function (messageId) {
+        return {
+          update: function (props, cb) {
+            var method = '/private/' + userId + '/messages/' + messageId;
+            var promise = apiPut(method, props);
+
+            if (cb) {
+              promise.success(cb);
+            }
+          }
+        };
+      };
+
       var messages = function (messageId, cb) {
         if (cb) {
           apiGet('/private/' + userId + '/messages' + messageId)
             .success(cb);
+        } else {
+          return message(messageId);
         }
       };
 
       messages.list = function (options, cb) {
-        // TODO: Options for since_id etc
-        apiGet('/private/' + userId + '/messages').success(cb);
+        apiGet('/private/' + userId + '/messages', options).success(cb);
       };
 
       messages.send = function (message, uuid, tags, cb) {

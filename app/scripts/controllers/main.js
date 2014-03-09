@@ -14,9 +14,10 @@ angular.module('hipflowApp')
     $scope.showRoom = function (room) {
       $scope.currentRoom = room;
       $scope.setCurrentDiscussion();
-      room.unread = 0;
+
       localStorageService.set('currentRoomId', room.id);
 
+      Rooms.clearMentions(room);
       Messages.update(room);
     };
 

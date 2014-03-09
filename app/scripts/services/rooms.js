@@ -95,9 +95,29 @@ angular.module('hipflowApp')
         }
       },
 
+      clearMentions: function (room) {
+        var r = room.access_mode ?
+          Flowdock.flows(room.organization.parameterized_name, room.parameterized_name) :
+          Flowdock.privateConversations(room.id);
+
+        var unread = ':unread:' + Users.me.id;
+
+        room.unread = 0;
+
+        r.messages.list({ tags: unread }, function (messages) {
+          messages.forEach(function (message) {
+            var tags = message.tags;
+            tags.splice(tags.indexOf(unread), 1);
+
+            r.messages(message.id).update({ tags: tags });
+          });
+        });
+
+      },
+
       close: function (room) {
         var r = room.access_mode ?
-          Flowdock.flows(room.id) :
+          Flowdock.flows(room.organization.parameterized_name, room.parameterized_name) :
           Flowdock.privateConversations(room.id);
 
         r.close(this.update);
