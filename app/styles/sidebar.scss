@@ -1,4 +1,5 @@
 @import "theme";
+@import "util";
 @import "btn";
 
 .sidebar {
@@ -15,8 +16,10 @@
 }
 
 .room {
+  @extend .truncate;
+
   position: relative;
-  overflow: auto;
+  padding-right: 1.875em;
 
   border-top-right-radius: 0.313em;
   border-bottom-right-radius: 0.313em;

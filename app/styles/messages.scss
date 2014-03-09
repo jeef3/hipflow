@@ -259,6 +259,10 @@ $fail-background: rgb(249, 230, 230);
   .message:hover & {
     visibility: visible;
   }
+
+  .message--date-separator & {
+    top: 1.813em;
+  }
 }
 
 .plain-message {
@@ -300,5 +304,9 @@ $fail-background: rgb(249, 230, 230);
   .message--thread-start:hover &,
   .message--thread:hover & {
     opacity: 1;
+  }
+
+  .message--date-separator & {
+    top: 2em;
   }
 }
