@@ -58,6 +58,11 @@ angular.module('hipflowApp')
           roomChatLogs = messages[roomId] = [];
         }
 
+        // Process information in tags
+        var tags = message.tags;
+        message.highlight = tags.indexOf(':highlight:' + Users.me.id) !== -1;
+        message.mentionsMe = tags.indexOf(':user:' + Users.me.id) !== -1;
+
         var existing = this.get(message.uuid || message.id, roomId);
 
         if (existing) {

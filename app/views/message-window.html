@@ -8,8 +8,9 @@
         data-timestamp="{{message.sent | amCalendar}}"
         ng-repeat="message in messages"
         ng-init="meta = getMessageMeta(message)"
-        ng-class="{'message--me': message.user === me().id,
-                   'message--highlight': mentionsMe(message) || message.event === 'jira' || message.event === 'vcs',
+        ng-class="{'message--me': message.user === me.id,
+                   'message--highlight': message.highlight || message.event === 'jira' || message.event === 'vcs',
+                   'message--mentions-me': message.mentionsMe,
                    'message--thread-start': isThreadStart(message),
                    'message--thread': message.event === 'comment',
                    'message--monologue': isMonologue(message, $index),

@@ -120,7 +120,8 @@ $fail-background: rgb(249, 230, 230);
     border-top-color: transparent;
   }
 
-  &.message--highlight {
+  &.message--highlight,
+  &.message--mentions-me {
     background: $notify-background;
   }
 
@@ -251,7 +252,8 @@ $fail-background: rgb(249, 230, 230);
   background: #ffffff;
   border-radius: 0.313em;
 
-  .message--highlight & {
+  .message--highlight &,
+  .message--mentions-me & {
     background: $notify-background;
   }
 

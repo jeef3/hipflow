@@ -7,18 +7,6 @@ angular.module('hipflowApp')
 
     $scope.messages = Messages.messages[$scope.room.id];
 
-    $scope.mentionsMe = function (message) {
-      if (!message.mentions || !message.mentions.length) {
-        return false;
-      }
-
-      var me = message.mentions.filter(function (mention) {
-        return mention === Flowdock.me().id;
-      });
-
-      return me.length > 0;
-    };
-
     $scope.isThreadStart = function (message) {
       // TODO: This needs some more work
       return !!message.lastUpdate;

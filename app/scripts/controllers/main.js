@@ -3,6 +3,8 @@
 angular.module('hipflowApp')
   .controller('MainCtrl', function ($scope, $rootScope, FlowdockAuth, Users, Rooms, Messages, localStorageService) {
 
+    $scope.me = Users.me;
+
     $scope.flows = Rooms.flows;
     $scope.privateConversations = Rooms.privateConversations;
 
@@ -23,10 +25,6 @@ angular.module('hipflowApp')
 
     $scope.leaveRoom = function (room) {
       Rooms.close(room);
-    };
-
-    $scope.me = function () {
-      return Users.me;
     };
 
     $scope.user = function (userId) {
