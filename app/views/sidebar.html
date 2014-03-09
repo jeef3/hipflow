@@ -1,49 +1,51 @@
 <div class="sidebar" ng-controller="SidebarCtrl">
   <button type="button" class="btn btn--sidebar">Lobby</button>
 
-  <nav>
-    <ul class="room-list">
-      <li class="room"
-          ng-repeat="room in flows | filter:{open:true}"
-          ng-class="{'active': room.id === currentRoom.id,
-                     'unread': room.unread > 0}">
-        <button type="button"
-            class="btn--sidebar room__join-btn"
-            ng-click="showRoom(room)">
-          <i class="fa fa-fw fa-comments-o room__type-icon"></i> {{room.name}}
+  <h3 class="list-title">Flows</h3>
+  <ul class="room-list">
+    <li class="room"
+        ng-repeat="room in flows | filter:{open:true}"
+        ng-class="{'active': room.id === currentRoom.id,
+                   'unread': room.unread > 0}">
+      <button type="button"
+          class="btn--sidebar room__join-btn"
+          ng-click="showRoom(room)">
+        <i class="fa fa-fw fa-comments-o room__type-icon"></i> {{room.name}}
 
-          <i class="fa fa-fw fa-circle unread-marker"></i>
-        </button>
+        <i class="fa fa-fw fa-circle unread-marker"></i>
+      </button>
 
-        <button type="button"
-            class="btn room__close-btn"
-            ng-click="leaveRoom(room)">
-          <i class="fa fa-fw fa-times"></i>
-        </button>
-      </li>
+      <button type="button"
+          class="btn room__close-btn"
+          ng-click="leaveRoom(room)">
+        <i class="fa fa-fw fa-times"></i>
+      </button>
+    </li>
+  </ul>
 
-      <li class="room"
-          ng-repeat="query in privateConversations | filter:{open:true}"
-          ng-class="{'query-online': query.online,
-                     'query-offline': !query.online,
-                     'active': query === currentRoom,
-                     'unread': query.unread > 0}">
-        <button type="button"
-            class="btn btn--sidebar room__join-btn"
-            ng-click="showRoom(query)">
-          <i class="fa fa-fw room__type-icon"
-              ng-class="{'fa-circle': query.online,
-                         'fa-circle-o': !query.online}"></i> {{query.name}}
+  <h3 class="list-title">1&ndash;to&ndash;1s</h3>
+  <ul class="room-list">
+    <li class="room"
+        ng-repeat="query in privateConversations | filter:{open:true}"
+        ng-class="{'query-online': query.online,
+                   'query-offline': !query.online,
+                   'active': query === currentRoom,
+                   'unread': query.unread > 0}">
+      <button type="button"
+          class="btn btn--sidebar room__join-btn"
+          ng-click="showRoom(query)">
+        <i class="fa fa-fw room__type-icon"
+            ng-class="{'fa-circle': query.online,
+                       'fa-circle-o': !query.online}"></i> {{query.name}}
 
-          <i class="fa fa-fw fa-circle unread-marker"></i>
-        </button>
+        <i class="fa fa-fw fa-circle unread-marker"></i>
+      </button>
 
-        <button type="button"
-            class="btn room__close-btn"
-            ng-click="leaveRoom(query)">
-          <i class="fa fa-fw fa-times"></i>
-        </button>
-      </li>
-    </ul>
-  </nav>
+      <button type="button"
+          class="btn room__close-btn"
+          ng-click="leaveRoom(query)">
+        <i class="fa fa-fw fa-times"></i>
+      </button>
+    </li>
+  </ul>
 </div>

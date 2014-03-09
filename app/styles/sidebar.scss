@@ -2,6 +2,7 @@
 @import "btn";
 
 .sidebar {
+  color: $sidebar-text;
   background: $sidebar-background;
 }
 
@@ -24,14 +25,15 @@
     background: $sidebar-background-dark;
   }
 
-  .active {
+  &.active {
     color: $sidebar-text-light;
-    background: $sidebar-background-dark;
+    background: $sidebar-background-angle;
   }
 }
 
 .btn--sidebar {
   @extend .btn;
+  @extend .btn--no-focus;
 
   display: block;
   width: 100%;
@@ -39,16 +41,9 @@
   margin: 0;
 
   line-height: 2em;
-  color: $sidebar-text;
 
   .unread & {
     font-weight: 900;
-  }
-
-  &:active,
-  &:hover,
-  &:focus {
-    // background: $sidebar-background-dark;
   }
 }
 
@@ -60,7 +55,7 @@
   top: 0;
   right: 0;
 
-  color: $sidebar-text;
+  // color: $sidebar-text;
 
   &:hover,
   &:active,
@@ -74,6 +69,11 @@
 }
 
 .room__type-icon {
+
+  .active & {
+    color: $sidebar-text-angle;
+  }
+
   .query-online & {
     color: #32BE32;
   }
