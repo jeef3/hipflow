@@ -12,12 +12,22 @@ angular.module('hipflowApp')
       this.tags.splice(this.tags.indexOf(tag), 1);
     };
 
+    var influxRegex = /^influx:(\d+)$/;
     var processTags = function (message) {
-      // Process information in tags
       var tags = message.tags;
       message.highlight = tags.indexOf(':highlight:' + Users.me.id) !== -1;
       message.mentionsMe = tags.indexOf(':user:' + Users.me.id) !== -1;
       message.thread = tags.indexOf(':thread') !== -1;
+
+      if (message.event === 'comment') {
+        message.parent = tags
+          .filter(function (tag) {
+            return influxRegex.test(tag);
+          })
+          .map(function (tag) {
+            return influxRegex.exec(tag)[1];
+          })[0];
+      }
     };
 
     return {
@@ -29,8 +39,8 @@ angular.module('hipflowApp')
         // Add to the chat roomw straight away
         this.add({
           flow: flow.id,
-          event: messageId ? 'comments' : 'message',
-          content: message,
+          event: messageId ? 'comment' : 'message',
+          content: messageId ? { text: message} : message,
           message: messageId,
           sent: new Date().getTime(),
           tags: tags,

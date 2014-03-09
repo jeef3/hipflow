@@ -217,7 +217,7 @@ angular.module('hipflowApp')
           // TODO: Allow no uuid by checking to see if it is an array
           var m = {
             event: 'comment',
-            content: comments,
+            content: comment,
             message: messageId,
             tags: tags,
             uuid: uuid

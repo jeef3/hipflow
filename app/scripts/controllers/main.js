@@ -97,7 +97,7 @@ angular.module('hipflowApp')
       switch (message.event) {
         case 'comment':
           angular.copy({
-            // id: Flowdock.getCommentTitleMessageId(message),
+            id: message.parent,
             title: message.content.title
           }, $scope.currentDiscussion);
           break;
