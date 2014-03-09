@@ -199,7 +199,8 @@ angular.module('hipflowApp')
       '👬': 'two_men_holding_hands',
       '👫': 'couple',
       '😨': 'worried',
-      '😛': 'stuck_out_tongue'
+      '😛': 'stuck_out_tongue',
+      '👀': 'eyes'
     };
 
     var makeImg = function (emoji) {
