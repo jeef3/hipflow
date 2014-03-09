@@ -24,6 +24,11 @@
   border-top-right-radius: 0.313em;
   border-bottom-right-radius: 0.313em;
 
+  &.unread {
+    font-weight: 900;
+    color: $sidebar-text-light;
+  }
+
   &:hover {
     background: $sidebar-background-dark;
   }
@@ -44,10 +49,6 @@
   margin: 0;
 
   line-height: 2em;
-
-  .unread & {
-    font-weight: 900;
-  }
 }
 
 .room__close-btn {

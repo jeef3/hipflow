@@ -6,24 +6,13 @@ angular.module('hipflowApp')
     $scope.privateConversations = Rooms.privateConversations;
 
     $scope.$on('NEW_MESSAGE', function (e, message) {
-      var messageRoomId;
-
       if (message.user === Users.me.id) {
         return;
       }
 
-      if (message.flow) {
-        messageRoomId = message.flow;
-      } else if (message.to) {
-        messageRoomId = message.to === Users.me.id ?
-          message.user :
-          message.to;
+      var room = Rooms.getForMessage(message);
 
-        messageRoomId = parseInt(messageRoomId, 10);
-      }
-
-      if (messageRoomId !== $scope.currentRoom.id) {
-        var room = Rooms.get(messageRoomId);
+      if (room.id !== $scope.currentRoom.id) {
         room.unread = room.unread + 1 || 1;
       }
     });

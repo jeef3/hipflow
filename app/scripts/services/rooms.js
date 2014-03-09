@@ -18,6 +18,9 @@ angular.module('hipflowApp')
       addOrUpdateFlow: function (flow) {
         var existing = this.get(flow.id);
 
+        // Normalize unread
+        flow.unread = flow.unread_mentions || 0;
+
         if (existing) {
           angular.copy(flow, existing);
           return;
@@ -32,6 +35,9 @@ angular.module('hipflowApp')
 
       addOrUpdatePrivateConversation: function (privateConversation) {
         var existing = this.get(privateConversation.id);
+
+        // Normalize unread
+        privateConversation.unread = privateConversation.activity.mentions || 0;
 
         if (existing) {
           angular.copy(privateConversation, existing);
@@ -59,6 +65,11 @@ angular.module('hipflowApp')
         })[0];
 
         // TODO: Handle if the room isn't in the list
+      },
+
+      getForMessage: function (message) {
+        var roomId = Flowdock.util.roomIdFromMessage(message, Users.me);
+        return this.get(roomId);
       },
 
       userActivity: function (message) {
