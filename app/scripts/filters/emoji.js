@@ -200,7 +200,9 @@ angular.module('hipflowApp')
       '👫': 'couple',
       '😨': 'worried',
       '😛': 'stuck_out_tongue',
-      '👀': 'eyes'
+      '👀': 'eyes',
+      '🎁': 'gift',
+      '🐑': 'ram'
     };
 
     var makeImg = function (emoji) {
