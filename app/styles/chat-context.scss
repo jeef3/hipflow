@@ -1,7 +1,9 @@
+@import "util";
+
 .users {
   overflow: auto;
   margin: 0;
-  padding: 0;
+  padding: 0.313em;
 
   list-style: none;
 }
@@ -29,22 +31,21 @@
   }
 }
 
-.discussion-list {
-  padding: 0.313em;
-  margin: 2em 0 0;
+.thread-list {
+  padding: 0 0.625em;
+  margin: 0;
 
   list-style: none;
 }
 
-.discussion-list__item {
-  overflow: hidden;
+.thread-list__item {
+  @extend .truncate;
+
   margin: 0.313em 0;
 
   font-size: 0.813em;
   font-weight: 500;
   color: #666;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   cursor: pointer;
   user-select: none;
 
@@ -58,8 +59,8 @@
   }
 }
 
-.discussion-list__item--muted,
-.discussion-list__item.discussion-muted {
+.thread-list__item--muted,
+.thread-list__item.thread-muted {
   color: #999;
   font-weight: 100;
 

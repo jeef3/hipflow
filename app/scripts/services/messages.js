@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('hipflowApp')
-  .service('Messages', function Messages($rootScope, Flowdock, Users, localStorageService, Uuid) {
-    var messages = localStorageService.get('messages') || {};
+  .service('Messages', function Messages($rootScope, Flowdock, Users, Threads, localStorageService, Uuid) {
 
     var addTag = function (tag) {
       this.tags.push(tag);
@@ -30,13 +29,17 @@ angular.module('hipflowApp')
       }
     };
 
+    var processThread = function (message) {
+      Threads.addMessageToThread(message);
+    };
+
     return {
-      messages: messages,
+      messages: localStorageService.get('messages') || {},
 
       send: function (flow, message, tags, messageId) {
         var uuid = Uuid.generate();
 
-        // Add to the chat roomw straight away
+        // Add to the chat room straight away
         this.add({
           flow: flow.id,
           event: messageId ? 'comment' : 'message',
@@ -70,13 +73,14 @@ angular.module('hipflowApp')
 
       addOrUpdate: function (message, append) {
         var roomId = Flowdock.util.roomIdFromMessage(message, Users.me);
-        var roomChatLogs = messages[roomId];
+        var roomChatLogs = this.messages[roomId];
 
         if (!roomChatLogs) {
-          roomChatLogs = messages[roomId] = [];
+          roomChatLogs = this.messages[roomId] = [];
         }
 
         processTags(message);
+        processThread(message);
 
         var existing = this.get(message.uuid || message.id, roomId);
 
@@ -114,7 +118,7 @@ angular.module('hipflowApp')
       },
 
       get: function (messageId, roomId) {
-        var roomChatLogs = messages[roomId];
+        var roomChatLogs = this.messages[roomId];
 
         if (!roomChatLogs) {
           return null;
