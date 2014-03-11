@@ -212,6 +212,8 @@ $fail-background: rgb(249, 230, 230);
 
   border-radius: 0.313em;
 
+  background-size: $avatar-size;
+
   .message--monologue:not(.message--date-separator) & {
     display: none;
   }

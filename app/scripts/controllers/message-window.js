@@ -46,9 +46,15 @@ angular.module('hipflowApp')
 
       switch (message.event) {
         case 'jira':
-          return { author: 'JIRA' };
+          return {
+            author: 'JIRA',
+            avatar: '/images/jira/avatar.png'
+          };
         case 'vcs':
-          return { author: 'GitHub' };
+          return {
+            author: 'GitHub',
+            avatar: '/images/github/avatar.png'
+          };
       }
     };
   });
