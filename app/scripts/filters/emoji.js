@@ -202,7 +202,12 @@ angular.module('hipflowApp')
       '😛': 'stuck_out_tongue',
       '👀': 'eyes',
       '🎁': 'gift',
-      '🐑': 'ram'
+      '🐑': 'ram',
+      '☁': 'cloud',
+      '🌂': 'closed_umbrella',
+      '🍀': 'four_leaf_clover',
+      '☕': 'coffee',
+      '☔': 'umbrella'
     };
 
     var makeImg = function (emoji) {
