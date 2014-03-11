@@ -3,7 +3,7 @@
 angular.module('hipflowApp')
   .service('Threads', function Threads(Flowdock, localStorageService) {
     return {
-      rooms: localStorageService.get('threads') || {},
+      rooms: {},
 
       getThreads: function (roomId) {
         var threads = this.rooms[roomId];
