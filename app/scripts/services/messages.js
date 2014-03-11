@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hipflowApp')
-  .service('Messages', function Messages($rootScope, Flowdock, Users, Threads, localStorageService, Uuid) {
+  .service('Messages', function Messages($rootScope, Flowdock, Users, Threads, Uuid) {
 
     var addTag = function (tag) {
       this.tags.push(tag);
@@ -34,7 +34,7 @@ angular.module('hipflowApp')
     };
 
     return {
-      messages: localStorageService.get('messages') || {},
+      messages: {},
 
       send: function (flow, message, tags, messageId) {
         var uuid = Uuid.generate();
@@ -129,6 +129,16 @@ angular.module('hipflowApp')
         })[0] || null;
       },
 
+      getRoom: function (roomId) {
+        var roomChatLogs = this.messages[roomId];
+
+        if (!roomChatLogs) {
+          roomChatLogs = this.messages[roomId] = [];
+        }
+
+        return roomChatLogs;
+      },
+
       update: function (room, options) {
         var _this = this;
 
@@ -138,8 +148,6 @@ angular.module('hipflowApp')
 
         r.messages.list(options, function (messages) {
           messages.forEach(_this.addOrUpdate.bind(_this));
-
-          localStorageService.set('messages', _this.messages);
         });
       }
     };

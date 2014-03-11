@@ -9,9 +9,12 @@ angular.module('hipflowApp')
     $scope.privateConversations = Rooms.privateConversations;
 
     var currentRoomId = localStorageService.get('currentRoomId') || null;
-    $scope.currentRoom = currentRoomId ?
-      Rooms.get(currentRoomId) :
-      null;
+    if (currentRoomId) {
+      $scope.currentRoom = Rooms.get(currentRoomId);
+      Messages.update($scope.currentRoom);
+    } else {
+      $scope.currentRoom = null;
+    }
 
     $scope.showRoom = function (room) {
       $scope.currentRoom = room;

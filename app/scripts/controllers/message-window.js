@@ -5,7 +5,7 @@ angular.module('hipflowApp')
     $scope.isLoadingOlder = false;
     $scope.isLoadingNewer = false;
 
-    $scope.messages = Messages.messages[$scope.room.id];
+    $scope.messages = Messages.getRoom($scope.room.id);
 
     $scope.isMonologue = function (message, index) {
       var previous = $scope.messages[index - 1];
