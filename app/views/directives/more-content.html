@@ -1,0 +1,6 @@
+<button class="btn--more-content"
+    ng-click="moreContent = !moreContent">
+  <i class="fa fa-fw fa-ellipsis-h"></i>
+</button>
+<div class="message__more-content"
+    ng-show="moreContent"><div ng-transclude></div></div>

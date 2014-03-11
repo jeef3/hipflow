@@ -6,8 +6,4 @@ the flex sdk source (which IDEA makes nic... -->
 of
 <a ng-href="{{github.repository.url}}" target="_blank">{{github.repository.owner.login}}/{{github.repository.name}}</a>:
 
-<button class="show-more-btn"
-    ng-click="commentVisible = !commentVisible">
-  <i class="fa fa-fw fa-ellipsis-h"></i>
-</button>
-<div class="comment" ng-show="commentVisible" ng-bind-html="github.comment.body_html | emoji"></div>
+<more-content>{{github.comment.body_html | emoji}}</more-content>

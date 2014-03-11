@@ -9,8 +9,4 @@ Unknown:
     </span>
 </span>
 
-<button class="show-more-btn"
-    ng-click="commentVisible = !commentVisible">
-  <i class="fa fa-fw fa-ellipsis-h"></i>
-</button>
-<div class="comment" ng-show="commentVisible" ng-bind-html="jira.comment_body_html"></div>
+<more-content ng-if="jira.comment_body">{{jira.comment_body_html}}</more-content>

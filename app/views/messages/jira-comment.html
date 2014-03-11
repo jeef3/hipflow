@@ -4,9 +4,4 @@
     ng-href="{{jira.issue_url}}"
     class="jira-issue-{{jira.issue_type}}">{{jira.issue_key}} &mdash; {{jira.issue_summary | limitWithEllipsis:30}}</a>
 
-<button class="show-more-btn"
-    ng-show="jira.comment_body"
-    ng-click="commentVisible = !commentVisible">
-  <i class="fa fa-fw fa-ellipsis-h"></i>
-</button>
-<div class="comment" ng-show="commentVisible" ng-bind-html="jira.comment_body_html"></div>
+<more-content ng-if="jira.comment_body">{{jira.comment_body_html}}</more-content>
