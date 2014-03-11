@@ -10,7 +10,7 @@
         ng-repeat="message in messages"
         ng-init="meta = getMessageMeta(message)"
         ng-class="{'message--me': message.user === me.id,
-                   'message--highlight': message.highlight || message.event === 'jira' || message.event === 'vcs',
+                   'message--highlight': message.highlight,
                    'message--mentions-me': message.mentionsMe,
                    'message--thread': message.thread,
                    'message--comment': message.event === 'comment',
