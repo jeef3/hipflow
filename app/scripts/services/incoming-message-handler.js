@@ -10,7 +10,7 @@ angular.module('hipflowApp')
         case 'file':
         case 'vcs':
         case 'jira':
-          Messages.addOrUpdate(message);
+          Messages.add(message);
           $rootScope.$broadcast('NEW_MESSAGE', message);
           console.log('Handled message', message);
           break;

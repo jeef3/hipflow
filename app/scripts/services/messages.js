@@ -2,6 +2,7 @@
 
 angular.module('hipflowApp')
   .service('Messages', function Messages($rootScope, Flowdock, Users, Threads, Uuid) {
+    var MESSAGE_BUFFER_LENGTH = 30;
 
     var addTag = function (tag) {
       this.tags.push(tag);
@@ -68,10 +69,10 @@ angular.module('hipflowApp')
       },
 
       add: function (message) {
-        this.addOrUpdate(message, true);
+        this.addOrUpdate(message, true, true);
       },
 
-      addOrUpdate: function (message, append) {
+      addOrUpdate: function (message, append, prune) {
         var roomId = Flowdock.util.roomIdFromMessage(message, Users.me);
         var roomChatLogs = this.messages[roomId];
 
@@ -91,13 +92,15 @@ angular.module('hipflowApp')
 
         roomChatLogs.push(message);
 
-        if (!existing && append) {
-          return;
+        if (!append) {
+          roomChatLogs.sort(function (m1, m2) {
+            return m1.sent - m2.sent;
+          });
         }
 
-        roomChatLogs.sort(function (m1, m2) {
-          return m1.sent - m2.sent;
-        });
+        if (prune && roomChatLogs.length > MESSAGE_BUFFER_LENGTH) {
+          roomChatLogs.splice(0, roomChatLogs.length - MESSAGE_BUFFER_LENGTH);
+        }
       },
 
       edit: function (message) {
@@ -147,7 +150,9 @@ angular.module('hipflowApp')
           Flowdock.privateConversations(room.id);
 
         r.messages.list(options, function (messages) {
-          messages.forEach(_this.addOrUpdate.bind(_this));
+          messages.forEach(function (message) {
+            _this.addOrUpdate(message);
+          });
         });
       }
     };
