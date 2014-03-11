@@ -42,6 +42,7 @@ angular.module('hipflowApp')
 
         // Add to the chat room straight away
         this.add({
+          app: 'chat',
           flow: flow.id,
           event: messageId ? 'comment' : 'message',
           content: messageId ? { text: message} : message,
