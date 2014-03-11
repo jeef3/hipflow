@@ -20,13 +20,19 @@ angular.module('hipflowApp')
       $scope.currentRoom = room;
       $scope.setCurrentDiscussion();
 
-      localStorageService.set('currentRoomId', room.id);
+      localStorageService.set('currentRoomId', room ? room.id : null);
 
-      Rooms.clearMentions(room);
-      Messages.update(room);
+      if (room) {
+        Rooms.clearMentions(room);
+        Messages.update(room);
+      }
     };
 
     $scope.leaveRoom = function (room) {
+      if (room === $scope.currentRoom) {
+        $scope.showRoom(null);
+      }
+
       Rooms.close(room);
     };
 

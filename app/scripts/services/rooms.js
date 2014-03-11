@@ -9,7 +9,7 @@ angular.module('hipflowApp')
       flows: flows,
       privateConversations: privateConversations,
 
-      open: function () {
+      openFlows: function () {
         return flows.filter(function (room) {
           return room.open;
         });
@@ -116,7 +116,19 @@ angular.module('hipflowApp')
       },
 
       close: function (room) {
-        var r = room.access_mode ?
+        var isFlow = !!room.access_mode;
+
+        // Close locally
+        var l = isFlow ?
+          this.flows :
+          this.privateConversations;
+
+        l.splice(l.indexOf(room), 1);
+        localStorageService.set('flows', this.flows);
+        localStorageService.set('privateConversations', this.privateConversations);
+
+        // Close on Flowdock
+        var r = isFlow ?
           Flowdock.flows(room.organization.parameterized_name, room.parameterized_name) :
           Flowdock.privateConversations(room.id);
 
