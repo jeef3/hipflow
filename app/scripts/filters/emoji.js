@@ -207,7 +207,8 @@ angular.module('hipflowApp')
       '🌂': 'closed_umbrella',
       '🍀': 'four_leaf_clover',
       '☕': 'coffee',
-      '☔': 'umbrella'
+      '☔': 'umbrella',
+      '😲': 'astonished'
     };
 
     var makeImg = function (emoji) {
