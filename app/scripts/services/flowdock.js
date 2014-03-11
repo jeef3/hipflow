@@ -339,7 +339,8 @@ angular.module('hipflowApp')
           }
 
           return roomId;
-        }
+        },
+        url: apiUrl
       }
     };
   });

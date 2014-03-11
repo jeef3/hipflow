@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hipflowApp')
-  .controller('MainCtrl', function ($scope, $rootScope, FlowdockAuth, Users, Rooms, Messages, localStorageService) {
+  .controller('MainCtrl', function ($scope, $rootScope, Flowdock, FlowdockAuth, Users, Rooms, Messages, localStorageService) {
 
     $scope.me = Users.me;
 
@@ -75,8 +75,8 @@ angular.module('hipflowApp')
         });
     };
 
-    $scope.getFileUrl = function (/*path*/) {
-      // return Flowdock.url(path);
+    $scope.getFileUrl = function (path) {
+      return Flowdock.util.url(path);
     };
 
     $scope.currentDiscussion = {};
