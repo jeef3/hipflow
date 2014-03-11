@@ -10,9 +10,14 @@ angular.module('hipflowApp')
     $scope.isMonologue = function (message, index) {
       var previous = $scope.messages[index - 1];
 
-      return previous &&
-        message.user === previous.user &&
-        message.app === previous.app;
+      if (message.user === '0') {
+        return previous &&
+          message.event === previous.event;
+      } else {
+        return previous &&
+          message.user === previous.user &&
+          message.app === previous.app;
+      }
     };
 
     $scope.isSameDay = function (message, index) {
