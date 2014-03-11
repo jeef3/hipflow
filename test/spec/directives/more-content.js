@@ -15,6 +15,6 @@ describe('Directive: moreContent', function () {
   it('should make hidden element visible', inject(function ($compile) {
     element = angular.element('<more-content></more-content>');
     element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the moreContent directive');
+    expect(element.text()).toBe('');
   }));
 });
