@@ -76,6 +76,9 @@ angular.module('hipflowApp')
         var roomId = Flowdock.util.roomIdFromMessage(message, Users.me);
 
         var room = this.get(roomId);
+        if (!room) {
+          return;
+        }
 
         var user = room.users.filter(function (user) {
           return user.id === parseInt(message.user);
