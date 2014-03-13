@@ -51,16 +51,8 @@ angular.module('hipflowApp')
       this.message = null;
     };
 
-    $scope.isOnline = function (user) {
-      var now = new Date(),
-        ping = user.last_ping,
-        diff = now - ping;
-
-      if (diff < (1000 * 60 * 5)) {
-        return true;
-      } else {
-        return false;
-      }
+    $scope.isOnline = function (userId) {
+      return Users.isOnline(userId);
     };
 
     $scope.tokenExpired = false;

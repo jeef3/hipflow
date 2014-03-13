@@ -10,7 +10,7 @@
       <button type="button"
           class="btn--sidebar room__join-btn"
           ng-click="showRoom(room)">
-        <i class="fa fa-fw fa-comments-o room__type-icon"></i> {{room.name}}
+        <i class="fa fa-fw fa-comments-o room__icon"></i> {{room.name}}
 
         <i class="fa fa-fw fa-circle unread-marker"></i>
       </button>
@@ -34,9 +34,9 @@
       <button type="button"
           class="btn btn--sidebar room__join-btn"
           ng-click="showRoom(query)">
-        <i class="fa fa-fw room__type-icon"
-            ng-class="{'fa-circle': query.online,
-                       'fa-circle-o': !query.online}"></i> {{query.name}}
+        <i class="fa fa-fw fa-circle"
+            ng-class="{'online-status-icon--online': isOnline(query.id),
+                       'online-status-icon--offline': !isOnline(query.id)}"></i> {{query.name}}
 
         <i class="fa fa-fw fa-circle unread-marker"></i>
       </button>

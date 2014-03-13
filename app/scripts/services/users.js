@@ -37,6 +37,20 @@ angular.module('hipflowApp')
         }
       },
 
+      isOnline: function (userId) {
+        var user = this.get(userId);
+
+        var now = new Date(),
+        ping = user.last_ping || user.last_activity,
+        diff = now - ping;
+
+        if (diff < (1000 * 60 * 5)) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+
       update: function () {
         var _this = this;
 
