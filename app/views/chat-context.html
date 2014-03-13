@@ -1,34 +1,36 @@
 <aside class="chat-context" ng-controller="ChatContextCtrl">
 
-  <ul class="users">
-    <li class="user avatar"
-        style="background-image:url({{user.avatar}})"
-        title="{{user.name}}"
-        ng-repeat="user in currentRoom.users | orderBy:'-last_ping'"
-        ng-class="{'user-online': isOnline(user.id),
-                   'user-offline': !isOnline(user.id)}">
-    </li>
-  </ul>
+  <div ng-if="currentRoom.access_mode">
+    <ul class="users">
+      <li class="user avatar"
+          ng-repeat="user in currentRoom.users | orderBy:'-last_ping'"
+          title="{{user.name}}"
+          style="background-image:url({{user.avatar}})"
+          ng-class="{'user-online': isOnline(user.id),
+                     'user-offline': !isOnline(user.id)}">
+      </li>
+    </ul>
 
-  <h3 class="list-title">Discussions</h3>
-  <ul class="thread-list">
-    <li class="thread-list__item"
-        ng-repeat="thread in threads | orderBy:'-lastUpdate'"
-        ng-class="{'thread-muted': thread.muted}">
-      <i class="fa fa-fw"
-          ng-click="thread.muted = !thread.muted"
-          ng-class="{'fa-volume-up': !thread.muted,
-                     'fa-volume-off': thread.muted}"></i>
-      <span title="{{thread.title}}"
-          ng-bind-html="thread.title | emoji"></span>
-    </li>
-  </ul>
+    <h3 class="list-title">Discussions</h3>
+    <ul class="thread-list">
+      <li class="thread-list__item"
+          ng-repeat="thread in threads | orderBy:'-lastUpdate'"
+          ng-class="{'thread-muted': thread.muted}">
+        <i class="fa fa-fw"
+            ng-click="thread.muted = !thread.muted"
+            ng-class="{'fa-volume-up': !thread.muted,
+                       'fa-volume-off': thread.muted}"></i>
+        <span title="{{thread.title}}"
+            ng-bind-html="thread.title | emoji"></span>
+      </li>
+    </ul>
 
-  <h3 class="list-title">Integrations</h3>
-  <ul class="thread-list">
-    <li class="thread-list__item">GitHub</li>
-    <li class="thread-list__item">JIRA</li>
-  </ul>
+    <h3 class="list-title">Integrations</h3>
+    <ul class="thread-list">
+      <li class="thread-list__item">GitHub</li>
+      <li class="thread-list__item">JIRA</li>
+    </ul>
+  </div>
 
   <buton type="button"
       class="btn refresh-token-btn"

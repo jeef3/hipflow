@@ -55,7 +55,7 @@ code,
 }
 
 .btn--more-content {
-  @extend .btn;
+  @extend .btn--no-focus;
 
   padding: 0 0.313em;
   margin: 0;
