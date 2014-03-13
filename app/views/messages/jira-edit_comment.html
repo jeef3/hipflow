@@ -4,4 +4,4 @@
     ng-href="{{jira.issue_url}}"
     class="jira-issue-{{jira.issue_type}}">{{jira.issue_key}} &mdash; {{jira.issue_summary | limitWithEllipsis:30}}</a>
 
-<more-content ng-if="jira.comment_body">{{jira.comment_body_html}}</more-content>
+<more-content content="jira.comment_body_html"></more-content>

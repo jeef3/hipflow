@@ -12,14 +12,11 @@
 on
 <a ng-href="{{github.repository.url}}" target="_blank">{{github.repository.owner.name}}/{{github.repository.name}}</a>
 
-<button class="btn--more-content"
-    ng-show="github.commits.length > 0"
-    ng-click="commitsVisible = !commitsVisible">
-  <i class="fa fa-fw fa-ellipsis-h"></i>
-</button>
-<ol ng-show="commitsVisible">
-  <li ng-repeat="commit in github.commits">
-    <a class="code" ng-href="{{commit.url}}" ng-bind="commit.id | shortHash" target="_blank"></a> {{commit.message}}
-  </li>
-</ol>
+<more-content>
+  <ol>
+    <li ng-repeat="commit in github.commits">
+      <a class="code" ng-href="{{commit.url}}" ng-bind="commit.id | shortHash" target="_blank"></a> {{commit.message}}
+    </li>
+  </ol>
+</more-content>
 

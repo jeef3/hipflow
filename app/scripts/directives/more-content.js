@@ -6,6 +6,8 @@ angular.module('hipflowApp')
       templateUrl: '/views/directives/more-content.html',
       restrict: 'E',
       transclude: true,
-      scope: true
+      scope: {
+        content: '='
+      }
     };
   });

@@ -15,7 +15,8 @@
                    'message--thread': message.thread,
                    'message--comment': message.event === 'comment',
                    'message--monologue': isMonologue(message, $index),
-                   'message--date-separator': !isSameDay(message, $index)}">
+                   'message--date-separator': !isSameDay(message, $index),
+                   'message--influx': message.app === 'influx'}">
 
       <button type="button"
           class="btn message__discussion-marker"

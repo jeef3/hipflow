@@ -1,7 +1,7 @@
 @import "theme";
 
 html, button {
-  font: 100%/1.5 "lato", sans-serif;
+  font: 100%/1.5 "Lato", sans-serif;
   font-weight: 400;
 
   -webkit-font-smoothing: antialiased;
@@ -14,7 +14,30 @@ input, textarea {
   font-family: "lato", sans-serif;
 }
 
-code {
+blockquote,
+.blockquote {
+  $size: 0.125em;
+
+  position: relative;
+
+  padding-left: $size * 8;
+  margin: $size * 8;
+
+  &:before {
+    content: '';
+
+    position: absolute;
+    top: $size;
+    bottom: $size;
+    left: 0;
+
+    border: solid $size $red;
+    border-radius: $size;
+  }
+}
+
+code,
+.code {
   font-family: "Source Code Pro", monospace;
 }
 
