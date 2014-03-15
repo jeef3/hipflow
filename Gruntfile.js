@@ -58,6 +58,30 @@ module.exports = function (grunt) {
     },
 
     // The actual grunt server settings
+    nodemon: {
+      dev: {
+        script: 'app/server.js',
+        watch: 'config',
+        options: {
+          nodeArgs: ['--debug'],
+          env: {
+            PORT: 9000
+          },
+          callback: function (nodemon) {
+            nodemon.on('log', function (event) {
+              console.log(event.colour);
+            });
+
+            nodemon.on('config:update', function () {
+              setTimeout(function () {
+                require('open')('http://localhost:9000');
+              }, 1000);
+            });
+          }
+        }
+      }
+    },
+
     connect: {
       options: {
         port: 9000,
@@ -82,11 +106,6 @@ module.exports = function (grunt) {
             'test',
             '<%= yeoman.app %>'
           ]
-        }
-      },
-      dist: {
-        options: {
-          base: '<%= yeoman.dist %>'
         }
       }
     },
@@ -326,9 +345,15 @@ module.exports = function (grunt) {
 
     // Run some tasks in parallel to speed up the build process
     concurrent: {
-      server: [
-        'compass:server'
-      ],
+      server: {
+        tasks: [
+          'nodemon',
+          'watch'
+        ],
+        options: {
+          logConcurrentOutput: true
+        }
+      },
       test: [
         'compass'
       ],
@@ -388,10 +413,9 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'bower-install',
-      'concurrent:server',
+      'compass:server',
       'autoprefixer',
-      'connect:livereload',
-      'watch'
+      'concurrent:server'
     ]);
   });
 

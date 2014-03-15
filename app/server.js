@@ -6,7 +6,7 @@ var passport = require('passport');
 var request = require('request');
 var app = express();
 
-app.set('port', process.env.PORT || 9000);
+var config = require('./config/config');
 
 app.configure(function () {
   app.use(express.json());
@@ -22,6 +22,8 @@ app.configure(function () {
 });
 
 app.configure('development', function () {
+  app.use(require('connect-livereload')({ port: config.get('LIVERELOAD_PORT') || 35729 }));
+
   app.use('/styles', express.static(path.join(__dirname, '..', '.tmp', 'styles')));
 });
 
@@ -63,8 +65,8 @@ app.get('/', function (req, res) {
   res.sendfile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(app.get('port'), function () {
-  console.log('Listening on %d', app.get('port'));
+app.listen(config.get('PORT'), function () {
+  console.log('Listening on %d', config.get('PORT'));
 });
 
 exports = app;
