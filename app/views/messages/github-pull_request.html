@@ -1,6 +1,8 @@
-{{github.sender.login}} {{github.action}} pull request
-<a ng-href="{{github.pull_request.html_url}}" target="_blank">#{{github.number}} &mdash; {{github.pull_request.title}}</a>
+{{github.sender.login}} {{github.action}} pull request #{{github.number}}
+<a ng-href="{{github.pull_request.html_url}}" target="_blank">{{github.pull_request.title | limitWithEllipsis:50}}</a>
 for
 <a ng-href="{{github.repository.html_url}}" target="_blank">{{github.repository.owner.login}}/{{github.repository.name}}</a>
 
-<more-content content="github.pull_request.body_html | emoji"></more-content>
+<more-content
+    ng-if="github.action === 'opened'"
+    content="github.pull_request.body_html | emoji"></more-content>

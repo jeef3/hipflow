@@ -1,18 +1,26 @@
-{{github.pusher.name}} <span ng-if="github.forced">force</span> pushed
-<ng-pluralize
-    count="github.commits.length"
-    when="{'0': '',
-           'one': 'one commit to',
-           'other': '{} commits to'}"></ng-pluralize>
-<a target="_blank"
-    ng-if="!github.forced"
-    ng-href="{{github.compare}}">{{github.ref | localBranchName}}</a>
-<span
-    ng-if="github.forced">{{github.ref | localBranchName}}</span>
+{{github.pusher.name}}
+<span ng-if="github.deleted">
+  deleted branch
+  <a target="_blank"
+      ng-href="{{github.compare}}">{{github.ref | localBranchName}}</a>
+</span>
+
+<span ng-if="!github.deleted">
+  <span ng-if="github.forced">force</span> pushed
+
+  <ng-pluralize
+      count="github.commits.length"
+      when="{'0': '',
+             'one': 'one commit to',
+             'other': '{} commits to'}"></ng-pluralize>
+  <a target="_blank"
+      ng-href="{{github.compare}}">{{github.ref | localBranchName}}</a>
+</span>
+
 on
 <a ng-href="{{github.repository.url}}" target="_blank">{{github.repository.owner.name}}/{{github.repository.name}}</a>
 
-<more-content>
+<more-content ng-if="github.commits.length">
   <ol>
     <li ng-repeat="commit in github.commits">
       <a class="code" ng-href="{{commit.url}}" ng-bind="commit.id | shortHash" target="_blank"></a> {{commit.message | limitWithEllipsis:50}}
