@@ -11,7 +11,7 @@
       </li>
     </ul>
 
-    <h3 class="list-title">Discussions</h3>
+    <h3 class="list-title">Threads</h3>
     <ul class="thread-list">
       <li class="thread-list__item"
           ng-repeat="thread in threads | orderBy:'-lastUpdate'"
@@ -25,10 +25,11 @@
       </li>
     </ul>
 
-    <h3 class="list-title">Integrations</h3>
+    <h3 class="list-title">Sources</h3>
     <ul class="thread-list">
-      <li class="thread-list__item">GitHub</li>
-      <li class="thread-list__item">JIRA</li>
+      <li class="thread-list__item"
+          ng-repeat="source in sources"
+          ng-class="source--{{source.type}}">{{source.id}}</li>
     </ul>
   </div>
 

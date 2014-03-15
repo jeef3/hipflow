@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hipflowApp')
-  .controller('MainCtrl', function ($scope, $rootScope, Flowdock, FlowdockAuth, Users, Rooms, Messages, localStorageService) {
+  .controller('MainCtrl', function ($scope, $rootScope, Flowdock, FlowdockAuth, Users, Rooms, Messages, Sources, localStorageService) {
 
     $scope.me = Users.me;
 
@@ -25,6 +25,7 @@ angular.module('hipflowApp')
       if (room) {
         Rooms.clearMentions(room);
         Messages.update(room);
+        Sources.update(room);
       }
     };
 

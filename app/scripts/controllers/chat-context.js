@@ -1,15 +1,18 @@
 'use strict';
 
 angular.module('hipflowApp')
-  .controller('ChatContextCtrl', function ($scope, Threads) {
+  .controller('ChatContextCtrl', function ($scope, Threads, Sources) {
 
-    if ($scope.currentRoom) {
-      $scope.threads = Threads.getThreads($scope.currentRoom.id);
+    var update = function (room) {
+      if (room) {
+        $scope.threads = Threads.getThreads(room.id);
+        $scope.sources = Sources.getSources(room.id);
+      }  
     }
 
     $scope.$watch('currentRoom', function () {
-      if ($scope.currentRoom) {
-        $scope.threads = Threads.getThreads($scope.currentRoom.id);
-      }
+      update($scope.currentRoom);
     });
+
+    update($scope.currentRoom);
   });

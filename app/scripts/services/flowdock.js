@@ -143,6 +143,24 @@ angular.module('hipflowApp')
         }
       };
 
+      var source = function (sourceId) {
+        
+      };
+
+      var sources = function (sourceId, cb) {
+        if (cb) {
+          apiGet('/flows/' + organization + '/' + flowName, '/sources/' + sourceId)
+            .success(cb);
+        } else {
+          return source(sourceId);
+        }
+      };
+
+      sources.list = function (cb) {
+        apiGet('/flows/' + organization + '/' + flowName + '/sources')
+          .success(cb);
+      };
+
       return {
         update: function (props, cb) {
           var method = '/flows/' + organization + '/' + flowName;
@@ -186,7 +204,8 @@ angular.module('hipflowApp')
           return this.update({ access_mode: mode }, cb);
         },
 
-        messages: messages
+        messages: messages,
+        sources: sources
       };
     };
 
