@@ -15,7 +15,7 @@ on
 <more-content>
   <ol>
     <li ng-repeat="commit in github.commits">
-      <a class="code" ng-href="{{commit.url}}" ng-bind="commit.id | shortHash" target="_blank"></a> {{commit.message}}
+      <a class="code" ng-href="{{commit.url}}" ng-bind="commit.id | shortHash" target="_blank"></a> {{commit.message | limitWithEllipsis:50}}
     </li>
   </ol>
 </more-content>
