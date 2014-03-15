@@ -38,7 +38,14 @@ blockquote,
 
 code,
 .code {
+  padding: 0 0.313em;
+
   font-family: "Source Code Pro", monospace;
+  font-size: 0.813em;
+
+  border: solid 1px #ddd;
+  border-radius: 0.313em;
+  background: #eee;
 }
 
 .list-title {
