@@ -5,7 +5,7 @@
 
 <div class="messages-container">
   <ul class="messages" ui-scroll-bottom>
-    <li class="message"
+    <li class="message message--{{message.app}}"
         data-timestamp="{{message.sent | amCalendar}}"
         ng-repeat="message in messages"
         ng-init="meta = getMessageMeta(message)"
@@ -15,8 +15,7 @@
                    'message--thread': message.thread,
                    'message--comment': message.event === 'comment',
                    'message--monologue': isMonologue(message, $index),
-                   'message--date-separator': !isSameDay(message, $index),
-                   'message--influx': message.app === 'influx'}">
+                   'message--date-separator': !isSameDay(message, $index)}">
 
       <button type="button"
           class="btn message__discussion-marker"
