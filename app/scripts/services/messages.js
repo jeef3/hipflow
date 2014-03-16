@@ -37,13 +37,13 @@ angular.module('hipflowApp')
     return {
       messages: {},
 
-      send: function (flow, message, tags, messageId) {
+      send: function (room, message, tags, messageId) {
         var uuid = Uuid.generate();
 
         // Add to the chat room straight away
         this.add({
           app: 'chat',
-          flow: flow.id,
+          flow: room.id,
           event: messageId ? 'comment' : 'message',
           content: messageId ? { text: message} : message,
           message: messageId,
@@ -53,15 +53,17 @@ angular.module('hipflowApp')
           uuid: uuid
         });
 
+        var r = room.access_mode ?
+          Flowdock.flows(room.organization.parameterized_name, room.parameterized_name) :
+          Flowdock.privateConversations(room.id);
+
         // Post to Flowdock
         if (messageId) {
-          Flowdock.flows(flow.organization.parameterized_name, flow.parameterized_name)
-            .messages(messageId)
+          r.messages(messageId)
             .comments
             .send(message, uuid, tags);
         } else {
-          Flowdock.flows(flow.organization.parameterized_name, flow.parameterized_name)
-            .messages
+          r.messages
             .send(message, uuid, tags);
         }
       },
