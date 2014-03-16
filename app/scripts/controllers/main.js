@@ -23,9 +23,7 @@ angular.module('hipflowApp')
       localStorageService.set('currentRoomId', room ? room.id : null);
 
       if (room) {
-        Rooms.clearMentions(room);
         Messages.update(room);
-        Sources.update(room);
       }
     };
 

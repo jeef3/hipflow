@@ -4,14 +4,18 @@ angular.module('hipflowApp')
   .controller('ChatContextCtrl', function ($scope, Threads, Sources) {
 
     var update = function (room) {
-      if (room) {
-        $scope.threads = Threads.getThreads(room.id);
-        $scope.sources = Sources.getSources(room.id);
-      }  
-    }
+      if (!room) {
+        return;
+      }
 
-    $scope.$watch('currentRoom', function () {
-      update($scope.currentRoom);
+      $scope.threads = Threads.getThreads(room.id);
+      $scope.sources = Sources.getSources(room.id);
+
+      Sources.update(room);
+    };
+
+    $scope.$watch('currentRoom', function (room) {
+      update(room);
     });
 
     update($scope.currentRoom);
