@@ -143,8 +143,8 @@ angular.module('hipflowApp')
         }
       };
 
-      var source = function (sourceId) {
-        
+      var source = function (/*sourceId*/) {
+
       };
 
       var sources = function (sourceId, cb) {
