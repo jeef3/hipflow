@@ -67,8 +67,40 @@ angular.module('hipflowApp')
             .send(message, uuid, tags);
         }
       },
-      sendPrivate: function (userId, message, tags) {
-        Flowdock.privateConversations(userId).send(message, tags);
+
+      upload: function (room, file, tags, messageId) {
+        var uuid = Uuid.generate();
+
+        // Add to the chat room straight away
+        this.add({
+          app: 'chat',
+          flow: room.id,
+          event: 'file',
+          content: {
+            data: '',
+            content_type: '',
+            file_name: ''
+          },
+          message: messageId,
+          sent: new Date().getTime(),
+          tags: tags,
+          user: Number(Users.me.id).toString(),
+          uuid: uuid
+        });
+
+        var r = room.access_mode ?
+          Flowdock.flows(room.organization.parameterized_name, room.parameterized_name) :
+          Flowdock.privateConversations(room.id);
+
+        // Post to Flowdock
+        if (messageId) {
+          r.messages(messageId)
+            .comments
+            .upload(file, uuid, tags);
+        } else {
+          r.messages
+            .upload(file, uuid, tags);
+        }
       },
 
       add: function (message) {
