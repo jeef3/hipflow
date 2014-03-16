@@ -32,7 +32,7 @@
       <div class="message__author">{{meta.author}}</div>
 
       <a href="{{meta.permalink}}" title="Permalink">
-        <time datetime=""
+        <time datetime="{{message.sent | date:'yyyy-mm-ddThh:mm:ssZ'}}"
             title="{{message.sent | date:'fullDate'}}"
             class="message__timestamp"
             am-time-ago="message.sent"></time>
