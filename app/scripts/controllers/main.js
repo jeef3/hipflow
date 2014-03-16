@@ -40,6 +40,10 @@ angular.module('hipflowApp')
       Rooms.close(room);
     };
 
+    $scope.upload = function (file) {
+      console.log('upload file %s', file.name);
+    };
+
     $scope.user = function (userId) {
       return Users.get(userId);
     };

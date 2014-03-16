@@ -53,6 +53,25 @@ $chat-context-small-width = 3.125em;
   left: $sidebar-width;
 
   transition: right $responsive-transition-time ease-in-out;
+
+  &.file-hover {
+    &:before {
+      content: '';
+
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      pointer-events: none;
+
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    &:after {
+
+    }
+  }
 }
 
 .chat-context {

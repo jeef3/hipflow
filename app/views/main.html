@@ -1,7 +1,8 @@
 
 <div ng-include="'views/sidebar.html'"></div>
 
-<section class="chat">
+<section class="chat"
+    on-file-drop="upload(file)">
   <div class="message-windows">
     <!-- Rooms -->
     <div class="message-window"
