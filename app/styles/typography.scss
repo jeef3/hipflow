@@ -34,6 +34,15 @@ blockquote,
     border: solid $size $red;
     border-radius: $size;
   }
+
+  blockquote,
+  .blockquote {
+    color: $text-color-light;
+
+    &:before {
+      border-color: $text-color-light;
+    }
+  }
 }
 
 code,
