@@ -10,7 +10,7 @@ angular.module('hipflowApp', [
     $locationProvider.html5Mode(true);
     localStorageServiceProvider.setPrefix('hipflow');
   })
-  .run(function ($window, Flowdock, FlowdockAuth, Users, Rooms, IncomingMessageHandler) {
+  .run(function ($window, Notifications, Flowdock, FlowdockAuth, Users, Rooms, IncomingMessageHandler) {
     if (!FlowdockAuth.isAuthenticated()) {
       $window.location.href = '/login';
     }
