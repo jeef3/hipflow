@@ -7,7 +7,9 @@
           title="{{user.name}}"
           style="background-image:url({{user.avatar}})"
           ng-class="{'user-online': isOnline(user.id),
-                     'user-offline': !isOnline(user.id)}">
+                     'user-offline': !isOnline(user.id),
+                     'user--typing': user.typing}">
+        <i class="fa fa-fw fa-pencil user-typing-indicator"></i>
       </li>
     </ul>
 

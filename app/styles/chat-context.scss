@@ -9,6 +9,7 @@
 }
 
 .user {
+  position: relative;
   float: left;
   margin: 0.313em;
 
@@ -28,6 +29,23 @@
       opacity: 1;
       filter: grayscale(0);
     }
+  }
+}
+
+.user-typing-indicator {
+  position: absolute;
+  display: none;
+  width: 19px;
+  height: 19px;
+  right: 0;
+  bottom: 0;
+
+  line-height: 19px;
+  color: black;
+  background: rgba(255,255,255,0.5);
+
+  .user--typing & {
+    display: block;
   }
 }
 
