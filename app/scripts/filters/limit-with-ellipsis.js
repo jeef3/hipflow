@@ -7,6 +7,12 @@ angular.module('hipflowApp')
         return input;
       }
 
-      return input.substring(0, limit).trim() + '…';
+      var output = input.substring(0, limit + 1).trim();
+
+      if (output.length < input.length) {
+        output = output + '…';
+      }
+
+      return output;
     };
   });
