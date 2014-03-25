@@ -215,7 +215,8 @@ angular.module('hipflowApp')
       '😎': 'sunglasses',
       '🚨': 'rotating_light',
       '😆': 'laughing',
-      '😑': 'expressionless'
+      '😑': 'expressionless',
+      '😭': 'sob'
     };
 
     var makeImg = function (emoji) {
