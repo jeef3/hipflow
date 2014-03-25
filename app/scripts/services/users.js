@@ -40,6 +40,10 @@ angular.module('hipflowApp')
       isOnline: function (userId) {
         var user = this.get(userId);
 
+        if (!user) {
+          return false;
+        }
+
         var now = new Date(),
         ping = user.last_ping || user.last_activity,
         diff = now - ping;
