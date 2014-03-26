@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hipflowApp')
-  .service('Notifications', function Notifications($rootScope, $window, $document, Rooms) {
+  .service('Notifications', function Notifications($rootScope, $window, $document, Users, Rooms) {
 
     if (!('Notification' in $window)) {
       console.log('No notifications');
@@ -17,7 +17,11 @@ angular.module('hipflowApp')
     }
 
     $rootScope.$on('NEW_MESSAGE', function (e, message) {
-      if ($document.hidden) {
+      if (!$document.hidden || document.hasFocus()) {
+        return;
+      }
+
+      if (parseInt(message.user) === Users.me.id) {
         return;
       }
 
