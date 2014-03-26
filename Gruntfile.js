@@ -7,6 +7,8 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
+var pkg = require('./package.json');
+
 module.exports = function (grunt) {
 
   // Load grunt tasks automatically
@@ -340,6 +342,29 @@ module.exports = function (grunt) {
           { src: 'package.json' },
           { cwd: '<%= yeoman.dist %>/', src: '**', expand: true }
         ]
+      }
+    },
+
+    buildcontrol: {
+      options: {
+        dir: 'dist',
+        commit: true,
+        push: true,
+        message: 'Built from commit %sourceCommit% on branch %sourceBranch%'
+      },
+
+      heroku: {
+        options: {
+          remote: 'git@heroku.com:slipflow.git',
+          branch: 'master',
+          tag: pkg.version
+        }
+      },
+      local: {
+        options: {
+          remote: '../',
+          branch: 'build'
+        }
       }
     },
 
