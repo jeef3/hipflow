@@ -167,6 +167,21 @@ $fail-background: rgb(249, 230, 230);
     }
   }
 
+  &.message--first-unseen:before {
+    content: 'Unread';
+
+    display: block;
+
+    color: white;
+    font-weight: 900;
+    font-size: 0.813em;
+    text-transform: uppercase;
+    text-align: center;
+
+    border-radius: 0.313em;
+    background: #975050;
+  }
+
   a {
     font-weight: 600;
     color: rgb(62, 116, 173);

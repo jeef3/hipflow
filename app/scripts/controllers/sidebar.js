@@ -16,8 +16,4 @@ angular.module('hipflowApp')
         room.unread = room.unread + 1 || 1;
       }
     });
-
-    $scope.$watch('currentRoom', function (room) {
-      Rooms.clearMentions(room);
-    });
   });

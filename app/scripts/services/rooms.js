@@ -100,7 +100,7 @@ angular.module('hipflowApp')
         }
       },
 
-      clearMentions: function (room) {
+      focusGained: function (room) {
         var r = room.access_mode ?
           Flowdock.flows(room.organization.parameterized_name, room.parameterized_name) :
           Flowdock.privateConversations(room.id);
@@ -118,6 +118,10 @@ angular.module('hipflowApp')
           });
         });
 
+      },
+
+      focusLost: function (room) {
+        room.lastVisited = new Date();
       },
 
       close: function (room) {

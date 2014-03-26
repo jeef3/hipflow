@@ -17,6 +17,8 @@ angular.module('hipflowApp')
     }
 
     $scope.showRoom = function (room) {
+      Rooms.focusLost($scope.currentRoom);
+
       $scope.currentRoom = room;
       $scope.setCurrentDiscussion();
 
@@ -24,6 +26,7 @@ angular.module('hipflowApp')
 
       if (room) {
         Messages.update(room);
+        Rooms.focusGained(room);
       }
     };
 

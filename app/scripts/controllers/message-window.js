@@ -31,6 +31,22 @@ angular.module('hipflowApp')
         new Date(previous.sent).getDate();
     };
 
+    $scope.isFirstUnseen = function (room, message, index) {
+      if (!room.lastVisited) {
+        return false;
+      }
+
+      var messageDate = new Date(message.sent);
+
+      var previous = $scope.messages[index - 1];
+      if (previous) {
+        return new Date(previous.sent) < room.lastVisited &&
+          room.lastVisited < messageDate;
+      } else {
+        return room.lastVisited < messageDate;
+      }
+    };
+
     $scope.getMessageMeta = function (message) {
       if (message.event === 'message' ||
           message.event === 'comment' ||
