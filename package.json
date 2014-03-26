@@ -1,6 +1,6 @@
 {
-  "name": "hipflow",
-  "description": "HipChat, for Flowdock users",
+  "name": "slipflow",
+  "description": "An alternative Flowdock client",
   "repository": {
     "type": "git",
     "url": "https://github.com/jeef3/hipflow.git"
