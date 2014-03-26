@@ -57,8 +57,6 @@
     "node": ">=0.8.0"
   },
   "scripts": {
-    "postinstall": "bower install --config.interactive=false && grunt build",
-    "start": "node dist/server.js",
     "test": "grunt test"
   }
 }
