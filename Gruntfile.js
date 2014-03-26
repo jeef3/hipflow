@@ -7,6 +7,8 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
+var pkg = require('./package.json');
+
 module.exports = function (grunt) {
 
   // Load grunt tasks automatically
@@ -207,8 +209,8 @@ module.exports = function (grunt) {
           src: [
             '<%= yeoman.dist %>/scripts/{,*/}*.js',
             '<%= yeoman.dist %>/styles/{,*/}*.css',
-            '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= yeoman.dist %>/styles/fonts/*'
+            // '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+            // '<%= yeoman.dist %>/fonts/*.{eot,svg,ttf,woff,otf}'
           ]
         }
       }
@@ -236,12 +238,12 @@ module.exports = function (grunt) {
     // The following *-min tasks produce minified files in the dist folder
     imagemin: {
       dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.{png,jpg,jpeg,gif}',
-          dest: '<%= yeoman.dist %>/images'
-        }]
+        // files: [{
+        //   expand: true,
+        //   cwd: '<%= yeoman.app %>/images',
+        //   src: '{,*/}*.{png,jpg,jpeg,gif}',
+        //   dest: '<%= yeoman.dist %>/images'
+        // }]
       }
     },
     svgmin: {
@@ -304,10 +306,19 @@ module.exports = function (grunt) {
             '.htaccess',
             '*.html',
             'views/{,*/}*.html',
-            'images/{,*/}*.{webp}',
+            'images/{,*/}*.png',
             'fonts/*',
             'server.js',
-            'config/**/*'
+            'config/{,*/}*.js'
+          ]
+        }, {
+          expand: true,
+          dot: true,
+          cwd: '.',
+          dest: '<%= yeoman.dist %>',
+          src: [
+            'package.json',
+            'Procfile'
           ]
         }, {
           expand: true,
@@ -340,6 +351,29 @@ module.exports = function (grunt) {
           { src: 'package.json' },
           { cwd: '<%= yeoman.dist %>/', src: '**', expand: true }
         ]
+      }
+    },
+
+    buildcontrol: {
+      options: {
+        dir: 'dist',
+        commit: true,
+        push: true,
+        message: 'Built from commit %sourceCommit% on branch %sourceBranch%'
+      },
+
+      heroku: {
+        options: {
+          remote: 'git@heroku.com:slipflow.git',
+          branch: 'master',
+          tag: pkg.version
+        }
+      },
+      local: {
+        options: {
+          remote: '../',
+          branch: 'build'
+        }
       }
     },
 

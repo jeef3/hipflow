@@ -4,4 +4,4 @@ hipflow.nw
 .tmp
 .sass-cache
 app/bower_components
-app/config/env.json
+.env
