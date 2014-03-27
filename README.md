@@ -5,4 +5,4 @@ Slipflow
 
 Alternative chat client for Flowdock
 
-![Slipflow screenshot](screenshot.png)
+![Slipflow screenshot](screenshot.jpg)
