@@ -4,10 +4,17 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('styles', function () {
-  return gulp.src('app/styles/**/*.scss')
-    .pipe($.sass())
+  return gulp.src('app/styles/styles.scss')
+    // .pipe($.sass())
+    .pipe($.rubySass({
+      style: 'expanded',
+      precision: 10,
+      sourcemap: true,
+      trace: true,
+      lineNumbers: true
+    }))
     .pipe($.autoprefixer('last 1 version'))
-    .pipe(gulp.dest('./tmp/styles'))
+    .pipe(gulp.dest('.tmp/styles'))
     .pipe($.size());
 });
 
