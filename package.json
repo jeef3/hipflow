@@ -57,6 +57,7 @@
     "gulp-jscs": "^0.4.2",
     "gulp-jshint": "^1.5.5",
     "gulp-load-plugins": "^0.5.1",
+    "gulp-ngmin": "^0.3.0",
     "gulp-ruby-sass": "^0.5.0",
     "gulp-size": "^0.3.1",
     "gulp-uglify": "^0.3.0",
@@ -68,7 +69,8 @@
     "load-grunt-tasks": "~0.2.0",
     "open": "0.0.4",
     "streamqueue": "0.0.7",
-    "time-grunt": "~0.2.1"
+    "time-grunt": "~0.2.1",
+    "wiredep": "^1.6.1"
   },
   "engines": {
     "node": ">=0.8.0"

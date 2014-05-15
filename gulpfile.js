@@ -34,10 +34,11 @@ gulp.task('html', ['styles'], function () {
   var jsFilter = $.filter('**/*.js');
   var cssFilter = $.filter('**/*.css');
 
-  return gulp.src('app/*.html')
+  return gulp.src('app/index.html')
     .pipe($.useref.assets({searchPath: '{.tmp,app}'}))
 
     .pipe(jsFilter)
+    .pipe($.ngmin())
     .pipe($.uglify())
     .pipe(jsFilter.restore())
 
@@ -78,10 +79,12 @@ gulp.task('fonts', function () {
 
 gulp.task('extras', function () {
   return gulp.src([
-      'app/favicon.ico',
-      'app/robots.txt',
-      'app/server.js'
-    ])
+      'favicon.ico',
+      'robots.txt',
+      'server.js',
+      'config/*.js',
+      'views/**/*.html'
+    ], { cwd: 'app', base: './app' })
     .pipe(gulp.dest('dist'))
     .pipe($.size());
 });
@@ -129,11 +132,11 @@ gulp.task('wiredep', function () {
   var wiredep = require('wiredep').stream;
 
   gulp.src('app/styles/*.scss')
-    .pipe(wiredep({ directory: 'bower_components' }))
+    .pipe(wiredep({ directory: 'app/bower_components' }))
     .pipe(gulp.dest('app/styles'));
 
-  gulp.src('app/*.html')
-    .pipe(wiredep({ directory: 'bower_components' }))
+  gulp.src('app/index.html')
+    .pipe(wiredep({ directory: 'app/bower_components' }))
     .pipe(gulp.dest('app'));
 });
 
