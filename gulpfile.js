@@ -30,7 +30,7 @@ gulp.task('check', function () {
     .pipe($.size());
 });
 
-gulp.task('html', ['styles'], function () {
+gulp.task('html', ['wiredep', 'styles'], function () {
   var jsFilter = $.filter('**/*.js');
   var cssFilter = $.filter('**/*.css');
 
@@ -105,28 +105,6 @@ gulp.task('default', ['clean'], function () {
   gulp.start('build');
 });
 
-gulp.task('connect', function () {
-  var connect = require('connect');
-  var app = connect()
-    .use(require('connect-livereload')({ port: 35729 }))
-    .use(connect.static('app'))
-    .use(connect.static('.tmp'))
-    // paths to bower_components should be relative to the current file
-    // e.g. in app/index.html you should use ../bower_components
-    .use('/bower_components', connect.static('bower_components'))
-    .use(connect.directory('app'));
-
-  require('http').createServer(app)
-    .listen(9000)
-    .on('listening', function () {
-      console.log('Started connect web server on http://localhost:9000');
-    });
-});
-
-gulp.task('serve', ['connect', 'styles'], function () {
-  require('opn')('http://localhost:9000');
-});
-
 // inject bower components
 gulp.task('wiredep', function () {
   var wiredep = require('wiredep').stream;
@@ -140,7 +118,15 @@ gulp.task('wiredep', function () {
     .pipe(gulp.dest('app'));
 });
 
-gulp.task('watch', ['connect', 'serve'], function () {
+gulp.task('serve', function () {
+  $.nodemon({
+    script: 'app/server.js',
+    watch: 'app/server.js',
+    nodeArgs: ['--debug']
+  });
+});
+
+gulp.task('watch', ['serve'], function () {
   var server = $.livereload();
 
   // watch for changes
