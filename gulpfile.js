@@ -3,6 +3,8 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
+var rupture = require('rupture');
+
 gulp.task('styles', function () {
   return gulp.src('app/styles/styles.styl')
     // .pipe($.sass())
@@ -13,7 +15,9 @@ gulp.task('styles', function () {
     //   trace: true,
     //   lineNumbers: true
     // }))
-    .pipe($.stylus())
+    .pipe($.stylus({
+      use: [rupture()]
+    }))
     .pipe($.autoprefixer('last 1 version'))
     .pipe(gulp.dest('.tmp/styles'))
     .pipe($.size());
