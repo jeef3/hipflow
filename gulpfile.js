@@ -30,7 +30,7 @@ gulp.task('check', function () {
     .pipe($.size());
 });
 
-gulp.task('html', ['wiredep', 'styles'], function () {
+gulp.task('html', ['styles'], function () {
   var jsFilter = $.filter('**/*.js');
   var cssFilter = $.filter('**/*.css');
 
@@ -118,7 +118,7 @@ gulp.task('wiredep', function () {
     .pipe(gulp.dest('app'));
 });
 
-gulp.task('serve', function () {
+gulp.task('serve', ['styles'], function () {
   $.nodemon({
     script: 'app/server.js',
     watch: 'app/server.js',
@@ -133,13 +133,13 @@ gulp.task('watch', ['serve'], function () {
   gulp.watch([
     'app/*.html',
     '.tmp/styles/**/*.css',
-    'app/scripts/**/*.js',
-    'app/images/**/*'
+    'app/scripts/**/*.js'//,
+    // 'app/images/**/*'
   ]).on('change', function (file) {
     server.changed(file.path);
   });
 
   gulp.watch('app/styles/**/*.scss', ['styles']);
-  gulp.watch('app/images/**/*', ['images']);
+  // gulp.watch('app/images/**/*', ['images']);
   gulp.watch('bower.json', ['wiredep']);
 });
