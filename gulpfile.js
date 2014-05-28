@@ -88,7 +88,9 @@ gulp.task('extras', function () {
       'robots.txt',
       'server.js',
       'config/*.js',
-      'views/**/*.html'
+      'views/**/*.html',
+      'package.json',
+      'Procfile'
     ], { cwd: 'app', base: './app' })
     .pipe(gulp.dest('dist'))
     .pipe($.size());
