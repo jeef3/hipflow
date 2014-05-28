@@ -16,7 +16,9 @@ body {
 }
 
 $sidebar-width = 13.125em;
-$chat-context-width = 13.125em;
+$chat-context-full-width = 13.125em;
+$chat-context-medium-width = 5.63em;
+$chat-context-small-width = 3.125em;
 
 .container {
   position: relative;
@@ -33,14 +35,30 @@ $chat-context-width = 13.125em;
 .chat {
   position: absolute;
   top: 0;
-  right: $chat-context-width;
+  right: $chat-context-small-width;
+
+  +above(49em) {
+    right: $chat-context-medium-width;
+  }
+  +above(60em) {
+    right: $chat-context-full-width;
+  }
+
   bottom: 0;
   left: $sidebar-width;
 }
 
 .chat-context {
   position: absolute;
-  width: $chat-context-width;
+  width: $chat-context-small-width;
+
+  +above(49em) {
+    width: $chat-context-medium-width;
+  }
+  +above(60em) {
+    width: $chat-context-full-width;
+  }
+
   top: 0;
   right: 0;
   bottom: 0;
