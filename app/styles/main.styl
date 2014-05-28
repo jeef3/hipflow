@@ -1,4 +1,5 @@
-@import "btn";
+@require "_responsive";
+@require "btn";
 
 * { box-sizing: border-box; }
 
@@ -15,8 +16,10 @@ body {
   margin: 0;
 }
 
-$sidebar-width: 13.125em;
-$chat-context-width: 13.125em;
+$sidebar-width = 13.125em;
+$chat-context-full-width = 13.125em;
+$chat-context-medium-width = 5.63em;
+$chat-context-small-width = 3.125em;
 
 .container {
   position: relative;
@@ -33,19 +36,39 @@ $chat-context-width: 13.125em;
 .chat {
   position: absolute;
   top: 0;
-  right: $chat-context-width;
+  right: $chat-context-small-width;
+
+  +from($breakpoint-large) {
+    right: $chat-context-medium-width;
+  }
+  +from($breakpoint-x-large) {
+    right: $chat-context-full-width;
+  }
+
   bottom: 0;
   left: $sidebar-width;
+
+  transition: right $responsive-transition-time ease-in-out;
 }
 
 .chat-context {
   position: absolute;
-  width: $chat-context-width;
+  width: $chat-context-small-width;
+
+  +from($breakpoint-large) {
+    width: $chat-context-medium-width;
+  }
+  +from($breakpoint-x-large) {
+    width: $chat-context-full-width;
+  }
+
   top: 0;
   right: 0;
   bottom: 0;
 
   background: #e6e6e6;
+
+  transition: width $responsive-transition-time ease-in-out;
 }
 
 .btn--more-content {

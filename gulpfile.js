@@ -3,15 +3,20 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
+var rupture = require('rupture');
+
 gulp.task('styles', function () {
-  return gulp.src('app/styles/styles.scss')
+  return gulp.src('app/styles/styles.styl')
     // .pipe($.sass())
-    .pipe($.rubySass({
-      style: 'expanded',
-      precision: 10,
-      sourcemap: true,
-      trace: true,
-      lineNumbers: true
+    // .pipe($.rubySass({
+    //   style: 'expanded',
+    //   precision: 10,
+    //   sourcemap: true,
+    //   trace: true,
+    //   lineNumbers: true
+    // }))
+    .pipe($.stylus({
+      use: [rupture()]
     }))
     .pipe($.autoprefixer('last 1 version'))
     .pipe(gulp.dest('.tmp/styles'))
@@ -109,7 +114,7 @@ gulp.task('default', ['clean'], function () {
 gulp.task('wiredep', function () {
   var wiredep = require('wiredep').stream;
 
-  gulp.src('app/styles/*.scss')
+  gulp.src('app/styles/*.styl')
     .pipe(wiredep({ directory: 'app/bower_components' }))
     .pipe(gulp.dest('app/styles'));
 
@@ -139,7 +144,7 @@ gulp.task('watch', ['serve'], function () {
     server.changed(file.path);
   });
 
-  gulp.watch('app/styles/**/*.scss', ['styles']);
+  gulp.watch('app/styles/**/*.styl', ['styles']);
   // gulp.watch('app/images/**/*', ['images']);
   gulp.watch('bower.json', ['wiredep']);
 });
