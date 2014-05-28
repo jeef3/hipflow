@@ -1,6 +1,6 @@
-@import "theme";
-@import "util";
-@import "btn";
+@require "_theme";
+@require "_util";
+@require "btn";
 
 .sidebar {
   color: $sidebar-text;
@@ -77,18 +77,18 @@
   }
 }
 
-%online-status-icon {
+.online-status-icon {
   font-size: 0.625em;
 }
 
 .online-status-icon--online {
-  @extend %online-status-icon;
+  @extend .online-status-icon;
 
   color: #32BE32;
 }
 
 .online-status-icon--offline {
-  @extend %online-status-icon;
+  @extend .online-status-icon;
 }
 
 .unread-marker {

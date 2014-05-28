@@ -1,7 +1,7 @@
-@import "theme";
-@import "util";
+@require "_theme";
+@require "_util";
 
-$topic-bar-height: 3em;
+$topic-bar-height = 3em;
 
 .topic-bar {
   @extend .truncate;
@@ -123,9 +123,9 @@ $topic-bar-height: 3em;
   list-style: none;
 }
 
-$notify-background: rgb(255, 251, 233);
-$success-background: rgb(245, 248, 232);
-$fail-background: rgb(249, 230, 230);
+$notify-background = rgb(255, 251, 233);
+$success-background = rgb(245, 248, 232);
+$fail-background = rgb(249, 230, 230);
 
 .message {
   clear: both;
@@ -145,7 +145,7 @@ $fail-background: rgb(249, 230, 230);
   }
 
   &.message--date-separator {
-    $date-separator-height: 2em;
+    $date-separator-height = 2em;
     padding-top: $date-separator-height;
     margin-top: $date-separator-height;
 
@@ -218,7 +218,7 @@ $fail-background: rgb(249, 230, 230);
 
 .message__author-avatar {
   // $avatar-size: em(30px);
-  $avatar-size: 1.875em;
+  $avatar-size = 1.875em;
 
   float: left;
   width: $avatar-size;
