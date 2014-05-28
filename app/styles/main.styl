@@ -1,3 +1,4 @@
+@require "_responsive";
 @require "btn";
 
 * { box-sizing: border-box; }
@@ -37,25 +38,27 @@ $chat-context-small-width = 3.125em;
   top: 0;
   right: $chat-context-small-width;
 
-  +above(49em) {
+  +from($breakpoint-large) {
     right: $chat-context-medium-width;
   }
-  +above(60em) {
+  +from($breakpoint-x-large) {
     right: $chat-context-full-width;
   }
 
   bottom: 0;
   left: $sidebar-width;
+
+  transition: right $responsive-transition-time ease-in-out;
 }
 
 .chat-context {
   position: absolute;
   width: $chat-context-small-width;
 
-  +above(49em) {
+  +from($breakpoint-large) {
     width: $chat-context-medium-width;
   }
-  +above(60em) {
+  +from($breakpoint-x-large) {
     width: $chat-context-full-width;
   }
 
@@ -64,6 +67,8 @@ $chat-context-small-width = 3.125em;
   bottom: 0;
 
   background: #e6e6e6;
+
+  transition: width $responsive-transition-time ease-in-out;
 }
 
 .btn--more-content {
