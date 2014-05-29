@@ -83,14 +83,19 @@ gulp.task('fonts', function () {
 });
 
 gulp.task('extras', function () {
+  gulp.src([
+      'package.json',
+      'Procfile'
+    ])
+    .pipe(gulp.dest('dist'))
+    .pipe($.size());
+
   return gulp.src([
       'favicon.ico',
       'robots.txt',
       'server.js',
       'config/*.js',
-      'views/**/*.html',
-      'package.json',
-      'Procfile'
+      'views/**/*.html'
     ], { cwd: 'app', base: './app' })
     .pipe(gulp.dest('dist'))
     .pipe($.size());
