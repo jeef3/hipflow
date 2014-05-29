@@ -1,6 +1,12 @@
 {{github.comment.user.login}} commented on
-<a ng-href="{{github.comment.html_url}}" target="_blank">pull request ??</a>
+<a ng-href="{{github.comment.html_url}}" target="_blank">pull request #{{github.comment.pull_request_url | prFromUrl}}</a>
 of
 <a ng-href="{{github.repository.url}}" target="_blank">{{github.repository.owner.login}}/{{github.repository.name}}</a>:
 
-<more-content content="github.comment.body_html | emoji"></more-content>
+<more-content ng-if="github.comment.body_html">
+  <pre class="monospaced">
+    <div>{{github.comment.diff_hunk}}</div>
+  </pre>
+
+  <div ng-bind-html="github.comment.body_html"></div>
+</more-content>
