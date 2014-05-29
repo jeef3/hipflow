@@ -22,8 +22,9 @@ on
 
 <more-content ng-if="github.commits.length">
   <ol>
-    <li ng-repeat="commit in github.commits">
-      <a class="code" ng-href="{{commit.url}}" ng-bind="commit.id | shortHash" target="_blank"></a> {{commit.message | limitWithEllipsis:50}}
+    <li class="monospaced"
+        ng-repeat="commit in github.commits">
+      <a ng-href="{{commit.url}}" ng-bind="commit.id | shortHash" target="_blank"></a> {{commit.message | limitWithEllipsis:50}}
     </li>
   </ol>
 </more-content>
