@@ -912,7 +912,7 @@ angular.module('hipflowApp')
     var emojiUnicodesRegex = new RegExp('(' + emojiUnicodes.join('|') + ')', 'g');
 
     var makeImg = function (keyword) {
-      return '<img class="emoji emoji-' + keyword + '" src="/images/emojis/"' + keyword + '.png">';
+      return '<img class="emoji emoji-' + keyword + '" src="/images/emojis/' + keyword + '.png">';
     };
 
     return function (input) {
