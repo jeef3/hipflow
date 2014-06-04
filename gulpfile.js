@@ -7,17 +7,7 @@ var rupture = require('rupture');
 
 gulp.task('styles', function () {
   return gulp.src('app/styles/styles.styl')
-    // .pipe($.sass())
-    // .pipe($.rubySass({
-    //   style: 'expanded',
-    //   precision: 10,
-    //   sourcemap: true,
-    //   trace: true,
-    //   lineNumbers: true
-    // }))
-    .pipe($.stylus({
-      use: [rupture()]
-    }))
+    .pipe($.stylus({ use: [rupture()] }))
     .pipe($.autoprefixer('last 1 version'))
     .pipe(gulp.dest('.tmp/styles'))
     .pipe($.size());
@@ -143,7 +133,7 @@ gulp.task('watch', ['serve'], function () {
 
   // watch for changes
   gulp.watch([
-    'app/*.html',
+    'app/**/*.html',
     '.tmp/styles/**/*.css',
     'app/scripts/**/*.js'//,
     // 'app/images/**/*'
