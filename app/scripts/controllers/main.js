@@ -44,6 +44,10 @@ angular.module('hipflowApp')
       return Users.get(userId);
     };
 
+    $scope.me = function () {
+      return Users.me;
+    };
+
     $scope.send = function (message) {
       if ($scope.currentDiscussion.id) {
         Messages.send($scope.currentRoom, message, [],
