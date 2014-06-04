@@ -57,7 +57,7 @@
         style="background-image:url({{me().avatar}})"></div>
       <span class="user-menu__name">{{me().name}}</span>
       <i class="fa fa-fw fa-circle"
-          ng-class="{'online-status-icon--online': isOnline(me().id),
-                     'online-status-icon--offline': !isOnline(me().id)}"></i>
+          ng-class="{'online-status-icon--online': online,
+                     'online-status-icon--offline': !online}"></i>
   </div>
 </div>

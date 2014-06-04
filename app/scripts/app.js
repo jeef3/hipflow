@@ -10,7 +10,17 @@ angular.module('hipflowApp', [
     $locationProvider.html5Mode(true);
     localStorageServiceProvider.setPrefix('hipflow');
   })
-  .run(function ($window, Notifications, Flowdock, FlowdockAuth, Users, Rooms, IncomingMessageHandler) {
+  .run(function ($window, $rootScope, Notifications, Flowdock, FlowdockAuth, Users, Rooms, IncomingMessageHandler) {
+
+    $rootScope.online = navigator.onLine;
+    var onlineHandler = function () {
+      $rootScope.online = $window.navigator.onLine;
+      $rootScope.$apply();
+    };
+
+    $window.addEventListener('online', onlineHandler, false);
+    $window.addEventListener('offline', onlineHandler, false);
+
     if (!FlowdockAuth.isAuthenticated()) {
       $window.location.href = '/login';
     }
