@@ -3,7 +3,7 @@
   <div ng-if="currentRoom.access_mode">
     <ul class="users">
       <li class="user avatar"
-          ng-repeat="user in currentRoom.users | orderBy:'-last_ping'"
+          ng-repeat="user in currentRoom.users | filter:{in_flow: true} | orderBy:'-last_activity'"
           title="{{user.name}}"
           style="background-image:url({{user.avatar}})"
           ng-class="{'user-online': isOnline(user.id),
