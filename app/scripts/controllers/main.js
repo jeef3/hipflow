@@ -59,26 +59,9 @@ angular.module('hipflowApp')
       return Users.isOnline(userId);
     };
 
-    $scope.tokenExpired = false;
-    $scope.authError = false;
-
     $scope.$on('TOKEN_EXPIRED', function () {
-      $scope.tokenExpired = true;
+      FlowdockAuth.refreshToken();
     });
-
-    $scope.refreshToken = function () {
-      $scope.refreshStatus = ' refreshing';
-
-      FlowdockAuth.refreshToken()
-        .then(function () {
-          $scope.refreshStatus = '';
-          $scope.tokenExpired = false;
-          $scope.authError = false;
-        }, function () {
-          $scope.refreshStatus = ' error';
-          $scope.authError = true;
-        });
-    };
 
     $scope.getFileUrl = function (path) {
       return Flowdock.util.url(path);
