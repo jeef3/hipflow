@@ -9,7 +9,7 @@
         ng-class="{'is-loading': isLoading}"
         ng-repeat="room in flows"
         ng-init="room = room"
-        ng-show="room.id === currentRoom.id"
+        ng-if="room.id === currentRoom.id"
         ng-include="'views/message-window.html'">
     </div>
     <!-- Queries -->
@@ -18,7 +18,7 @@
         ng-class="{'is-loading': isLoading}"
         ng-repeat="room in privateConversations"
         ng-init="room = room"
-        ng-show="room.id === currentRoom.id"
+        ng-if="room.id === currentRoom.id"
         ng-include="'views/message-window.html'">
     </div>
   </div>
