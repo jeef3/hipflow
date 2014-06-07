@@ -1,10 +1,16 @@
 .avatar {
+  $size = 1.875em;
+
   display: inline-block;
-  width: 1.875em;
-  height: 1.875em;
+  width: $size;
+  height: $size;
 
   border-radius: 0.313em;
 
-  background-size: 1.875em;
+  background-size: $size;
   background-repeat: no-repeat;
+
+  &--medium {
+    font-size: 1.333em;
+  }
 }

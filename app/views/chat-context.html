@@ -5,7 +5,7 @@
       <li class="user avatar"
           ng-repeat="user in currentRoom.users | filter:{in_flow: true} | orderBy:'-last_activity'"
           title="{{user.name}}"
-          style="background-image:url({{user.avatar}})"
+          style="background-image:url({{user.avatar}}60)"
           ng-class="{'user-online': isOnline(user.id),
                      'user-offline': !isOnline(user.id),
                      'user--typing': user.typing}">
