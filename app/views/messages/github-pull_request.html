@@ -1,5 +1,8 @@
-{{github.sender.login}} {{github.action}} pull request #{{github.number}}
-<a ng-href="{{github.pull_request.html_url}}" target="_blank">{{github.pull_request.title | limitWithEllipsis:50}}</a>
+<span class="avatar avatar--small"
+    style="background-image:url({{github.sender.avatar_url}}s=34)"
+></span>
+{{github.sender.login}} {{github.action}}
+<a ng-href="{{github.pull_request.html_url}}" target="_blank">pull request #{{github.number}} &mdash; {{github.pull_request.title | limitWithEllipsis:50}}</a>
 for
 <a ng-href="{{github.repository.html_url}}" target="_blank">{{github.repository.owner.login}}/{{github.repository.name}}</a>
 
