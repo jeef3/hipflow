@@ -56,7 +56,7 @@ angular.module('hipflowApp')
 
         return {
           author: user.name,
-          avatar: user.avatar
+          avatar: user.avatar + '60'
         };
       }
 
