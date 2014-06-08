@@ -24,6 +24,8 @@ angular.module('hipflowApp')
         var dragOver = function (e) {
           e.preventDefault();
           e.stopPropagation();
+
+          element.addClass('file-hover');
         };
 
         var drop = function (e) {

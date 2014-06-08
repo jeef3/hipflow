@@ -53,25 +53,6 @@ $chat-context-small-width = 3.125em;
   left: $sidebar-width;
 
   transition: right $responsive-transition-time ease-in-out;
-
-  &.file-hover {
-    &:before {
-      content: '';
-
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      pointer-events: none;
-
-      background: rgba(0, 0, 0, 0.5);
-    }
-
-    &:after {
-
-    }
-  }
 }
 
 .chat-context {
@@ -117,4 +98,30 @@ $chat-context-small-width = 3.125em;
   color: #999;
   text-transform: uppercase;
   letter-spacing: 0.125em;
+}
+
+.file-hover {
+  &:before {
+    content: '';
+
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  &:after {
+    content: 'Drop';
+
+    position: absolute;
+    z-index: 2;
+    width: 50%;
+    height: 50%;
+    background: white;
+  }
 }
