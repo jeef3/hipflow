@@ -34,4 +34,12 @@
           ng-class="source--{{source.type}}">{{source.id}}</li>
     </ul>
   </div>
+
+  <div ng-if="!currentRoom.access_mode">
+    <div class="user avatar avatar--large"
+        title="{{currentRoom.users[1].name}}"
+        style="background-image:url({{currentRoom.users[1].avatar}}316)">
+
+    </div>
+  </div>
 </aside>
