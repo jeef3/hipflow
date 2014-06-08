@@ -16,7 +16,10 @@
                    'message--comment': message.event === 'comment',
                    'message--monologue': isMonologue(message, $index),
                    'message--date-separator': !isSameDay(message, $index),
-                   'message--first-unseen': isFirstUnseen(room, message, $index)}">
+                   'message--first-unseen': isFirstUnseen(room, message, $index),
+                   'message--success': message.tags.indexOf('success') !== -1,
+                   'message--notify': message.tags.indexOf('notify') !== -1,
+                   'message--fail': message.tags.indexOf('fail') !== -1}">
 
       <button type="button"
           class="btn message__discussion-marker"

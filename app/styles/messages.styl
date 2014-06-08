@@ -63,8 +63,17 @@ $fail-background = rgb(249, 230, 230);
   }
 
   &.message--highlight,
-  &.message--mentions-me {
+  &.message--mentions-me,
+  &.message--notify {
     background: $notify-background;
+  }
+
+  &.message--success {
+    background: $success-background;
+  }
+
+  &.message--fail {
+    background: $fail-background;
   }
 
   &.message--date-separator {
