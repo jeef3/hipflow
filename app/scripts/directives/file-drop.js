@@ -14,24 +14,24 @@ angular.module('hipflowApp')
           e.preventDefault();
           e.stopPropagation();
 
-          element.addClass('file-hover');
+          element.addClass('has-file-hover');
         };
 
         var dragLeave = function () {
-          element.removeClass('file-hover');
+          element.removeClass('has-file-hover');
         };
 
         var dragOver = function (e) {
           e.preventDefault();
           e.stopPropagation();
 
-          element.addClass('file-hover');
+          element.addClass('has-file-hover');
         };
 
         var drop = function (e) {
           e.preventDefault();
 
-          element.removeClass('file-hover');
+          element.removeClass('has-file-hover');
 
           [].slice.call(e.dataTransfer.files).forEach(function (file) {
             scope.callback({ file: file });
