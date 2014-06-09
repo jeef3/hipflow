@@ -143,6 +143,26 @@ angular.module('hipflowApp')
         }
       };
 
+      messages.upload = function (file, uuid, tags, cb) {
+        var m = {
+          event: 'file',
+          content: {
+            data: file.data,
+            content_type: file.contentType,
+            file_name: file.name
+          },
+          tags: tags,
+          uuid: uuid
+        };
+
+        var method = '/flows/' + organization + '/' + flowName + '/messages';
+        var promise = apiPost(method, m);
+
+        if (cb) {
+          promise.success(cb);
+        }
+      };
+
       var source = function (/*sourceId*/) {
 
       };

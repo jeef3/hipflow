@@ -40,6 +40,10 @@ angular.module('hipflowApp')
       Rooms.close(room);
     };
 
+    $scope.upload = function (file) {
+      Messages.upload($scope.currentRoom, file, []);
+    };
+
     $scope.user = function (userId) {
       return Users.get(userId);
     };
