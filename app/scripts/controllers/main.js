@@ -41,7 +41,7 @@ angular.module('hipflowApp')
     };
 
     $scope.upload = function (file) {
-      console.log('upload file %s', file.name);
+      Messages.upload($scope.currentRoom, file, []);
     };
 
     $scope.user = function (userId) {

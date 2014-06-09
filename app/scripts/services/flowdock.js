@@ -147,9 +147,9 @@ angular.module('hipflowApp')
         var m = {
           event: 'file',
           content: {
-            data: '',
-            content_type: '',
-            file_name: ''
+            data: file.data,
+            content_type: file.contentType,
+            file_name: file.name
           },
           tags: tags,
           uuid: uuid

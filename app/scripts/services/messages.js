@@ -71,6 +71,33 @@ angular.module('hipflowApp')
       upload: function (room, file, tags, messageId) {
         var uuid = Uuid.generate();
 
+        var r = room.access_mode ?
+          Flowdock.flows(room.organization.parameterized_name, room.parameterized_name) :
+          Flowdock.privateConversations(room.id);
+
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          var fileData = {
+            data: e.target.result.split(',')[1],
+            name: file.name,
+            contentType: file.type
+          };
+
+          var uploaded = function () {
+            console.log('uploaded');
+          };
+
+          // Post to Flowdock
+          if (messageId) {
+            r.messages(messageId)
+              .comments
+              .upload(fileData, uuid, tags, uploaded);
+          } else {
+            r.messages
+              .upload(fileData, uuid, tags, uploaded);
+          }
+        };
+
         // Add to the chat room straight away
         this.add({
           app: 'chat',
@@ -88,19 +115,7 @@ angular.module('hipflowApp')
           uuid: uuid
         });
 
-        var r = room.access_mode ?
-          Flowdock.flows(room.organization.parameterized_name, room.parameterized_name) :
-          Flowdock.privateConversations(room.id);
-
-        // Post to Flowdock
-        if (messageId) {
-          r.messages(messageId)
-            .comments
-            .upload(file, uuid, tags);
-        } else {
-          r.messages
-            .upload(file, uuid, tags);
-        }
+        reader.readAsDataURL(file);
       },
 
       add: function (message) {
