@@ -1,11 +1,21 @@
 <div class="plain-message">
   <!-- TODO: General attachments[] template -->
-  <img ng-if="message.content.content_type === 'image/jpeg' ||
-              message.content.content_type === 'image/png'"
-      alt="{{message.content.file_name}}"
-      ng-src="{{getFileUrl(message.content.path)}}">
+  <div ng-if="!message.progress">
+    <img ng-if="message.content.content_type === 'image/jpeg' ||
+                message.content.content_type === 'image/png'"
+        alt="{{message.content.file_name}}"
+        ng-src="{{getFileUrl(message.content.path)}}">
 
-  <a ng-if="message.content.content_type === 'application/pdf'"
-      target="_blank"
-      href="{{getFileUrl(message.content.path)}}">{{message.content.file_name}}</a>
+    <a ng-if="message.content.content_type === 'application/pdf'"
+        target="_blank"
+        href="{{getFileUrl(message.content.path)}}">{{message.content.file_name}}</a>
+  </div>
+
+  <div ng-if="message.progress">
+    <div class="progress-bar">
+      <div class="progress-bar__progress" style="width: {{message.progress}}%"></div>
+
+      <div class="progress-bar__label">Uploading <strong class="very-strong">{{message.content.file_name}}</strong> &hellip; {{message.progress}}%</div>
+    </div>
+  </div>
 </div>

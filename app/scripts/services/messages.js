@@ -107,10 +107,10 @@ angular.module('hipflowApp')
         if (messageId) {
           r.messages(messageId)
             .comments
-            .upload(file, uuid, tags);
+            .upload(file, uuid, tags, null, progress);
         } else {
           r.messages
-            .upload(file, uuid, tags);
+            .upload(file, uuid, tags, null, progress);
         }
       },
 
