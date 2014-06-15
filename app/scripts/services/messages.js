@@ -15,6 +15,11 @@ angular.module('hipflowApp')
     var influxRegex = /^influx:(\d+)$/;
     var processTags = function (message) {
       var tags = message.tags;
+
+      if (!tags) {
+        return;
+      }
+
       message.highlight = tags.indexOf(':highlight:' + Users.me.id) !== -1;
       message.mentionsMe = tags.indexOf(':user:' + Users.me.id) !== -1;
       message.thread = tags.indexOf(':thread') !== -1;
@@ -90,18 +95,22 @@ angular.module('hipflowApp')
           user: Users.me.id.toString(),
           uuid: uuid,
 
-          progress: 25
+          progress: 0
         };
 
+        var _this = this;
         var progress = function (e) {
-          var progress = Math.round(e.position / e.total) * 100;
+          var progress = Math.round((e.position / e.total) * 100);
           message.progress = progress;
+          console.log('progress');
 
-          this.addOrUpdate(message, false, false);
+          _this.addOrUpdate(message, false, false);
+
+          $rootScope.$apply();
         };
 
         // Add to the chat room straight away
-        this.add(message);
+        this.add(angular.copy(message));
 
         // Post to Flowdock
         if (messageId) {
