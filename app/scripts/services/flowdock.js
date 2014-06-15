@@ -143,24 +143,26 @@ angular.module('hipflowApp')
         }
       };
 
-      messages.upload = function (file, uuid, tags, cb) {
-        var m = {
-          event: 'file',
-          content: {
-            data: file.data,
-            content_type: file.contentType,
-            file_name: file.name
-          },
-          tags: tags,
-          uuid: uuid
-        };
+      messages.upload = function (file, uuid, tags, cb, progressCb) {
 
-        var method = '/flows/' + organization + '/' + flowName + '/messages';
-        var promise = apiPost(method, m);
+        var formData = new FormData();
+        formData.append('uuid', uuid);
+        formData.append('event', 'file');
+        formData.append('content', file);
+
+        var xhr = new XMLHttpRequest();
 
         if (cb) {
-          promise.success(cb);
+          xhr.upload.onload = cb;
         }
+
+        if (progressCb) {
+          xhr.upload.onprogress = progressCb;
+        }
+
+        var url = apiUrl('/flows/' + organization + '/' + flowName + '/messages');
+        xhr.open('POST', url);
+        xhr.send(formData);
       };
 
       var source = function (/*sourceId*/) {
