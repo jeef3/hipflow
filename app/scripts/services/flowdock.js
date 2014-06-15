@@ -151,14 +151,14 @@ angular.module('hipflowApp')
         formData.append('content', file);
 
         var xhr = new XMLHttpRequest();
-        xhr.upload.onprogress = function (e) {
-          var percent = (e.position / e.total) * 100;
-          console.log('Upload progress: %s%', percent);
-        };
 
-        xhr.upload.onload = function (e) {
-          console.log('Upload finished');
-        };
+        if (cb) {
+          xhr.upload.onload = cb;
+        }
+
+        if (progressCb) {
+          xhr.upload.onprogress = progressCb;
+        }
 
         var url = apiUrl('/flows/' + organization + '/' + flowName + '/messages');
         xhr.open('POST', url);

@@ -75,22 +75,33 @@ angular.module('hipflowApp')
           Flowdock.flows(room.organization.parameterized_name, room.parameterized_name) :
           Flowdock.privateConversations(room.id);
 
-        // Add to the chat room straight away
-        this.add({
+        var message = {
           app: 'chat',
           flow: room.id,
           event: 'file',
           content: {
-            data: '',
-            content_type: '',
-            file_name: ''
+            data: null,
+            content_type: file.type,
+            file_name: file.name
           },
           message: messageId,
           sent: new Date().getTime(),
           tags: tags,
-          user: Number(Users.me.id).toString(),
-          uuid: uuid
-        });
+          user: Users.me.id.toString(),
+          uuid: uuid,
+
+          progress: 25
+        };
+
+        var progress = function (e) {
+          var progress = Math.round(e.position / e.total) * 100;
+          message.progress = progress;
+
+          this.addOrUpdate(message, false, false);
+        };
+
+        // Add to the chat room straight away
+        this.add(message);
 
         // Post to Flowdock
         if (messageId) {
