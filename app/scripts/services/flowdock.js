@@ -71,6 +71,27 @@ angular.module('hipflowApp')
         });
     };
 
+    var apiUpload = function (file, uuid, path, cb, progressCb) {
+
+      var formData = new FormData();
+      formData.append('uuid', uuid);
+      formData.append('event', 'file');
+      formData.append('content', file);
+
+      var xhr = new XMLHttpRequest();
+
+      if (cb) {
+        xhr.upload.onload = cb;
+      }
+
+      if (progressCb) {
+        xhr.upload.onprogress = progressCb;
+      }
+
+      xhr.open('POST', apiUrl(path));
+      xhr.send(formData);
+    };
+
     var flow = function (organization, flowName) {
 
       var message = function (messageId) {
@@ -144,25 +165,8 @@ angular.module('hipflowApp')
       };
 
       messages.upload = function (file, uuid, tags, cb, progressCb) {
-
-        var formData = new FormData();
-        formData.append('uuid', uuid);
-        formData.append('event', 'file');
-        formData.append('content', file);
-
-        var xhr = new XMLHttpRequest();
-
-        if (cb) {
-          xhr.upload.onload = cb;
-        }
-
-        if (progressCb) {
-          xhr.upload.onprogress = progressCb;
-        }
-
-        var url = apiUrl('/flows/' + organization + '/' + flowName + '/messages');
-        xhr.open('POST', url);
-        xhr.send(formData);
+        var path = '/flows/' + organization + '/' + flowName + '/messages';
+        apiUpload(file, uuid, path, cb, progressCb);
       };
 
       var source = function (/*sourceId*/) {
@@ -298,6 +302,11 @@ angular.module('hipflowApp')
         if (cb) {
           promise.success(cb);
         }
+      };
+
+      messages.upload = function (file, uuid, cb, progressCb) {
+        var path = '/private/' + userId + '/messages';
+        apiUpload(file, uuid, path, cb, progressCb);
       };
 
       return {
