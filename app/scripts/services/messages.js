@@ -98,13 +98,11 @@ angular.module('hipflowApp')
           progress: 0
         };
 
-        var _this = this;
         var progress = function (e) {
           var progress = Math.round((e.position / e.total) * 100);
           message.progress = progress;
-          console.log('progress');
 
-          _this.addOrUpdate(message, false, false);
+          this.addOrUpdate(message, false, false);
 
           $rootScope.$apply();
         };
@@ -116,10 +114,10 @@ angular.module('hipflowApp')
         if (messageId) {
           r.messages(messageId)
             .comments
-            .upload(file, uuid, tags, null, progress);
+            .upload(file, uuid, tags, null, progress.bind(this));
         } else {
           r.messages
-            .upload(file, uuid, tags, null, progress);
+            .upload(file, uuid, tags, null, progress.bind(this));
         }
       },
 
