@@ -1,9 +1,16 @@
-{{github.comment.user.login}} commented on pull request
-<a class="strong"
-    ng-href="{{message.content.comment.html_url}}"
-    target="_blank">#{{github.issue.number}} &mdash; {{github.issue.title}}</a>
-of
-<a ng-href="{{github.repository.url}}"
-    target="_blank">{{github.repository.owner.login}}/{{github.repository.name}}</a>:
+<div class="gh gh--issue-comment">
 
-<more-content content="github.comment.body_html | emoji"></more-content>
+  <i class="gh-message-icon octicon octicon-comment"></i>
+
+  <span class="avatar avatar--small"
+      style="background-image:url({{github.comment.user.avatar_url}}s=34)"></span>
+
+  {{github.comment.user.login}} commented on
+  <a target="_blank"
+      ng-href="{{message.content.comment.html_url}}">#{{github.issue.number}} &mdash; {{github.issue.title}}</a>
+  of
+  <a target="_blank"
+      ng-href="{{github.repository.url}}">{{github.repository.owner.login}}/{{github.repository.name}}</a>
+
+  <more-content content="github.comment.body_html | emoji"></more-content>
+</div>
