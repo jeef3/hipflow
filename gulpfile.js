@@ -111,12 +111,8 @@ gulp.task('default', ['clean'], function () {
 gulp.task('wiredep', function () {
   var wiredep = require('wiredep').stream;
 
-  gulp.src('app/styles/{,*}*.styl')
-    .pipe(wiredep({ directory: 'app/bower_components' }))
-    .pipe(gulp.dest('app/styles'));
-
   gulp.src('app/index.html')
-    .pipe(wiredep({ directory: 'app/bower_components' }))
+    .pipe(wiredep())
     .pipe(gulp.dest('app'));
 });
 
