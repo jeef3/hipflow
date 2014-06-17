@@ -111,7 +111,7 @@ gulp.task('default', ['clean'], function () {
 gulp.task('wiredep', function () {
   var wiredep = require('wiredep').stream;
 
-  gulp.src('app/styles/*.styl')
+  gulp.src('app/styles/{,*}*.styl')
     .pipe(wiredep({ directory: 'app/bower_components' }))
     .pipe(gulp.dest('app/styles'));
 
