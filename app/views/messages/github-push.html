@@ -1,11 +1,14 @@
-{{github.pusher.name}}
 <span ng-if="github.deleted">
+  <i class="octicon octicon-git-branch-delete"></i>
+  {{github.pusher.name}}
   deleted branch
   <a target="_blank"
       ng-href="{{github.compare}}">{{github.ref | localBranchName}}</a>
 </span>
 
 <span ng-if="!github.deleted">
+  <i class="octicon octicon-git-commit"></i>
+  {{github.pusher.name}}
   <span ng-if="github.forced && !github.created">force</span> pushed
 
   <ng-pluralize
