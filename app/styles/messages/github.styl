@@ -1,0 +1,29 @@
+@require "_theme";
+
+.gh {
+  position: relative;
+  padding-left: 2em;
+
+  .avatar {
+    margin-right: 0.5em;
+  }
+}
+
+.gh-message-icon {
+  position: absolute;
+  width: 1em;
+  left: 0.5em;
+
+  line-height: 1.5;
+  text-align: center;
+
+  color: #aaa;
+
+  .gh--open-pull-request & {
+    color: $green;
+  }
+
+  .gh--close-pull-request & {
+    color: $red;
+  }
+}

@@ -1,11 +1,33 @@
-<span class="avatar avatar--small"
-    style="background-image:url({{github.sender.avatar_url}}s=34)"
-></span>
-{{github.sender.login}} {{github.action}}
-<a ng-href="{{github.pull_request.html_url}}" target="_blank">pull request #{{github.number}} &mdash; {{github.pull_request.title | limitWithEllipsis:50}}</a>
-for
-<a ng-href="{{github.repository.html_url}}" target="_blank">{{github.repository.owner.login}}/{{github.repository.name}}</a>
+<div class="gh gh--open-pull-request"
+    ng-if="github.action === 'opened'">
 
-<more-content
-    ng-if="github.action === 'opened'"
-    content="github.pull_request.body_html | emoji"></more-content>
+  <i class="gh-message-icon octicon octicon-git-pull-request" title="Opened pull request"></i>
+
+  <span class="avatar avatar--small"
+      style="background-image:url({{github.sender.avatar_url}}s=34)"></span>
+
+  {{github.sender.login}} opened
+
+  <a ng-href="{{github.pull_request.html_url}}" target="_blank">#{{github.number}} &mdash; {{github.pull_request.title | limitWithEllipsis:50}}</a>
+  for
+  <a ng-href="{{github.repository.html_url}}" target="_blank">{{github.repository.owner.login}}/{{github.repository.name}}</a>
+
+  <more-content
+      ng-if="github.action === 'opened'"
+      content="github.pull_request.body_html | emoji"></more-content>
+</div>
+
+<div class="gh gh--close-pull-request"
+    ng-if="github.action === 'closed'">
+
+  <i class="gh-message-icon octicon octicon-circle-slash" title="Closed pull request"></i>
+
+  <span class="avatar avatar--small"
+      style="background-image:url({{github.sender.avatar_url}}s=34)"></span>
+
+  {{github.sender.login}} closed
+
+  <a ng-href="{{github.pull_request.html_url}}" target="_blank">#{{github.number}} &mdash; {{github.pull_request.title | limitWithEllipsis:50}}</a>
+  for
+  <a ng-href="{{github.repository.html_url}}" target="_blank">{{github.repository.owner.login}}/{{github.repository.name}}</a>
+</div>

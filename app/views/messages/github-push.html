@@ -1,32 +1,38 @@
-{{github.pusher.name}}
-<span ng-if="github.deleted">
-  deleted branch
-  <a target="_blank"
-      ng-href="{{github.compare}}">{{github.ref | localBranchName}}</a>
-</span>
+<div class="gh gh--delete-branch"
+    ng-if="github.deleted">
 
-<span ng-if="!github.deleted">
+  <i class="gh-message-icon octicon octicon-git-branch-delete"></i>
+
+  {{github.pusher.name}} deleted branch {{github.ref | localBranchName}}
+</div>
+
+<div class="gh gh--push"
+    ng-if="!github.deleted">
+
+  <i class="gh-message-icon octicon octicon-git-commit"></i>
+  {{github.pusher.name}}
   <span ng-if="github.forced && !github.created">force</span> pushed
 
   <ng-pluralize
       count="github.commits.length"
-      when="{'0': '',
+      when="{'0': 'a',
              'one': 'one commit to',
              'other': '{} commits to'}"></ng-pluralize>
 
   <span ng-if="github.created">new branch</span>
   <a target="_blank"
       ng-href="{{github.compare}}">{{github.ref | localBranchName}}</a>
-</span>
 
-on
-<a ng-href="{{github.repository.url}}" target="_blank">{{github.repository.owner.name}}/{{github.repository.name}}</a>
+  on
+  <a target="_blank"
+      ng-href="{{github.repository.url}}">{{github.repository.owner.name}}/{{github.repository.name}}</a>
 
-<more-content ng-if="github.commits.length">
-  <ol>
-    <li class="monospaced"
-        ng-repeat="commit in github.commits">
-      <a ng-href="{{commit.url}}" ng-bind="commit.id | shortHash" target="_blank"></a> {{commit.message | limitWithEllipsis:50}}
-    </li>
-  </ol>
-</more-content>
+  <more-content ng-if="github.commits.length">
+    <ol>
+      <li class="monospaced"
+          ng-repeat="commit in github.commits">
+        <a ng-href="{{commit.url}}" ng-bind="commit.id | shortHash" target="_blank"></a> {{commit.message | limitWithEllipsis:50}}
+      </li>
+    </ol>
+  </more-content>
+</div>
