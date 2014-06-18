@@ -124,6 +124,22 @@ angular.module('hipflowApp')
         room.lastVisited = new Date();
       },
 
+      open: function (room) {
+        var isFlow = !!room.access_mode;
+
+        // Open locally
+        room.open = true;
+        localStorageService.set('flows', this.flows);
+        localStorageService.set('privateConversations', this.privateConversations);
+
+        // Open on Flowdock
+        var r = isFlow ?
+          Flowdock.flows(room.organization.parameterized_name, room.parameterized_name) :
+          Flowdock.privateConversations(room.id);
+
+        r.open(this.update.bind(this));
+      },
+
       close: function (room) {
         var isFlow = !!room.access_mode;
 
