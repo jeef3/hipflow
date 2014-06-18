@@ -128,11 +128,7 @@ angular.module('hipflowApp')
         var isFlow = !!room.access_mode;
 
         // Close locally
-        var l = isFlow ?
-          this.flows :
-          this.privateConversations;
-
-        l.splice(l.indexOf(room), 1);
+        room.open = false;
         localStorageService.set('flows', this.flows);
         localStorageService.set('privateConversations', this.privateConversations);
 
@@ -141,7 +137,7 @@ angular.module('hipflowApp')
           Flowdock.flows(room.organization.parameterized_name, room.parameterized_name) :
           Flowdock.privateConversations(room.id);
 
-        r.close(this.update);
+        r.close(this.update.bind(this));
       },
 
       update: function () {
