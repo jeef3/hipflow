@@ -2,6 +2,7 @@
 
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
+var karma = require('karma');
 
 var rupture = require('rupture');
 
@@ -23,6 +24,24 @@ gulp.task('check', function () {
     .pipe($.jshint.reporter('fail'))
     .pipe($.jscs())
     .pipe($.size());
+});
+
+gulp.task('test', function (done) {
+  var server = karma.server;
+  server.start({
+    browsers: ['PhantomJS'],
+    frameworks: ['jasmine'],
+    singleRun: true,
+    autoWatch: false,
+    files: [
+      'app/scripts/**/*.js',
+      'test/mock/**/*.js',
+      'test/spec/**/*.js'
+    ]
+  }, function(exitCode) {
+    console.log('Karma has exited with ' + exitCode);
+    process.exit(exitCode);
+  });
 });
 
 gulp.task('html', ['styles'], function () {
