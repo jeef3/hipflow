@@ -12,6 +12,16 @@ angular.module('hipflowApp')
 
       var room = Rooms.getForMessage(message);
 
+      if (!room) {
+        // Not sure how we got here?
+        return;
+      }
+
+      // If the room is not currently open, then open it
+      if (!room.open) {
+        Rooms.open(room);
+      }
+
       if (room.id !== $scope.currentRoom.id) {
         room.unread = room.unread + 1 || 1;
       }
