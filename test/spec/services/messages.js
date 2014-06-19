@@ -116,7 +116,7 @@ describe('Service: Messages', function () {
       });
 
       it('should keep the messages sorted by sent time', function () {
-        expect(Messages.messages[flow][0]).toBe(newMessage);
+        expect(Messages.messages[flow][Messages.messages[flow].length - 1]).toBe(newMessage);
       });
     });
   });
