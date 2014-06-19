@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .service('Threads', function Threads(Flowdock, localStorageService) {
     return {
       rooms: {},

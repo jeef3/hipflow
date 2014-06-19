@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .service('FlowdockAuth', function FlowdockAuth($http, $cookies) {
     var auth = {};
 

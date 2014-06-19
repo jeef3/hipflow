@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .service('Sources', function Sources(Flowdock, localStorageService) {
     return {
       sources: localStorageService.get('sources') || {},

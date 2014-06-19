@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .directive('moreContent', function () {
     return {
       templateUrl: '/views/directives/more-content.html',

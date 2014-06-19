@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .controller('ChatContextCtrl', function ($scope, Threads, Sources) {
 
     var update = function (room) {

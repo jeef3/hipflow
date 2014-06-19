@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .filter('prFromUrl', function () {
     return function (input) {
       if (!input) {

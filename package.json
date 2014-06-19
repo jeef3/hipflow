@@ -3,7 +3,7 @@
   "description": "An alternative Flowdock client",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jeef3/hipflow.git"
+    "url": "https://github.com/jeef3/slipflow.git"
   },
   "keyword": [
     "flowdock"

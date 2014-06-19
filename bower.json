@@ -1,5 +1,5 @@
 {
-  "name": "hipflow",
+  "name": "slipflow",
   "version": "0.0.0",
   "dependencies": {
     "angular": "1.2.12",

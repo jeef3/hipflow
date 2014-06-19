@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp', [
+angular.module('slipflowApp', [
     'ngCookies',
     'ngSanitize',
     'LocalStorageModule',
@@ -8,7 +8,7 @@ angular.module('hipflowApp', [
   ])
   .config(function ($locationProvider, localStorageServiceProvider) {
     $locationProvider.html5Mode(true);
-    localStorageServiceProvider.setPrefix('hipflow');
+    localStorageServiceProvider.setPrefix('slipflow');
   })
   .run(function ($window, $rootScope, Notifications, Flowdock, FlowdockAuth, Users, Rooms, IncomingMessageHandler) {
 

@@ -3,7 +3,7 @@
 describe('Controller: SidebarCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('hipflowApp'));
+  beforeEach(module('slipflowApp'));
 
   var SidebarCtrl,
     scope;

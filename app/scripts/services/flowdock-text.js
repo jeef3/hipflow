@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .service('FlowdockText', function FlowdockText($window) {
     return $window.FlowdockText;
   });

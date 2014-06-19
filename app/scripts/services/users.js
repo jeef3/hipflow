@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .service('Users', function Users(Flowdock, localStorageService) {
     return {
       users: localStorageService.get('users') || [],

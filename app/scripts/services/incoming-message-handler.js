@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .service('IncomingMessageHandler', function IncomingMessageHandler($rootScope, Messages, Users, Rooms, Flowdock) {
 
     var handleMessage = function (message) {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .filter('limitWithEllipsis', function () {
     return function (input, limit) {
       if (!input || input.length <= limit) {

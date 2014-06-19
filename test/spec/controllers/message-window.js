@@ -3,7 +3,7 @@
 describe('Controller: MessageWindowCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('hipflowApp'));
+  beforeEach(module('slipflowApp'));
 
   var MessageWindowCtrl,
     scope;

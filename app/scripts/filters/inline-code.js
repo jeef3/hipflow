@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .filter('inlineCode', function () {
     return function (input) {
       var inlineCodeBlocks = input.match(/`(.*)`/i);

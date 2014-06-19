@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .service('Notifications', function Notifications($rootScope, $window, Users, Rooms) {
 
     if (!('Notification' in $window)) {

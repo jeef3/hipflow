@@ -140,7 +140,7 @@ module.exports = function (grunt) {
             '.tmp',
             '<%= yeoman.dist %>/*',
             '!<%= yeoman.dist %>/.git*',
-            'hipflow.nw'
+            'slipflow.nw'
           ]
         }]
       },
@@ -343,7 +343,7 @@ module.exports = function (grunt) {
     compress: {
       dist: {
         options: {
-          archive: 'hipflow.nw',
+          archive: 'slipflow.nw',
           mode: 'zip',
           pretty: true
         },

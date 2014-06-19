@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .directive('onFileDrop', function () {
     return {
       restrict: 'A',

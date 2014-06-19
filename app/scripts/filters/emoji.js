@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .filter('emoji', function () {
     var emojiMap = {
       '\\+1': ['\ud83d\udc4d'],

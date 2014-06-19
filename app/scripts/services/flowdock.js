@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .service('Flowdock', function Flowdock($q, $http, $rootScope, EventSource, FlowdockAuth) {
 
     var apiBase = 'https://api.flowdock.com';

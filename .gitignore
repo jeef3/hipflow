@@ -1,6 +1,6 @@
 node_modules
 dist
-hipflow.nw
+slipflow.nw
 .tmp
 .sass-cache
 app/bower_components

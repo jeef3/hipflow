@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .service('FlowdockAuth', function FlowdockAuth() {
     this.isAuthenticated = function () {
       return true;

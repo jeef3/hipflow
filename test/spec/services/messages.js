@@ -3,7 +3,7 @@
 describe('Service: Messages', function () {
 
   // load the service's module
-  beforeEach(module('hipflowApp'));
+  beforeEach(module('slipflowApp'));
 
   // instantiate service
   var Messages,

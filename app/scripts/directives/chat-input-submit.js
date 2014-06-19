@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .directive('chatInputSubmit', function () {
     return {
       restrict: 'AC',

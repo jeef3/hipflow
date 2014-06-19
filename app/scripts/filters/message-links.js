@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .filter('messageLinks', function (FlowdockText) {
     return function (input) {
       if (!input) {

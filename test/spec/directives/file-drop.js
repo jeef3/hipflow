@@ -3,7 +3,7 @@
 describe('Directive: fileDrop', function () {
 
   // load the directive's module
-  beforeEach(module('hipflowApp'));
+  beforeEach(module('slipflowApp'));
 
   var element,
     scope;

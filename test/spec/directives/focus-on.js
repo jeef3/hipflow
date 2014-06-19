@@ -3,7 +3,7 @@
 describe('Directive: focusOn', function () {
 
   // load the directive's module
-  beforeEach(module('hipflowApp'));
+  beforeEach(module('slipflowApp'));
 
   var
     scope;

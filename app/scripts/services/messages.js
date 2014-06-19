@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .service('Messages', function Messages($rootScope, Flowdock, Users, Threads, Uuid) {
     var MESSAGE_BUFFER_LENGTH = 30;
 

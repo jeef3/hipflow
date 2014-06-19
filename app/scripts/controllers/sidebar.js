@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .controller('SidebarCtrl', function ($scope, Flowdock, Users, Rooms) {
     $scope.flows = Rooms.flows;
     $scope.privateConversations = Rooms.privateConversations;

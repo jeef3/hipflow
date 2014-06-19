@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hipflowApp')
+angular.module('slipflowApp')
   .service('EventSource', function EventSource() {
     function EventSourceMock() {
 
