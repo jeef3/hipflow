@@ -10,10 +10,4 @@ describe('Filter: prFromUrl', function () {
   beforeEach(inject(function ($filter) {
     prFromUrl = $filter('prFromUrl');
   }));
-
-  it('should return the input prefixed with "prFromUrl filter:"', function () {
-    var text = 'angularjs';
-    expect(prFromUrl(text)).toBe('prFromUrl filter: ' + text);
-  });
-
 });
