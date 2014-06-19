@@ -1,10 +1,33 @@
 'use strict';
 
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
-var karma = require('karma');
+var path = require('path');
 
+var $ = require('gulp-load-plugins')();
+var gulp = require('gulp');
+var gutil = require('gulp-util');
+var karma = require('karma');
+var karmaParseConfig = require('karma/lib/config').parseConfig;
 var rupture = require('rupture');
+
+var runKarma = function (configFilePath, options, cb) {
+	configFilePath = path.resolve(configFilePath);
+
+	var server = karma.server;
+	var log = gutil.log;
+  var colors = gutil.colors;
+
+	var config = karmaParseConfig(configFilePath, {});
+
+  Object.keys(options).forEach(function(key) {
+    config[key] = options[key];
+  });
+
+	server.start(config, function(exitCode) {
+		log('Karma has exited with ' + colors.red(exitCode));
+		cb();
+		process.exit(exitCode);
+	});
+};
 
 gulp.task('styles', function () {
   return gulp.src('app/styles/styles.styl')
@@ -25,21 +48,10 @@ gulp.task('check', function () {
 });
 
 gulp.task('test', function (done) {
-  var server = karma.server;
-  server.start({
-    browsers: ['PhantomJS'],
-    frameworks: ['jasmine'],
-    singleRun: true,
-    autoWatch: false,
-    files: [
-      'app/scripts/**/*.js',
-      'test/mock/**/*.js',
-      'test/spec/**/*.js'
-    ]
-  }, function(exitCode) {
-    console.log('Karma has exited with ' + exitCode);
-    process.exit(exitCode);
-  });
+  runKarma('karma.conf.js', {
+		autoWatch: false,
+		singleRun: true
+	}, done);
 });
 
 gulp.task('html', ['styles'], function () {
@@ -136,7 +148,7 @@ gulp.task('serve', ['styles'], function () {
   });
 });
 
-gulp.task('watch', ['serve'], function () {
+gulp.task('watch', ['serve'], function (done) {
   var server = $.livereload();
 
   // watch for changes
@@ -152,4 +164,9 @@ gulp.task('watch', ['serve'], function () {
   gulp.watch('app/styles/**/*.styl', ['styles']);
   // gulp.watch('app/images/**/*', ['images']);
   gulp.watch('bower.json', ['wiredep']);
+
+  runKarma('karma.conf.js', {
+		autoWatch: true,
+		singleRun: false
+	}, done);
 });
