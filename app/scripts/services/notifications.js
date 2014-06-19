@@ -4,7 +4,6 @@ angular.module('hipflowApp')
   .service('Notifications', function Notifications($rootScope, $window, Users, Rooms) {
 
     if (!('Notification' in $window)) {
-      console.log('No notifications');
       return;
     }
 
