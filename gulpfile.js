@@ -14,7 +14,6 @@ var runKarma = function (configFilePath, options, cb) {
 
 	var server = karma.server;
 	var log = gutil.log;
-  var colors = gutil.colors;
 
 	var config = karmaParseConfig(configFilePath, {});
 
@@ -23,7 +22,7 @@ var runKarma = function (configFilePath, options, cb) {
   });
 
 	server.start(config, function(exitCode) {
-		log('Karma has exited with ' + colors.red(exitCode));
+		log('Karma has exited with', exitCode);
 		cb();
 		process.exit(exitCode);
 	});

@@ -18,7 +18,6 @@ module.exports = function(config) {
       'test/spec/**/*.js'
     ],
 
-    port: 8080,
     logLevel: config.LOG_INFO,
     browsers: ['Chrome']
   });
