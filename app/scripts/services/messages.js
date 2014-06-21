@@ -24,15 +24,13 @@ angular.module('slipflowApp')
       message.mentionsMe = tags.indexOf(':user:' + Users.me.id) !== -1;
       message.thread = tags.indexOf(':thread') !== -1;
 
-      if (message.event === 'comment') {
-        message.parent = tags
-          .filter(function (tag) {
-            return influxRegex.test(tag);
-          })
-          .map(function (tag) {
-            return influxRegex.exec(tag)[1];
-          })[0];
-      }
+      message.parent = tags
+        .filter(function (tag) {
+          return influxRegex.test(tag);
+        })
+        .map(function (tag) {
+          return influxRegex.exec(tag)[1];
+        })[0];
     };
 
     var processThread = function (message) {
