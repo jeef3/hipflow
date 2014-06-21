@@ -179,7 +179,7 @@ angular.module('slipflowApp')
         }
 
         return roomChatLogs.filter(function (m) {
-          return m.id === messageId || m.uuid === messageId;
+          return m.id === parseInt(messageId) || m.uuid === messageId;
         })[0] || null;
       },
 

@@ -104,6 +104,18 @@ angular.module('slipflowApp')
           break;
 
         case 'file':
+          var parent;
+          if ((parent = Messages.get(message.parent, $scope.currentRoom.id))) {
+            angular.copy({
+              id: parent.id,
+              title: parent.content
+            }, $scope.currentDiscussion);
+          } else {
+            angular.copy({
+              id: message.id,
+              title: message.content.file_name
+            }, $scope.currentDiscussion);
+          }
           break;
 
         case 'message':
