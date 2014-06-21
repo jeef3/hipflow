@@ -41,7 +41,12 @@ angular.module('slipflowApp')
     };
 
     $scope.upload = function (file) {
-      Messages.upload($scope.currentRoom, file, []);
+      if ($scope.currentDiscussion.id) {
+        Messages.upload($scope.currentRoom, file, [],
+          $scope.currentDiscussion.id);
+      } else {
+        Messages.upload($scope.currentRoom, file, []);
+      }
     };
 
     $scope.user = function (userId) {

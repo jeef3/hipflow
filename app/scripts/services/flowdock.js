@@ -119,6 +119,11 @@ angular.module('slipflowApp')
           }
         };
 
+        comments.upload = function (file, uuid, tags, cb, progressCb) {
+          var path = '/flows/' + organization + '/' + flowName + '/messages/' + messageId + '/comments';
+          apiUpload(file, uuid, path, cb, progressCb);
+        };
+
         return {
           update: function (props, cb) {
             var method = '/flows/' + organization + '/' + flowName + '/messages/' + messageId;
