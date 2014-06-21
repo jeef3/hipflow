@@ -13,7 +13,7 @@
                    'message--highlight': message.highlight,
                    'message--mentions-me': message.mentionsMe,
                    'message--thread': message.thread,
-                   'message--comment': message.event === 'comment',
+                   'message--comment': message.parent,
                    'message--monologue': isMonologue(message, $index),
                    'message--date-separator': !isSameDay(message, $index),
                    'message--first-unseen': isFirstUnseen(room, message, $index),
@@ -25,8 +25,8 @@
           class="btn message__discussion-marker"
           ng-click="setCurrentDiscussion(message)">
         <i class="fa fa-fw"
-            ng-class="{'fa-comments': message.event === 'comment',
-                       'fa-comment': message.event !== 'comment'}"></i>
+            ng-class="{'fa-comments': message.parent,
+                       'fa-comment': !message.parent}"></i>
       </button>
 
       <div class="avatar message__author-avatar"
