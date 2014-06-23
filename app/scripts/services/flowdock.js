@@ -1,41 +1,10 @@
 'use strict';
 
 angular.module('slipflowApp')
-  .service('Flowdock', function Flowdock($q, $http, $rootScope, EventSource, FlowdockAuth) {
-
-    var apiBase = 'https://api.flowdock.com';
-    var streamBase = 'https://stream.flowdock.com';
-
-    var url = function (base, path, params) {
-      var url = base + path;
-      var token = FlowdockAuth.token();
-      var options = angular.extend({}, params, { access_token: token });
-
-      var firstParam = true;
-      Object.keys(options).forEach(function (key) {
-        url = url + (firstParam ? '?' : '&') + key + '=' + options[key];
-        firstParam = false;
-      });
-
-      return url;
-    };
-
-    var streamUrl = function (flows, params) {
-      if (flows && flows.length) {
-        params = params || {};
-        params.filter = flows
-          .map(function (flow) {
-            return flow.organization.parameterized_name + '/' +
-              flow.parameterized_name;
-          })
-          .join(',');
-      }
-
-      return url(streamBase, '/flows', params);
-    };
+  .service('Flowdock', function Flowdock($window, $q, $http, $rootScope, FlowdockUrl) {
 
     var apiUrl = function (path, params) {
-      return url(apiBase, path, params);
+      return FlowdockUrl.url(FlowdockUrl.apiBase, path, params);
     };
 
     var apiGet = function (path, params) {
@@ -359,23 +328,6 @@ angular.module('slipflowApp')
     };
 
     return {
-      connect: function () {},
-      stream: function (flows, options) {
-        var stream = new EventSource(streamUrl(flows, options),
-          { withCredentials: false });
-
-        return {
-          onmessage: function (fn) {
-            stream.onmessage = function (e) {
-              fn.call(this, JSON.parse(e.data));
-            };
-          },
-          close: function () {
-            stream.close();
-          }
-        };
-      },
-
       user: user,
       users: users,
       flows: flows,
