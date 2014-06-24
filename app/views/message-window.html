@@ -43,6 +43,8 @@
       </a>
 
       <div class="message__content">
+        <div class="emphasis quiet"
+            ng-if="!message.content">Redacted</div>
         <div ng-if="message.event === 'message'" ng-include="'views/messages/plain.html'"></div>
         <div ng-if="message.event === 'comment'" ng-include="'views/messages/comment.html'"></div>
         <div ng-if="message.event === 'file'" ng-include="'views/messages/file.html'"></div>
