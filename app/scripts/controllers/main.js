@@ -131,4 +131,8 @@ angular.module('slipflowApp')
 
       $rootScope.$broadcast('CURRENT_DISCUSSION_SET');
     };
+
+    $scope.isMergeCommit = function (commit) {
+      return commit.message.indexOf('Merge pull request') === 0;
+    };
   });

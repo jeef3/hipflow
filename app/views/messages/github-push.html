@@ -6,8 +6,20 @@
   {{github.pusher.name}} deleted branch {{github.ref | localBranchName}}
 </div>
 
+<div class="gh gh--merge"
+    ng-if="github.head_commit && isMergeCommit(github.head_commit)">
+
+  <i class="gh-message-icon octicon octicon-git-merge"></i>
+  {{github.pusher.name}} merged commit
+  <a target="_blank"
+      class="code"
+      ng-href="{{github.head_commit.url}}"
+      ng-bind="github.head_commit.id | shortHash"></a>
+  into <span class="code">{{github.ref | localBranchName}}</span> from ??
+</div>
+
 <div class="gh gh--push"
-    ng-if="!github.deleted">
+    ng-if="!github.deleted && (github.head_commit && !isMergeCommit(github.head_commit))">
 
   <i class="gh-message-icon octicon octicon-git-commit"></i>
   {{github.pusher.name}}
