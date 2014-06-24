@@ -122,6 +122,7 @@ angular.module('slipflowApp')
 
       focusLost: function (room) {
         room.lastVisited = new Date();
+        this.save();
       },
 
       open: function (room) {
@@ -129,8 +130,7 @@ angular.module('slipflowApp')
 
         // Open locally
         room.open = true;
-        localStorageService.set('flows', this.flows);
-        localStorageService.set('privateConversations', this.privateConversations);
+        this.save();
 
         // Open on Flowdock
         var r = isFlow ?
@@ -145,8 +145,7 @@ angular.module('slipflowApp')
 
         // Close locally
         room.open = false;
-        localStorageService.set('flows', this.flows);
-        localStorageService.set('privateConversations', this.privateConversations);
+        this.save();
 
         // Close on Flowdock
         var r = isFlow ?
@@ -154,6 +153,11 @@ angular.module('slipflowApp')
           Flowdock.privateConversations(room.id);
 
         r.close(this.update.bind(this));
+      },
+
+      save: function () {
+        localStorageService.set('flows', this.flows);
+        localStorageService.set('privateConversations', this.privateConversations);
       },
 
       update: function () {
