@@ -163,6 +163,7 @@ angular.module('slipflowApp')
 
         if (message.event === 'message-edit') {
           existing.content = message.content.updated_content;
+          existing.edited = message.sent;
         } else if (message.event === 'tag-change') {
           message.content.add.forEach(addTag.bind(existing));
           message.content.remove.forEach(removeTag.bind(existing));
