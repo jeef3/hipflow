@@ -171,6 +171,17 @@ angular.module('slipflowApp')
         processTags(existing);
       },
 
+      delete: function (message) {
+        var existing = this.get(message.content.message, message.flow);
+
+        if (!existing) {
+          return;
+        }
+
+        var roomChatLogs = this.messages[message.flow];
+        roomChatLogs.splice(roomChatLogs.indexOf(existing), 1);
+      },
+
       get: function (messageId, roomId) {
         var roomChatLogs = this.messages[roomId];
 

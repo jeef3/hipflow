@@ -20,6 +20,11 @@ angular.module('slipflowApp')
           $rootScope.$broadcast('NEW_MESSAGE', message);
           console.log('Editing message', message);
           break;
+        case 'message-delete':
+          Messages.delete(message);
+          $rootScope.$broadcast('MESSAGE_DELETED', message);
+          console.log('Deleting message', message);
+          break;
         case 'tag-change':
           Messages.edit(message);
           console.log('Tag Change', message);
