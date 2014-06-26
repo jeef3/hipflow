@@ -23,7 +23,7 @@ angular.module('slipflowApp')
       }
 
       if (room.id !== $scope.currentRoom.id) {
-        room.unread = room.unread + 1 || 1;
+        room.hasUnread = true;
       }
     });
   });
