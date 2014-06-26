@@ -99,19 +99,31 @@ $fail-background = rgb(249, 230, 230);
     }
   }
 
-  &.message--first-unseen:before {
-    content: 'Unread';
+  &.message--first-unseen {
+    top: -1px;
+    border-top: dashed 2px $red !important;
 
-    display: block;
+    .message__content {
+      border-top-color: transparent !important;
+    }
 
-    color: white;
-    font-weight: 900;
-    font-size: 0.813em;
-    text-transform: uppercase;
-    text-align: center;
+    &:before {
+      content: 'New Messages';
 
-    border-radius: 0.313em;
-    background: #975050;
+      position: absolute;
+      top: -0.813em;
+      left: 50%;
+      padding: 0 1em;
+      transform: translate(-50%);
+
+      color: $red;
+      font-weight: 900;
+      font-size: 0.813em;
+      text-transform: uppercase;
+      text-align: center;
+
+      background: #ffffff;
+    }
   }
 
   a {
