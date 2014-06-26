@@ -18,11 +18,12 @@ angular.module('slipflowApp')
       addOrUpdateFlow: function (flow) {
         var existing = this.get(flow.id);
 
-        // Normalize unread
-        flow.unread = flow.unread_mentions || 0;
-
         if (existing) {
-          angular.copy(flow, existing);
+          existing.hasUnread =
+            new Date(flow.last_message_at) >
+            new Date(existing.lastSeenAt);
+
+          angular.extend(existing, flow);
           return;
         }
 
@@ -36,11 +37,12 @@ angular.module('slipflowApp')
       addOrUpdatePrivateConversation: function (privateConversation) {
         var existing = this.get(privateConversation.id);
 
-        // Normalize unread
-        privateConversation.unread = privateConversation.activity.mentions || 0;
-
         if (existing) {
-          angular.copy(privateConversation, existing);
+          existing.hasUnread =
+            new Date(privateConversation.last_message_at) >
+            new Date(existing.lastSeenAt);
+
+          angular.extend(existing, privateConversation);
           return;
         }
 
@@ -100,14 +102,16 @@ angular.module('slipflowApp')
         }
       },
 
-      focusGained: function (room) {
+      markAllAsRead: function (room) {
+        room.hasUnread = false;
+        this.save();
+
+        // Mark all mentions as read
         var r = room.access_mode ?
           Flowdock.flows(room.organization.parameterized_name, room.parameterized_name) :
           Flowdock.privateConversations(room.id);
 
         var unread = ':unread:' + Users.me.id;
-
-        room.unread = 0;
 
         r.messages.list({ tags: unread }, function (messages) {
           messages.forEach(function (message) {
@@ -117,11 +121,10 @@ angular.module('slipflowApp')
             r.messages(message.id).update({ tags: tags });
           });
         });
-
       },
 
-      focusLost: function (room) {
-        room.lastVisited = new Date();
+      placeReadMarker: function (room) {
+        room.lastSeenAt = new Date();
         this.save();
       },
 

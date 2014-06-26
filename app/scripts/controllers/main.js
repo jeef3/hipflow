@@ -18,7 +18,7 @@ angular.module('slipflowApp')
 
     $scope.showRoom = function (room) {
       if ($scope.currentRoom) {
-        Rooms.focusLost($scope.currentRoom);
+        Rooms.placeReadMarker($scope.currentRoom);
       }
 
       $scope.currentRoom = room;
@@ -28,7 +28,9 @@ angular.module('slipflowApp')
 
       if (room) {
         Messages.update(room);
-        Rooms.focusGained(room);
+
+        // TODO: Smarter handling of when to mark a message as read. Maybe delay?
+        Rooms.markAllAsRead(room);
       }
     };
 
