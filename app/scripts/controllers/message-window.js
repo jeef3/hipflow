@@ -40,10 +40,10 @@ angular.module('slipflowApp')
 
       var previous = $scope.messages[index - 1];
       if (previous) {
-        return new Date(previous.sent) < room.lastVisited &&
-          room.lastVisited < messageDate;
+        return new Date(previous.sent) < new Date(room.lastSeenAt) &&
+          new Date(room.lastSeenAt) < messageDate;
       } else {
-        return room.lastVisited < messageDate;
+        return new Date(room.lastSeenAt) < messageDate;
       }
     };
 
