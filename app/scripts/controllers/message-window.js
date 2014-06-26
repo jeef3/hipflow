@@ -32,7 +32,7 @@ angular.module('slipflowApp')
     };
 
     $scope.isFirstUnseen = function (room, message, index) {
-      if (!room.lastVisited) {
+      if (!room.lastSeenAt) {
         return false;
       }
 
