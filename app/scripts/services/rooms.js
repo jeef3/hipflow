@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('slipflowApp')
-  .service('Rooms', function Rooms(Flowdock, Users, localStorageService) {
+  .service('Rooms', function Rooms(Flowdock, Users, DocumentTitle, localStorageService) {
     var flows = localStorageService.get('flows') || [];
     var privateConversations = localStorageService.get('privateConversations') || [];
 
@@ -105,6 +105,17 @@ angular.module('slipflowApp')
       markAllAsRead: function (room) {
         room.hasUnread = false;
         this.save();
+
+        var unreadFlows = flows.filter(function (f) {
+          return f.hasUnread;
+        });
+        var unreadPrivateConversations = privateConversations.filter(function (pr) {
+          return pr.hasUnread;
+        });
+
+        if (!unreadFlows.length || !unreadPrivateConversations.length) {
+          DocumentTitle.clear();
+        }
 
         // Mark all mentions as read
         var r = room.access_mode ?
