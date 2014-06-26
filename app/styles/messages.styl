@@ -101,7 +101,7 @@ $fail-background = rgb(249, 230, 230);
 
   &.message--first-unseen {
     top: -1px;
-    border-top: dashed 2px $red !important;
+    border-top: dashed 2px $green !important;
 
     .message__content {
       border-top-color: transparent !important;
@@ -116,13 +116,49 @@ $fail-background = rgb(249, 230, 230);
       padding: 0 1em;
       transform: translate(-50%);
 
-      color: $red;
+      color: $green;
       font-weight: 900;
       font-size: 0.813em;
       text-transform: uppercase;
       text-align: center;
 
       background: #ffffff;
+    }
+
+    .is-below-screen& {
+      &:before {
+        position: fixed;
+        top: auto;
+        left: auto;
+        bottom: 4.692em;
+        right: 18em;
+        padding: 0.313em 1em;
+        transform: translate(0);
+        opacity: 0.8;
+
+        color: white;
+
+        background: $green;
+        border-top-left-radius: 0.313em;
+        border-top-right-radius: 0.313em;
+      }
+    }
+
+    .is-above-screen& {
+      &:before {
+        position: fixed;
+        top: 3.692em;
+        left: 17em;
+        right: 17em;
+        padding: 0.313em 1em;
+        transform: translate(0);
+        opacity: 0.8;
+
+        color: white;
+
+        background: $green;
+        border-radius: 0.313em;
+      }
     }
   }
 
