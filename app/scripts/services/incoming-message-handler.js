@@ -12,6 +12,7 @@ angular.module('slipflowApp')
         case 'jira':
         case 'mail':
           Messages.add(message);
+          Rooms.newMessage(message);
           $rootScope.$broadcast('NEW_MESSAGE', message);
           console.log('Handled message', message);
           break;

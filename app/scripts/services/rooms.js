@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('slipflowApp')
-  .service('Rooms', function Rooms(Flowdock, Users, DocumentTitle, localStorageService) {
+  .service('Rooms', function Rooms($window, Flowdock, Users, DocumentTitle, localStorageService) {
     var flows = localStorageService.get('flows') || [];
     var privateConversations = localStorageService.get('privateConversations') || [];
 
@@ -51,6 +51,21 @@ angular.module('slipflowApp')
         this.privateConversations.sort(function (c1, c2) {
           return c1.id < c2.id;
         });
+      },
+
+      newMessage: function (message) {
+        if (parseInt(message.user) === Users.me.id) {
+          return;
+        }
+
+        if (!$window.document.hasFocus()) {
+          return;
+        }
+
+        // This is effectivly updating the rooms last seen timestamp. Might be
+        // better if this is handled differently?
+        var room = this.getForMessage(message);
+        room.lastSeenAt = new Date();
       },
 
       get: function (id) {
