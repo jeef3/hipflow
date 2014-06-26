@@ -10,7 +10,7 @@ angular.module('slipflowApp', [
     $locationProvider.html5Mode(true);
     localStorageServiceProvider.setPrefix('slipflow');
   })
-  .run(function ($window, $rootScope, Notifications, Flowdock, FlowdockAuth, Users, Rooms, IncomingMessageHandler) {
+  .run(function ($window, $rootScope, Notifications, DocumentTitle, Flowdock, FlowdockAuth, Users, Rooms, IncomingMessageHandler) {
 
     $rootScope.online = navigator.onLine;
     var onlineHandler = function () {

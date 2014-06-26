@@ -8,7 +8,7 @@
       <li class="room"
           ng-repeat="room in flows | filter:{open:true}"
           ng-class="{'active': room.id === currentRoom.id,
-                     'unread': room.unread > 0}">
+                     'unread': room.hasUnread}">
         <button type="button"
             class="btn--sidebar room__join-btn"
             ng-click="showRoom(room)">
@@ -32,7 +32,7 @@
           ng-class="{'query-online': query.online,
                      'query-offline': !query.online,
                      'active': query === currentRoom,
-                     'unread': query.unread > 0}">
+                     'unread': query.hasUnread}">
         <button type="button"
             class="btn btn--sidebar room__join-btn"
             ng-click="showRoom(query)">

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('slipflowApp')
-  .service('Rooms', function Rooms(Flowdock, Users, localStorageService) {
+  .service('Rooms', function Rooms($window, Flowdock, Users, DocumentTitle, localStorageService) {
     var flows = localStorageService.get('flows') || [];
     var privateConversations = localStorageService.get('privateConversations') || [];
 
@@ -18,11 +18,12 @@ angular.module('slipflowApp')
       addOrUpdateFlow: function (flow) {
         var existing = this.get(flow.id);
 
-        // Normalize unread
-        flow.unread = flow.unread_mentions || 0;
-
         if (existing) {
-          angular.copy(flow, existing);
+          existing.hasUnread =
+            new Date(flow.last_message_at) >
+            new Date(existing.lastSeenAt);
+
+          angular.extend(existing, flow);
           return;
         }
 
@@ -36,11 +37,12 @@ angular.module('slipflowApp')
       addOrUpdatePrivateConversation: function (privateConversation) {
         var existing = this.get(privateConversation.id);
 
-        // Normalize unread
-        privateConversation.unread = privateConversation.activity.mentions || 0;
-
         if (existing) {
-          angular.copy(privateConversation, existing);
+          existing.hasUnread =
+            new Date(privateConversation.last_message_at) >
+            new Date(existing.lastSeenAt);
+
+          angular.extend(existing, privateConversation);
           return;
         }
 
@@ -49,6 +51,21 @@ angular.module('slipflowApp')
         this.privateConversations.sort(function (c1, c2) {
           return c1.id < c2.id;
         });
+      },
+
+      newMessage: function (message) {
+        if (parseInt(message.user) === Users.me.id) {
+          return;
+        }
+
+        if (!$window.document.hasFocus()) {
+          return;
+        }
+
+        // This is effectivly updating the rooms last seen timestamp. Might be
+        // better if this is handled differently?
+        var room = this.getForMessage(message);
+        room.lastSeenAt = new Date();
       },
 
       get: function (id) {
@@ -100,14 +117,27 @@ angular.module('slipflowApp')
         }
       },
 
-      focusGained: function (room) {
+      markAllAsRead: function (room) {
+        room.hasUnread = false;
+        this.save();
+
+        var unreadFlows = flows.filter(function (f) {
+          return f.hasUnread;
+        });
+        var unreadPrivateConversations = privateConversations.filter(function (pr) {
+          return pr.hasUnread;
+        });
+
+        if (!unreadFlows.length || !unreadPrivateConversations.length) {
+          DocumentTitle.clear();
+        }
+
+        // Mark all mentions as read
         var r = room.access_mode ?
           Flowdock.flows(room.organization.parameterized_name, room.parameterized_name) :
           Flowdock.privateConversations(room.id);
 
         var unread = ':unread:' + Users.me.id;
-
-        room.unread = 0;
 
         r.messages.list({ tags: unread }, function (messages) {
           messages.forEach(function (message) {
@@ -117,11 +147,11 @@ angular.module('slipflowApp')
             r.messages(message.id).update({ tags: tags });
           });
         });
-
       },
 
-      focusLost: function (room) {
-        room.lastVisited = new Date();
+      placeReadMarker: function (room) {
+        room.lastSeenAt = new Date();
+        this.save();
       },
 
       open: function (room) {
@@ -129,8 +159,7 @@ angular.module('slipflowApp')
 
         // Open locally
         room.open = true;
-        localStorageService.set('flows', this.flows);
-        localStorageService.set('privateConversations', this.privateConversations);
+        this.save();
 
         // Open on Flowdock
         var r = isFlow ?
@@ -145,8 +174,7 @@ angular.module('slipflowApp')
 
         // Close locally
         room.open = false;
-        localStorageService.set('flows', this.flows);
-        localStorageService.set('privateConversations', this.privateConversations);
+        this.save();
 
         // Close on Flowdock
         var r = isFlow ?
@@ -154,6 +182,11 @@ angular.module('slipflowApp')
           Flowdock.privateConversations(room.id);
 
         r.close(this.update.bind(this));
+      },
+
+      save: function () {
+        localStorageService.set('flows', this.flows);
+        localStorageService.set('privateConversations', this.privateConversations);
       },
 
       update: function () {
