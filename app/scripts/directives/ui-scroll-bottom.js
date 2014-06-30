@@ -30,7 +30,8 @@ angular.module('slipflowApp')
         var observer = new MutationObserver(elementAdded);
 
         var config = {
-          childList: true
+          childList: true,
+          subtree: true
         };
 
         observer.observe(container, config);
