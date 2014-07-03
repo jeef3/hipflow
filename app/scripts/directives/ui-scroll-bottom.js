@@ -7,27 +7,24 @@ angular.module('slipflowApp')
       scope: true,
 
       link: function postLink(scope, element, attrs) {
-        var container = element[0],
-          buffer = attrs.uiScrollBottomBuffer || 50;
+        var container = element[0];
+        var containerSize = container.scrollHeight;
+        var position = container.scrollTop;
+        var buffer = attrs.uiScrollBottomBuffer || 50;
 
-        var elementAdded = function (mutations) {
-          var heightAdded = 0;
+        var mutated = function () {
+          var delta = container.scrollHeight - containerSize;
+          var bottom = container.scrollTop + container.clientHeight;
 
-          mutations.forEach(function (m) {
-            [].slice.call(m.addedNodes).forEach(function (n) {
-              heightAdded += n.clientHeight || 0;
-            });
-          });
-
-          var height = container.scrollHeight - container.clientHeight,
-            position = container.scrollTop;
-
-          if (position + heightAdded + buffer > height) {
-            container.scrollTop = height;
+          // Scroll bottom if within buffer
+          if (bottom + buffer > container.scrollHeight) {
+            container.scrollTop = (container.scrollHeight - container.clientHeight);
           }
+
+          containerSize = container.scrollHeight;
         };
 
-        var observer = new MutationObserver(elementAdded);
+        var observer = new MutationObserver(mutated);
 
         var config = {
           childList: true,
