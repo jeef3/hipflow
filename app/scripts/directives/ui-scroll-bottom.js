@@ -17,7 +17,7 @@ angular.module('slipflowApp')
           var bottom = container.scrollTop + container.clientHeight;
 
           // Scroll bottom if within buffer
-          if (bottom + buffer > container.scrollHeight) {
+          if (bottom + buffer > containerSize) {
             container.scrollTop = (container.scrollHeight - container.clientHeight);
           }
 
