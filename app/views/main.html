@@ -41,6 +41,18 @@
             ng-model="message"></textarea>
       </div>
     </form>
+
+    <p class="user-typing emphasis small quiet" ng-show="usersTyping.length > 0">
+      <ng-pluralize
+        count="usersTyping.length"
+        offset="2"
+        when="{'0': 'No one is typing',
+               '1': '{{usersTyping[0]}} is typing',
+               '2': '{{usersTyping[0]}} and {{usersTyping[1]}} are typing',
+               'one': '{{usersTyping[1]}}, {{usersTyping[2]}} and one other person are typing',
+               'other': '{{usersTyping[1]}}, {{usersTyping[2]}}, and {} other people are typing'}">
+      </ng-pluralize>
+    </p>
   </div>
 </section>
 

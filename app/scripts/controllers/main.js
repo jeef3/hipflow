@@ -16,6 +16,14 @@ angular.module('slipflowApp')
       $scope.currentRoom = null;
     }
 
+    $rootScope.$on('USER_ACTIVITY', function (e, message) {
+      $scope.usersTyping = Users.users.filter(function (user) {
+        return user.typing;
+      }).map(function (user) {
+        return user.name;
+      });
+    });
+
     $scope.showRoom = function (room) {
       if ($scope.currentRoom) {
         Rooms.placeReadMarker($scope.currentRoom);
