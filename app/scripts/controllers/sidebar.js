@@ -5,7 +5,7 @@ angular.module('slipflowApp')
     $scope.flows = Rooms.flows;
     $scope.privateConversations = Rooms.privateConversations;
 
-    $scope.$on('NEW_MESSAGE', function (e, message) {
+    $scope.$on('MESSAGE_ADDED', function (e, message) {
       if (message.user === Users.me.id) {
         return;
       }

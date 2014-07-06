@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('slipflowApp')
-  .service('Rooms', function Rooms($window, Flowdock, Users, DocumentTitle, localStorageService) {
+  .service('Rooms', function Rooms($rootScope, $window, Flowdock, Users, DocumentTitle, localStorageService) {
     var flows = localStorageService.get('flows') || [];
     var privateConversations = localStorageService.get('privateConversations') || [];
 
-    return {
+    var rooms = {
       flows: flows,
       privateConversations: privateConversations,
 
@@ -195,4 +195,13 @@ angular.module('slipflowApp')
         });
       }
     };
+
+    $rootScope.$on('MESSAGE_ADDED', function (e, message) {
+      rooms.newMessage(message);
+    });
+    $rootScope.$on('USER_ACTIVITY', function (e, message) {
+      rooms.userActivity(message);
+    });
+
+    return rooms;
   });

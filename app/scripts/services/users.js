@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('slipflowApp')
-  .service('Users', function Users(Flowdock, localStorageService) {
-    return {
+  .service('Users', function Users($rootScope, Flowdock, localStorageService) {
+    var users = {
       users: localStorageService.get('users') || [],
 
       me: localStorageService.get('me') || {},
@@ -73,4 +73,10 @@ angular.module('slipflowApp')
         });
       }
     };
+
+    $rootScope.$on('USER_ACTIVITY', function (e, message) {
+      users.userActivity(message);
+    });
+
+    return users;
   });

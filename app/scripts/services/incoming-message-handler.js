@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('slipflowApp')
-  .service('IncomingMessageHandler', function IncomingMessageHandler($rootScope, Messages, Users, Rooms, Flowdock) {
+  .service('IncomingMessageHandler', function IncomingMessageHandler($rootScope, Flowdock, Rooms) {
 
     var handleMessage = function (message) {
       switch (message.event) {
@@ -11,29 +11,21 @@ angular.module('slipflowApp')
         case 'vcs':
         case 'jira':
         case 'mail':
-          Messages.add(message);
-          Rooms.newMessage(message);
-          $rootScope.$broadcast('NEW_MESSAGE', message);
-          console.log('Handled message', message);
+          console.log('Message', message);
+          $rootScope.$broadcast('MESSAGE_ADDED', message);
           break;
         case 'message-edit':
-          Messages.edit(message);
-          $rootScope.$broadcast('NEW_MESSAGE', message);
-          console.log('Editing message', message);
+        case 'tag-change':
+          console.log('Message edit', message);
+          $rootScope.$broadcast('MESSAGE_EDITED', message);
           break;
         case 'message-delete':
-          Messages.delete(message);
+          console.log('Message delete', message);
           $rootScope.$broadcast('MESSAGE_DELETED', message);
-          console.log('Deleting message', message);
-          break;
-        case 'tag-change':
-          Messages.edit(message);
-          console.log('Tag Change', message);
           break;
         case 'activity.user':
-          Users.userActivity(message);
-          Rooms.userActivity(message);
           console.log('User activity', message);
+          $rootScope.$broadcast('USER_ACTIVITY', message);
           break;
         default:
           console.log('Unhandled', message);

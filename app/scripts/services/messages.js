@@ -37,7 +37,7 @@ angular.module('slipflowApp')
       Threads.addMessageToThread(message);
     };
 
-    return {
+    var messages = {
       messages: {},
 
       send: function (room, message, tags, messageId) {
@@ -224,4 +224,16 @@ angular.module('slipflowApp')
         });
       }
     };
+
+    $rootScope.$on('MESSAGE_ADDED', function (e, message) {
+      messages.add(message);
+    });
+    $rootScope.$on('MESSAGE_EDITED', function (e, message) {
+      messages.edit(message);
+    });
+    $rootScope.$on('MESSAGE_DELETED', function (e, message) {
+      messages.delete(message);
+    });
+
+    return messages;
   });

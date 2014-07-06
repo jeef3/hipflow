@@ -16,7 +16,7 @@ angular.module('slipflowApp')
       $window.document.title = 'Slipflow';
     };
 
-    $rootScope.$on('NEW_MESSAGE', function (e, message) {
+    $rootScope.$on('MESSAGE_ADDED', function (e, message) {
       if ($window.document.hasFocus()) {
         return;
       }
