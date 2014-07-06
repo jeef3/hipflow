@@ -54,18 +54,10 @@ angular.module('slipflowApp')
       },
 
       newMessage: function (message) {
-        if (parseInt(message.user) === Users.me.id) {
+        if ($window.document.hasFocus() || parseInt(message.user) === Users.me.id) {
+          this.placeReadMarker(this.getForMessage(message));
           return;
         }
-
-        if (!$window.document.hasFocus()) {
-          return;
-        }
-
-        // This is effectivly updating the rooms last seen timestamp. Might be
-        // better if this is handled differently?
-        var room = this.getForMessage(message);
-        room.lastSeenAt = new Date();
       },
 
       get: function (id) {
