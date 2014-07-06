@@ -60,6 +60,8 @@ angular.module('slipflowApp')
     };
 
     $scope.send = function (message) {
+      if (!message) return;
+
       if ($scope.currentDiscussion.id) {
         Messages.send($scope.currentRoom, message, [],
           $scope.currentDiscussion.id);
