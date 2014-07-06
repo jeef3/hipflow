@@ -16,7 +16,7 @@ angular.module('slipflowApp')
       $scope.currentRoom = null;
     }
 
-    $rootScope.$on('USER_ACTIVITY', function (e, message) {
+    $rootScope.$on('USER_ACTIVITY', function () {
       $scope.usersTyping = Users.users.filter(function (user) {
         return user.typing;
       }).map(function (user) {
