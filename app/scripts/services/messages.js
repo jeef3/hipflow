@@ -44,14 +44,19 @@ angular.module('slipflowApp')
         var uuid = Uuid.generate();
 
         // Add to the chat room straight away
+        var clientTags = tags.slice();
+
+        if (messageId) {
+          clientTags.push('influx:' + messageId);
+        }
+
         this.add({
           app: 'chat',
           flow: room.id,
           event: messageId ? 'comment' : 'message',
-          content: messageId ? { text: message} : message,
-          message: messageId,
+          content: messageId ? { text: message } : message,
           sent: new Date().getTime(),
-          tags: tags,
+          tags: clientTags,
           user: Number(Users.me.id).toString(),
           uuid: uuid
         });
