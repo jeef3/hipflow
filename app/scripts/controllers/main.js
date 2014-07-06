@@ -67,6 +67,8 @@ angular.module('slipflowApp')
         Messages.send($scope.currentRoom, message, []);
       }
 
+      Rooms.placeReadMarker($scope.currentRoom);
+
       this.message = null;
     };
 
