@@ -58,6 +58,16 @@ angular.module('slipflowApp')
           this.placeReadMarker(this.getForMessage(message));
           return;
         }
+
+        // The send of the message is no longer typing
+        var roomId = Flowdock.util.roomIdFromMessage(message, Users.me);
+        var room = this.get(roomId);
+
+        var user = room.users.filter(function (user) {
+          return user.id === parseInt(message.user);
+        })[0];
+
+        user.typing = false;
       },
 
       get: function (id) {
