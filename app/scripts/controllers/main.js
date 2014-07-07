@@ -16,13 +16,11 @@ angular.module('slipflowApp')
       $scope.currentRoom = null;
     }
 
-    $rootScope.$on('USER_ACTIVITY', function () {
-      $scope.usersTyping = Users.users.filter(function (user) {
+    $scope.usersTyping = function () {
+      return $scope.currentRoom.users.filter(function (user) {
         return user.typing;
-      }).map(function (user) {
-        return user.name;
       });
-    });
+    };
 
     $scope.showRoom = function (room) {
       if ($scope.currentRoom) {

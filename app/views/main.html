@@ -42,15 +42,15 @@
       </div>
     </form>
 
-    <p class="user-typing emphasis small quiet" ng-show="usersTyping.length > 0">
+    <p class="user-typing emphasis small quiet" ng-show="usersTyping().length">
       <ng-pluralize
-        count="usersTyping.length"
+        count="usersTyping().length"
         offset="2"
         when="{'0': 'No one is typing',
-               '1': '{{usersTyping[0]}} is typing',
-               '2': '{{usersTyping[0]}} and {{usersTyping[1]}} are typing',
-               'one': '{{usersTyping[1]}}, {{usersTyping[2]}} and one other person are typing',
-               'other': '{{usersTyping[1]}}, {{usersTyping[2]}}, and {} other people are typing'}">
+               '1': '{{usersTyping()[0].name}} is typing',
+               '2': '{{usersTyping()[0].name}} and {{usersTyping()[1].name}} are typing',
+               'one': '{{usersTyping()[0].name}}, {{usersTyping()[1].name}} and one other person are typing',
+               'other': '{{usersTyping()[0].name}}, {{usersTyping()[1].name}}, and {} other people are typing'}">
       </ng-pluralize>
     </p>
   </div>
