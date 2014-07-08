@@ -3,6 +3,9 @@
 
   <i class="gh-message-icon octicon octicon-git-branch-delete"></i>
 
+  <span class="avatar avatar--small"
+      style="background-image:url({{getAvatar(github.pusher.name)}}s=34)"></span>
+
   {{github.pusher.name}} deleted branch {{github.ref | localBranchName}}
 </div>
 
@@ -10,7 +13,12 @@
     ng-if="github.head_commit && isMergeCommit(github.head_commit)">
 
   <i class="gh-message-icon octicon octicon-git-merge"></i>
+
+  <span class="avatar avatar--small"
+      style="background-image:url({{getAvatar(github.pusher.name)}}s=34)"></span>
+
   {{github.pusher.name}} merged commit
+
   <a target="_blank"
       class="code"
       ng-href="{{github.head_commit.url}}"
@@ -22,7 +30,12 @@
     ng-if="!github.deleted && (github.head_commit && !isMergeCommit(github.head_commit))">
 
   <i class="gh-message-icon octicon octicon-git-commit"></i>
+
+  <span class="avatar avatar--small"
+      style="background-image:url({{getAvatar(github.pusher.name)}}s=34)"></span>
+
   {{github.pusher.name}}
+
   <span ng-if="github.forced && !github.created">force</span> pushed
 
   <ng-pluralize

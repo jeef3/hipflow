@@ -1,12 +1,26 @@
 'use strict';
 
 angular.module('slipflowApp')
-  .controller('MainCtrl', function ($scope, $rootScope, Flowdock, FlowdockAuth, Users, Rooms, Messages, Sources, localStorageService) {
+  .controller('MainCtrl', function (
+        $scope,
+        $rootScope,
+        Flowdock,
+        FlowdockAuth,
+        Users,
+        Rooms,
+        Messages,
+        Sources,
+        Avatars,
+        localStorageService) {
 
     $scope.me = Users.me;
 
     $scope.flows = Rooms.flows;
     $scope.privateConversations = Rooms.privateConversations;
+
+    $scope.getAvatar = function (name) {
+      return Avatars.getAvatar(name);
+    };
 
     var currentRoomId = localStorageService.get('currentRoomId') || null;
     if (currentRoomId) {

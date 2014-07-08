@@ -4,6 +4,7 @@ var express = require('express');
 var path = require('path');
 var passport = require('passport');
 var request = require('request');
+var GitHub = require('github');
 var app = express();
 
 var config = require('./config/config');
@@ -60,6 +61,25 @@ app.get('/oauth/callback',
     res.cookie('flowauth', JSON.stringify(req.user));
     res.redirect('/');
   });
+
+var github = new GitHub({
+  version: '3.0.0'
+});
+github.authenticate({
+  type: 'oauth',
+  key: config.get('GITHUB_CLIENT_ID'),
+  secret: config.get('GITHUB_CLIENT_SECRET')
+});
+
+app.get('/avatar/github/:username', function (req, res) {
+  github.user.getFrom({ user: req.params.username }, function (err, user) {
+    if (err) {
+      throw err;
+    }
+
+    res.send(user.avatar_url);
+  });
+});
 
 app.get('/', function (req, res) {
   res.sendfile(path.join(__dirname, 'index.html'));
