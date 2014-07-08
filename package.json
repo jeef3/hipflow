@@ -10,12 +10,13 @@
   ],
   "version": "0.0.1",
   "dependencies": {
+    "dotenv": "^0.2.5",
     "express": "~3.4.8",
+    "github": "^0.2.1",
     "nconf": "^0.6.9",
     "passport": "~0.2.0",
     "passport-oauth2": "~1.1.1",
-    "request": "~2.33.0",
-    "dotenv": "^0.2.5"
+    "request": "~2.33.0"
   },
   "devDependencies": {
     "connect-livereload": "^0.3.2",
