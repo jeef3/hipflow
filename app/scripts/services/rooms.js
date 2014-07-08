@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('slipflowApp')
-  .service('Rooms', function Rooms($rootScope, $window, Flowdock, Users, DocumentTitle, localStorageService) {
+  .service('Rooms', function Rooms($rootScope, Flowdock, Users, DocumentTitle, MessageSeer, localStorageService) {
     var flows = localStorageService.get('flows') || [];
     var privateConversations = localStorageService.get('privateConversations') || [];
 
@@ -54,7 +54,7 @@ angular.module('slipflowApp')
       },
 
       newMessage: function (message) {
-        if ($window.document.hasFocus() || parseInt(message.user) === Users.me.id) {
+        if (MessageSeer.sawMessage(message)) {
           this.placeReadMarker(this.getForMessage(message));
           return;
         }

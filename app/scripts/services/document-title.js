@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('slipflowApp')
-  .service('DocumentTitle', function DocumentTitle($rootScope, $window, Users) {
+  .service('DocumentTitle', function DocumentTitle($rootScope, $window, Users, MessageSeer) {
 
     var set = function (title) {
       $window.document.title = title;
@@ -17,11 +17,7 @@ angular.module('slipflowApp')
     };
 
     $rootScope.$on('MESSAGE_ADDED', function (e, message) {
-      if ($window.document.hasFocus()) {
-        return;
-      }
-
-      if (parseInt(message.user) === Users.me.id) {
+      if (MessageSeer.sawMessage(message)) {
         return;
       }
 

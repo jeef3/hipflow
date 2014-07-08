@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('slipflowApp')
-  .service('Notifications', function Notifications($rootScope, $window, Users, Rooms) {
+  .service('Notifications', function Notifications($rootScope, $window, Users, Rooms, MessageSeer) {
 
     if (!('Notification' in $window)) {
       return;
@@ -16,11 +16,7 @@ angular.module('slipflowApp')
     }
 
     $rootScope.$on('MESSAGE_ADDED', function (e, message) {
-      if ($window.document.hasFocus()) {
-        return;
-      }
-
-      if (parseInt(message.user) === Users.me.id) {
+      if (MessageSeer.sawMessage(message)) {
         return;
       }
 
