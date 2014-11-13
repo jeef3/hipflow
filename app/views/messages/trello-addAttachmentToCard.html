@@ -1,1 +1,16 @@
-Added attachment to card
+<div class="status">
+  <span class="avatar avatar--small"
+      style="background-image:url(https://trello-avatars.s3.amazonaws.com/{{trello.action.memberCreator.avatarHash}}/30.png)"></span>
+
+  {{trello.action.memberCreator.username}}
+  attached
+  <a target="blank"
+      ng-href="{{trello.action.data.attachment.url}}">{{trello.action.data.attachment.name}}</a>
+  to
+  <a target="_blank"
+      ng-href="{{trello.action.data.card.shortLink}}">{{trello.action.data.card.name}}</a>
+
+  <more-content ng-if="trello.action.data.attachment">
+    <img src="{{trello.action.data.attachment.previewUrl}}">
+  </more-content>
+</div>
