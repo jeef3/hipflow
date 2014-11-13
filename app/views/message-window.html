@@ -61,7 +61,7 @@
 
         <div ng-if="message.event === 'trello'"
             ng-init="trello = message.content"
-            ng-include="'views/messages/trello-' + message.content.event + '.html'"></div>
+            ng-include="'views/messages/trello-' + message.content.action.type + '.html'"></div>
       </div>
     </li>
   </ul>

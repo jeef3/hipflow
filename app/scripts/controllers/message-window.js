@@ -71,6 +71,11 @@ angular.module('slipflowApp')
             author: 'GitHub',
             avatar: '/images/github/avatar.png'
           };
+        case 'trello':
+          return {
+            author: 'Trello',
+            avatar: '/images/trello/avatar.png'
+          };
       }
     };
   });

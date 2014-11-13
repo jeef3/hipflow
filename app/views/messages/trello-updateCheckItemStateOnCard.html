@@ -1,0 +1,15 @@
+<div>
+  <span class="avatar avatar--small"
+      style="background-image:url(https://trello-avatars.s3.amazonaws.com/{{trello.action.memberCreator.avatarHash}}/30.png)"></span>
+
+  {{trello.action.memberCreator.username}}
+
+  <span ng-messages="trello.action.data.checkItem.state">
+    <span ng-message="complete">completed</span>
+  </span>
+
+  '{{trello.action.data.checkItem.name}}'
+  on
+  <a target="_blank"
+      ng-href="{{trello.action.data.card.shortLink}}">{{trello.action.data.card.name}}</a>
+</div>
