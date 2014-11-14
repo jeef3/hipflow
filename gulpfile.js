@@ -114,8 +114,13 @@ gulp.task('extras', function () {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('clear', function (done) {
+  return $.cache.clearAll(done);
+});
+
 gulp.task('clean', function () {
-  return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.clean());
+  return gulp.src(['.tmp', 'dist'], { read: false })
+    .pipe($.clean());
 });
 
 gulp.task('build', [
