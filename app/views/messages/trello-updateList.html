@@ -3,18 +3,10 @@
       style="background-image:url(https://trello-avatars.s3.amazonaws.com/{{trello.action.memberCreator.avatarHash}}/30.png)"></span>
 
   {{trello.action.memberCreator.username}}
-
-  <!-- Moved -->
-  <span ng-if="trello.action.data.old.idList">
-    moved
-    <a target="_blank"
-        ng-href="{{trello.action.data.card.shortLink}}">{{trello.action.data.card.name}}</a>
-    from
-    '{{trello.action.data.listBefore.name}}'
-    to
-    '{{trello.action.data.listAfter.name}}'
-  </span>
-
+  <span ng-if="trello.action.data.list.closed">archived</span>
+  <span ng-if="!trello.action.data.list.closed">re-opened</span>
+  list
+  '{{trello.action.data.list.name}}'
   on
   <a target="_blank"
       ng-href="{{trello.action.data.board.shortLink}}">{{trello.action.data.board.name}}</a>
