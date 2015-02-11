@@ -1,4 +1,4 @@
-JS_BIN            := node_modules/.bin/
+JS_BIN          := node_modules/.bin
 
 # Directories
 out ?= dist
@@ -18,7 +18,7 @@ styles_bundle   := $(out)/styles.css
 NOTIFY          := ./lib/notify
 
 .PHONY: all clean test
-all: dist vendor
+all: dist
 
 .PHONY: dist
 dist: $(js_bundle) $(styles_bundle)
@@ -26,10 +26,10 @@ dist: $(js_bundle) $(styles_bundle)
 $(js_bundle): $(js_src)
 	@echo "Compiling $@"
 	@mkdir -p $(@D)
-	@jshint $? \
+	@$(JS_BIN)/jshint $? \
 		--reporter node_modules/jshint-stylish/stylish.js
-	@jscs $?
-	@browserify \
+	@$(JS_BIN)/jscs $?
+	@$(JS_BIN)/browserify \
 		$(js_entry) \
 		--debug \
 		--transform 'ractivate' \
@@ -40,9 +40,16 @@ $(js_bundle): $(js_src)
 $(styles_bundle): $(styles_src)
 	@echo "Compiling $@"
 	@mkdir -p $(@D)
-	@stylus \
-		--use jeet \
+	@$(JS_BIN)/stylus \
 		--sourcemap \
 		--out $(out) \
 		$(styles_entry)
 	@$(NOTIFY) $(@F) ||:
+
+test:
+	karma start
+
+clean:
+	@rm -rf $(out)
+	@rm -rf $(tmp)
+	@echo "Cleaned"

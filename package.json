@@ -1,6 +1,7 @@
 {
   "name": "slipflow",
   "description": "An alternative Flowdock client",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/jeef3/slipflow.git"
@@ -8,7 +9,11 @@
   "keyword": [
     "flowdock"
   ],
-  "version": "0.0.1",
+  "aliasify": {
+    "aliases": {
+      "ractive": "ractive/build/ractive.runtime"
+    }
+  },
   "dependencies": {
     "dotenv": "^0.2.5",
     "express": "~3.4.8",
@@ -19,6 +24,8 @@
     "request": "~2.33.0"
   },
   "devDependencies": {
+    "aliasify": "^1.5.1",
+    "browserify": "^8.1.3",
     "connect-livereload": "^0.3.2",
     "grunt": "~0.4.1",
     "grunt-autoprefixer": "~0.4.0",
@@ -67,6 +74,8 @@
     "gulp-uglify": "^0.3.0",
     "gulp-useref": "^0.4.3",
     "gulp-util": "^2.2.17",
+    "jscs": "^1.11.2",
+    "jshint": "^2.6.0",
     "jshint-stylish": "^0.2.0",
     "karma": "0.10.10",
     "karma-chrome-launcher": "^0.1.4",
@@ -74,8 +83,10 @@
     "karma-ng-scenario": "^0.1.0",
     "load-grunt-tasks": "~0.2.0",
     "open": "0.0.4",
+    "ractivate": "^0.2.0",
     "rupture": "^0.1.0",
     "streamqueue": "0.0.7",
+    "stylus": "^0.50.0",
     "time-grunt": "~0.2.1",
     "wiredep": "^1.7.0"
   },
