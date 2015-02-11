@@ -1,0 +1,29 @@
+#!/bin/sh
+
+if [ ! $(which fswatch) ]; then
+  echo "You need to install fswatch to use watch"
+  exit 1
+fi
+
+export PATH=node_modules/.bin:$PATH
+export LIVERELOAD=true
+
+echo "Initial compile"
+make -s
+echo "\033[0;34mDone\033[0m"
+
+echo "\033[0;32mWatching...\033[0m"
+
+# Start LiveReload server
+# livereload dist
+
+# Watch dist and notify Livereload of changes
+fswatch -0o . | while read -d "" event; \
+  do \
+    make --question
+    status=$?
+
+    if [ $status -eq 1 ]; then
+      make
+    fi
+  done
