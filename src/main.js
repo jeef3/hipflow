@@ -1,18 +1,24 @@
 'use strict';
 
-var template = require('./template');
-var view = require('./main.html');
+import Ractive from 'ractive';
+
+import template from './main.html';
 
 function MainCtrl() {
 
+  this.viewData = {};
 }
 
-module.exports = function (el) {
+export default function (el) {
   var controller = new MainCtrl();
 
-  template(el, controller, view);
+  new Ractive({
+    el: el,
+    template: template,
+    data: controller.viewData
+  });
 
   return controller;
-};
+}
 
-module.exports.MainCtrl = MainCtrl;
+export {MainCtrl};

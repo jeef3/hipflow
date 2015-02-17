@@ -1,0 +1,60 @@
+<div class="sidebar">
+  <button class="lobby btn btn--sidebar"
+      type="button">Lobby</button>
+
+  <div class="channels scroll-container">
+    <h3 class="list-title">Flows</h3>
+    <ul class="room-list">
+      {{#flows}}
+      <li class="room"
+          ng-repeat="room in flows | filter:{open:true}"
+          ng-class="{'active': room.id === currentRoom.id,
+                     'unread': room.hasUnread}">
+        <button type="button"
+            class="btn--sidebar room__join-btn"
+            ng-click="showRoom(room)">
+          <i class="fa fa-fw fa-comments-o room__icon"></i> {{room.name}}
+
+          <i class="fa fa-fw fa-circle unread-marker"></i>
+        </button>
+
+        <button type="button"
+            class="btn room__close-btn"
+            ng-click="leaveRoom(room)">
+          <i class="fa fa-fw fa-times"></i>
+        </button>
+      </li>
+      {{/}}
+    </ul>
+
+    <h3 class="list-title">1&ndash;to&ndash;1s</h3>
+    <ul class="room-list">
+      {{#privateConversations}}
+      <li class="room"
+          ng-repeat="query in privateConversations | filter:{open:true}"
+          ng-class="{'query-online': query.online,
+                     'query-offline': !query.online,
+                     'active': query === currentRoom,
+                     'unread': query.hasUnread}">
+        <button type="button"
+            class="btn btn--sidebar room__join-btn"
+            ng-click="showRoom(query)">
+          <i class="fa fa-fw fa-circle"
+              ng-class="{'online-status-icon--online': isOnline(query.id),
+                         'online-status-icon--offline': !isOnline(query.id)}"></i> {{query.name}}
+
+          <i class="fa fa-fw fa-circle unread-marker"></i>
+        </button>
+
+        <button type="button"
+            class="btn room__close-btn"
+            ng-click="leaveRoom(query)">
+          <i class="fa fa-fw fa-times"></i>
+        </button>
+      </li>
+      {{/}}
+    </ul>
+  </div>
+
+  <x-user-status></x-user-status>
+</div>

@@ -18,10 +18,10 @@ styles_bundle   := $(out)/styles.css
 NOTIFY          := ./lib/notify
 
 .PHONY: all clean test
-all: dist
+all: test dist
 
 .PHONY: dist
-dist: $(js_bundle) $(styles_bundle)
+dist: $(js_bundle) $(styles_bundle) $(out)/index.html
 
 $(js_bundle): $(js_src)
 	@echo "Compiling $@"
@@ -30,8 +30,9 @@ $(js_bundle): $(js_src)
 		--reporter node_modules/jshint-stylish/stylish.js
 	@$(JS_BIN)/jscs $?
 	@$(JS_BIN)/browserify \
-		$(js_entry) \
+		--entry $(js_entry) \
 		--debug \
+    --transform 'babelify' \
 		--transform 'ractivate' \
 		--exclude 'ractive' \
 		--outfile $@
@@ -46,8 +47,12 @@ $(styles_bundle): $(styles_src)
 		$(styles_entry)
 	@$(NOTIFY) $(@F) ||:
 
+$(out)/index.html: $(src)/index.html
+	@echo "Copying $(@F)"
+	@cp $? $@
+
 test:
-	karma start
+	# karma start
 
 clean:
 	@rm -rf $(out)
