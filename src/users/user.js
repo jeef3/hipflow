@@ -15,4 +15,4 @@ User.prototype.isMe = function () {
 
 };
 
-export {User};
+export default User;

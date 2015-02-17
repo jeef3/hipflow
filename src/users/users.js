@@ -3,9 +3,9 @@
 import {EventEmitter} from 'events';
 import util from 'util';
 
-import Flowdock from './flowdock';
 import User from './user';
-import storage from './storage';
+import Flowdock from '../flowdock';
+import storage from '../storage';
 
 var Users = {
   me: storage.create(User, 'me'),
@@ -61,4 +61,4 @@ Flowdock.on('user_activity', function (e, message) {
   Users.emit('user_updated', user);
 });
 
-export {Users};
+export default Users;

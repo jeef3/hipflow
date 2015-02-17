@@ -2,18 +2,27 @@
 
 import Ractive from 'ractive';
 
+import Rooms from '../rooms';
 import template from './sidebar.html';
 
-var component = Ractive.extend({
-  isolated: true,
-  template: template,
+var sidebar =
+  Ractive.components.xSidebar =
+  Ractive.extend({
+    isolated: true,
+    template: template,
 
-  data: {
-    flows: [],
-    privateConversations: []
-  }
+    data: {
+      flows: Rooms.flows(),
+      privateConversations: Rooms.privateConversations()
+    }
+  });
+
+Rooms.on('flows_updated', function () {
+  sidebar.set('flows', Rooms.flows());
 });
 
-Ractive.components.xSidebar = component;
+Rooms.on('privateConversations_updated', function () {
+  sidebar.set('privateConversations', Rooms.privateConversations());
+});
 
-export {component};
+export default sidebar;

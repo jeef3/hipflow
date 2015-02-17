@@ -13,7 +13,7 @@ var onlineStatus =
 
     data: {
       online: navigator.onLine,
-      me: Users.me()
+      me: Users.me
     }
   });
 
@@ -29,7 +29,5 @@ window.addEventListener('online', function () {
 window.addEventListener('offline', function () {
   onlineStatus.set('online', false);
 });
-
-Ractive.components.xUserOnlineStatus = onlineStatus;
 
 export default onlineStatus;
