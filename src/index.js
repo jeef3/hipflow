@@ -9,12 +9,15 @@ var app = express();
 
 var config = require('./config/config');
 
+app.use(require('connect-livereload')({ port: config.get('LIVERELOAD_PORT') || 35729 }));
+
 app.configure(function () {
   app.use(express.json());
   app.use(express.methodOverride());
   app.use(express.urlencoded());
   app.use(express.cookieParser());
 
+  app.use('/', express.static(path.join(__dirname, 'public')));
   app.use('/fonts', express.static(path.join(__dirname, 'fonts')));
   app.use('/images', express.static(path.join(__dirname, 'images')));
   app.use('/scripts', express.static(path.join(__dirname, 'scripts')));
@@ -23,8 +26,6 @@ app.configure(function () {
 });
 
 app.configure('development', function () {
-  app.use(require('connect-livereload')({ port: config.get('LIVERELOAD_PORT') || 35729 }));
-
   app.use('/styles', express.static(path.join(__dirname, '..', '.tmp', 'styles')));
 });
 

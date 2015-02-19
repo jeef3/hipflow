@@ -8,8 +8,8 @@ import Flowdock from '../flowdock';
 import storage from '../storage';
 
 var Users = {
-  me: storage.create(User, 'me'),
-  all: storage.create(User, 'users'),
+  me: storage.create(User.prototype, 'me'),
+  all: storage.create(User.prototype, 'users'),
 
   get: function (userId) {
     var id = parseInt(userId, 10);

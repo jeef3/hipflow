@@ -70,4 +70,4 @@ Flowdock.on('user_activity', function () {
 });
 
 
-export {Rooms};
+export default Rooms;

@@ -19,7 +19,7 @@ js_entry  := $(src)/client/app.js
 js_bundle := $(static_out)/app.js
 
 $(js_bundle): $(js_src)
-	@echo "Compiling $@"
+	@echo "\033[0;90mCompiling \033[0;34m$@\033[0m"
 	@mkdir -p $(@D)
 	@$(JS_BIN)/jshint $? \
 		--reporter node_modules/jshint-stylish/stylish.js
@@ -29,7 +29,6 @@ $(js_bundle): $(js_src)
 		--entry $(js_entry) \
     --transform 'babelify' \
 		--transform 'ractivate' \
-		--exclude 'ractive' \
 		--outfile $@
 	@$(NOTIFY) $(@F) ||:
 
@@ -41,7 +40,7 @@ styles_entry  := $(src)/client/styles.scss
 styles_bundle := $(static_out)/styles.css
 
 $(styles_bundle): $(styles_src)
-	@echo "Compiling $@"
+	@echo "\033[0;90mCompiling \033[0;34m$@\033[0m"
 	@mkdir -p $(@D)
 	@$(JS_BIN)/node-sass \
 		--source-map-embed \
@@ -54,24 +53,23 @@ $(styles_bundle): $(styles_src)
 
 .PHONY: assets
 assets:
-	@echo "Copying assets"
+	@echo "\033[0;90mCopying assets\033[0m"
 	@mkdir -p $(static_out)
 	@rsync \
 		-rupE \
-		--verbose \
 		--exclude '.DS_Store' \
 		$(src)/assets/ $(static_out)
+	@$(NOTIFY) $(@F) ||:
 
 #
 # Server
 
 .PHONY: server
 server:
-	@echo "Copying server"
+	@echo "\033[0;90mCopying server\033[0m"
 	@mkdir -p $(out)
 	@rsync \
 		-rupEh \
-		--verbose \
 		--exclude '.DS_Store' \
 		--exclude 'client' \
 		--exclude 'assets' \
@@ -86,8 +84,7 @@ dist: \
 	$(js_bundle) \
 	$(styles_bundle) \
 	assets \
-	server \
-	$(out)/package.json
+	server
 
 test:
 	karma start

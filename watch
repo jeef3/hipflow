@@ -10,15 +10,19 @@ export LIVERELOAD=true
 
 echo "Initial compile"
 make -s
-echo "\033[0;34mDone\033[0m"
 
+echo "\033[0;34mDone\033[0m"
 echo "\033[0;32mWatching...\033[0m"
 
 # Start LiveReload server
-# livereload dist
+tiny-lr &
 
-# Watch dist and notify Livereload of changes
-fswatch -0o . | while read -d "" event; \
+# Start application with Nodemon for watching
+nodemon dist/index.js \
+  --watch dist/index.js &
+
+# Watch src and Make on changes
+fswatch -0o ./src | while read -d "" event; \
   do \
     make --question
     status=$?

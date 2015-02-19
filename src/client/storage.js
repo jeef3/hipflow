@@ -29,8 +29,8 @@ var storage = {
       });
     }
 
-    return Object.create(proto, raw);
+    return Object.create(proto, raw || {});
   }
 };
 
-export {storage};
+export default storage;
