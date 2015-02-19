@@ -13,9 +13,17 @@ var sidebar =
 
     data: {
       flows: Rooms.flows(),
-      privateConversations: Rooms.privateConversations()
+      privateConversations: Rooms.privateConversations(),
+
+      currentRoom: 0
     }
   });
+
+sidebar.on('showRoom', function () {
+});
+
+sidebar.on('leaveRoom', function () {
+});
 
 Rooms.on('flows_updated', function () {
   sidebar.set('flows', Rooms.flows());

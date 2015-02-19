@@ -83,6 +83,7 @@
     "karma-ng-html2js-preprocessor": "^0.1.0",
     "karma-ng-scenario": "^0.1.0",
     "load-grunt-tasks": "~0.2.0",
+    "node-sass": "^2.0.1",
     "open": "0.0.4",
     "ractivate": "^0.2.0",
     "rupture": "^0.1.0",

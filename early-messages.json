@@ -1,0 +1,128 @@
+[{
+    "user": "0",
+    "content": "Welcome to your flow, Jeff!",
+    "event": "message",
+    "tags": [":highlight:58790"],
+    "id": 2,
+    "sent": 1404875243009,
+    "edited": null,
+    "attachments": [],
+    "app": "chat",
+    "flow": "996e6b3b-0aad-4609-9602-66e09250f68e"
+}, {
+    "user": "58790",
+    "content": "This flow can now be joined by everyone in the organization.",
+    "event": "line",
+    "tags": [],
+    "id": 3,
+    "sent": 1404875243845,
+    "edited": null,
+    "attachments": [],
+    "app": "chat",
+    "flow": "996e6b3b-0aad-4609-9602-66e09250f68e"
+}, {
+    "user": "62411",
+    "content": {
+        "type": "join"
+    },
+    "event": "action",
+    "tags": [],
+    "id": 12,
+    "sent": 1404875343215,
+    "edited": null,
+    "attachments": [],
+    "app": "chat",
+    "flow": "996e6b3b-0aad-4609-9602-66e09250f68e"
+}, {
+    "user": "58790",
+    "content": {
+        "type": "add_people",
+        "message": ["Glenn", "Emma", "Alan", "Matt", "Marc", "Simon", "serge"]
+    },
+    "event": "action",
+    "tags": [],
+    "id": 25,
+    "sent": 1404875437175,
+    "edited": null,
+    "attachments": [],
+    "app": "chat",
+    "flow": "996e6b3b-0aad-4609-9602-66e09250f68e"
+}, {
+    "user": "62614",
+    "content": "Thanks for starting this, Jeff!",
+    "event": "message",
+    "tags": [":highlight:58790", ":thread"],
+    "id": 1402,
+    "sent": 1404952929452,
+    "edited": null,
+    "attachments": [],
+    "uuid": "qeteH6vktEzBrU8f",
+    "app": "chat",
+    "flow": "996e6b3b-0aad-4609-9602-66e09250f68e"
+}, {
+    "user": "58790",
+    "content": {
+        "text": "\ud83d\udc4d",
+        "title": "Thanks for starting this, Jeff!"
+    },
+    "event": "comment",
+    "tags": ["influx:1402"],
+    "id": 1403,
+    "sent": 1404952947482,
+    "edited": null,
+    "attachments": [],
+    "uuid": "af616f4c-3a76-4756-f8e4-7a89d3d7c5d5",
+    "app": "chat",
+    "flow": "996e6b3b-0aad-4609-9602-66e09250f68e"
+}, {
+    "user": "0",
+    "content": {
+        "id": "996e6b3b-0aad-4609-9602-66e09250f68e"
+    },
+    "event": "flow-change",
+    "tags": [],
+    "id": 1559,
+    "sent": 1404954345617,
+    "edited": null,
+    "attachments": [],
+    "persist": false,
+    "flow": "996e6b3b-0aad-4609-9602-66e09250f68e"
+}, {
+    "user": "62614",
+    "content": "Roadworks starting on Tuam St on Monday & will last about 6 weeks.",
+    "event": "message",
+    "tags": [],
+    "id": 1568,
+    "sent": 1404954376855,
+    "edited": null,
+    "attachments": [],
+    "uuid": "ocy3FQZxtNW9lkMl",
+    "app": "chat",
+    "flow": "996e6b3b-0aad-4609-9602-66e09250f68e"
+}, {
+    "user": "62614",
+    "content": {
+        "path": "\/files\/65828\/kunFQJWuO9E-fpj-8M00mw\/140624 Tuam St Central City Wastewater UN.pdf",
+        "file_name": "140624 Tuam St Central City Wastewater UN.pdf",
+        "file_size": 611229,
+        "content_type": "application\/pdf",
+        "content_disposition": "attachment"
+    },
+    "event": "file",
+    "tags": [":file"],
+    "id": 1575,
+    "sent": 1404954405250,
+    "edited": null,
+    "attachments": [{
+        "path": "\/files\/65828\/kunFQJWuO9E-fpj-8M00mw\/140624 Tuam St Central City Wastewater UN.pdf",
+        "file_name": "140624 Tuam St Central City Wastewater UN.pdf",
+        "file_size": 611229,
+        "content_type": "application\/pdf",
+        "content_disposition": "attachment"
+    }
+    ],
+    "uuid": "amvSlvbF0wNUD2ay",
+    "app": "chat",
+    "flow": "996e6b3b-0aad-4609-9602-66e09250f68e"
+}
+]

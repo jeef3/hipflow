@@ -6,8 +6,7 @@
     <h3 class="list-title">Flows</h3>
     <ul class="room-list">
       {{#flows}}
-      <li class="room"
-          ng-repeat="room in flows | filter:{open:true}"
+      <li class="room {{active ? 'active' : ''}}"
           ng-class="{'active': room.id === currentRoom.id,
                      'unread': room.hasUnread}">
         <button type="button"

@@ -1,27 +1,22 @@
-JS_BIN          := node_modules/.bin
+JS_BIN := node_modules/.bin
 
-# Directories
-out ?= dist
-tmp ?= .tmp
-src ?= src
-#
-# JavaScript
-js_src          := $(shell find $(src) -name '*.js')
-js_entry        := $(src)/app.js
-js_bundle       := $(out)/app.js
+src        ?= src
+out        ?= dist
+static_out ?= $(out)/public
 
-# CSS
-styles_src      := $(shell find $(src) -name '*.styl')
-styles_entry    := $(src)/styles.styl
-styles_bundle   := $(out)/styles.css
-
-NOTIFY          := ./lib/notify
+NOTIFY := ./lib/notify
 
 .PHONY: all clean test
-all: test dist
+all: dist
 
 .PHONY: dist
-dist: $(js_bundle) $(styles_bundle) $(out)/index.html
+
+#
+# JavaScript
+
+js_src    := $(shell find $(src)/client -name '*.js')
+js_entry  := $(src)/client/app.js
+js_bundle := $(static_out)/app.js
 
 $(js_bundle): $(js_src)
 	@echo "Compiling $@"
@@ -30,31 +25,74 @@ $(js_bundle): $(js_src)
 		--reporter node_modules/jshint-stylish/stylish.js
 	@$(JS_BIN)/jscs $?
 	@$(JS_BIN)/browserify \
-		--entry $(js_entry) \
 		--debug \
+		--entry $(js_entry) \
     --transform 'babelify' \
 		--transform 'ractivate' \
 		--exclude 'ractive' \
 		--outfile $@
 	@$(NOTIFY) $(@F) ||:
 
+#
+# CSS
+
+styles_src    := $(shell find $(src)/client -name '*.scss')
+styles_entry  := $(src)/client/styles.scss
+styles_bundle := $(static_out)/styles.css
+
 $(styles_bundle): $(styles_src)
 	@echo "Compiling $@"
 	@mkdir -p $(@D)
-	@$(JS_BIN)/stylus \
-		--sourcemap \
-		--out $(out) \
-		$(styles_entry)
+	@$(JS_BIN)/node-sass \
+		--source-map-embed \
+		$(styles_entry) \
+    $@
 	@$(NOTIFY) $(@F) ||:
 
-$(out)/index.html: $(src)/index.html
-	@echo "Copying $(@F)"
-	@cp $? $@
+#
+# Static
+
+.PHONY: assets
+assets:
+	@echo "Copying assets"
+	@mkdir -p $(static_out)
+	@rsync \
+		-rupE \
+		--verbose \
+		--exclude '.DS_Store' \
+		$(src)/assets/ $(static_out)
+
+#
+# Server
+
+.PHONY: server
+server:
+	@echo "Copying server"
+	@mkdir -p $(out)
+	@rsync \
+		-rupEh \
+		--verbose \
+		--exclude '.DS_Store' \
+		--exclude 'client' \
+		--exclude 'assets' \
+		$(src)/ $(out)
+
+$(out)/package.json: package.json
+	@echo "Copying $@"
+	@cp package.json $@
+	@npm install --production
+
+dist: \
+	$(js_bundle) \
+	$(styles_bundle) \
+	assets \
+	server \
+	$(out)/package.json
 
 test:
-	# karma start
+	karma start
 
 clean:
 	@rm -rf $(out)
-	@rm -rf $(tmp)
+	@rm -rf $(static_out)
 	@echo "Cleaned"
