@@ -4,7 +4,8 @@ src        ?= src
 out        ?= dist
 static_out ?= $(out)/public
 
-NOTIFY := ./lib/notify
+NOTIFY          := ./lib/notify
+COPY_AND_NOTIFY := ./lib/copy-and-notify
 
 .PHONY: all clean test
 all: dist
@@ -27,7 +28,7 @@ $(js_bundle): $(js_src)
 	@$(JS_BIN)/browserify \
 		--debug \
 		--entry $(js_entry) \
-    --transform 'babelify' \
+		--transform 'babelify' \
 		--transform 'ractivate' \
 		--outfile $@
 	@$(NOTIFY) $(@F) ||:
@@ -45,20 +46,27 @@ $(styles_bundle): $(styles_src)
 	@$(JS_BIN)/node-sass \
 		--source-map-embed \
 		$(styles_entry) \
-    $@
+		$@
 	@$(NOTIFY) $(@F) ||:
 
 #
-# Static
+# Static assets
 
-.PHONY: assets
-assets:
-	@echo "\033[0;90mCopying assets\033[0m"
-	@mkdir -p $(static_out)
-	@rsync \
-		-rupE \
-		--exclude '.DS_Store' \
-		$(src)/assets/ $(static_out)
+assets := $(static_out)/index.html
+assets += $(patsubst $(src)/assets/images/%.png,$(static_out)/images/%.png,$(wildcard $(src)/assets/images/*.png))
+assets += $(patsubst $(src)/assets/images/jira/%.png,$(static_out)/images/jira/%.png,$(wildcard $(src)/assets/images/jira/*.png))
+assets += $(patsubst $(src)/assets/images/github/%.png,$(static_out)/images/github/%.png,$(wildcard $(src)/assets/images/github/*.png))
+assets += $(patsubst $(src)/assets/images/trello/%.png,$(static_out)/images/trello/%.png,$(wildcard $(src)/assets/images/trello/*.png))
+assets += $(patsubst $(src)/assets/images/emojis/%.png,$(static_out)/images/emojis/%.png,$(wildcard $(src)/assets/images/emojis/*.png))
+
+$(static_out)/%: $(src)/assets/%
+	@mkdir -p $(@D)
+	cp $< $@
+	@$(NOTIFY) $(@F) ||:
+
+$(static_out)/index.html: $(src)/assets/index.html
+	@mkdir -p $(@D)
+	cp $< $@
 	@$(NOTIFY) $(@F) ||:
 
 #
@@ -83,7 +91,7 @@ $(out)/package.json: package.json
 dist: \
 	$(js_bundle) \
 	$(styles_bundle) \
-	assets \
+	$(assets) \
 	server
 
 test:
