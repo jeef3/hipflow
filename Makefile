@@ -53,18 +53,11 @@ $(styles_bundle): $(styles_src)
 # Static assets
 
 assets := $(static_out)/index.html
-assets += $(patsubst $(src)/assets/images/%.png,$(static_out)/images/%.png,$(wildcard $(src)/assets/images/*.png))
-assets += $(patsubst $(src)/assets/images/jira/%.png,$(static_out)/images/jira/%.png,$(wildcard $(src)/assets/images/jira/*.png))
-assets += $(patsubst $(src)/assets/images/github/%.png,$(static_out)/images/github/%.png,$(wildcard $(src)/assets/images/github/*.png))
-assets += $(patsubst $(src)/assets/images/trello/%.png,$(static_out)/images/trello/%.png,$(wildcard $(src)/assets/images/trello/*.png))
-assets += $(patsubst $(src)/assets/images/emojis/%.png,$(static_out)/images/emojis/%.png,$(wildcard $(src)/assets/images/emojis/*.png))
+assets += $(patsubst $(src)/assets/images/%,\
+					$(static_out)/images/%,\
+					$(shell find $(src)/assets/images -name '*.png'))
 
 $(static_out)/%: $(src)/assets/%
-	@mkdir -p $(@D)
-	cp $< $@
-	@$(NOTIFY) $(@F) ||:
-
-$(static_out)/index.html: $(src)/assets/index.html
 	@mkdir -p $(@D)
 	cp $< $@
 	@$(NOTIFY) $(@F) ||:
@@ -72,27 +65,25 @@ $(static_out)/index.html: $(src)/assets/index.html
 #
 # Server
 
-.PHONY: server
-server:
-	@echo "\033[0;90mCopying server\033[0m"
-	@mkdir -p $(out)
-	@rsync \
-		-rupEh \
-		--exclude '.DS_Store' \
-		--exclude 'client' \
-		--exclude 'assets' \
-		$(src)/ $(out)
+server := $(out)/Procfile
+server += $(out)/package.json
+server += $(patsubst $(src)/server/%,\
+					$(out)/%,\
+					$(shell find $(src)/server -name '*.js'))
+
+$(out)/%: $(src)/server/%
+	@mkdir -p $(@D)
+	cp $< $@
 
 $(out)/package.json: package.json
-	@echo "Copying $@"
-	@cp package.json $@
-	@npm install --production
+	@mkdir -p $(@D)
+	cp $< $@
 
 dist: \
 	$(js_bundle) \
 	$(styles_bundle) \
 	$(assets) \
-	server
+	$(server)
 
 test:
 	karma start
