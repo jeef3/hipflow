@@ -22,9 +22,9 @@ js_bundle := $(static_out)/app.js
 $(js_bundle): $(js_src)
 	@echo "\033[0;90mCompiling \033[0;34m$@\033[0m"
 	@mkdir -p $(@D)
-	@$(JS_BIN)/jshint $? \
+	@-$(JS_BIN)/jscs $?
+	@-$(JS_BIN)/jshint $? \
 		--reporter node_modules/jshint-stylish/stylish.js
-	@$(JS_BIN)/jscs $?
 	@$(JS_BIN)/browserify \
 		--debug \
 		--entry $(js_entry) \
