@@ -1,5 +1,6 @@
 'use strict';
 
-function Room() {}
+class Room {
+}
 
 export default Room;

@@ -1,50 +1,52 @@
 'use strict';
 
 import {EventEmitter} from 'events';
-import util from 'util';
 
 import User from './user';
 import Flowdock from '../flowdock';
 import storage from '../storage';
 
-var Users = {
-  me: storage.create(User.prototype, 'me'),
-  all: storage.create(User.prototype, 'users'),
+class Users extends EventEmitter {
 
-  get: function (userId) {
-    var id = parseInt(userId, 10);
+  constructor() {
+    this.me = storage.create(User.prototype, 'me');
+    this.all = storage.create(User.prototype, 'users');
+  }
 
-    if (!id) {
-      throw new Error('Invalid user id: ' + userId);
+  get(id) {
+    var userId = parseInt(id, 10);
+
+    if (!userId) {
+      throw new Error('Invalid user id: ' + id);
     }
 
     return this.all.filter(function (user) {
-      return user.id === id;
+      return user.id === userId;
     })[0];
-  },
+  }
 
-  update: function () {
-    Flowdock.user(function (user) {
+  update() {
+    Flowdock.user((user) => {
       this.me = Object.create(User, user);
 
       storage.set('me', this.me);
       Users.emit('user_updated', this.me);
-    }.bind(this));
+    });
 
-    Flowdock.users.list(function (users) {
-      this.users = users.map(function (user) {
+    Flowdock.users.list((users) => {
+      this.all = users.map(function (user) {
         return Object.create(User, user);
       });
 
-      storage.set('users', this.users);
-      Users.emit('users_updated', this.users);
-    }.bind(this));
+      storage.set('users', this.all);
+      Users.emit('users_updated', this.all);
+    });
   }
-};
+}
 
-util.inherits(Users, EventEmitter);
+export default new Users();
 
-Flowdock.on('user_activity', function (e, message) {
+Flowdock.on('user_activity', (e, message) => {
   var user = Users.get(message.user);
 
   if (message.content.last_activity) {
@@ -60,5 +62,3 @@ Flowdock.on('user_activity', function (e, message) {
 
   Users.emit('user_updated', user);
 });
-
-export default Users;

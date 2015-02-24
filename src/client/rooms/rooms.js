@@ -1,18 +1,20 @@
 'use strict';
 
 import {EventEmitter} from 'events';
-import util from 'util';
 
 import Room from './room';
 import Flowdock from '../flowdock';
 import storage from '../storage';
 
-var Rooms = {
-  flows: storage.create(Room, 'flows'),
-  privateConversations: storage.create(Room, 'privateConversations'),
+class Rooms extends EventEmitter {
 
-  get: function (id) {
-    var flow = this.flows.filter(function (f) {
+  constructor() {
+    this.flows = storage.create(Room, 'flows');
+    this.privateConversations = storage.create(Room, 'privateConversations');
+  }
+
+  get(id) {
+    var flow = this.flows.filter((f) => {
       return f.id === id;
     })[0];
 
@@ -21,7 +23,7 @@ var Rooms = {
     }
 
     id = parseInt(id, 10);
-    var privateConversation = this.privateConversations.filter(function (f) {
+    var privateConversation = this.privateConversations.filter((f) => {
       return f.id === id;
     })[0];
 
@@ -30,16 +32,16 @@ var Rooms = {
     }
 
     throw new Error('Invalid flow or privateConversation id: ' + id);
-  },
+  }
 
-  openFlows: function () {
-    return this.flows.filter(function (flow) {
+  openFlows() {
+    return this.flows.filter((flow) => {
       return flow.open;
     });
-  },
+  }
 
-  update: function () {
-    Flowdock.flows.allWithUsers(function (flows) {
+  update() {
+    Flowdock.flows.allWithUsers((flows) => {
       this.flows = flows.map(function (flow) {
         return Object.create(Room, flow);
       });
@@ -48,7 +50,7 @@ var Rooms = {
       Rooms.emit('flows_updated', this.flows);
     });
 
-    Flowdock.privateConversations.list(function (privateConversations) {
+    Flowdock.privateConversations.list((privateConversations) => {
       this.privateConversations = privateConversations.map(function (flow) {
         return Object.create(Room, flow);
       });
@@ -57,17 +59,14 @@ var Rooms = {
       Rooms.emit('privateConversations_updated', this.privateConversations);
     });
   }
-};
+}
 
-util.inherits(Rooms, EventEmitter);
+export default new Rooms();
 
-Flowdock.on('message', function () {
-
-});
-
-Flowdock.on('user_activity', function () {
+Flowdock.on('message', () => {
 
 });
 
+Flowdock.on('user_activity', () => {
 
-export default Rooms;
+});
