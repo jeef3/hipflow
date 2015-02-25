@@ -27,19 +27,19 @@ class Users extends EventEmitter {
 
   update() {
     Flowdock.user((user) => {
-      this.me = Object.create(User, user);
+      this.me = new User(user);
 
       storage.set('me', this.me);
-      Users.emit('user_updated', this.me);
+      this.emit('user_updated', this.me);
     });
 
     Flowdock.users.list((users) => {
       this.all = users.map(function (user) {
-        return Object.create(User, user);
+        return new User(user);
       });
 
       storage.set('users', this.all);
-      Users.emit('users_updated', this.all);
+      this.emit('users_updated', this.all);
     });
   }
 }

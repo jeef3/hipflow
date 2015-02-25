@@ -43,20 +43,20 @@ class Rooms extends EventEmitter {
   update() {
     Flowdock.flows.allWithUsers((flows) => {
       this.flows = flows.map(function (flow) {
-        return Object.create(Room, flow);
+        return new Room(flow);
       });
 
       storage.set('flows', this.flows);
-      Rooms.emit('flows_updated', this.flows);
+      this.emit('flows_updated', this.flows);
     });
 
     Flowdock.privateConversations.list((privateConversations) => {
-      this.privateConversations = privateConversations.map(function (flow) {
-        return Object.create(Room, flow);
+      this.privateConversations = privateConversations.map(function (privateConversation) {
+        return new Room(privateConversation);
       });
 
       storage.set('privateConversations', this.privateConversations);
-      Rooms.emit('privateConversations_updated', this.privateConversations);
+      this.emit('privateConversations_updated', this.privateConversations);
     });
   }
 }

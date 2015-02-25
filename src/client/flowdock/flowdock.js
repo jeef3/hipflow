@@ -2,6 +2,7 @@
 
 // import {EventEmitter} from 'events';
 import request from 'browser-request';
+import _ from 'lodash';
 
 import FlowdockAuth from './flowdock-auth';
 
@@ -14,8 +15,7 @@ var streamBase = 'https://stream.flowdock.com';
 var url = function (base, path, params) {
   var url = base + path;
   var token = FlowdockAuth.token();
-  var options = Object.create(params || {});
-  options.access_token = token;
+  var options = _.assign({}, params, { access_token: token });
 
   var firstParam = true;
   Object.keys(options).forEach(function (key) {
