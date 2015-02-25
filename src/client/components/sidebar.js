@@ -26,10 +26,12 @@ export default
       // });
 
       Rooms.on('flows_updated', () => {
+        console.log('flows updated');
         this.set('flows', Rooms.flows());
       });
 
       Rooms.on('privateConversations_updated', () => {
+        console.log('privates updated');
         this.set('privateConversations', Rooms.privateConversations());
       });
     }

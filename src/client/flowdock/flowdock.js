@@ -83,7 +83,9 @@ var apiPost = function (path, data) {
           reject(err);
           return;
         }
-      })
+
+        resolve(body);
+      });
   });
 };
 
@@ -104,7 +106,9 @@ var apiPut = function (path, data) {
           reject(err);
           return;
         }
-      })
+
+        resolve(body);
+      });
   });
 };
 

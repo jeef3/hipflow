@@ -1,6 +1,7 @@
 'use strict';
 
 import cookie from 'cookie';
+import request from 'browser-request';
 
 class FlowdockAuth {
 
@@ -34,10 +35,16 @@ class FlowdockAuth {
         url: '/oauth/refresh',
         method: 'POST',
         json: true,
-        body: { refresh_token: auth.refresh_token }
+        body: { refresh_token: this.auth.refresh_token }
       }, (err, response, body) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+
         this.auth = body;
         document.cookie = 'flowauth=' + JSON.stringify(this.auth);
+        resolve();
       });
     });
   }
