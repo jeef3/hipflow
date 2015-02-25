@@ -5,11 +5,11 @@ import Ractive from 'ractive';
 import Users from '../users';
 import template from './online-status.html';
 
-var onlineStatus =
+export default
   Ractive.components['x-online-status'] =
   Ractive.extend({
+    template,
     isolated: true,
-    template: template,
 
     data: {
       online: navigator.onLine,
@@ -31,6 +31,3 @@ var onlineStatus =
       });
     }
   });
-
-
-export default onlineStatus;
