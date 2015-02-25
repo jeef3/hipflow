@@ -4,17 +4,20 @@ import Ractive from 'ractive';
 
 import template from './main.html';
 
-function MainCtrl() {
-
-  this.viewData = {};
+class MainCtrl {
+  constructor() {
+    this.viewData = {
+      currentRoomId: 1
+    };
+  }
 }
 
 export default function (el) {
   var controller = new MainCtrl();
 
   new Ractive({
-    el: el,
-    template: template,
+    el,
+    template,
     data: controller.viewData
   });
 
