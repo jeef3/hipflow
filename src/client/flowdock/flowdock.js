@@ -1,33 +1,21 @@
 'use strict';
 
 // import {EventEmitter} from 'events';
+import request from 'browser-request';
 
-// import FlowdockAuth from './flowdock-auth';
+import FlowdockAuth from './flowdock-auth';
 
-var $http = {
-  get: function () {
-    return {
-      error: function () {
-        return {
-          success: function () {}
-        };
-      }
-    };
-  }
-};
 var $rootScope = {};
 var EventSource = {};
-
-
 
 var apiBase = 'https://api.flowdock.com';
 var streamBase = 'https://stream.flowdock.com';
 
 var url = function (base, path, params) {
   var url = base + path;
-  // var token = FlowdockAuth.token();
-  // var options = angular.extend({}, params, { access_token: token });
-  var options = params || {};
+  var token = FlowdockAuth.token();
+  var options = Object.create(params || {});
+  options.access_token = token;
 
   var firstParam = true;
   Object.keys(options).forEach(function (key) {
@@ -59,33 +47,64 @@ var apiUrl = function (path, params) {
 var apiGet = function (path, params) {
   var url = apiUrl(path, params);
 
-  return $http.get(url)
-  .error(function (data, status) {
-    if (status === 401) {
-      $rootScope.$broadcast('TOKEN_EXPIRED');
-    }
+  return new Promise((resolve, reject) => {
+    request({
+        url,
+        method: 'GET',
+        json: true
+      }, function (err, response, body) {
+        if (err) {
+          if (response.status === 401) {
+            $rootScope.$broadcast('TOKEN_EXPIRED');
+          }
+          reject(err);
+          return;
+        }
+
+        resolve(body);
+      });
   });
 };
 
 var apiPost = function (path, data) {
   var url = apiUrl(path);
 
-  return $http.post(url, data)
-  .error(function (data, status) {
-    if (status === 401) {
-      $rootScope.$broadcast('TOKEN_EXPIRED');
-    }
+  return new Promise((resolve, reject) => {
+    request({
+        url,
+        method: 'POST',
+        json: true,
+        body: data
+      }, function (err, response, body) {
+        if (err) {
+          if (response.status === 401) {
+            $rootScope.$broadcast('TOKEN_EXPIRED');
+          }
+          reject(err);
+          return;
+        }
+      })
   });
 };
 
 var apiPut = function (path, data) {
   var url = apiUrl(path);
 
-  return $http.put(url, data)
-  .error(function (data, status) {
-    if (status === 401) {
-      $rootScope.$broadcast('TOKEN_EXPIRED');
-    }
+  return new Promise((resolve, reject) => {
+    request({
+        url,
+        method: 'PUT',
+        json: true,
+        body: data
+      }, function (err, response, body) {
+        if (err) {
+          if (response.status === 401) {
+            $rootScope.$broadcast('TOKEN_EXPIRED');
+          }
+          reject(err);
+          return;
+        }
+      })
   });
 };
 
@@ -116,7 +135,7 @@ var flow = function (organization, flowName) {
 
     var comments = function (commentId, cb) {
       apiGet('/flows/' + organization + '/' + flowName + '/messages/' + messageId + '/comments/' + commentId)
-      .success(cb);
+      .then(cb);
     };
 
     comments.send = function (comment, uuid, tags, cb) {
@@ -133,7 +152,7 @@ var flow = function (organization, flowName) {
       var promise = apiPost(method, m);
 
       if (cb) {
-        promise.success(cb);
+        promise.then(cb);
       }
     };
 
@@ -148,7 +167,7 @@ var flow = function (organization, flowName) {
         var promise = apiPut(method, props);
 
         if (cb) {
-          promise.success(cb);
+          promise.then(cb);
         }
       },
 
@@ -159,7 +178,7 @@ var flow = function (organization, flowName) {
   var messages = function (messageId, cb) {
     if (cb) {
       apiGet('/flows/' + organization + '/' + flowName + '/messages/' + messageId)
-      .success(cb);
+      .then(cb);
     } else {
       return message(messageId);
     }
@@ -167,7 +186,7 @@ var flow = function (organization, flowName) {
 
   messages.list = function (options, cb) {
     // TODO: Options for since_id etc
-    apiGet('/flows/' + organization + '/' + flowName + '/messages', options).success(cb);
+    apiGet('/flows/' + organization + '/' + flowName + '/messages', options).then(cb);
   };
 
   messages.send = function (message, uuid, tags, cb) {
@@ -183,7 +202,7 @@ var flow = function (organization, flowName) {
     var promise = apiPost(method, m);
 
     if (cb) {
-      promise.success(cb);
+      promise.then(cb);
     }
   };
 
@@ -199,7 +218,7 @@ var flow = function (organization, flowName) {
   var sources = function (sourceId, cb) {
     if (cb) {
       apiGet('/flows/' + organization + '/' + flowName, '/sources/' + sourceId)
-      .success(cb);
+      .then(cb);
     } else {
       return source(sourceId);
     }
@@ -207,7 +226,7 @@ var flow = function (organization, flowName) {
 
   sources.list = function (cb) {
     apiGet('/flows/' + organization + '/' + flowName + '/sources')
-    .success(cb);
+    .then(cb);
   };
 
   return {
@@ -216,7 +235,7 @@ var flow = function (organization, flowName) {
       var promise = apiPut(method, props);
 
       if (cb) {
-        promise.success(cb);
+        promise.then(cb);
       }
     },
     rename: function (name, cb) {
@@ -260,26 +279,26 @@ var flow = function (organization, flowName) {
 
 var flows = function (organization, flowName, cb) {
   if (cb) {
-    apiGet('flows/' + organization + '/' + flowName).success(cb);
+    apiGet('flows/' + organization + '/' + flowName).then(cb);
   } else {
     return flow(organization, flowName);
   }
 };
 
 flows.list = function (cb) {
-  apiGet('/flows').success(cb);
+  apiGet('/flows').then(cb);
 };
 
 flows.all = function (cb) {
-  apiGet('/flows/all').success(cb);
+  apiGet('/flows/all').then(cb);
 };
 
 flows.allWithUsers = function (cb) {
-  apiGet('/flows/all', { users: 1 }).success(cb);
+  apiGet('/flows/all', { users: 1 }).then(cb);
 };
 
 flows.create = function (organization, name, cb) {
-  apiPost('/flows/' + organization, { name: name }).success(cb);
+  apiPost('/flows/' + organization, { name: name }).then(cb);
 };
 
 var privateConversation = function (userId) {
@@ -291,7 +310,7 @@ var privateConversation = function (userId) {
         var promise = apiPut(method, props);
 
         if (cb) {
-          promise.success(cb);
+          promise.then(cb);
         }
       }
     };
@@ -300,14 +319,14 @@ var privateConversation = function (userId) {
   var messages = function (messageId, cb) {
     if (cb) {
       apiGet('/private/' + userId + '/messages' + messageId)
-      .success(cb);
+      .then(cb);
     } else {
       return message(messageId);
     }
   };
 
   messages.list = function (options, cb) {
-    apiGet('/private/' + userId + '/messages', options).success(cb);
+    apiGet('/private/' + userId + '/messages', options).then(cb);
   };
 
   messages.send = function (message, uuid, tags, cb) {
@@ -323,7 +342,7 @@ var privateConversation = function (userId) {
     var promise = apiPost(method, m);
 
     if (cb) {
-      promise.success(cb);
+      promise.then(cb);
     }
   };
 
@@ -338,7 +357,7 @@ var privateConversation = function (userId) {
       var promise = apiPut(method, props);
 
       if (cb) {
-        promise.success(cb);
+        promise.then(cb);
       }
     },
     open: function (cb) {
@@ -354,18 +373,18 @@ var privateConversation = function (userId) {
 
 var privateConversations = function (userId, cb) {
   if (cb) {
-    apiGet('/private/' + userId).success(cb);
+    apiGet('/private/' + userId).then(cb);
   } else {
     return privateConversation(userId);
   }
 };
 
 privateConversations.list = function (cb) {
-  apiGet('/private').success(cb);
+  apiGet('/private').then(cb);
 };
 
 var user = function (cb) {
-  apiGet('/user').success(cb);
+  apiGet('/user').then(cb);
 };
 
 var users = function (/*id, cb*/) {
@@ -373,11 +392,11 @@ var users = function (/*id, cb*/) {
 };
 
 users.list = function (cb) {
-  apiGet('/users').success(cb);
+  apiGet('/users').then(cb);
 };
 
 module.exports = {
-  connect: function () {},
+  connect: function () { },
   stream: function (flows, options) {
     var stream = new EventSource(streamUrl(flows, options),
                                  { withCredentials: false });
