@@ -15,11 +15,12 @@ all: dist
 #
 # JavaScript
 
+html_src  := $(shell find $(src)/client -name '*.html')
 js_src    := $(shell find $(src)/client -name '*.js')
 js_entry  := $(src)/client/app.js
 js_bundle := $(static_out)/app.js
 
-$(js_bundle): $(js_src)
+$(js_bundle): $(js_src) $(html_src)
 	@echo "\033[0;90mCompiling \033[0;34m$@\033[0m"
 	@mkdir -p $(@D)
 	@-$(JS_BIN)/jscs $?
