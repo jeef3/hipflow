@@ -6,7 +6,7 @@ import Users from '../users';
 import template from './online-status.html';
 
 var onlineStatus =
-  Ractive.components.xOnlineStatus =
+  Ractive.components['x-online-status'] =
   Ractive.extend({
     isolated: true,
     template: template,
@@ -14,20 +14,23 @@ var onlineStatus =
     data: {
       online: navigator.onLine,
       me: Users.me
+    },
+
+    onrender: function () {
+      window.addEventListener('online', () => {
+        this.set('online', true);
+      });
+
+      window.addEventListener('offline', () => {
+        this.set('online', false);
+      });
+
+      Users.on('user_updated', (e, user) => {
+        if (!user.isMe()) { return; }
+        this.set('me', user);
+      });
     }
   });
 
-Users.on('user_updated', function (e, user) {
-  if (!user.isMe()) { return; }
-  onlineStatus.set('me', user);
-});
-
-window.addEventListener('online', function () {
-  onlineStatus.set('online', true);
-});
-
-window.addEventListener('offline', function () {
-  onlineStatus.set('online', false);
-});
 
 export default onlineStatus;

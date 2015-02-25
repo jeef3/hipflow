@@ -6,7 +6,7 @@ import Rooms from '../rooms';
 import template from './sidebar.html';
 
 var sidebar =
-  Ractive.components.xSidebar =
+  Ractive.components['x-sidebar'] =
   Ractive.extend({
     isolated: true,
     template: template,
