@@ -25,9 +25,8 @@ export default
         this.set('online', false);
       });
 
-      Users.on('user_updated', (e, user) => {
-        if (!user.isMe()) { return; }
-        this.set('me', user);
+      Users.on('user_updated', () => {
+        this.set('me', Users.me);
       });
     }
   });
