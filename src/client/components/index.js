@@ -1,4 +1,4 @@
 'use strict';
 
-import './online-status';
-import './sidebar';
+import './online-status/online-status';
+import './sidebar/sidebar';

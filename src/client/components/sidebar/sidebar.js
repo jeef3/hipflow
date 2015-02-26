@@ -2,8 +2,8 @@
 
 import Ractive from 'ractive';
 
-import Rooms from '../rooms';
-import MessageWindowManager from '../message-window';
+import Rooms from '../../rooms';
+import MessageWindowManager from '../../message-window';
 import template from './sidebar.html';
 
 export default
@@ -16,7 +16,15 @@ export default
       flows: Rooms.flows,
       privateConversations: Rooms.privateConversations,
 
-      currentRoom: {}
+      currentRoom: {},
+
+      isActive: function (room) {
+        return room === this.get('currentRoom');
+      },
+
+      hasUnread: function (room) {
+        return room.hasUnread();
+      }
     },
 
     onrender: function () {
@@ -38,6 +46,7 @@ export default
     },
 
     leaveRoom: function (room) {
+      console.log(room);
       // RoomManager.leaveRoom(room);
     }
   });

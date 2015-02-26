@@ -2,7 +2,7 @@
 
 import Ractive from 'ractive';
 
-import Users from '../users';
+import Users from '../../users';
 import template from './online-status.html';
 
 export default

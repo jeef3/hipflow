@@ -1,0 +1,17 @@
+.btn {
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  font-weight: inherit;
+
+  border: 0;
+  background: none;
+}
+
+.btn--no-focus {
+  @extend .btn;
+
+  &:focus {
+    outline: 0;
+  }
+}
