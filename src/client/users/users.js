@@ -9,8 +9,8 @@ import storage from '../storage';
 class Users extends EventEmitter {
 
   constructor() {
-    this.me = storage.create(User.prototype, 'me');
-    this.all = storage.create(User.prototype, 'users');
+    this.me = storage.create(User, 'me');
+    this.all = storage.create(User, 'users');
   }
 
   get(id) {

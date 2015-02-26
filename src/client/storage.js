@@ -1,10 +1,17 @@
 'use strict';
 
-var prefix = 'slipflow';
+import _ from 'lodash';
 
-var storage = {
+const PREFIX = 'slipflow';
+
+function instantiate(Ctr, data) {
+  var instance = new Ctr();
+  return _.assign(instance, data);
+}
+
+export default {
   get: function (key) {
-    var value = localStorage.getItem(prefix + key);
+    var value = localStorage.getItem(`${PREFIX}.${key}`);
 
     if (!value) { return null; }
 
@@ -13,10 +20,10 @@ var storage = {
 
   set: function (key, value) {
     var store = JSON.stringify(value);
-    localStorage.setItem(key, store);
+    localStorage.setItem(`${PREFIX}.${key}`, store);
   },
 
-  create: function (proto, key) {
+  create: function (ctr, key) {
     var raw = this.get(key);
 
     if (typeof raw !== 'object') {
@@ -25,12 +32,10 @@ var storage = {
 
     if (raw instanceof Array) {
       return raw.map(function (i) {
-        return Object.create(proto, i);
+        return instantiate(ctr, i);
       });
     }
 
-    return Object.create(proto, raw || {});
+    return instantiate(ctr, raw);
   }
 };
-
-export default storage;
