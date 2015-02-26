@@ -1,6 +1,12 @@
 'use strict';
 
+import _ from 'lodash';
+
 class User {
+  constructor(data) {
+    _.assign(this, data);
+  }
+
   isOnline() {
     var now = new Date();
     var ping = this.last_ping || this.last_activity;
