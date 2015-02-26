@@ -40,6 +40,12 @@ class Rooms extends EventEmitter {
     });
   }
 
+  openPrivateConversations() {
+    return this.privateConversations.filter((privateConversation) => {
+      return privateConversation.open;
+    });
+  }
+
   update() {
     Flowdock.flows.allWithUsers((flows) => {
       this.flows = flows.map(function (flow) {

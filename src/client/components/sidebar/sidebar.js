@@ -13,8 +13,8 @@ export default
     isolated: true,
 
     data: {
-      flows: Rooms.flows,
-      privateConversations: Rooms.privateConversations,
+      flows: Rooms.openFlows(),
+      privateConversations: Rooms.openPrivateConversations(),
 
       currentRoom: {},
 
@@ -29,11 +29,11 @@ export default
 
     onrender: function () {
       Rooms.on('flows_updated', () => {
-        this.set('flows', Rooms.flows);
+        this.set('flows', Rooms.openFlows());
       });
 
       Rooms.on('privateConversations_updated', () => {
-        this.set('privateConversations', Rooms.privateConversations);
+        this.set('privateConversations', Rooms.openPrivateConversations());
       });
 
       MessageWindowManager.on('show_room', (room) => {
