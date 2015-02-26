@@ -9,17 +9,18 @@
       <li class="room {{active ? 'active' : ''}}"
           ng-class="{'active': room.id === currentRoom.id,
                      'unread': room.hasUnread}">
+        {{this === currentRoom ? 'current': 'not'}}
         <button type="button"
             class="btn--sidebar room__join-btn"
-            ng-click="showRoom(room)">
-          <i class="fa fa-fw fa-comments-o room__icon"></i> {{room.name}}
+            on-click="showRoom(this)">
+          <i class="fa fa-fw fa-comments-o room__icon"></i> {{name}}
 
           <i class="fa fa-fw fa-circle unread-marker"></i>
         </button>
 
         <button type="button"
             class="btn room__close-btn"
-            ng-click="leaveRoom(room)">
+            on-click="leaveRoom(this)">
           <i class="fa fa-fw fa-times"></i>
         </button>
       </li>
@@ -35,19 +36,20 @@
                      'query-offline': !query.online,
                      'active': query === currentRoom,
                      'unread': query.hasUnread}">
+        {{this === currentRoom ? 'current': 'not'}}
         <button type="button"
             class="btn btn--sidebar room__join-btn"
-            ng-click="showRoom(query)">
+            on-click="showRoom(this)">
           <i class="fa fa-fw fa-circle"
               ng-class="{'online-status-icon--online': isOnline(query.id),
-                         'online-status-icon--offline': !isOnline(query.id)}"></i> {{query.name}}
+                         'online-status-icon--offline': !isOnline(query.id)}"></i> {{name}}
 
           <i class="fa fa-fw fa-circle unread-marker"></i>
         </button>
 
         <button type="button"
             class="btn room__close-btn"
-            ng-click="leaveRoom(query)">
+            on-click="leaveRoom(this)">
           <i class="fa fa-fw fa-times"></i>
         </button>
       </li>

@@ -3,6 +3,7 @@
 import Ractive from 'ractive';
 
 import Rooms from '../rooms';
+import MessageWindowManager from '../message-window';
 import template from './sidebar.html';
 
 export default
@@ -15,16 +16,10 @@ export default
       flows: Rooms.flows,
       privateConversations: Rooms.privateConversations,
 
-      currentRoom: 0
+      currentRoom: {}
     },
 
     onrender: function () {
-      // sidebar.on('showRoom', function () {
-      // });
-
-      // sidebar.on('leaveRoom', function () {
-      // });
-
       Rooms.on('flows_updated', () => {
         this.set('flows', Rooms.flows);
       });
@@ -32,5 +27,17 @@ export default
       Rooms.on('privateConversations_updated', () => {
         this.set('privateConversations', Rooms.privateConversations);
       });
+
+      MessageWindowManager.on('show_room', (room) => {
+        this.set('currentRoom', room);
+      });
+    },
+
+    showRoom: function (room) {
+      MessageWindowManager.setActive(room);
+    },
+
+    leaveRoom: function (room) {
+      // RoomManager.leaveRoom(room);
     }
   });
