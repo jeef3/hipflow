@@ -16,10 +16,11 @@ export default
       flows: Rooms.openFlows(),
       privateConversations: Rooms.openPrivateConversations(),
 
-      currentRoom: {},
+      currentRoom: MessageWindowManager.getActive(),
 
       isActive: function (room) {
-        return room === this.get('currentRoom');
+        console.log('checking', room.id, MessageWindowManager.getActive());
+        return room === MessageWindowManager.getActive();
       },
 
       hasUnread: function (room) {
