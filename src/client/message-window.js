@@ -2,19 +2,36 @@
 
 import {EventEmitter} from 'events';
 
+import Rooms from './rooms';
+import storage from './storage';
+
 class MessageWindowManager extends EventEmitter {
 
   constructor() {
-    this.active = null;
+    var currentRoom = storage.get('currentRoom');
+    if (currentRoom) {
+      this.activeRoomId = currentRoom.id;
+    }
   }
 
   setActive(room) {
-    if (this.active) {
-      this.emit('hide_room', this.active);
+    if (this.activeRoomId) {
+      this.emit('hide_room', Rooms.get(this.activeRoomId));
     }
 
-    this.active = room;
-    this.emit('show_room', this.active);
+    storage.set('currentRoom', room);
+
+    this.activeRoomId = room.id;
+    console.log('active', this.activeRoomId);
+    this.emit('show_room', Rooms.get(this.activeRoomId));
+  }
+
+  getActive() {
+    if (!this.activeRoomId) {
+      return null;
+    }
+
+    return Rooms.get(this.activeRoomId);
   }
 }
 
