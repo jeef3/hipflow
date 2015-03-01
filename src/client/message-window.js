@@ -22,7 +22,6 @@ class MessageWindowManager extends EventEmitter {
     storage.set('currentRoom', room);
 
     this.activeRoomId = room.id;
-    console.log('active', this.activeRoomId);
     this.emit('show_room', Rooms.get(this.activeRoomId));
   }
 

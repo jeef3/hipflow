@@ -1,14 +1,16 @@
 'use strict';
 
-import './components';
+import React from 'react';
+
 import Flowdock from './flowdock';
 import Users from './users';
 import Rooms from './rooms';
-import main from './main';
+import Main from './main.jsx';
 
 // Application root element
-var el = document.getElementById('app');
-main(el);
+React.render(
+  React.createElement(Main, null),
+  document.getElementById('app'));
 
 Flowdock.connect();
 Users.update();

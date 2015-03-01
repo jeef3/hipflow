@@ -91,6 +91,8 @@
     "open": "0.0.4",
     "ractivate": "^0.2.0",
     "ractive": "^0.6.1",
+    "react": "^0.12.2",
+    "reactify": "^1.0.0",
     "rupture": "^0.1.0",
     "streamqueue": "0.0.7",
     "stylus": "^0.50.0",
