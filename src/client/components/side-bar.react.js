@@ -1,9 +1,9 @@
 'use strict';
 
-import React from 'react';
+import React from 'react/addons';
 
-import Rooms from './rooms';
-import MessageWindowManager from './message-window';
+import Rooms from '../rooms';
+import MessageWindowManager from '../message-window';
 
 export default
   class SideBar extends React.Component {
@@ -79,11 +79,16 @@ SideBar.Room =
 
     render() {
       var room = this.props.room;
-      var active = 'active';
+
+      var classes = React.addons.classSet({
+        'room': true,
+        'active': room === MessageWindowManager.getActive(),
+        'unread': room.hasUnread()
+      });
 
       return (
-        <li className="room {active}">
-          <button className="btn--sidebar room__join-btn"
+        <li className={classes}>
+          <button className="btn--sidebar room__join-btn'"
               type="button"
               onClick={this.handleShow}>
             <i className="fa fa-fw fa-comments-o room__icon"></i>

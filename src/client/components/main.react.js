@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import SideBar from './side-bar.jsx';
+import SideBar from './side-bar.react';
 
 class Main extends React.Component {
 
