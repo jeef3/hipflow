@@ -46,7 +46,8 @@ class UserStore extends EventEmitter {
     this.me = Storage.create(User, 'me');
     this.all = Storage.create(User, 'users');
 
-    this._dispatchTokenFn = this._dispatchTokenFn.bind(this);
+    this._dispatchTokenFn =
+      Dispatcher.register(this._dispatchTokenFn.bind(this));
   }
 
   get(id) {
@@ -59,6 +60,10 @@ class UserStore extends EventEmitter {
     return this.all.filter(function (user) {
       return user.id === userId;
     })[0];
+  }
+
+  getMe() {
+    return this.me;
   }
 
   _update() {
@@ -94,8 +99,5 @@ class UserStore extends EventEmitter {
   }
 }
 
-var userStore = new UserStore();
-userStore.dispatchToken = Dispatcher.register(_dispatchTokenFn);
-
 export {User};
-export default userStore;
+export default new UserStore();

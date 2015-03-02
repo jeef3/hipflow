@@ -10,7 +10,8 @@ class MessageWindowStore extends EventEmitter {
     var current = Storage.get('currentRoom');
     this.currentRoom = current ? current.value : null;
 
-    this._dispatchTokenFn = this._dispatchTokenFn.bind(this);
+    this._dispatchTokenFn =
+      Dispatcher.register(this._dispatchTokenFn.bind(this));
   }
 
   getCurrentRoomId() {
@@ -28,7 +29,4 @@ class MessageWindowStore extends EventEmitter {
   }
 }
 
-var messageWindowStore = new MessageWindowStore();
-messageWindowStore.dispatchToken = Dispatcher.register(messageWindowStore._dispatchTokenFn);
-
-export default messageWindowStore;
+export default new MessageWindowStore();

@@ -23,7 +23,9 @@ class RoomStore extends EventEmitter {
     this.flows = Storage.create(Room, 'flows');
     this.privateConversations = Storage.create(Room, 'privateConversations');
 
-    this._dispatchTokenFn = this._dispatchTokenFn.bind(this);
+    this._dispatchTokenFn =
+      Dispatcher.register(this._dispatchTokenFn.bind(this));
+
   }
 
   get(id) {
@@ -89,7 +91,6 @@ class RoomStore extends EventEmitter {
 }
 
 var roomStore = new RoomStore();
-roomStore.dispatchToken = Dispatcher.register(roomStore._dispatchTokenFn);
 
 export {Room};
-export default roomStore;
+export default new RoomStore();

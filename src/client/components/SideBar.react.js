@@ -6,6 +6,7 @@ import cx from 'react/lib/cx';
 import RoomActions from '../actions/RoomActions';
 import RoomStore from '../stores/RoomStore';
 import MessageWindowStore from '../stores/MessageWindowStore';
+import OnlineStatus from './OnlineStatus.react';
 
 function getState() {
   return {
@@ -16,49 +17,50 @@ function getState() {
   };
 }
 
-export default
-  class SideBar extends React.Component {
+class SideBar extends React.Component {
 
-    constructor(props) {
-      super(props);
-      this.state = getState();
+  constructor(props) {
+    super(props);
+    this.state = getState();
 
-      this._onChange = this._onChange.bind(this);
-    }
-
-    componentDidMount() {
-      RoomStore.on('flows_updated', this._onChange);
-      RoomStore.on('private_conversations_updated', this._onChange);
-      MessageWindowStore.on('change', this._onChange);
-    }
-
-    componentWillUnmount() {
-      RoomStore.off('flows_updated', this._onChange);
-      RoomStore.off('private_conversations_updated', this._onChange);
-      MessageWindowStore.off('change', this._onChange);
-    }
-
-    render() {
-      return (
-        <div className="sidebar">
-          <button className="lobby btn btn--sidebar"
-              type="button">Lobby</button>
-
-          <div className="channels scroll-container">
-            <h3 className="list-title">Flows</h3>
-            <SideBar.RoomList rooms={this.state.flows} />
-
-            <h3 className="list-title">1&ndash;to&ndash;1s</h3>
-            <SideBar.RoomList rooms={this.state.privateConversations} />
-          </div>
-        </div>
-      );
-    }
-
-    _onChange() {
-      this.setState(getState());
-    }
+    this._onChange = this._onChange.bind(this);
   }
+
+  componentDidMount() {
+    RoomStore.on('flows_updated', this._onChange);
+    RoomStore.on('private_conversations_updated', this._onChange);
+    MessageWindowStore.on('change', this._onChange);
+  }
+
+  componentWillUnmount() {
+    RoomStore.off('flows_updated', this._onChange);
+    RoomStore.off('private_conversations_updated', this._onChange);
+    MessageWindowStore.off('change', this._onChange);
+  }
+
+  render() {
+    return (
+      <div className="sidebar">
+        <button className="lobby btn btn--sidebar"
+            type="button">Lobby</button>
+
+        <div className="channels scroll-container">
+          <h3 className="list-title">Flows</h3>
+          <SideBar.RoomList rooms={this.state.flows} />
+
+          <h3 className="list-title">1&ndash;to&ndash;1s</h3>
+          <SideBar.RoomList rooms={this.state.privateConversations} />
+        </div>
+
+        <OnlineStatus />
+      </div>
+    );
+  }
+
+  _onChange() {
+    this.setState(getState());
+  }
+}
 
 SideBar.RoomList =
   class RoomList extends React.Component {
@@ -114,3 +116,5 @@ SideBar.Room =
       RoomActions.closeRoom(this.props.room);
     }
   }
+
+export default SideBar;
