@@ -41,11 +41,12 @@ class User {
   }
 }
 
-class Users extends EventEmitter {
-
+class UserStore extends EventEmitter {
   constructor() {
     this.me = Storage.create(User, 'me');
     this.all = Storage.create(User, 'users');
+
+    this._dispatchTokenFn = this._dispatchTokenFn.bind(this);
   }
 
   get(id) {
@@ -60,7 +61,7 @@ class Users extends EventEmitter {
     })[0];
   }
 
-  update() {
+  _update() {
     Flowdock.user((user) => {
       this.me = new User(user);
 
@@ -77,25 +78,24 @@ class Users extends EventEmitter {
       this.emit('users_updated');
     });
   }
+
+  _dispatchTokenFn(action) {
+    switch (action.type) {
+      case 'app_init':
+        this._update();
+        break;
+
+      case 'user_activity':
+        var user = this.get(payload.message.user);
+        user.handleActivity(payload.message);
+        this.emit('users_updated');
+        break;
+    }
+  }
 }
 
-var users = new Users();
-
-users.dispatchToken = Dispatcher.register(function (payload) {
-  var action = payload.action;
-
-  switch (action.type) {
-    case 'app_init':
-      users.update();
-      break;
-
-    case 'user_activity':
-      var user = users.get(payload.message.user);
-      user.handleActivity(payload.message);
-      users.emitChange();
-      break;
-  }
-});
+var userStore = new UserStore();
+userStore.dispatchToken = Dispatcher.register(_dispatchTokenFn);
 
 export {User};
-export default users;
+export default userStore;

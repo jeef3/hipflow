@@ -18,11 +18,12 @@ class Room {
   }
 }
 
-class Rooms extends EventEmitter {
-
+class RoomStore extends EventEmitter {
   constructor() {
     this.flows = Storage.create(Room, 'flows');
     this.privateConversations = Storage.create(Room, 'privateConversations');
+
+    this._dispatchTokenFn = this._dispatchTokenFn.bind(this);
   }
 
   get(id) {
@@ -58,7 +59,7 @@ class Rooms extends EventEmitter {
     });
   }
 
-  update() {
+  _update() {
     Flowdock.flows.allWithUsers((flows) => {
       this.flows = flows.map(function (flow) {
         return new Room(flow);
@@ -77,19 +78,18 @@ class Rooms extends EventEmitter {
       this.emit('private_conversations_updated');
     });
   }
+
+  _dispatchTokenFn(action) {
+    switch (action.type) {
+      case 'app_init':
+        this._update();
+        break;
+    }
+  }
 }
 
-var rooms = new Rooms();
-
-rooms.dispatchToken = Dispatcher.register(function (payload) {
-  var action = payload.action;
-
-  switch (action.type) {
-    case 'app_init':
-      rooms.update();
-      break;
-  }
-});
+var roomStore = new RoomStore();
+roomStore.dispatchToken = Dispatcher.register(roomStore._dispatchTokenFn);
 
 export {Room};
-export default rooms;
+export default roomStore;

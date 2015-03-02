@@ -1,16 +1,18 @@
 'use strict';
 
-import React from 'react/addons';
+import React from 'react';
+import cx from 'react/lib/cx';
 
+import RoomActions from '../actions/RoomActions';
 import RoomStore from '../stores/RoomStore';
-import MessageWindowManager from '../message-window';
+import MessageWindowStore from '../stores/MessageWindowStore';
 
 function getState() {
   return {
     flows: RoomStore.openFlows(),
     privateConversations: RoomStore.openPrivateConversations(),
 
-    currentRoom: MessageWindowManager.getActive()
+    currentRoom: MessageWindowStore.getCurrentRoomId()
   };
 }
 
@@ -27,13 +29,13 @@ export default
     componentDidMount() {
       RoomStore.on('flows_updated', this._onChange);
       RoomStore.on('private_conversations_updated', this._onChange);
-      MessageWindowManager.on('show_room', this._onChange);
+      MessageWindowStore.on('change', this._onChange);
     }
 
     componentWillUnmount() {
       RoomStore.off('flows_updated', this._onChange);
       RoomStore.off('private_conversations_updated', this._onChange);
-      MessageWindowManager.off('show_room', this._onChange);
+      MessageWindowStore.off('change', this._onChange);
     }
 
     render() {
@@ -74,32 +76,22 @@ SideBar.RoomList =
 SideBar.Room =
   class Room extends React.Component {
     constructor() {
-      this.handleShow = this.handleShow.bind(this);
-      this.handleClose = this.handleClose.bind(this);
-    }
-
-    handleShow() {
-      MessageWindowManager.setActive(this.props.room);
-    }
-
-    handleClose() {
-      console.log('close room', this.props.room);
+      this._handleShow = this._handleShow.bind(this);
+      this._handleClose = this._handleClose.bind(this);
     }
 
     render() {
       var room = this.props.room;
 
-      var classes = React.addons.classSet({
-        'room': true,
-        'active': room === MessageWindowManager.getActive(),
-        'unread': room.hasUnread()
-      });
-
       return (
-        <li className={classes}>
+        <li className={cx({
+            'room': true,
+            'active': room.id === MessageWindowStore.getCurrentRoomId(),
+            'unread': room.hasUnread()
+          })}>
           <button className="btn--sidebar room__join-btn'"
               type="button"
-              onClick={this.handleShow}>
+              onClick={this._handleShow}>
             <i className="fa fa-fw fa-comments-o room__icon"></i>
             {room.name}
             <i className="fa fa-fw fa-circle unread-marker"></i>
@@ -107,10 +99,18 @@ SideBar.Room =
 
           <button type="button"
               className="btn room__close-btn"
-              onClick={this.handleClose}>
+              onClick={this._handleClose}>
             <i className="fa fa-fw fa-times"></i>
           </button>
         </li>
       );
+    }
+
+    _handleShow() {
+      RoomActions.showRoom(this.props.room);
+    }
+
+    _handleClose() {
+      RoomActions.closeRoom(this.props.room);
     }
   }
