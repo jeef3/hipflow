@@ -11,6 +11,6 @@ React.render(
   <Main />,
   document.getElementById('app'));
 
-Dispatcher.dispatch({ action: { type: 'app_init' } });
+Dispatcher.dispatch({ type: 'app_init' });
 
 Flowdock.connect();
