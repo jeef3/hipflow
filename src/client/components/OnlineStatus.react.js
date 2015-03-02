@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import cx from 'react/lib/cx';
+import cx from 'classnames';
 
 import UserStore from '../stores/UserStore';
 
@@ -34,9 +34,7 @@ class OnlineStatus extends React.Component {
       <div className="online-status">
         <div className="avatar avatar--medium"></div>
         <span className="online-status__name">{this.state.me.name}</span>
-        <i className={cx({
-            'fa fa-fw': true,
-            'fa-circle': true,
+        <i className={cx('fa fa-fw fa-circle', {
             'online-status-icon--online': this.state.online,
             'online-status-icon--offline': !this.state.online
           })}></i>

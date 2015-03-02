@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import cx from 'react/lib/cx';
+import cx from 'classnames';
 
 import RoomActions from '../actions/RoomActions';
 import RoomStore from '../stores/RoomStore';
@@ -86,8 +86,7 @@ SideBar.Room =
       var room = this.props.room;
 
       return (
-        <li className={cx({
-            'room': true,
+        <li className={cx('room', {
             'active': room.id === MessageWindowStore.getCurrentRoomId(),
             'unread': room.hasUnread()
           })}>
