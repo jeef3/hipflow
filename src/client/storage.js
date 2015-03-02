@@ -1,12 +1,12 @@
 'use strict';
 
-import _ from 'lodash';
+import objectAssign from 'object-assign';
 
 const PREFIX = 'slipflow';
 
 function instantiate(Ctr, data) {
   var instance = new Ctr();
-  return _.assign(instance, data);
+  return objectAssign(instance, data);
 }
 
 export default {

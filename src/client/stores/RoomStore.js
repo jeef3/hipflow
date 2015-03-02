@@ -2,15 +2,28 @@
 
 import {EventEmitter} from 'events';
 
-import Room from './room';
+import objectAssign from 'object-assign';
+
+import Dispatcher from '../dispatcher';
 import Flowdock from '../flowdock';
-import storage from '../storage';
+import Storage from '../storage';
 
-class Rooms extends EventEmitter {
+class Room {
+  constructor(data) {
+    objectAssign(this, data);
+  }
 
+  hasUnread() {
+    return false;
+  }
+}
+
+class RoomStore extends EventEmitter {
   constructor() {
-    this.flows = storage.create(Room, 'flows');
-    this.privateConversations = storage.create(Room, 'privateConversations');
+    this.flows = Storage.create(Room, 'flows');
+    this.privateConversations = Storage.create(Room, 'privateConversations');
+
+    this._dispatchTokenFn = this._dispatchTokenFn.bind(this);
   }
 
   get(id) {
@@ -46,14 +59,14 @@ class Rooms extends EventEmitter {
     });
   }
 
-  update() {
+  _update() {
     Flowdock.flows.allWithUsers((flows) => {
       this.flows = flows.map(function (flow) {
         return new Room(flow);
       });
 
-      storage.set('flows', this.flows);
-      this.emit('flows_updated', this.flows);
+      Storage.set('flows', this.flows);
+      this.emit('flows_updated');
     });
 
     Flowdock.privateConversations.list((privateConversations) => {
@@ -61,18 +74,22 @@ class Rooms extends EventEmitter {
         return new Room(privateConversation);
       });
 
-      storage.set('privateConversations', this.privateConversations);
-      this.emit('privateConversations_updated', this.privateConversations);
+      Storage.set('privateConversations', this.privateConversations);
+      this.emit('private_conversations_updated');
     });
+  }
+
+  _dispatchTokenFn(action) {
+    switch (action.type) {
+      case 'app_init':
+        this._update();
+        break;
+    }
   }
 }
 
-export default new Rooms();
+var roomStore = new RoomStore();
+roomStore.dispatchToken = Dispatcher.register(roomStore._dispatchTokenFn);
 
-Flowdock.on('message', () => {
-
-});
-
-Flowdock.on('user_activity', () => {
-
-});
+export {Room};
+export default roomStore;
