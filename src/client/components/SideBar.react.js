@@ -2,33 +2,38 @@
 
 import React from 'react/addons';
 
-import Rooms from '../rooms';
+import RoomStore from '../stores/RoomStore';
 import MessageWindowManager from '../message-window';
+
+function getState() {
+  return {
+    flows: RoomStore.openFlows(),
+    privateConversations: RoomStore.openPrivateConversations(),
+
+    currentRoom: MessageWindowManager.getActive()
+  };
+}
 
 export default
   class SideBar extends React.Component {
 
     constructor(props) {
       super(props);
+      this.state = getState();
 
-      this.state = {
-        flows: Rooms.openFlows(),
-        privateConversations: Rooms.openPrivateConversations(),
+      this._onChange = this._onChange.bind(this);
+    }
 
-        currentRoom: MessageWindowManager.getActive()
-      };
+    componentDidMount() {
+      RoomStore.on('flows_updated', this._onChange);
+      RoomStore.on('private_conversations_updated', this._onChange);
+      MessageWindowManager.on('show_room', this._onChange);
+    }
 
-      Rooms.on('flows_updated', () => {
-        this.setState({ flows: Rooms.openFlows() });
-      });
-
-      Rooms.on('privateConversations_updated', () => {
-        this.setState({ privateConversations: Rooms.openPrivateConversations() });
-      });
-
-      MessageWindowManager.on('show_room', (room) => {
-        this.setState({ currentRoom: room });
-      });
+    componentWillUnmount() {
+      RoomStore.off('flows_updated', this._onChange);
+      RoomStore.off('private_conversations_updated', this._onChange);
+      MessageWindowManager.off('show_room', this._onChange);
     }
 
     render() {
@@ -46,6 +51,10 @@ export default
           </div>
         </div>
       );
+    }
+
+    _onChange() {
+      this.setState(getState());
     }
   }
 

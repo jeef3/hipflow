@@ -2,15 +2,14 @@
 
 import React from 'react';
 
-import SideBar from './side-bar.react';
+import SideBar from './SideBar.react';
 
 class Main extends React.Component {
-
   render() {
     return (
-      <div>
+      <main className="container">
         <SideBar />
-      </div>
+      </main>
     );
   }
 }
