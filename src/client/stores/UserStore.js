@@ -91,8 +91,8 @@ class UserStore extends EventEmitter {
         break;
 
       case 'user_activity':
-        var user = this.get(payload.message.user);
-        user.handleActivity(payload.message);
+        var user = this.get(action.message.user);
+        user.handleActivity(action.message);
         this.emit('users_updated');
         break;
     }
