@@ -41,7 +41,7 @@ class OnlineStatus extends React.Component {
             'online-status-icon--offline': !this.state.online
           })}></i>
       </div>
-    )
+    );
   }
 
   _onChange() {

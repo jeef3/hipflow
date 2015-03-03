@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import cx from 'classnames';
 
 import MessageWindowStore from '../stores/MessageWindowStore';
 import RoomStore from '../stores/RoomStore';
@@ -33,55 +34,62 @@ class ChatContext extends React.Component {
   }
 
   render() {
-    return (
-      <aside class="chat-context">
-        <div ng-if="currentRoom.access_mode">
-          <ul class="users">
-            <li class="user avatar"
-                ng-repeat="user in currentRoom.users | filter:{in_flow: true} | orderBy:'-last_activity'"
-                title="{{user.name}}"
-                style="background-image:url({{user.avatar}}60)"
-                ng-class="{'user-online': isOnline(user.id),
-                           'user-offline': !isOnline(user.id)}">
-            </li>
-          </ul>
-
-          <h3 class="list-title">Threads</h3>
-          <ul class="thread-list">
-            <li class="thread-list__item"
-                ng-repeat="thread in threads | orderBy:'-lastUpdate'"
-                ng-class="{'thread-muted': thread.muted}">
-              <i class="fa fa-fw"
-                  ng-click="thread.muted = !thread.muted"
-                  ng-class="{'fa-volume-up': !thread.muted,
-                             'fa-volume-off': thread.muted}"></i>
-              <span title="{{thread.title}}"
-                  ng-bind-html="thread.title | emoji"></span>
-            </li>
-          </ul>
-
-          <h3 class="list-title">Sources</h3>
-          <ul class="thread-list">
-            <li class="thread-list__item"
-                ng-repeat="source in sources"
-                ng-class="source--{{source.type}}">{{source.id}}</li>
-          </ul>
-        </div>
-
-        <div ng-if="!currentRoom.access_mode">
-          <div class="user avatar avatar--large"
-              title="{{currentRoom.users[1].name}}"
-              style="background-image:url({{currentRoom.users[1].avatar}}316)">
-
+    var context;
+    if (this.state.currentRoom.access_mode) {
+      context = (
+        <aside className="chat-context">
+          <ChatContext.Users users={this.state.currentRoom.users} />
+        </aside>
+      );
+    } else {
+      context = (
+        <aside className="chat-context">
+          <div className="user avatar avatar--large"
+              title={this.state.currentRoom.users[1].name}
+              style={{backgroundImage: 'url(' + this.state.currentRoom.users[1].avatar + '/316)'}}>
           </div>
-        </div>
-      </aside>
-    )
+        </aside>
+      );
+    }
+
+    return context;
   }
 
   _onChange() {
     this.setState(getState());
   }
 }
+
+ChatContext.Users =
+  class Users extends React.Component {
+    render() {
+      return (
+        <ul className="users">
+          {this.props.users.map(function (user) {
+            return <ChatContext.User key={user.id} user={user} />;
+          })}
+        </ul>
+      );
+    }
+  }
+
+ChatContext.User =
+  class User extends React.Component {
+    render() {
+      var user = this.props.user;
+
+      user.isOnline = () => { return true; }
+
+      return (
+        <li title={user.name}
+            style={{backgroundImage: 'url(' + user.avatar + '/60)'}}
+            className={cx('user avatar', {
+              'user-online': user.isOnline(),
+              'user-offline': !user.isOnline()
+            })}>
+        </li>
+      );
+    }
+  }
 
 export default ChatContext;
