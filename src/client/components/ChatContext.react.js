@@ -36,9 +36,13 @@ class ChatContext extends React.Component {
   render() {
     var context;
     if (this.state.currentRoom.access_mode) {
+      var users = this.state.currentRoom.getJoinedUsers().sort((a, b) => {
+        return b.last_activity - a.last_activity;
+      });
+
       context = (
         <aside className="chat-context">
-          <ChatContext.Users users={this.state.currentRoom.getJoinedUsers()} />
+          <ChatContext.Users users={users} />
         </aside>
       );
     } else {
