@@ -7,15 +7,35 @@ import objectAssign from 'object-assign';
 import Dispatcher from '../dispatcher';
 import Flowdock from '../flowdock';
 import Storage from '../storage';
+import {User} from  './UserStore';
 
 class Room {
   constructor(data) {
     objectAssign(this, data);
+
+    if (data && data.users) {
+      this.users = data.users.map((user) => {
+        return new User(user);
+      });
+    }
   }
 
   hasUnread() {
     return false;
   }
+
+  getUser(id) {
+    return this.users.filter((user) => {
+      return user.id === id;
+    })[0];
+  }
+
+  getJoinedUsers() {
+    return this.users.filter((user) => {
+      return user.in_flow;
+    });
+  }
+
 }
 
 class RoomStore extends EventEmitter {
@@ -25,7 +45,6 @@ class RoomStore extends EventEmitter {
 
     this._dispatchTokenFn =
       Dispatcher.register(this._dispatchTokenFn.bind(this));
-
   }
 
   get(id) {
@@ -63,7 +82,7 @@ class RoomStore extends EventEmitter {
 
   _update() {
     Flowdock.flows.allWithUsers((flows) => {
-      this.flows = flows.map(function (flow) {
+      this.flows = flows.map((flow) => {
         return new Room(flow);
       });
 
@@ -72,7 +91,7 @@ class RoomStore extends EventEmitter {
     });
 
     Flowdock.privateConversations.list((privateConversations) => {
-      this.privateConversations = privateConversations.map(function (privateConversation) {
+      this.privateConversations = privateConversations.map((privateConversation) => {
         return new Room(privateConversation);
       });
 
@@ -85,6 +104,13 @@ class RoomStore extends EventEmitter {
     switch (action.type) {
       case 'app_init':
         this._update();
+        break;
+
+      case 'user_activity':
+        var room = this.get(action.message.flow);
+        var user = room.getUser(action.message.user);
+        user.handleActivity(action.message);
+        this.emit('users_updated');
         break;
     }
   }

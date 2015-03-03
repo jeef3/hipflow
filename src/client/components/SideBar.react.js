@@ -71,7 +71,7 @@ SideBar.RoomList =
             return <SideBar.Room key={room.id} room={room} />;
           })}
         </ul>
-      );
+      )
     }
   }
 

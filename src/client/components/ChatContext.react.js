@@ -38,7 +38,7 @@ class ChatContext extends React.Component {
     if (this.state.currentRoom.access_mode) {
       context = (
         <aside className="chat-context">
-          <ChatContext.Users users={this.state.currentRoom.users} />
+          <ChatContext.Users users={this.state.currentRoom.getJoinedUsers()} />
         </aside>
       );
     } else {
@@ -77,8 +77,6 @@ ChatContext.User =
   class User extends React.Component {
     render() {
       var user = this.props.user;
-
-      user.isOnline = () => { return true; }
 
       return (
         <li title={user.name}

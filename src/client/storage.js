@@ -1,13 +1,6 @@
 'use strict';
 
-import objectAssign from 'object-assign';
-
 const PREFIX = 'slipflow';
-
-function instantiate(Ctr, data) {
-  var instance = new Ctr();
-  return objectAssign(instance, data);
-}
 
 export default {
   get: function (key) {
@@ -23,7 +16,7 @@ export default {
     localStorage.setItem(`${PREFIX}.${key}`, store);
   },
 
-  create: function (ctr, key) {
+  create: function (Ctr, key) {
     var raw = this.get(key);
 
     if (typeof raw !== 'object') {
@@ -31,11 +24,11 @@ export default {
     }
 
     if (raw instanceof Array) {
-      return raw.map(function (i) {
-        return instantiate(ctr, i);
+      return raw.map((i) => {
+        return new Ctr(i);
       });
     }
 
-    return instantiate(ctr, raw);
+    return new Ctr(raw);
   }
 };
