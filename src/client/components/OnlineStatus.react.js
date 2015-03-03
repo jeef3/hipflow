@@ -22,17 +22,19 @@ class OnlineStatus extends React.Component {
 
   componentDidMount() {
     window.addEventListener('online', this._onChange);
+    window.addEventListener('offline', this._onChange);
   }
 
   componentWillUnmount() {
     window.removeEventListener('online', this._onChange);
+    window.removeEventListener('offline', this._onChange);
   }
 
   render() {
-    // style={{backgroundImage: 'url(' + this.state.me.avatar + '80)'}></div>
     return (
       <div className="online-status">
-        <div className="avatar avatar--medium"></div>
+        <div className="avatar avatar--medium"
+          style={{backgroundImage: 'url(' + this.state.me.avatar + '/80)'}}></div>
         <span className="online-status__name">{this.state.me.name}</span>
         <i className={cx('fa fa-fw fa-circle', {
             'online-status-icon--online': this.state.online,
