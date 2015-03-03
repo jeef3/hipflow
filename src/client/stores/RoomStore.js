@@ -90,7 +90,5 @@ class RoomStore extends EventEmitter {
   }
 }
 
-var roomStore = new RoomStore();
-
 export {Room};
 export default new RoomStore();
