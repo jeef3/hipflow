@@ -7,7 +7,6 @@ import _ from 'lodash';
 import FlowdockAuth from './flowdock-auth';
 
 var $rootScope = {};
-var EventSource = {};
 
 var apiBase = 'https://api.flowdock.com';
 var streamBase = 'https://stream.flowdock.com';
@@ -400,10 +399,9 @@ users.list = function (cb) {
 };
 
 module.exports = {
-  connect: function () { },
   stream: function (flows, options) {
-    var stream = new EventSource(streamUrl(flows, options),
-                                 { withCredentials: false });
+    var url = streamUrl(flows, options);
+    var stream = new EventSource(url, { withCredentials: false });
 
     return {
       onmessage: function (fn) {

@@ -25,8 +25,14 @@ class Room {
   }
 
   getUser(id) {
+    var userId = parseInt(id, 10);
+
+    if (!userId) {
+      throw new Error('Invalid user id: ' + id);
+    }
+
     return this.users.filter((user) => {
-      return user.id === id;
+      return user.id === userId;
     })[0];
   }
 
@@ -106,11 +112,13 @@ class RoomStore extends EventEmitter {
         this._update();
         break;
 
-      case 'user_activity':
-        var room = this.get(action.message.flow);
-        var user = room.getUser(action.message.user);
-        user.handleActivity(action.message);
-        this.emit('users_updated');
+      case 'stream':
+        if (action.message.event === 'activity.user') {
+          var room = this.get(action.message.flow);
+          var user = room.getUser(action.message.user);
+          user.handleActivity(action.message);
+          this.emit('flows_updated');
+        }
         break;
     }
   }

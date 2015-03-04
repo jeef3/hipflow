@@ -7,17 +7,13 @@ class FlowdockAuth {
 
   constructor() {
     var cookies = cookie.parse(document.cookie);
-    this.auth = JSON.parse(cookies.flowauth) || {};
+
+    if (cookies.flowauth) {
+      this.auth = JSON.parse(cookies.flowauth) || {};
+    }
   }
 
   isAuthenticated() {
-    try {
-      var cookies = cookie.parse(document.cookie);
-      this.auth = JSON.parse(cookies.flowauth);
-    } catch (err) {
-      return false;
-    }
-
     return !!this.auth.access_token;
   }
 
