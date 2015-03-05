@@ -9,7 +9,7 @@ export PATH=node_modules/.bin:$PATH
 export LIVERELOAD=true
 
 echo "Initial compile"
-make -s
+make
 
 echo "\033[0;34mDone\033[0m"
 echo "\033[0;32mWatching...\033[0m"
@@ -21,13 +21,12 @@ tiny-lr &
 nodemon dist/index.js \
   --watch dist/index.js &
 
-# Watch src and Make on changes
-fswatch -0o ./src | while read -d "" event; \
-  do \
-    make --question
-    status=$?
+# Uses Watchify with manual notify
+make watch_js &
+fswatch -o dist/public/app.js | \
+  xargs -n1 -I {} lib/notify app.js
 
-    if [ $status -eq 1 ]; then
-      make
-    fi
-  done
+# SASS watching doesn't work, do it outselves
+fswatch -o src/client/styles | \
+  xargs -n1 -I{} make dist/public/styles.css &
+
