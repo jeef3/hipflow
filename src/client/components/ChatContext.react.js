@@ -3,15 +3,10 @@
 import React from 'react';
 import cx from 'classnames';
 
-import MessageWindowStore from '../stores/MessageWindowStore';
 import RoomStore from '../stores/RoomStore';
 
 function getState() {
-  var currentRoomId = MessageWindowStore.getCurrentRoomId();
-
   return {
-    currentRoom: RoomStore.get(currentRoomId),
-
     threads: [],
     sources: []
   };
@@ -26,17 +21,15 @@ class ChatContext extends React.Component {
   }
 
   componentDidMount() {
-    MessageWindowStore.on('change', this._onChange);
   }
 
   componentWillUnmount() {
-    MessageWindowStore.off('change', this,_onChange);
   }
 
   render() {
     var context;
-    if (this.state.currentRoom.access_mode) {
-      var users = this.state.currentRoom.getJoinedUsers().sort((a, b) => {
+    if (this.props.room.access_mode) {
+      var users = this.props.room.getJoinedUsers().sort((a, b) => {
         return b.last_activity - a.last_activity;
       });
 
@@ -49,8 +42,8 @@ class ChatContext extends React.Component {
       context = (
         <aside className="chat-context">
           <div className="user avatar avatar--large"
-              title={this.state.currentRoom.users[1].name}
-              style={{backgroundImage: 'url(' + this.state.currentRoom.users[1].avatar + '/316)'}}>
+              title={this.props.room.users[1].name}
+              style={{backgroundImage: 'url(' + this.props.room.users[1].avatar + '/316)'}}>
           </div>
         </aside>
       );

@@ -12,13 +12,10 @@ function getState() {
   return {
     flows: RoomStore.openFlows(),
     privateConversations: RoomStore.openPrivateConversations(),
-
-    currentRoom: MessageWindowStore.getCurrentRoomId()
   };
 }
 
 class SideBar extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = getState();
@@ -29,13 +26,11 @@ class SideBar extends React.Component {
   componentDidMount() {
     RoomStore.on('flows_updated', this._onChange);
     RoomStore.on('private_conversations_updated', this._onChange);
-    MessageWindowStore.on('change', this._onChange);
   }
 
   componentWillUnmount() {
     RoomStore.off('flows_updated', this._onChange);
     RoomStore.off('private_conversations_updated', this._onChange);
-    MessageWindowStore.off('change', this._onChange);
   }
 
   render() {
@@ -46,10 +41,10 @@ class SideBar extends React.Component {
 
         <div className="channels scroll-container">
           <h3 className="list-title">Flows</h3>
-          <SideBar.RoomList rooms={this.state.flows} />
+          <SideBar.RoomList currentRoom={this.props.room} rooms={this.state.flows} />
 
           <h3 className="list-title">1&ndash;to&ndash;1s</h3>
-          <SideBar.RoomList rooms={this.state.privateConversations} />
+          <SideBar.RoomList currentroom={this.props.room} rooms={this.state.privateConversations} />
         </div>
 
         <OnlineStatus />
@@ -67,8 +62,8 @@ SideBar.RoomList =
     render() {
       return (
         <ul className="room-list">
-          {this.props.rooms.map(function (room) {
-            return <SideBar.Room key={room.id} room={room} />;
+          {this.props.rooms.map((room) => {
+            return <SideBar.Room key={room.id} room={room} currentRoom={this.props.currentRoom} />;
           })}
         </ul>
       )
@@ -87,7 +82,7 @@ SideBar.Room =
 
       return (
         <li className={cx('room', {
-            'active': room.id === MessageWindowStore.getCurrentRoomId(),
+            'active': room === this.props.currentroom,
             'unread': room.hasUnread()
           })}>
           <button className="btn--sidebar room__join-btn'"

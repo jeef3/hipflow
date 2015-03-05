@@ -2,9 +2,10 @@
 
 import React from 'react';
 
-import Dispatcher from './dispatcher';
 import Flowdock from './flowdock';
 import {FlowdockAuth} from './flowdock';
+import AppActions from './actions/AppActions';
+import FlowdockActions from './actions/FlowdockActions';
 import RoomStore from './stores/RoomStore.js';
 import Main from './components/Main.react';
 
@@ -13,7 +14,7 @@ React.render(
   <Main />,
   document.getElementById('app'));
 
-Dispatcher.dispatch({ type: 'app_init' });
+AppActions.init();
 
 if (!FlowdockAuth.isAuthenticated()) {
   window.location.href = '/login';
@@ -24,8 +25,5 @@ var stream = Flowdock.stream(
 
 stream.onmessage(function (message) {
   console.log(message);
-  Dispatcher.dispatch({
-    type: 'stream',
-    message: message
-  });
+  FlowdockActions.receiveStreamMessage(message);
 });
