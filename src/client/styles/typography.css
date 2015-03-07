@@ -2,43 +2,45 @@ html, button {
   font: 100%/1.5 "Lato", sans-serif;
   font-weight: 400;
 
-  -webkit-font-smoothing: antialiased;
-  -webkit-text-size-adjust: 100%;
+  font-smoothing: antialiased;
+  text-size-adjust: 100%;
 
-  color: $text-color;
+  color: var(--text-color);
 }
 
 input, textarea {
   font-family: "lato", sans-serif;
 }
 
+:root {
+  --size: 0.125em;
+}
+
 blockquote,
 .blockquote {
-  $size: 0.125em;
-
   position: relative;
 
-  padding-left: $size * 8;
-  margin: $size * 8;
+  padding-left: calc(var(--size) * 8);
+  margin: calc(var(--size) * 8);
 
   &:before {
     content: '';
 
     position: absolute;
-    top: $size;
-    bottom: $size;
+    top: var(--size);
+    bottom: var(--size);
     left: 0;
 
-    border: solid $size $red;
-    border-radius: $size;
+    border: solid var(--size) var(--red);
+    border-radius: var(--size);
   }
 
   blockquote,
   .blockquote {
-    color: $text-color-light;
+    color: var(--text-color-light);
 
     &:before {
-      border-color: $text-color-light;
+      border-color: var(--text-color-light);
     }
   }
 }
@@ -99,7 +101,7 @@ pre {
 }
 
 .quiet {
-  color: $text-color-light;
+  color: var(--text-color-light);
 }
 
 .small {

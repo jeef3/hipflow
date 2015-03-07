@@ -4,8 +4,8 @@ src        ?= src
 out        ?= dist
 static_out ?= $(out)/public
 
-NOTIFY          := ./lib/notify
-COPY_AND_NOTIFY := ./lib/copy-and-notify
+NOTIFY   := ./lib/notify
+POST_CSS := ./lib/post-css.js
 
 .PHONY: all clean dist test
 all: dist
@@ -39,29 +39,16 @@ watch_js:
 #
 # CSS
 
-styles_src    := $(shell find $(src)/client/styles -name '*.scss')
-styles_entry  := $(src)/client/styles/styles.scss
-styles_bundle := $(static_out)/styles.css
-
-sass_options := \
-	--source-map-embed \
-	$(styles_entry) \
-	$(styles_bundle)
+styles_src    := $(shell find $(src)/client/styles -name '*.css')
+styles_entry  := $(src)/client/styles/main.css
+styles_bundle := $(static_out)/main.css
 
 $(styles_bundle): $(styles_src)
 	@echo "\033[0;90mCompiling \033[0;34m$@\033[0m"
 	@mkdir -p $(@D)
-	@$(JS_BIN)/node-sass $(sass_options)
+	@$(POST_CSS) $(styles_entry) $(styles_bundle)
 	@$(NOTIFY) $(@F) ||:
 
-# .PHONY: watch_css
-# watch_css:
-# 	@echo "\033[0;90mStarting SASS Watch\033[0m"
-# 	@mkdir -p $(@D)
-# 	$(JS_BIN)/node-sass \
-# 		--watch $(src)/client/styles \
-# 		--recursive \
-# 		$(sass_options)
 
 #
 # Static assets
