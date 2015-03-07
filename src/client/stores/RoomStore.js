@@ -94,6 +94,7 @@ class RoomStore extends EventEmitter {
 
       Storage.set('flows', this.flows);
       this.emit('flows_updated');
+      this.emit('flows_list_updated');
     });
 
     Flowdock.privateConversations.list((privateConversations) => {
