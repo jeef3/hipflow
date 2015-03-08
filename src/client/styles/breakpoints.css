@@ -1,0 +1,18 @@
+:root {
+  --responsive-transition-time: 400ms;
+}
+
+// 336px and up (iPhone landscape)
+@custom-media --breakpoint-small (max-width: 21em);
+
+// 576px and up (iPad portrait)
+@custom-media --breakpoint-medium (max-width: 36em);
+
+// 784px and up
+@custom-media --breakpoint-large (max-width: 49em);
+
+// 960px and up (iPad landscape and small desktop)
+@custom-media --breakpoint-x-large (max-width: 60em);
+
+// 1440px and up (Proper sized desktops)
+@custom-media --breakpoint-xx-large (max-width: 90em);

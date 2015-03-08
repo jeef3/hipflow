@@ -1,9 +1,10 @@
-@import "util";
-@import "btn";
+/* @import "util"; */
+/* @import "btn"; */
+
 
 .sidebar {
-  color: $sidebar-text;
-  background: $sidebar-background;
+  color: var(--sidebar-text);
+  background: var(--sidebar-background);
 
   .channels {
     position: absolute;
