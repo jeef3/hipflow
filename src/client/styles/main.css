@@ -7,6 +7,6 @@
 @import "btn";
 @import "avatar.css";
 
-@import "chat-context.css";
-@import "online-status.css";
-@import "sidebar.css";
+@import "components/chat-context.css";
+@import "components/online-status.css";
+@import "components/sidebar.css";

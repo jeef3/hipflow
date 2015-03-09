@@ -1,0 +1,18 @@
+.c-OnlineStatus {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  line-height: 3.750em;
+}
+
+  .c-OnlineStatus .avatar {
+    float: left;
+    margin: 0.5em;
+  }
+
+  .c-OnlineStatus__Name {
+    color: var(--sidebar-text-light);
+    font-weight: 900;
+  }

@@ -1,4 +1,4 @@
-.btn {
+.c-Btn {
   text-align: left;
   cursor: pointer;
   color: inherit;
@@ -8,8 +8,5 @@
   background: none;
 }
 
-.btn--no-focus {
-  &:focus {
-    outline: 0;
-  }
-}
+.c-Btn--NoFocus {}
+.c-Btn--NoFocus:focus { outline: 0; }

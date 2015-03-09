@@ -1,11 +1,11 @@
-.truncate {
+.u-truncate {
   overflow: hidden;
 
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.scroll-container {
+.u-scroller {
   overflow-y: scroll;
 }
 

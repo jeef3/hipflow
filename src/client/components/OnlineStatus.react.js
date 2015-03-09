@@ -32,14 +32,14 @@ class OnlineStatus extends React.Component {
 
   render() {
     return (
-      <div className="online-status">
+      <div className="c-OnlineStatus">
         <div className="avatar avatar--medium"
-          style={{backgroundImage: 'url(' + this.state.me.avatar + '/80)'}}></div>
-        <span className="online-status__name">{this.state.me.name}</span>
+            style={{backgroundImage: 'url(' + this.state.me.avatar + '/80)'}}></div>
+        <span className="c-OnlineStatus__Name">{this.state.me.name}</span>
         <i className={cx('fa fa-fw fa-circle', {
-            'online-status-icon--online': this.state.online,
-            'online-status-icon--offline': !this.state.online
-          })}></i>
+              'is-online': this.state.online,
+              'is-offline': !this.state.online
+            })}></i>
       </div>
     );
   }

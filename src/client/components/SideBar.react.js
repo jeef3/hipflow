@@ -34,11 +34,11 @@ class SideBar extends React.Component {
 
   render() {
     return (
-      <div className="sidebar">
+      <div className="c-Sidebar">
         <button className="lobby btn btn--sidebar"
             type="button">Lobby</button>
 
-        <div className="channels scroll-container">
+        <div className="c-Sidebar__Channels u-scroller">
           <h3 className="list-title">Flows</h3>
           <SideBar.RoomList currentRoom={this.props.room} rooms={this.state.flows} />
 
@@ -67,15 +67,15 @@ SideBar.RoomList =
       var currentRoom = this.props.currentRoom || {};
 
       return (
-        <ul className="room-list">
+        <ul className="c-Sidebar__RoomList">
           {this.props.rooms.map((room) => {
             return (
               <li key={room.id}
-                  className={cx('room truncate', {
-                    'active': room.id === currentRoom.id,
-                    'unread': room.hasUnread() })}>
+                  className={cx('Sidebar__RoomListRoom u-truncate', {
+                    'is-active': room.id === currentRoom.id,
+                    'has-unread': room.hasUnread() })}>
 
-                <button className="btn btn--no-focus btn--sidebar room__join-btn'"
+                <button className="c-Btn c-Btn--NoFocus btn--sidebar room__join-btn'"
                     type="button"
                     onClick={(e) => { this._handleShow(e, room); }}>
                   <i className="fa fa-fw fa-comments-o room__icon"></i>
@@ -84,7 +84,7 @@ SideBar.RoomList =
                 </button>
 
                 <button type="button"
-                    className="btn btn--no-focus room__close-btn"
+                    className="c-Btn c-Btn--NoFocus room__close-btn"
                     onClick={(e) => { this._handleClose(e, room); }}>
                   <i className="fa fa-fw fa-times"></i>
                 </button>

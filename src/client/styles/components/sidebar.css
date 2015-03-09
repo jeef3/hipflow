@@ -1,43 +1,42 @@
-.sidebar {
+.c-Sidebar {
   color: var(--sidebar-text);
   background: var(--sidebar-background);
-
 }
 
-.sidebar .channels {
-  position: absolute;
-  top: 2.625em;
-  right: 0;
-  bottom: 3.750em;
-  left: 0;
-}
+  .c-Sidebar__Channels {
+    position: absolute;
+    top: 2.625em;
+    right: 0;
+    bottom: 3.750em;
+    left: 0;
+  }
 
-.room-list {
-  padding: 0 1em 0 0;
-  margin: 0;
+  .c-Sidebar__RoomList {
+    padding: 0 1em 0 0;
+    margin: 0;
 
-  list-style: none;
-  font-size: 0.875em;
-}
+    list-style: none;
+    font-size: 0.875em;
+  }
 
-.room {
-  position: relative;
-  padding-right: 1.875em;
+  .c-Sidebar__RoomListRoom {
+    position: relative;
+    padding-right: 1.875em;
 
-  border-top-right-radius: 0.313em;
-  border-bottom-right-radius: 0.313em;
-}
+    border-top-right-radius: 0.313em;
+    border-bottom-right-radius: 0.313em;
+  }
 
-  .room.unread {
+  .c-Sidebar__RoomListRoom:hover {
+    background: var(--sidebar-background-dark);
+  }
+
+  .c-Sidebar__RoomListRoom.has-unread {
     font-weight: 900;
     color: var(--sidebar-text-light);
   }
 
-  .room:hover {
-    background: var(--sidebar-background-dark);
-  }
-
-  .room.active {
+  .c-Sidebar__RoomListRoom.is-active {
     color: var(--sidebar-text-light);
     background: var(--sidebar-background-angle);
   }
