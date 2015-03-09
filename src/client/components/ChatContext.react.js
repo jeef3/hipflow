@@ -63,26 +63,16 @@ ChatContext.Users =
       return (
         <ul className="users">
           {this.props.users.map(function (user) {
-            return <ChatContext.User key={user.id} user={user} />;
+            return (
+              <li key={user.id}
+                  title={user.name}
+                  style={{backgroundImage: 'url(' + user.avatar + '/60)'}}
+                  className={cx('user avatar', {
+                    'user--online': user.isOnline(),
+                    'user--offline': !user.isOnline() })}></li>
+            );
           })}
         </ul>
-      );
-    }
-  }
-
-ChatContext.User =
-  class User extends React.Component {
-    render() {
-      var user = this.props.user;
-
-      return (
-        <li title={user.name}
-            style={{backgroundImage: 'url(' + user.avatar + '/60)'}}
-            className={cx('user avatar', {
-              'user--online': user.isOnline(),
-              'user--offline': !user.isOnline()
-            })}>
-        </li>
       );
     }
   }

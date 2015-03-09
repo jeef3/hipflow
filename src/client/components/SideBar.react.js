@@ -59,55 +59,49 @@ class SideBar extends React.Component {
 
 SideBar.RoomList =
   class RoomList extends React.Component {
-    render() {
-      return (
-        <ul className="room-list">
-          {this.props.rooms.map((room) => {
-            return <SideBar.Room key={room.id} room={room} currentRoom={this.props.currentRoom} />;
-          })}
-        </ul>
-      )
-    }
-  }
-
-SideBar.Room =
-  class Room extends React.Component {
     constructor() {
       this._handleShow = this._handleShow.bind(this);
       this._handleClose = this._handleClose.bind(this);
     }
 
     render() {
-      var room = this.props.room;
+      var currentRoom = this.props.currentRoom || {};
 
       return (
-        <li className={cx('room truncate', {
-            'active': room === this.props.currentroom,
-            'unread': room.hasUnread()
-          })}>
-          <button className="btn btn--no-focus btn--sidebar room__join-btn'"
-              type="button"
-              onClick={this._handleShow}>
-            <i className="fa fa-fw fa-comments-o room__icon"></i>
-            {room.name}
-            <i className="fa fa-fw fa-circle unread-marker"></i>
-          </button>
+        <ul className="room-list">
+          {this.props.rooms.map((room) => {
+            return (
+              <li key={room.id}
+                  className={cx('room truncate', {
+                    'active': room.id === currentRoom.id,
+                    'unread': room.hasUnread() })}>
 
-          <button type="button"
-              className="btn btn--no-focus room__close-btn"
-              onClick={this._handleClose}>
-            <i className="fa fa-fw fa-times"></i>
-          </button>
-        </li>
-      );
+                <button className="btn btn--no-focus btn--sidebar room__join-btn'"
+                    type="button"
+                    onClick={(e) => { this._handleShow(e, room); }}>
+                  <i className="fa fa-fw fa-comments-o room__icon"></i>
+                  {room.name}
+                  <i className="fa fa-fw fa-circle unread-marker"></i>
+                </button>
+
+                <button type="button"
+                    className="btn btn--no-focus room__close-btn"
+                    onClick={(e) => { this._handleClose(e, room); }}>
+                  <i className="fa fa-fw fa-times"></i>
+                </button>
+            </li>
+            );
+          }, this)}
+        </ul>
+      )
     }
 
-    _handleShow() {
-      RoomActions.showRoom(this.props.room);
+    _handleShow(e, room) {
+      RoomActions.showRoom(room);
     }
 
-    _handleClose() {
-      RoomActions.closeRoom(this.props.room);
+    _handleClose(e, room) {
+      RoomActions.closeRoom(room);
     }
   }
 
