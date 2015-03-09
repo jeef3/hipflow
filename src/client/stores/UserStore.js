@@ -46,7 +46,7 @@ class UserStore extends EventEmitter {
     this.me = Storage.create(User, 'me');
     this.all = Storage.create(User, 'users');
 
-    this._dispatchTokenFn =
+    this.dispatchToken =
       Dispatcher.register(this._dispatchTokenFn.bind(this));
   }
 

@@ -9,20 +9,25 @@ import RoomStore from './RoomStore';
 class MessageWindowStore extends EventEmitter {
   constructor() {
     var current = Storage.get('currentRoom');
-    this.currentRoomId = current ? current.value : null;
 
-    this._dispatchTokenFn =
+    if (current && current.value) {
+      this.currentRoom = RoomStore.get(current.value);
+    }
+
+    this.dispatchToken =
       Dispatcher.register(this._dispatchTokenFn.bind(this));
   }
 
   getCurrentRoom() {
-    return RoomStore.get(this.currentRoomId);
+    return this.currentRoom;
   }
 
   _dispatchTokenFn(action) {
+    Dispatcher.waitFor([RoomStore.dispatchToken]);
+
     switch (action.type) {
       case 'show_room':
-        this.currentRoomId = action.id;
+        this.currentRoom = RoomStore.get(action.id);
         Storage.set('currentRoom', { value: action.id });
         this.emit('change');
         break;

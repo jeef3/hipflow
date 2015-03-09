@@ -5,7 +5,6 @@ import cx from 'classnames';
 
 import RoomActions from '../actions/RoomActions';
 import RoomStore from '../stores/RoomStore';
-import MessageWindowStore from '../stores/MessageWindowStore';
 import OnlineStatus from './OnlineStatus.react';
 
 function getState() {
@@ -44,7 +43,7 @@ class SideBar extends React.Component {
           <SideBar.RoomList currentRoom={this.props.room} rooms={this.state.flows} />
 
           <h3 className="list-title">1&ndash;to&ndash;1s</h3>
-          <SideBar.RoomList currentroom={this.props.room} rooms={this.state.privateConversations} />
+          <SideBar.RoomList currentRoom={this.props.room} rooms={this.state.privateConversations} />
         </div>
 
         <OnlineStatus />

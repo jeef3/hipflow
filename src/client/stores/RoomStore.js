@@ -49,7 +49,7 @@ class RoomStore extends EventEmitter {
     this.flows = Storage.create(Room, 'flows');
     this.privateConversations = Storage.create(Room, 'privateConversations');
 
-    this._dispatchTokenFn =
+    this.dispatchToken =
       Dispatcher.register(this._dispatchTokenFn.bind(this));
   }
 

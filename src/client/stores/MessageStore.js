@@ -22,7 +22,7 @@ class MessageStore extends EventEmitter {
   constructor() {
     this.messages = {};
 
-    this._dispatchTokenFn =
+    this.dispatchToken =
       Dispatcher.register(this._dispatchTokenFn.bind(this));
   }
 
