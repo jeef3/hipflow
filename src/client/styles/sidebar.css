@@ -1,17 +1,15 @@
-@import "util";
-@import "btn";
-
 .sidebar {
-  color: $sidebar-text;
-  background: $sidebar-background;
+  color: var(--sidebar-text);
+  background: var(--sidebar-background);
 
-  .channels {
-    position: absolute;
-    top: 2.625em;
-    right: 0;
-    bottom: 3.750em;
-    left: 0;
-  }
+}
+
+.sidebar .channels {
+  position: absolute;
+  top: 2.625em;
+  right: 0;
+  bottom: 3.750em;
+  left: 0;
 }
 
 .room-list {
@@ -23,32 +21,28 @@
 }
 
 .room {
-  @extend .truncate;
-
   position: relative;
   padding-right: 1.875em;
 
   border-top-right-radius: 0.313em;
   border-bottom-right-radius: 0.313em;
-
-  &.unread {
-    font-weight: 900;
-    color: $sidebar-text-light;
-  }
-
-  &:hover {
-    background: $sidebar-background-dark;
-  }
-
-  &.active {
-    color: $sidebar-text-light;
-    background: $sidebar-background-angle;
-  }
 }
 
-.btn--sidebar {
-  @extend .btn--no-focus;
+  .room.unread {
+    font-weight: 900;
+    color: var(--sidebar-text-light);
+  }
 
+  .room:hover {
+    background: var(--sidebar-background-dark);
+  }
+
+  .room.active {
+    color: var(--sidebar-text-light);
+    background: var(--sidebar-background-angle);
+  }
+
+.btn--sidebar {
   display: block;
   width: 100%;
   padding: 0 0.625em;
@@ -58,30 +52,26 @@
 }
 
 .room__close-btn {
-  @extend .btn--no-focus;
-
   display: none;
   position: absolute;
   width: 2em;
   height: 2em;
   top: 0;
   right: 0;
-
-  &:hover,
-  &:active,
-  &:focus {
-    color: $sidebar-text-light;
-  }
-
-  .room:hover & {
-    display: block;
-  }
 }
 
-.room__icon {
-  .active & {
-    color: $sidebar-text-angle;
-  }
+.room__close-btn:hover,
+.room__close-btn:active,
+.room__close-btn:focus {
+  color: var(--sidebar-text-light);
+}
+
+.room:hover .room__close-btn {
+  display: block;
+}
+
+.active .room__icon {
+  color: var(--sidebar-text-angle);
 }
 
 .online-status-icon {
@@ -89,13 +79,13 @@
 }
 
 .online-status-icon--online {
-  @extend .online-status-icon;
+  /* @extend .online-status-icon; */
 
   color: #32BE32;
 }
 
 .online-status-icon--offline {
-  @extend .online-status-icon;
+  /* @extend .online-status-icon; */
 }
 
 .unread-marker {
@@ -107,16 +97,16 @@
   opacity: 0;
 
   transition: all 250ms ease-in-out;
+}
 
-  .unread & {
-    opacity: 0.6;
+.unread .unread-marker {
+  opacity: 0.6;
 
-    animation-name: pulse;
-    animation-duration: 1200ms;
-    animation-delay: 250ms;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-  }
+  animation-name: pulse;
+  animation-duration: 1200ms;
+  animation-delay: 250ms;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
 @keyframes pulse {

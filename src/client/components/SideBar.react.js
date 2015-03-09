@@ -81,11 +81,11 @@ SideBar.Room =
       var room = this.props.room;
 
       return (
-        <li className={cx('room', {
+        <li className={cx('room truncate', {
             'active': room === this.props.currentroom,
             'unread': room.hasUnread()
           })}>
-          <button className="btn--sidebar room__join-btn'"
+          <button className="btn btn--no-focus btn--sidebar room__join-btn'"
               type="button"
               onClick={this._handleShow}>
             <i className="fa fa-fw fa-comments-o room__icon"></i>
@@ -94,7 +94,7 @@ SideBar.Room =
           </button>
 
           <button type="button"
-              className="btn room__close-btn"
+              className="btn btn--no-focus room__close-btn"
               onClick={this._handleClose}>
             <i className="fa fa-fw fa-times"></i>
           </button>

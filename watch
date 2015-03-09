@@ -24,9 +24,8 @@ nodemon dist/index.js \
 # Uses Watchify with manual notify
 make watch_js &
 fswatch -o dist/public/app.js | \
-  xargs -n1 -I {} lib/notify app.js
+  xargs -n1 -I {} lib/notify app.js &
 
-# SASS watching doesn't work, do it outselves
+# CSS Watch and compile
 fswatch -o src/client/styles | \
-  xargs -n1 -I{} make dist/public/styles.css &
-
+  xargs -n1 -I{} make dist/public/main.css

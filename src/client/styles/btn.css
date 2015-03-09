@@ -9,8 +9,6 @@
 }
 
 .btn--no-focus {
-  @extend .btn;
-
   &:focus {
     outline: 0;
   }

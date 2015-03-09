@@ -79,8 +79,8 @@ ChatContext.User =
         <li title={user.name}
             style={{backgroundImage: 'url(' + user.avatar + '/60)'}}
             className={cx('user avatar', {
-              'user-online': user.isOnline(),
-              'user-offline': !user.isOnline()
+              'user--online': user.isOnline(),
+              'user--offline': !user.isOnline()
             })}>
         </li>
       );

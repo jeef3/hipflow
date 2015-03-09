@@ -1,0 +1,24 @@
+:root {
+  /* Colors */
+  --main-blue: #39394d;
+  --main-blue-dark: #30303d;
+  --green: #649750;
+  --light-green: #b9cfaa;
+  --yellow: #cfcfaa;
+  --red: #975050;
+
+  --text-color: #3d3c40;
+  --text-color-light: #9e9ea6;
+
+  --text-color-inverse: #ffffff;
+  --text-color-inverse-dim: #9b9bab;
+
+  /* Sidebar */
+  --sidebar-background: var(--main-blue);
+  --sidebar-background-dark: var(--main-blue-dark);
+  --sidebar-background-angle: var(--green);
+
+  --sidebar-text-light: var(--text-color-inverse);
+  --sidebar-text: var(--text-color-inverse-dim);
+  --sidebar-text-angle: #b9cfaa;
+}
