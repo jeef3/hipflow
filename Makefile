@@ -18,6 +18,7 @@ js_entry  := $(src)/client/app.js
 js_bundle := $(static_out)/app.js
 
 browserify_options := \
+	--debug \
 	--entry $(js_entry) \
 	--transform 'reactify' \
 	--transform 'babelify' \
