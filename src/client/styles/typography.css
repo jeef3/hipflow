@@ -21,26 +21,6 @@ blockquote,
   padding-left: calc(var(--size) * 8);
   margin: calc(var(--size) * 8);
 
-  &:before {
-    content: '';
-
-    position: absolute;
-    top: var(--size);
-    bottom: var(--size);
-    left: 0;
-
-    border: solid var(--size) var(--red);
-    border-radius: var(--size);
-  }
-
-  blockquote,
-  .blockquote {
-    color: var(--text-color-light);
-
-    &:before {
-      border-color: var(--text-color-light);
-    }
-  }
 }
 
 code,
