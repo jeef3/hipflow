@@ -1,0 +1,25 @@
+:root {
+  --topic-bar-height: 3em;
+}
+
+.c-TopicBar {
+  height: var(--topic-bar-height);
+  padding: 0 1em;
+
+  line-height: var(--topic-bar-height);
+}
+
+.c-TopicBar__Name {
+  display: inline;
+  margin: 0;
+
+  font-size: 1.250em;
+  font-weight: 900;
+}
+
+.c-TopicBar__Description {
+  margin-left: 1em;
+
+  font-size: 0.813em;
+  color: var(--text-color-light);
+}

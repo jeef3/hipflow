@@ -1,29 +1,6 @@
 @require "_theme";
 @require "_util";
 
-$topic-bar-height = 3em;
-
-.topic-bar {
-  @extend .truncate;
-
-  height: $topic-bar-height;
-  padding: 0 1em;
-
-  line-height: $topic-bar-height;
-}
-
-.topic-bar__room-name {
-  font-size: 1.250em;
-  font-weight: 900;
-}
-
-.topic-bar__room-description {
-  margin-left: 1em;
-
-  font-size: 0.813em;
-  color: $text-color-light;
-}
-
 .messages-container {
   position: absolute;
   top: $topic-bar-height;

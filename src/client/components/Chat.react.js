@@ -9,7 +9,6 @@ import MessageWindowStore from '../stores/MessageWindowStore';
 
 function getState() {
   return {
-    currentRoom: MessageWindowStore.getCurrentRoom()
   };
 }
 
@@ -22,18 +21,16 @@ class Chat extends React.Component {
   }
 
   componentDidMount() {
-    MessageWindowStore.on('change', this._onChange);
   }
 
   componentWillUnmount() {
-    MessageWindowStore.off('change', this._onChange);
   }
 
   render() {
-    var room = this.state.currentRoom;
+    var room = this.props.room;
 
     return (
-      <section className="chat">
+      <section className="c-Chat">
         <TopicBar name={room.name} description={room.description} />
         <MessageWindow />
         <ChatBar />
@@ -46,4 +43,4 @@ class Chat extends React.Component {
   }
 }
 
-export default TopicBar;
+export default Chat;

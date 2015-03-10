@@ -1,3 +1,8 @@
+.c-ChatContext {
+  /* Size and Position in ../layout.css */
+  background: #e6e6e6;
+}
+
 .users {
   overflow: auto;
   margin: 0;
@@ -41,10 +46,10 @@
   line-height: 19px;
   color: black;
   background: rgba(255,255,255,0.5);
+}
 
-  .user--typing & {
-    display: block;
-  }
+.user--typing .user-typing-indicator {
+  display: block;
 }
 
 .thread-list {
@@ -55,7 +60,7 @@
 }
 
 .thread-list__item {
-  @extend .truncate;
+  /* @extend .truncate; */
 
   margin: 0.313em 0;
 

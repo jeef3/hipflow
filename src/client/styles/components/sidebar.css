@@ -1,4 +1,5 @@
 .c-Sidebar {
+  /* Size and Position in ../layout.css */
   color: var(--sidebar-text);
   background: var(--sidebar-background);
 }

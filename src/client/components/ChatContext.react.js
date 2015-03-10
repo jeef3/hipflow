@@ -27,7 +27,7 @@ class ChatContext extends React.Component {
       });
 
       context = (
-        <aside className="chat-context">
+        <aside className="c-ChatContext">
           <ChatContext.Users users={users} />
         </aside>
       );
@@ -36,7 +36,7 @@ class ChatContext extends React.Component {
       var avatarUrl = this.props.room.users[1].avatar + '/316';
 
       context = (
-        <aside className="chat-context">
+        <aside className="c-ChatContext">
           <div className="user avatar avatar--large"
               title={userName}
               style={{backgroundImage: `url(${avatarUrl})`}}>

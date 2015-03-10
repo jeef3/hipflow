@@ -27,7 +27,7 @@ body {
   left: 0;
 }
 
-.chat {
+.c-Chat {
   position: absolute;
   top: 0;
   right: var(--chat-context-small-width);
@@ -38,15 +38,15 @@ body {
   transition: right var(--responsive-transition-time) ease-in-out;
 }
 
-@media (--breakpoint-large) {
-  .chat { right: var(--chat-context-medium-width); }
-}
+  @media (--breakpoint-large) {
+    .c-Chat { right: var(--chat-context-medium-width); }
+  }
 
-@media (--breakpoint-x-large) {
-  .chat { right: var(--chat-context-full-width); }
-}
+  @media (--breakpoint-x-large) {
+    .c-Chat { right: var(--chat-context-full-width); }
+  }
 
-.chat-context {
+.c-ChatContext {
   position: absolute;
   width: var(--chat-context-small-width);
 
@@ -54,16 +54,13 @@ body {
   right: 0;
   bottom: 0;
 
-  background: #e6e6e6;
-
   transition: width var(--responsive-transition-time) ease-in-out;
 }
 
-@media (--breakpoint-large) {
-  .chat-context { width: var(--chat-context-medium-width) };
-}
+  @media (--breakpoint-large) {
+    .c-ChatContext { width: var(--chat-context-medium-width) };
+  }
 
-@media (--breakpoint-x-large) {
-  .chat-context { width: var(--chat-context-full-width); }
-}
-
+  @media (--breakpoint-x-large) {
+    .c-ChatContext { width: var(--chat-context-full-width); }
+  }
