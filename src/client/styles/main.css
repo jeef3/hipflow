@@ -4,9 +4,9 @@
 @import "layout.css";
 @import "util.css";
 
-@import "btn";
 @import "avatar.css";
 
+@import "components/button.css";
 @import "components/chat-context.css";
 @import "components/online-status.css";
 @import "components/sidebar.css";

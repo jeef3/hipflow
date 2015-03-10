@@ -19,7 +19,7 @@ body {
 
 .container { position: relative; }
 
-.sidebar {
+.c-Sidebar {
   position: absolute;
   width: var(--sidebar-width);
   top: 0;

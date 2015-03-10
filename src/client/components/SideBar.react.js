@@ -6,6 +6,8 @@ import cx from 'classnames';
 import RoomActions from '../actions/RoomActions';
 import RoomStore from '../stores/RoomStore';
 import OnlineStatus from './OnlineStatus.react';
+import Button from './Button.react';
+import Icon from './Icon.react';
 
 function getState() {
   return {
@@ -35,8 +37,7 @@ class SideBar extends React.Component {
   render() {
     return (
       <div className="c-Sidebar">
-        <button className="lobby btn btn--sidebar"
-            type="button">Lobby</button>
+        <Button>Lobby</Button>
 
         <div className="c-Sidebar__Channels u-scroller">
           <h3 className="list-title">Flows</h3>
@@ -75,19 +76,21 @@ SideBar.RoomList =
                     'is-active': room.id === currentRoom.id,
                     'has-unread': room.hasUnread() })}>
 
-                <button className="c-Btn c-Btn--NoFocus btn--sidebar room__join-btn'"
-                    type="button"
-                    onClick={(e) => { this._handleShow(e, room); }}>
-                  <i className="fa fa-fw fa-comments-o room__icon"></i>
+                <Button
+                    noFocus="true"
+                    className="btn--sidebar room__join-btn"
+                    onClick={this._handleShow.bind(this, room)}>
+                  <Icon kind="comments-o" className="room__icon" />
                   {room.name}
-                  <i className="fa fa-fw fa-circle unread-marker"></i>
-                </button>
+                  <Icon kind="circle" className="unread-marker" />
+                </Button>
 
-                <button type="button"
-                    className="c-Btn c-Btn--NoFocus room__close-btn"
-                    onClick={(e) => { this._handleClose(e, room); }}>
-                  <i className="fa fa-fw fa-times"></i>
-                </button>
+                <Button
+                    noFocus="true"
+                    className="room__close-btn"
+                    onClick={this._handleClose.bind(this, room)}>
+                  <Icon kind="times" />
+                </Button>
             </li>
             );
           }, this)}
@@ -95,11 +98,11 @@ SideBar.RoomList =
       )
     }
 
-    _handleShow(e, room) {
+    _handleShow(room) {
       RoomActions.showRoom(room);
     }
 
-    _handleClose(e, room) {
+    _handleClose(room) {
       RoomActions.closeRoom(room);
     }
   }
