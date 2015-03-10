@@ -17,8 +17,7 @@ function getState() {
 }
 
 class SideBar extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
     this.state = getState();
 
     this._onChange = this._onChange.bind(this);
@@ -72,7 +71,7 @@ SideBar.RoomList =
           {this.props.rooms.map((room) => {
             return (
               <li key={room.id}
-                  className={cx('Sidebar__RoomListRoom u-truncate', {
+                  className={cx('c-Sidebar__RoomListRoom u-truncate', {
                     'is-active': room.id === currentRoom.id,
                     'has-unread': room.hasUnread() })}>
 

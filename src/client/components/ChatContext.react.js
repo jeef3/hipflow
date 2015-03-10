@@ -13,17 +13,10 @@ function getState() {
 }
 
 class ChatContext extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
     this.state = getState();
 
     this._onChange = this._onChange.bind(this);
-  }
-
-  componentDidMount() {
-  }
-
-  componentWillUnmount() {
   }
 
   render() {
@@ -39,11 +32,14 @@ class ChatContext extends React.Component {
         </aside>
       );
     } else {
+      var userName = this.props.room.users[1].name;
+      var avatarUrl = this.props.room.users[1].avatar + '/316';
+
       context = (
         <aside className="chat-context">
           <div className="user avatar avatar--large"
-              title={this.props.room.users[1].name}
-              style={{backgroundImage: 'url(' + this.props.room.users[1].avatar + '/316)'}}>
+              title={userName}
+              style={{backgroundImage: `url(${avatarUrl})`}}>
           </div>
         </aside>
       );
