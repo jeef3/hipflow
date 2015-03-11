@@ -58,11 +58,6 @@ class SideBar extends React.Component {
 
 SideBar.RoomList =
   class RoomList extends React.Component {
-    constructor() {
-      this._handleShow = this._handleShow.bind(this);
-      this._handleClose = this._handleClose.bind(this);
-    }
-
     render() {
       var currentRoom = this.props.currentRoom || {};
 
@@ -71,22 +66,21 @@ SideBar.RoomList =
           {this.props.rooms.map((room) => {
             return (
               <li key={room.id}
-                  className={cx('c-Sidebar__RoomListRoom u-truncate', {
+                  className={cx('c-Sidebar__Room u-truncate', {
                     'is-active': room.id === currentRoom.id,
                     'has-unread': room.hasUnread() })}>
 
                 <Button
                     noFocus="true"
-                    className="btn--sidebar room__join-btn"
+                    className="c-Sidebar__ShowRoomButton"
                     onClick={this._handleShow.bind(this, room)}>
-                  <Icon kind="comments-o" className="room__icon" />
-                  {room.name}
+                  <Icon kind="comments-o" className="room__icon" /> {room.name}
                   <Icon kind="circle" className="unread-marker" />
                 </Button>
 
                 <Button
                     noFocus="true"
-                    className="room__close-btn"
+                    className="c-Sidebar__CloseRoomButton"
                     onClick={this._handleClose.bind(this, room)}>
                   <Icon kind="times" />
                 </Button>

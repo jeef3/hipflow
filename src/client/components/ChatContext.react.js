@@ -37,7 +37,7 @@ class ChatContext extends React.Component {
 
       context = (
         <aside className="c-ChatContext">
-          <div className="user avatar avatar--large"
+          <div className="c-ChatContext__User o-avatar o-avatar--large"
               title={userName}
               style={{backgroundImage: `url(${avatarUrl})`}}>
           </div>
@@ -57,15 +57,15 @@ ChatContext.Users =
   class Users extends React.Component {
     render() {
       return (
-        <ul className="users">
+        <ul className="c-ChatContext__Users">
           {this.props.users.map(function (user) {
             return (
               <li key={user.id}
                   title={user.name}
                   style={{backgroundImage: 'url(' + user.avatar + '/60)'}}
-                  className={cx('user avatar', {
-                    'user--online': user.isOnline(),
-                    'user--offline': !user.isOnline() })}></li>
+                  className={cx('c-ChatContext__User o-avatar', {
+                    'is-online': user.isOnline(),
+                    'is-offline': !user.isOnline() })}></li>
             );
           })}
         </ul>

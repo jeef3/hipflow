@@ -4,45 +4,45 @@
   background: var(--sidebar-background);
 }
 
-  .c-Sidebar__Channels {
-    position: absolute;
-    top: 2.625em;
-    right: 0;
-    bottom: 3.750em;
-    left: 0;
-  }
+.c-Sidebar__Channels {
+  position: absolute;
+  top: 2.625em;
+  right: 0;
+  bottom: 3.750em;
+  left: 0;
+}
 
-  .c-Sidebar__RoomList {
-    padding: 0 1em 0 0;
-    margin: 0;
+.c-Sidebar__RoomList {
+  padding: 0 1em 0 0;
+  margin: 0;
 
-    list-style: none;
-    font-size: 0.875em;
-  }
+  list-style: none;
+  font-size: 0.875em;
+}
 
-  .c-Sidebar__RoomListRoom {
-    position: relative;
-    padding-right: 1.875em;
+.c-Sidebar__Room {
+  position: relative;
+  padding-right: 1.875em;
 
-    border-top-right-radius: 0.313em;
-    border-bottom-right-radius: 0.313em;
-  }
+  border-top-right-radius: 0.313em;
+  border-bottom-right-radius: 0.313em;
+}
 
-  .c-Sidebar__RoomListRoom:hover {
+  .c-Sidebar__Room:hover {
     background: var(--sidebar-background-dark);
   }
 
-  .c-Sidebar__RoomListRoom.has-unread {
+  .c-Sidebar__Room.has-unread {
     font-weight: 900;
     color: var(--sidebar-text-light);
-  }
+}
 
-  .c-Sidebar__RoomListRoom.is-active {
+  .c-Sidebar__Room.is-active {
     color: var(--sidebar-text-light);
     background: var(--sidebar-background-angle);
   }
 
-.btn--sidebar {
+.c-Sidebar__ShowRoomButton {
   display: block;
   width: 100%;
   padding: 0 0.625em;
@@ -51,7 +51,7 @@
   line-height: 2em;
 }
 
-.room__close-btn {
+.c-Sidebar__CloseRoomButton {
   display: none;
   position: absolute;
   width: 2em;
@@ -60,15 +60,15 @@
   right: 0;
 }
 
-.room__close-btn:hover,
-.room__close-btn:active,
-.room__close-btn:focus {
-  color: var(--sidebar-text-light);
-}
+  .c-Sidebar__CloseRoomButton:hover,
+  .c-Sidebar__CloseRoomButton:active,
+  .c-Sidebar__CloseRoomButton:focus {
+    color: var(--sidebar-text-light);
+  }
 
-.room:hover .room__close-btn {
-  display: block;
-}
+  .c-Sidebar__Room:hover .c-Sidebar__CloseRoomButton {
+    display: block;
+  }
 
 .active .room__icon {
   color: var(--sidebar-text-angle);

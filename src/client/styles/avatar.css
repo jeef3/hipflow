@@ -2,7 +2,7 @@
   --avatar-size: 1.875em;
 }
 
-.avatar {
+.o-avatar {
   display: inline-block;
   width: var(--avatar-size);
   height: var(--avatar-size);
@@ -15,6 +15,6 @@
   background-repeat: no-repeat;
 }
 
-.avatar--small { font-size: 0.5em; }
-.avatar--medium { font-size: 1.333em; }
-.avatar--large { font-size: 5.25em; }
+.o-avatar--small { font-size: 0.5em; }
+.o-avatar--medium { font-size: 1.333em; }
+.o-avatar--large { font-size: 5.25em; }
