@@ -3,8 +3,6 @@
 import React from 'react';
 import cx from 'classnames';
 
-import RoomStore from '../stores/RoomStore';
-
 function getState() {
   return {
     threads: [],
@@ -21,10 +19,13 @@ class ChatContext extends React.Component {
 
   render() {
     var context;
-    if (this.props.room.access_mode) {
-      var users = this.props.room.getJoinedUsers().sort((a, b) => {
-        return b.last_activity - a.last_activity;
-      });
+    var room = this.props.room;
+
+    if (room.access_mode) {
+      let users = room.getJoinedUsers()
+        .sort((a, b) => {
+          return b.last_activity - a.last_activity;
+        });
 
       context = (
         <aside className="c-ChatContext">
@@ -32,13 +33,13 @@ class ChatContext extends React.Component {
         </aside>
       );
     } else {
-      var userName = this.props.room.users[1].name;
-      var avatarUrl = this.props.room.users[1].avatar + '/316';
+      let user = room.users[1];
+      let avatarUrl = user.avatar + '/316';
 
       context = (
         <aside className="c-ChatContext">
           <div className="c-ChatContext__User o-avatar o-avatar--large"
-              title={userName}
+              title={user.name}
               style={{backgroundImage: `url(${avatarUrl})`}}>
           </div>
         </aside>
@@ -56,19 +57,29 @@ class ChatContext extends React.Component {
 ChatContext.Users =
   class Users extends React.Component {
     render() {
+      var users = this.props.users;
+
       return (
         <ul className="c-ChatContext__Users">
-          {this.props.users.map(function (user) {
-            return (
-              <li key={user.id}
-                  title={user.name}
-                  style={{backgroundImage: 'url(' + user.avatar + '/60)'}}
-                  className={cx('c-ChatContext__User o-avatar', {
-                    'is-online': user.isOnline(),
-                    'is-offline': !user.isOnline() })}></li>
-            );
+          {users.map((user) => {
+            return <ChatContext.User key={user.id} user={user} />;
           })}
         </ul>
+      );
+    }
+  }
+
+ChatContext.User =
+  class User extends React.Component {
+    render() {
+      var user = this.props.user;
+
+      return (
+        <li title={user.name}
+            style={{backgroundImage: 'url(' + user.avatar + '/60)'}}
+            className={cx('c-ChatContext__User o-avatar', {
+              'is-online': user.isOnline(),
+              'is-offline': !user.isOnline() })}></li>
       );
     }
   }

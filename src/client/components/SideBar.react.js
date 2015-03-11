@@ -64,31 +64,42 @@ SideBar.RoomList =
       return (
         <ul className="c-Sidebar__RoomList">
           {this.props.rooms.map((room) => {
-            return (
-              <li key={room.id}
-                  className={cx('c-Sidebar__Room u-truncate', {
-                    'is-active': room.id === currentRoom.id,
-                    'has-unread': room.hasUnread() })}>
-
-                <Button
-                    noFocus="true"
-                    className="c-Sidebar__ShowRoomButton"
-                    onClick={this._handleShow.bind(this, room)}>
-                  <Icon kind="comments-o" className="room__icon" /> {room.name}
-                  <Icon kind="circle" className="unread-marker" />
-                </Button>
-
-                <Button
-                    noFocus="true"
-                    className="c-Sidebar__CloseRoomButton"
-                    onClick={this._handleClose.bind(this, room)}>
-                  <Icon kind="times" />
-                </Button>
-            </li>
-            );
-          }, this)}
+            return <SideBar.Room
+                key={room.id}
+                room={room}
+                isActive={room.id === currentRoom.id}/>;
+          })}
         </ul>
       )
+    }
+  }
+
+SideBar.Room =
+  class Room extends React.Component {
+    render() {
+      var room = this.props.room;
+
+      return (
+        <li className={cx('c-Sidebar__Room u-truncate', {
+              'is-active': this.props.isActive,
+              'has-unread': room.hasUnread() })}>
+
+          <Button
+              noFocus="true"
+              className="c-Sidebar__ShowRoomButton"
+              onClick={this._handleShow.bind(this, room)}>
+            <Icon kind="comments-o" className="room__icon" /> {room.name}
+            <Icon kind="circle" className="unread-marker" />
+          </Button>
+
+          <Button
+              noFocus="true"
+              className="c-Sidebar__CloseRoomButton"
+              onClick={this._handleClose.bind(this, room)}>
+            <Icon kind="times" />
+          </Button>
+        </li>
+      );
     }
 
     _handleShow(room) {
