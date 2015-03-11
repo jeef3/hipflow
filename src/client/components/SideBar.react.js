@@ -67,7 +67,7 @@ SideBar.RoomList =
             return <SideBar.Room
                 key={room.id}
                 room={room}
-                isActive={room.id === currentRoom.id}/>;
+                isActive={room.id === currentRoom.id} />;
           })}
         </ul>
       )

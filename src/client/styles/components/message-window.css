@@ -1,0 +1,19 @@
+.c-MessageWindow {
+  position: absolute;
+  top: var(--topic-bar-height);
+  right: 0;
+  bottom: 3.813em;
+  left: 0;
+}
+
+.c-MessageWindow__Messages {
+  position: absolute;
+  padding: 0 0 2em;
+  margin: 0;
+  max-height: 100%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  list-style: none;
+}

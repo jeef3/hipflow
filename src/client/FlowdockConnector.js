@@ -7,7 +7,7 @@ import Flowdock, {FlowdockAuth} from './flowdock';
 var connection = null;
 
 function onMessage(message) {
-  console.log(message);
+  console.log('Stream message', message);
   FlowdockActions.receiveStreamMessage(message);
 }
 

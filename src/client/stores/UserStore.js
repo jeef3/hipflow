@@ -23,6 +23,7 @@ class User {
   }
 
   isMe() {
+    return false;
   }
 
   handleActivity(message) {
