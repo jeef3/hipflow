@@ -13,32 +13,34 @@
   border-top: solid 1px #f0f0f0;
 }
 
-.c-Message--Monologue:not(.c-Message--DateSeparator) {
-  border-top-color: transparent;
-}
+  .c-Message--Monologue:not(.c-Message--DateSeparator) {
+    border-top-color: transparent;
+  }
 
-.c-Message--highlight,
-.c-Message--mentions-me,
-.c-Message--notify {
-  background: var(--notify-background);
-}
+  .c-Message--Highlight,
+  .c-Message--MentionsMe,
+  .c-Message--Notify {
+    background: var(--notify-background);
+  }
 
-.c-Message--success {
-  background: var(--success-background);
-}
+  .c-Message--Success {
+    background: var(--success-background);
+  }
 
-.c-Message--fail {
-  background: var(--fail-background);
-}
+  .c-Message--Fail {
+    background: var(--fail-background);
+  }
 
-.c-Message--date-separator {
-    /* $date-separator-height = 2em; */
-    padding-top: $date-separator-height;
-    margin-top: $date-separator-height;
+  :root {
+    --date-separator-height: 2em;
+  }
+  .c-Message--DateSeparator {
+    padding-top: var(--date-separator-height);
+    margin-top: var(--date-separator-height);
 
     border-top: solid 1px #ccc;
-
-    &:before {
+  }
+    .c-Message--DateSeparator:before {
       content: attr(data-timestamp);
 
       position: absolute;
@@ -52,17 +54,16 @@
 
       background: #ffffff;
     }
-  }
 
   .c-Message--first-unseen {
     top: -1px;
     border-top: dashed 2px $green !important;
-
-    .message__content {
+  }
+    .c-Message--FirstUnseen .message__content {
       border-top-color: transparent !important;
     }
 
-    &:before {
+    .c-Message--FirstUnseen:before {
       content: 'New Messages';
 
       position: absolute;
@@ -80,54 +81,49 @@
       background: #ffffff;
     }
 
-    .is-below-screen& {
-      &:before {
-        position: fixed;
-        top: auto;
-        left: auto;
-        bottom: 4.692em;
-        right: 18em;
-        padding: 0.313em 1em;
-        transform: translate(0);
-        opacity: 0.8;
+    .c-Message--FirstUnseen.is-below-screen:before {
+      position: fixed;
+      top: auto;
+      left: auto;
+      bottom: 4.692em;
+      right: 18em;
+      padding: 0.313em 1em;
+      transform: translate(0);
+      opacity: 0.8;
 
-        color: white;
+      color: white;
 
-        background: $green;
-        border-top-left-radius: 0.313em;
-        border-top-right-radius: 0.313em;
-      }
+      background: $green;
+      border-top-left-radius: 0.313em;
+      border-top-right-radius: 0.313em;
     }
 
-    .is-above-screen& {
-      &:before {
-        position: fixed;
-        top: 3.692em;
-        left: 17em;
-        right: 17em;
-        padding: 0.313em 1em;
-        transform: translate(0);
-        opacity: 0.8;
+    .c-Message--FirstUnseen.is-above-screen:before {
+      position: fixed;
+      top: 3.692em;
+      left: 17em;
+      right: 17em;
+      padding: 0.313em 1em;
+      transform: translate(0);
+      opacity: 0.8;
 
-        color: white;
+      color: white;
 
-        background: $green;
-        border-radius: 0.313em;
-      }
+      background: $green;
+      border-radius: 0.313em;
     }
-  }
 
-  a {
+  .c-Message a {
     font-weight: 600;
     color: rgb(62, 116, 173);
     color: #000000;
     text-decoration: none;
   }
-  a:hover {
+  .c-Message a:hover {
     text-decoration: underline;
   }
 
-  .inline-code {
+  .c-Message .inline-code {
     padding: 0.125em;
 
     border: solid 1px #ccc;
@@ -135,89 +131,84 @@
     background: #eee;
   }
 
-  img {
+  .c-Message img {
     max-width: 100%;
   }
-}
 
-.message__author {
-  margin: 0.5em 0 0 3.643em;
+    .c-Message__Author {
+      margin: 0.5em 0 0 3.643em;
 
-  font-weight: 900;
-  font-size: 0.875em;
+      font-weight: 900;
+      font-size: 0.875em;
+    }
+      .c-Message--Monologue:not(.c-Message--DateSeparator) .c-Message__Author {
+        display: none;
+      }
 
-  .c-Message--monologue:not(.c-Message--date-separator) & {
-    display: none;
-  }
-}
+    .c-Message__AuthorAvatar {
+      float: left;
+      margin: 0.625em;
+    }
+      .c-Message--Monologue:not(.c-Message--DateSeparator) .c-Message__AuthorAvatar {
+        display: none;
+      }
 
-.message__author-avatar {
-  float: left;
-  margin: 0.625em;
+    .c-Message__Content {
+      padding: 0 0.625em 0.313em 0;
+      margin: 0 0 0 3.188em;
 
-  .c-Message--monologue:not(.c-Message--date-separator) & {
-    display: none;
-  }
-}
+      word-break: break-word;
+    }
+      .c-Message--Monologue:not(.c-Message--DateSeparator) .c-Message__Content {
+        margin-top: 0;
+        padding-top: 0.313em;
 
-.message__content {
-  padding: 0 0.625em 0.313em 0;
-  margin: 0 0 0 3.188em;
+        border-top: solid 1px #f0f0f0;
+      }
 
-  word-break: break-word;
+    .c-Message__MoreContent {
+      padding: 0 1em;
+      margin-top: 0.313em;
+      border: solid 1px #eeeeee;
+      border-radius: 0.313em;
+      background: #fdfdfd;
+    }
+      .c-Message__MoreContent code {
+        padding: 0 0.313em;
 
-  .c-Message--monologue:not(.c-Message--date-separator) & {
-    margin-top: 0;
-    padding-top: 0.313em;
+        border: solid 1px #dddddd;
+        border-radius: 0.313em;
+        background: #eeeeee;
+      }
 
-    border-top: solid 1px #f0f0f0;
-  }
-}
+    .c-Message__Timestamp {
+      display: block;
+      visibility: hidden;
+      position: absolute;
+      padding: 0 0.626em;
+      right: 0.625em;
+      top: -0.625em;
 
-.message__more-content {
-  padding: 0 1em;
-  margin-top: 0.313em;
-  border: solid 1px #eeeeee;
-  border-radius: 0.313em;
-  background: #fdfdfd;
+      color: rgb(153, 153, 153);
+      font-size: 0.813em;
+      font-weight: 300;
+      user-select: none;
+      cursor: default;
 
-  code {
-    padding: 0 0.313em;
+      background: #ffffff;
+      border-radius: 0.313em;
+    }
 
-    border: solid 1px #dddddd;
-    border-radius: 0.313em;
-    background: #eeeeee;
-  }
-}
+      .c-Message--Highlight .c-Message__Timestamp,
+      .c-Message--MentionsMe .c-Message__Timestamp {
+        background: var(--notify-background);
+      }
 
-.message__timestamp {
-  display: block;
-  visibility: hidden;
-  position: absolute;
-  padding: 0 0.626em;
-  right: 0.625em;
-  top: -0.625em;
+      .c-Message:last-child .c-Message__Timestamp,
+      .c-Message:hover .c-Message__Timestamp {
+        visibility: visible;
+      }
 
-  color: rgb(153, 153, 153);
-  font-size: 0.813em;
-  font-weight: 300;
-  user-select: none;
-  cursor: default;
-
-  background: #ffffff;
-  border-radius: 0.313em;
-
-  .c-Message--highlight &,
-  .c-Message--mentions-me & {
-    background: $notify-background;
-  }
-
-  .message:last-child &,
-  .message:hover & {
-    visibility: visible;
-  }
-
-  .c-Message--date-separator & {
-    top: 1.813em;
-  }
-}
+      .c-Message--DateSeparator .c-Message__Timestamp {
+        top: 1.813em;
+      }

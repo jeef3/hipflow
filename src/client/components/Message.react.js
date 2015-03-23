@@ -12,19 +12,19 @@ class Message extends React.Component {
     return (
       <li data-timestamp={message.sent}
           className={cx('c-Message', `c-Message--${message.app}`, {
-            'c-Message--me': message.user.isMe(),
-            'c-Message--highlight': message.highlight,
-            'c-Message--mentions-me': message.mentionsMe,
-            'c-Message--thread': message.thread,
-            'c-Message--comment': message.parent,
-            'c-Message--monologue': message.isMonologue(previousMessage),
-            'c-Message--date-separator': !message.isSameDay(previousMessage),
-            'c-Message--first-unseen': message.isFirstUnseen(room, message, $index),
-            'c-Message--success': message.hasTags('success'),
-            'c-Message--notify': message.hasTags('notify'),
-            'c-Message--fail': message.hasTags('fail')})}>
+            'c-Message--Me': message.user.isMe(),
+            'c-Message--Highlight': message.highlight,
+            'c-Message--MentionsMe': message.mentionsMe,
+            'c-Message--Thread': message.thread,
+            'c-Message--Comment': message.parent,
+            'c-Message--Monologue': message.isMonologue(previousMessage),
+            'c-Message--DateSeparator': !message.isSameDay(previousMessage),
+            'c-Message--FirstUnseen': message.isFirstUnseen(room, message, $index),
+            'c-Message--Success': message.hasTags('success'),
+            'c-Message--Notify': message.hasTags('notify'),
+            'c-Message--Fail': message.hasTags('fail')})}>
 
-        <Button className="message__discussion-marker"
+        <Button className="c-Message__DiscussionMarker"
             onClick="setCurrentDiscussion(message)">
           <Icon kind={message.parent ? 'comments' : 'comment'} />
         </Button>
