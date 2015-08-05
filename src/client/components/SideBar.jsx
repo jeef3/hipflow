@@ -2,12 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import cx from 'classnames';
 
-// import OnlineStatus from './OnlineStatus.react';
+import OnlineStatus from './OnlineStatus.jsx';
+import RoomList from './RoomList.jsx';
 import Button from './Button.react';
 
 @connect(state => ({
-  flows: state.flows,
-  privateConversations: state.privateConversations
+  flows: state.flows || [],
+  privateConversations: state.privateConversations || []
 }))
 export default class SideBar extends React.Component {
   render() {

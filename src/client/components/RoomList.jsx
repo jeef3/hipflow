@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import PureRender from 'react-purerender';
 
 import RoomActions from '../actions/RoomActions';

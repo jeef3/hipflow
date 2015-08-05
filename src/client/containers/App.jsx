@@ -14,10 +14,10 @@ export default class Main extends React.Component {
 
     return (
       <main className="container">
+        <SideBar room={currentRoom} />
       </main>
     );
   }
 }
-// <SideBar room={currentRoom} />
 // <Chat room={currentRoom} />
 // <ChatContext room={currentRoom} />

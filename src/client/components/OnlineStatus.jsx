@@ -1,14 +1,12 @@
-'use strict';
-
 import React from 'react';
 import cx from 'classnames';
 
-import UserStore from '../stores/UserStore';
+// import UserStore from '../stores/UserStore';
 
 function getState() {
   return {
     online: navigator.onLine,
-    me: UserStore.getMe()
+    me: {} //UserStore.getMe()
   };
 }
 

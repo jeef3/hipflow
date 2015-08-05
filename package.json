@@ -17,6 +17,7 @@
     "nconf": "^0.6.9",
     "passport": "~0.2.0",
     "passport-oauth2": "~1.1.1",
+    "react-purerender": "^0.1.0",
     "react-redux": "^0.2.2",
     "redux": "^1.0.0-rc",
     "request": "~2.33.0"
