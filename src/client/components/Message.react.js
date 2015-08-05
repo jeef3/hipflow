@@ -9,6 +9,7 @@ class Message extends React.Component {
     var previous = this.props.previousMessage;
     var meta = message.getMetadata();
 
+    console.log(message, previous, meta);
     return (
       <li data-timestamp={message.sent}
           className={cx('c-Message', `c-Message--${message.app}`, {
@@ -17,9 +18,9 @@ class Message extends React.Component {
             'c-Message--MentionsMe': message.mentionsMe,
             'c-Message--Thread': message.thread,
             'c-Message--Comment': message.parent,
-            'c-Message--Monologue': message.isMonologue(previousMessage),
-            'c-Message--DateSeparator': !message.isSameDay(previousMessage),
-            'c-Message--FirstUnseen': message.isFirstUnseen(room, message, $index),
+            'c-Message--Monologue': message.isMonologue(previous),
+            'c-Message--DateSeparator': !message.isSameDay(previous),
+            'c-Message--FirstUnseen': message.isFirstUnseen(room, message),
             'c-Message--Success': message.hasTags('success'),
             'c-Message--Notify': message.hasTags('notify'),
             'c-Message--Fail': message.hasTags('fail')})}>

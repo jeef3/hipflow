@@ -1,0 +1,27 @@
+.o-unread-marker {
+  line-height: 1em;
+  font-size: 0.313em;
+  color: rgb(50, 200, 50);
+  text-shadow: 0 0 5px rgba(50, 200, 50, 0.25);
+
+  opacity: 0;
+
+  transition: all 250ms ease-in-out;
+}
+
+.has-unread .o-unread-marker {
+  opacity: 0.6;
+
+  animation-name: pulse;
+  animation-duration: 1200ms;
+  animation-delay: 250ms;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes pulse {
+  to {
+    opacity: 1;
+    text-shadow: 0 0 15px rgba(50, 200, 50, 0.7);
+  }
+}

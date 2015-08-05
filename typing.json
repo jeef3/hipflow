@@ -1,0 +1,16 @@
+{
+  "app": null,
+  "attachments": [],
+  "content": {
+    "typing": "ac44640e-c3cb-4fab-9b92-672c90e51a82-chat-input"
+  },
+  "created_at": "2015-03-03T19:39:37.590Z",
+  "event": "activity.user",
+  "flow": "ac44640e-c3cb-4fab-9b92-672c90e51a82",
+  "id": 576209,
+  "persist": false,
+  "sent": 1425411577590,
+  "tags": [],
+  "user": "58790",
+  "uuid": null
+}

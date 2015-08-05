@@ -105,18 +105,18 @@ class MessageStore extends EventEmitter {
   }
 
   _update(room, options) {
-    console.log('Getting messages for', room);
     var r = room.access_mode ?
       Flowdock.flows(room.organization.parameterized_name, room.parameterized_name) :
       Flowdock.privateConversations(room.id);
 
-    var _store = this;
     r.messages.list(options, (messages) => {
-      _store.messages[room.id] = messages.map((message) => {
+      this.messages[room.id] = messages.map((message) => {
         return new Message(message);
       });
 
-      _store.emit('messages_updated');
+      console.log('emit');
+
+      this.emit('messages_updated');
     });
   }
 

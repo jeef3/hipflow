@@ -54,6 +54,10 @@ class UserStore extends EventEmitter {
   get(id) {
     var userId = parseInt(id, 10);
 
+    if (userId === 0) {
+      return new User();
+    }
+
     if (!userId) {
       throw new Error('Invalid user id: ' + id);
     }

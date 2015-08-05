@@ -1,0 +1,14 @@
+{
+  "app": null,
+  "attachments": [],
+  "content": {},
+  "created_at": "2015-03-03T19:42:29.417Z",
+  "event": "activity.user",
+  "flow": "47354561-f9a2-45cc-b976-0d592dccd9fa",
+  "id": 2099900,
+  "persist": false,
+  "sent": 1425411749417,
+  "tags": [],
+  "user": "58806",
+  "uuid": null
+}

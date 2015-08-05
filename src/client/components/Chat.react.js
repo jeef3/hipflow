@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 
 import TopicBar from './TopicBar.react';
@@ -8,7 +6,7 @@ import ChatBar from './ChatBar.react';
 
 class Chat extends React.Component {
   render() {
-    var room = this.props.room;
+    const {room} = this.props;
 
     return (
       <section className="c-Chat">
