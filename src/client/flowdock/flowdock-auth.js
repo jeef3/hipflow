@@ -1,16 +1,12 @@
-'use strict';
-
 import cookie from 'cookie';
 import request from 'browser-request';
 
 class FlowdockAuth {
-
   constructor() {
     var cookies = cookie.parse(document.cookie);
 
-    if (cookies.flowauth) {
-      this.auth = JSON.parse(cookies.flowauth) || {};
-    }
+    this.auth = cookies.flowauth ?
+      JSON.parse(cookies.flowauth) : {};
   }
 
   isAuthenticated() {

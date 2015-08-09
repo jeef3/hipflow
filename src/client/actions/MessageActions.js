@@ -1,4 +1,4 @@
-import FlowdockApi from '../FlowdockApi';
+import Flowdock from '../flowdock';
 import {
   ADD_MESSAGE,
   EDIT_MESSAGE,

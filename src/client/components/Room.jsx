@@ -1,7 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 import PureRender from 'react-purerender';
+import cx from 'classnames';
 
 import Icon from './Icon.react';
+import Button from './Button.react.js';
 
 const styles = {
   container: {}
@@ -22,13 +24,15 @@ export default class Room extends Component {
     return (
       <li className={cx('c-Sidebar__Room u-truncate', {
             'is-active': isActive,
-            'has-unread': room.hasUnread() })}>
+            'has-unread': room.hasUnread
+          })}>
 
         <Button
             noFocus="true"
             className="c-Sidebar__ShowRoomButton"
             onClick={showFn}>
-          <Icon kind="comments-o" className="room__icon" /> {room.name}
+          <Icon kind="comments-o" className="room__icon" />
+          {room.name}
           <Icon kind="circle" className="unread-marker" />
         </Button>
 

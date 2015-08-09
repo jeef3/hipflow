@@ -1,14 +1,16 @@
 import React from 'react';
-import { combineReducers, createStore } from 'redux';
+import { combineReducers, applyMiddleware, createStore } from 'redux';
+import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 
 import App from './containers/App.jsx';
+import FlowdockUtil from './FlowdockUtil';
 // import FlowdockConnector from './FlowdockConnector';
-// import AppActions from './actions/AppActions';
 import * as reducers from './reducers';
 
-let app = combineReducers(reducers);
-let store = createStore(app);
+const reducer = combineReducers(reducers);
+const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
+const store = createStoreWithMiddleware(reducer);
 
 React.render(
   <Provider store={store}>
@@ -16,6 +18,5 @@ React.render(
   </Provider>,
   document.getElementById('app'));
 
-// AppActions.init();
-
+FlowdockUtil.sync(store.dispatch);
 // FlowdockConnector.start();

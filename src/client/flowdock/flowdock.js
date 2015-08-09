@@ -1,12 +1,7 @@
-'use strict';
-
-// import {EventEmitter} from 'events';
 import request from 'browser-request';
 import _ from 'lodash';
 
 import FlowdockAuth from './flowdock-auth';
-
-var $rootScope = {};
 
 var apiBase = 'https://api.flowdock.com';
 var streamBase = 'https://stream.flowdock.com';
@@ -54,7 +49,8 @@ var apiGet = function (path, params) {
       }, function (err, response, body) {
         if (err) {
           if (response.status === 401) {
-            $rootScope.$broadcast('TOKEN_EXPIRED');
+            // TODO: Token expired
+            // $rootScope.$broadcast('TOKEN_EXPIRED');
           }
           reject(err);
           return;
@@ -77,7 +73,8 @@ var apiPost = function (path, data) {
       }, function (err, response, body) {
         if (err) {
           if (response.status === 401) {
-            $rootScope.$broadcast('TOKEN_EXPIRED');
+            // TODO: Token expired
+            // $rootScope.$broadcast('TOKEN_EXPIRED');
           }
           reject(err);
           return;
@@ -288,12 +285,12 @@ var flows = function (organization, flowName, cb) {
   }
 };
 
-flows.list = function (cb) {
-  apiGet('/flows').then(cb);
+flows.list = function () {
+  return apiGet('/flows');
 };
 
-flows.all = function (cb) {
-  apiGet('/flows/all').then(cb);
+flows.all = function () {
+  return apiGet('/flows/all');
 };
 
 flows.allWithUsers = function (cb) {

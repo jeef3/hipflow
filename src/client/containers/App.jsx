@@ -1,4 +1,5 @@
 import React from 'react';
+import PureRender from 'react-purerender';
 import { connect } from 'react-redux';
 
 import SideBar from '../components/SideBar.jsx';
@@ -8,6 +9,7 @@ import SideBar from '../components/SideBar.jsx';
 @connect(state => ({
   currentRoom: state.currentRoom
 }))
+@PureRender
 export default class Main extends React.Component {
   render() : Component {
     const currentRoom = this.props;

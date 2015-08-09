@@ -1,5 +1,3 @@
-'use strict';
-
 import FlowdockActions from './actions/FlowdockActions';
 import RoomStore from './stores/RoomStore';
 import Flowdock, {FlowdockAuth} from './flowdock';

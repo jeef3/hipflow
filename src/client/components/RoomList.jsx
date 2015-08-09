@@ -1,12 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import PureRender from 'react-purerender';
 
-import RoomActions from '../actions/RoomActions';
+import Room from './Room.jsx';
+import { showRoom, closeRoom } from '../actions/RoomActions';
 
 const styles = {
   container: {}
 };
 
+@PureRender
 export default class RoomList extends Component {
   static propTypes = {
     rooms: PropTypes.array.isRequired,
@@ -24,8 +26,8 @@ export default class RoomList extends Component {
             key={room.id}
             room={room}
             isActive={currentRoom && room.id === currentRoom.id}
-            showFn={() => dispatch(RoomActions.showRoom(room))}
-            closeFn={() => dispatch(RoomActions.closeRoom(room))} />;
+            showFn={() => dispatch(showRoom(room))}
+            closeFn={() => dispatch(closeRoom(room))} />;
         })}
       </ul>
     )
