@@ -379,8 +379,8 @@ var privateConversations = function (userId, cb) {
   }
 };
 
-privateConversations.list = function (cb) {
-  apiGet('/private').then(cb);
+privateConversations.list = function () {
+  return apiGet('/private');
 };
 
 var user = function (cb) {

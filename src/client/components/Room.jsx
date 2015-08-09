@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import PureRender from 'react-purerender';
+import shouldPureComponentUpdate from 'react-pure-render/function';
 import cx from 'classnames';
 
 import Icon from './Icon.react';
@@ -9,7 +9,6 @@ const styles = {
   container: {}
 };
 
-@PureRender
 export default class Room extends Component {
   static propTypes = {
     room: PropTypes.object.isRequired,
@@ -17,6 +16,8 @@ export default class Room extends Component {
     showFn: PropTypes.func.isRequired,
     closeFn: PropTypes.func.isRequired
   }
+
+  shouldComponentUpdate = shouldPureComponentUpdate;
 
   render() : Component {
     const {room, isActive, showFn, closeFn} = this.props;

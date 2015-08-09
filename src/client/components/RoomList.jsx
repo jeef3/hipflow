@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import PureRender from 'react-purerender';
+import shouldPureComponentUpdate from 'react-pure-render/function';
 
 import Room from './Room.jsx';
 import { showRoom, closeRoom } from '../actions/RoomActions';
@@ -8,13 +8,14 @@ const styles = {
   container: {}
 };
 
-@PureRender
 export default class RoomList extends Component {
   static propTypes = {
     rooms: PropTypes.array.isRequired,
     currentRoom: PropTypes.object,
     dispatch: PropTypes.func.isRequired
   }
+
+  shouldComponentUpdate = shouldPureComponentUpdate;
 
   render() : Component {
     const { rooms, currentRoom, dispatch } = this.props;

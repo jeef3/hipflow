@@ -1,5 +1,5 @@
-import React from 'react';
-import PureRender from 'react-purerender';
+import React, { Component, PropTypes } from 'react';
+import shouldPureComponentUpdate from 'react-pure-render/function';
 import { connect } from 'react-redux';
 import cx from 'classnames';
 
@@ -7,12 +7,18 @@ import OnlineStatus from './OnlineStatus.jsx';
 import RoomList from './RoomList.jsx';
 import Button from './Button.react';
 
-@connect(state => ({
-  flows: state.rooms.flows || [],
-  privateConversations: state.privateConversations || []
-}))
-@PureRender
-export default class SideBar extends React.Component {
+function roomsSelect(state) {
+  return state.rooms;
+}
+
+@connect(roomsSelect)
+export default class SideBar extends Component {
+  static propTypes = {
+    room: PropTypes.object
+  }
+
+  shouldComponentUpdate = shouldPureComponentUpdate;
+
   render() {
     const { room, flows, privateConversations, dispatch } = this.props;
 
