@@ -11,7 +11,7 @@ const styles = {
 export default class RoomList extends Component {
   static propTypes = {
     rooms: PropTypes.array.isRequired,
-    currentRoom: PropTypes.object,
+    currentRoom: PropTypes.string,
     dispatch: PropTypes.func.isRequired
   }
 
@@ -26,7 +26,7 @@ export default class RoomList extends Component {
           return <Room
             key={room.id}
             room={room}
-            isActive={currentRoom && room.id === currentRoom.id}
+            isActive={room.id === currentRoom}
             showFn={() => dispatch(showRoom(room))}
             closeFn={() => dispatch(closeRoom(room))} />;
         })}

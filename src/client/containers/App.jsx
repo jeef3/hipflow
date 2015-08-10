@@ -6,13 +6,13 @@ import SideBar from '../components/SideBar.jsx';
 // import ChatContext from '../ChatContext.react';
 
 function currentRoomSelect(state) {
-  return state.currentRoom || {};
+  return { currentRoom: state.currentRoom };
 }
 
 @connect(currentRoomSelect)
 export default class Main extends React.Component {
   render() : Component {
-    const currentRoom = this.props;
+    const { currentRoom } = this.props;
 
     return (
       <main className="container">

@@ -1,2 +1,2 @@
-export { default as messages } from './messages';
-export { default as rooms } from './rooms';
+export { default as data } from './data';
+export { default as currentRoom } from './currentRoom';

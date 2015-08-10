@@ -8,6 +8,10 @@ import {
   LOAD_PRIVATE_CONVERSATIONS_COMPLETED,
   LOAD_PRIVATE_CONVERSATIONS_FAILED,
 
+  LOAD_MESSAGES_STARTED,
+  LOAD_MESSAGES_COMPLETED,
+  LOAD_MESSAGES_FAILED,
+
   SHOW_ROOM,
   CLOSE_ROOM
 } from '../constants/ActionTypes';
@@ -46,6 +50,22 @@ export function loadPrivateConversationsAsync() {
   }
 }
 
+export function loadMessagesAsync(organizationName, flowName) {
+  return (dispatch) => {
+    dispatch({ type: LOAD_PRIVATE_CONVERSATIONS_STARTED });
+
+    return Flowdock.flow(organizationName, flowName).list()
+      .then(
+        (result) => dispatch({
+          type: LOAD_PRIVATE_CONVERSATIONS_COMPLETED,
+          payload: result
+        }),
+        (error) => dispatch({
+          type: LOAD_PRIVATE_CONVERSATIONS_FAILED,
+          payload: error
+        }));
+  }
+}
 export function showRoom(id) {
   return {
     type: SHOW_ROOM,

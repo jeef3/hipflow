@@ -12,6 +12,9 @@ const reducer = combineReducers(reducers);
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(reducer);
 
+// DEBUG
+store.subscribe(() => { console.log('STATE:', store.getState()); });
+
 React.render(
   <Provider store={store}>
     {() => <App />}

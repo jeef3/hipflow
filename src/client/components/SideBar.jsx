@@ -8,13 +8,16 @@ import RoomList from './RoomList.jsx';
 import Button from './Button.react';
 
 function roomsSelect(state) {
-  return state.rooms;
+  return {
+    flows: state.data.flows,
+    privateConversations: state.data.privateConversations
+  };
 }
 
 @connect(roomsSelect)
 export default class SideBar extends Component {
   static propTypes = {
-    room: PropTypes.object
+    room: PropTypes.string
   }
 
   shouldComponentUpdate = shouldPureComponentUpdate;
