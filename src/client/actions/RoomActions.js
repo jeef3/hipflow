@@ -52,16 +52,16 @@ export function loadPrivateConversationsAsync() {
 
 export function loadMessagesAsync(organizationName, flowName) {
   return (dispatch) => {
-    dispatch({ type: LOAD_PRIVATE_CONVERSATIONS_STARTED });
+    dispatch({ type: LOAD_MESSAGES_STARTED });
 
-    return Flowdock.flow(organizationName, flowName).list()
+    return Flowdock.flows(organizationName, flowName).messages.list()
       .then(
         (result) => dispatch({
-          type: LOAD_PRIVATE_CONVERSATIONS_COMPLETED,
-          payload: result
+          type: LOAD_MESSAGES_COMPLETED,
+          payload: { flow: flowName, messages: result }
         }),
         (error) => dispatch({
-          type: LOAD_PRIVATE_CONVERSATIONS_FAILED,
+          type: LOAD_MESSAGES_FAILED,
           payload: error
         }));
   }

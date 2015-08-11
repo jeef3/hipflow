@@ -14,7 +14,6 @@
     "dotenv": "^0.2.5",
     "express": "~3.4.8",
     "github": "^0.2.1",
-    "immutable": "^3.7.4",
     "nconf": "^0.6.9",
     "passport": "~0.2.0",
     "passport-oauth2": "~1.1.1",

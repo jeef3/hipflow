@@ -184,9 +184,9 @@ var flow = function (organization, flowName) {
     }
   };
 
-  messages.list = function (options, cb) {
+  messages.list = function (options) {
     // TODO: Options for since_id etc
-    apiGet('/flows/' + organization + '/' + flowName + '/messages', options).then(cb);
+    return apiGet('/flows/' + organization + '/' + flowName + '/messages', options);
   };
 
   messages.send = function (message, uuid, tags, cb) {

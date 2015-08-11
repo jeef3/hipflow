@@ -1,7 +1,7 @@
 import {
   loadFlowsAsync,
   loadPrivateConversationsAsync,
-  loadMessagesForRoomAsync
+  loadMessagesAsync
 } from './actions/RoomActions';
 
 export default {
@@ -9,6 +9,6 @@ export default {
     dispatch(loadFlowsAsync());
     dispatch(loadPrivateConversationsAsync());
 
-    dispatch(loadMessagesForRoomAsync('skilitics', 'idle-chit-chat'));
+    dispatch(loadMessagesAsync('skilitics', 'idle-chitchat'));
   }
 }
