@@ -1,25 +1,25 @@
-'use strict';
-
-import React from 'react';
+import React, { Component } from 'react';
+import shouldPureComponentUpdate from 'react-pure-render/function';
+import { connect } from 'react-redux';
 import cx from 'classnames';
 
-function getState() {
+function select(state) {
   return {
-    threads: [],
-    sources: []
+    currentRoom: state.currentRoom,
+
+    threads: state.threads,
+    sources: state.sources
   };
 }
 
 class ChatContext extends React.Component {
   constructor() {
-    this.state = getState();
-
     this._onChange = this._onChange.bind(this);
   }
 
   render() {
+    const { currentRoom } = this.props;
     var context;
-    var room = this.props.room;
 
     if (room.access_mode) {
       let users = room.getJoinedUsers()

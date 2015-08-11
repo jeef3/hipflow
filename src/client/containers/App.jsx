@@ -1,18 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import SideBar from './SideBar.jsx';
-// import Chat from '../Chat.react';
-// import ChatContext from '../ChatContext.react';
+// import Chat from './Chat.jsx';
+import ChatContext from './ChatContext.jsx';
 
 export default class Main extends React.Component {
   render() : Component {
     return (
       <main className="container">
         <SideBar />
+        <ChatContext />
       </main>
     );
   }
 }
-// <Chat room={currentRoom} />
-// <ChatContext room={currentRoom} />
+// <Chat room={room} />
