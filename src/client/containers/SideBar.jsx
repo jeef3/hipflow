@@ -3,27 +3,30 @@ import shouldPureComponentUpdate from 'react-pure-render/function';
 import { connect } from 'react-redux';
 import cx from 'classnames';
 
-import OnlineStatus from './OnlineStatus.jsx';
-import RoomList from './RoomList.jsx';
-import Button from './Button.react';
+import OnlineStatus from '../components/OnlineStatus.jsx';
+import RoomList from '../components/RoomList.jsx';
+import Button from '../components/Button.react';
 
 function roomsSelect(state) {
   return {
-    flows: state.data.flows,
-    privateConversations: state.data.privateConversations
+    currentRoom: state.currentRoom,
+
+    flows: state.flows,
+    privateConversations: state.privateConversations
   };
 }
 
 @connect(roomsSelect)
 export default class SideBar extends Component {
-  static propTypes = {
-    room: PropTypes.string
-  }
-
   shouldComponentUpdate = shouldPureComponentUpdate;
 
   render() {
-    const { room, flows, privateConversations, dispatch } = this.props;
+    const {
+      currentRoom,
+      flows,
+      privateConversations,
+      dispatch
+    } = this.props;
 
     return (
       <div className="c-Sidebar">
@@ -31,10 +34,10 @@ export default class SideBar extends Component {
 
         <div className="c-Sidebar__Channels u-scroller">
           <h3 className="list-title">Flows</h3>
-          <RoomList dispatch={dispatch} currentRoom={room} rooms={flows} />
+          <RoomList dispatch={dispatch} currentRoom={currentRoom} rooms={flows} />
 
           <h3 className="list-title">1&ndash;to&ndash;1s</h3>
-          <RoomList dispatch={dispatch} currentRoom={room} rooms={privateConversations} />
+          <RoomList dispatch={dispatch} currentRoom={currentRoom} rooms={privateConversations} />
         </div>
 
         <OnlineStatus />

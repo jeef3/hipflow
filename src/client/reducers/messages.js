@@ -10,13 +10,12 @@ import {
   LOAD_MESSAGES_COMPLETED
 } from '../constants/ActionTypes';
 
-const initialState = {};
-
-export default function (state = initialState, action) {
+export default function (state = {}, action) {
   switch (action.type) {
     case LOAD_MESSAGES_COMPLETED:
       const { flow, messages } = action.payload;
 
+      // TODO: Proper look into messages and merge
       return {
         ...state,
         [flow]: (state[flow] || []).concat(messages)
