@@ -2,6 +2,7 @@
   "name": "slipflow",
   "description": "An alternative Flowdock client",
   "version": "2.0.0",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/jeef3/slipflow.git"
@@ -9,6 +10,10 @@
   "keyword": [
     "flowdock"
   ],
+  "scripts": {
+    "start": "node server.js",
+    "test": "./node_modules/.bin/karma start --browsers Firefox --single-run"
+  },
   "dependencies": {
     "browser-request": "^0.3.3",
     "dotenv": "^0.2.5",
@@ -17,17 +22,21 @@
     "nconf": "^0.6.9",
     "passport": "~0.2.0",
     "passport-oauth2": "~1.1.1",
+    "react": "^0.13.3",
     "react-pure-render": "^1.0.2",
-    "react-redux": "^0.2.2",
+    "react-redux": "^0.8.2",
     "redux": "^1.0.0-rc",
-    "redux-thunk": "^0.1.0"
+    "redux-thunk": "^0.1.0",
+    "request": "^2.60.0"
   },
   "devDependencies": {
     "autoprefixer": "^5.1.0",
     "babel-core": "^5.8.20",
+    "babel-eslint": "^4.0.5",
     "babel-loader": "^5.3.2",
     "classnames": "^1.1.4",
     "cookie": "^0.1.2",
+    "eslint-plugin-react": "^3.2.2",
     "jscs": "^1.11.2",
     "jshint": "^2.6.0",
     "jshint-stylish": "^0.2.0",
@@ -40,11 +49,8 @@
     "postcss-custom-properties": "^3.0.1",
     "postcss-import": "^5.0.3",
     "react-hot-loader": "^1.2.8",
+    "redux-devtools": "^1.0.2",
     "webpack": "^1.10.5",
     "webpack-dev-server": "^1.10.1"
-  },
-  "scripts": {
-    "start": "node server.js",
-    "test": "./node_modules/.bin/karma start --browsers Firefox --single-run"
   }
 }

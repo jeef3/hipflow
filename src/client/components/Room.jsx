@@ -5,28 +5,24 @@ import cx from 'classnames';
 import Icon from './Icon.react';
 import Button from './Button.react.js';
 
-const styles = {
-  container: {}
-};
-
 export default class Room extends Component {
+  shouldComponentUpdate = shouldPureComponentUpdate;
+
   static propTypes = {
     room: PropTypes.object.isRequired,
     isActive: PropTypes.bool.isRequired,
-    showFn: PropTypes.func.isRequired,
-    closeFn: PropTypes.func.isRequired
-  }
 
-  shouldComponentUpdate = shouldPureComponentUpdate;
+    onShowRoom: PropTypes.func.isRequired,
+    onCloseRoom: PropTypes.func.isRequired
+  }
 
   render() : Component {
     const {room, isActive, showFn, closeFn} = this.props;
 
     return (
       <li className={cx('c-Sidebar__Room u-truncate', {
-            'is-active': isActive,
-            'has-unread': room.hasUnread
-          })}>
+        'is-active': isActive,
+        'has-unread': room.hasUnread })}>
 
         <Button
             noFocus="true"

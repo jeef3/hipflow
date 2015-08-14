@@ -30,7 +30,7 @@ export function loadFlowsAsync() {
           type: LOAD_FLOWS_FAILED,
           payload: error
         }));
-  }
+  };
 }
 
 export function loadPrivateConversationsAsync() {
@@ -47,7 +47,7 @@ export function loadPrivateConversationsAsync() {
           type: LOAD_PRIVATE_CONVERSATIONS_FAILED,
           payload: error
         }));
-  }
+  };
 }
 
 export function loadMessagesAsync(organizationName, flowName) {
@@ -64,8 +64,9 @@ export function loadMessagesAsync(organizationName, flowName) {
           type: LOAD_MESSAGES_FAILED,
           payload: error
         }));
-  }
+  };
 }
+
 export function showRoom(id) {
   return {
     type: SHOW_ROOM,

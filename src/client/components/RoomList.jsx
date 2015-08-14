@@ -4,18 +4,15 @@ import shouldPureComponentUpdate from 'react-pure-render/function';
 import Room from './Room.jsx';
 import { showRoom, closeRoom } from '../actions/RoomActions';
 
-const styles = {
-  container: {}
-};
-
 export default class RoomList extends Component {
-  static propTypes = {
-    rooms: PropTypes.array.isRequired,
-    currentRoom: PropTypes.string,
-    dispatch: PropTypes.func.isRequired
-  }
-
   shouldComponentUpdate = shouldPureComponentUpdate;
+
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired,
+
+    rooms: PropTypes.array.isRequired,
+    currentRoom: PropTypes.string
+  }
 
   render() : Component {
     const { rooms, currentRoom, dispatch } = this.props;
@@ -27,8 +24,8 @@ export default class RoomList extends Component {
             key={room.id}
             room={room}
             isActive={room.id === currentRoom}
-            showFn={() => dispatch(showRoom(room))}
-            closeFn={() => dispatch(closeRoom(room))} />;
+            onShowRoom={() => dispatch(showRoom(room))}
+            onCloseRoom={() => dispatch(closeRoom(room))} />;
         })}
       </ul>
     )

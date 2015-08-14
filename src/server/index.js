@@ -9,7 +9,7 @@ var app = express();
 
 var config = require('./config/config');
 
-app.use(require('connect-livereload')({ port: config.get('LIVERELOAD_PORT') || 35729 }));
+// app.use(require('connect-livereload')({ port: config.get('LIVERELOAD_PORT') || 35729 }));
 
 app.configure(function () {
   app.use(express.json());
