@@ -17,7 +17,7 @@ export default class Room extends Component {
   }
 
   render() : Component {
-    const {room, isActive, showFn, closeFn} = this.props;
+    const {room, isActive, onShowRoom, onCloseRoom} = this.props;
 
     return (
       <li className={cx('c-Sidebar__Room u-truncate', {
@@ -27,7 +27,7 @@ export default class Room extends Component {
         <Button
             noFocus="true"
             className="c-Sidebar__ShowRoomButton"
-            onClick={showFn}>
+            onClick={onShowRoom}>
           <Icon kind="comments-o" className="room__icon" />
           {room.name}
           <Icon kind="circle" className="unread-marker" />
@@ -36,7 +36,7 @@ export default class Room extends Component {
         <Button
             noFocus="true"
             className="c-Sidebar__CloseRoomButton"
-            onClick={closeFn}>
+            onClick={onCloseRoom}>
           <Icon kind="times" />
         </Button>
       </li>
