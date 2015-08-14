@@ -4,6 +4,17 @@ import shouldPureComponentUpdate from 'react-pure-render/function';
 import OnlineStatus from '../components/OnlineStatus.jsx';
 import RoomList from '../components/RoomList.jsx';
 import Button from '../components/Button.react';
+import theme from '../theme';
+
+
+const styles = {
+  container: {
+    height: '100%',
+    color: theme.sidebar.text,
+
+    background: theme.sidebar.background
+  }
+};
 
 export default class SideBar extends Component {
   shouldComponentUpdate = shouldPureComponentUpdate;
@@ -23,7 +34,7 @@ export default class SideBar extends Component {
     } = this.props;
 
     return (
-      <div className="c-Sidebar">
+      <div className="c-Sidebar" style={styles.container}>
         <Button>Lobby</Button>
 
         <div className="c-Sidebar__Channels u-scroller">
