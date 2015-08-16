@@ -70,13 +70,13 @@ export function loadMessagesAsync(organizationName, flowName) {
 export function showRoom(id) {
   return {
     type: SHOW_ROOM,
-    id
+    payload: id
   };
 }
 
 export function closeRoom(id) {
   return {
     type: CLOSE_ROOM,
-    id
+    payload: id
   };
 }
