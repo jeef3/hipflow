@@ -13,6 +13,14 @@ const styles = {
     color: theme.sidebar.text,
 
     background: theme.sidebar.background
+  },
+
+  channels: {
+    position: 'absolute',
+    top: '2.625em',
+    right: 0,
+    bottom: '3.750em',
+    left: 0
   }
 };
 
@@ -34,10 +42,10 @@ export default class SideBar extends Component {
     } = this.props;
 
     return (
-      <div className="c-Sidebar" style={styles.container}>
+      <div style={styles.container}>
         <Button>Lobby</Button>
 
-        <div className="c-Sidebar__Channels u-scroller">
+        <div style={styles.channels} className="u-scroller">
           <h3 className="list-title">Flows</h3>
           <RoomList dispatch={dispatch} currentRoom={currentRoom} rooms={flows} />
 

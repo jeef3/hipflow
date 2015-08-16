@@ -12,9 +12,32 @@ const colors = {
   textColorInverseDim: '#9b9bab'
 };
 
+const button = {
+  textAlign: 'left',
+  cursor: 'pointer',
+  color: 'inherit',
+  fontWeight: 'inherit',
+
+  border: 0,
+  background: 'none'
+};
+
 export default {
+  button: button,
+  buttonNoFocus: {
+    ...button,
+    ':focus': {
+      outline: 0
+    }
+  },
+
   sidebar: {
     text: colors.textColorLight,
-    background: colors.mainBlue
+    textLight: colors.textColorInverse,
+    textAngle: '#b9cfaa',
+
+    background: colors.mainBlue,
+    backgroundDark: colors.mainBlueDark,
+    backgroundAngle: colors.green
   }
 };

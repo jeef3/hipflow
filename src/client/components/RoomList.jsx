@@ -4,6 +4,16 @@ import shouldPureComponentUpdate from 'react-pure-render/function';
 import Room from './Room.jsx';
 import { showRoom, closeRoom } from '../actions/RoomActions';
 
+const styles = {
+  container: {
+    padding: '0 1em 0 0',
+    margin: 0,
+
+    listStyle: 'none',
+    fontSize: '0.875em'
+  }
+};
+
 export default class RoomList extends Component {
   shouldComponentUpdate = shouldPureComponentUpdate;
 
@@ -18,7 +28,7 @@ export default class RoomList extends Component {
     const { rooms, currentRoom, dispatch } = this.props;
 
     return (
-      <ul className="c-Sidebar__RoomList">
+      <ul style={styles.container}>
         {rooms.map((room) => {
           return <Room
             key={room.id}
