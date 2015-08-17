@@ -1,12 +1,16 @@
-'use strict';
-
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import Icon from './Icon.react';
 import Button from './Button.react';
 
 class ChatBar extends React.Component {
+  static propTypes = {
+    room: PropTypes.object.isRequired
+  }
+
   render() {
+    const { room } = this.props;
+
     return (
       <div className="c-ChatBar">
         <div className="c-ChatBar__CurrentDiscussion" ng-show="currentDiscussion.id">
@@ -39,7 +43,7 @@ class ChatBar extends React.Component {
           </div>
         </p>
       </div>
-    )
+    );
   }
 }
 
