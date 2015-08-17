@@ -6,8 +6,8 @@ function mapStateToProps(state) {
   return {
     currentRoom: state.currentRoom,
 
-    flows: state.flows,
-    privateConversations: state.privateConversations
+    flows: state.flows.filter(f => f.open),
+    privateConversations: state.privateConversations.filter(pc => pc.open)
   };
 }
 

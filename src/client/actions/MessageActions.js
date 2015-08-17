@@ -1,5 +1,9 @@
 import Flowdock from '../flowdock';
 import {
+  LOAD_MESSAGES_STARTED,
+  LOAD_MESSAGES_COMPLETED,
+  LOAD_MESSAGES_FAILED,
+
   ADD_MESSAGE,
   EDIT_MESSAGE,
   REMOVE_MESSAGE,
@@ -7,6 +11,23 @@ import {
   SEND_MESSAGE_COMPLETED,
   SEND_MESSAGE_FAILED
 } from '../constants/ActionTypes';
+
+export function loadMessagesAsync(organizationName, flowName) {
+  return (dispatch) => {
+    dispatch({ type: LOAD_MESSAGES_STARTED });
+
+    return Flowdock.flows(organizationName, flowName).messages.list()
+      .then(
+        (result) => dispatch({
+          type: LOAD_MESSAGES_COMPLETED,
+          payload: { flow: flowName, messages: result }
+        }),
+        (error) => dispatch({
+          type: LOAD_MESSAGES_FAILED,
+          payload: error
+        }));
+  };
+}
 
 export function addMessage(message) {
   return {

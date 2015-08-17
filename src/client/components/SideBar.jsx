@@ -28,9 +28,9 @@ export default class SideBar extends Component {
   shouldComponentUpdate = shouldPureComponentUpdate;
 
   static propTypes = {
-    currentRoom: PropTypes.object,
-    flows: PropTypes.array,
-    privateConversations: PropTypes.array
+    currentRoom: PropTypes.string,
+    flows: PropTypes.array.isRequired,
+    privateConversations: PropTypes.array.isRequired
   }
 
   render() {
