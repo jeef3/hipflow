@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import cx from 'classnames';
 
@@ -9,7 +7,6 @@ class Message extends React.Component {
     var previous = this.props.previousMessage;
     var meta = message.getMetadata();
 
-    console.log(message, previous, meta);
     return (
       <li data-timestamp={message.sent}
           className={cx('c-Message', `c-Message--${message.app}`, {
