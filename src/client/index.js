@@ -20,7 +20,7 @@ const reducer = combineReducers(reducers);
 const store = finalCreateStore(reducer);
 
 React.render(
-  <div>
+  <div style={{height: '100%'}}>
     <Provider store={store}>
       {() => <App />}
     </Provider>

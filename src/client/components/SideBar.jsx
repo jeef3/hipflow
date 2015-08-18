@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 
+import { FlexContainer, FlexItem } from '../Flex.jsx';
 import OnlineStatus from '../components/OnlineStatus.jsx';
 import RoomList from '../components/RoomList.jsx';
 import Button from '../components/Button.react';
@@ -13,14 +14,6 @@ const styles = {
     color: theme.sidebar.text,
 
     background: theme.sidebar.background
-  },
-
-  channels: {
-    position: 'absolute',
-    top: '2.625em',
-    right: 0,
-    bottom: '3.750em',
-    left: 0
   }
 };
 
@@ -43,17 +36,23 @@ export default class SideBar extends Component {
 
     return (
       <div style={styles.container}>
-        <Button>Lobby</Button>
+        <FlexContainer direction='column'>
+          <FlexItem height='2.625em'>
+            <Button>Lobby</Button>
+          </FlexItem>
 
-        <div style={styles.channels} className="u-scroller">
-          <h3 className="list-title">Flows</h3>
-          <RoomList dispatch={dispatch} currentRoom={currentRoom} rooms={flows} />
+          <FlexItem scrollY>
+            <h3 className="list-title">Flows</h3>
+            <RoomList dispatch={dispatch} currentRoom={currentRoom} rooms={flows} />
 
-          <h3 className="list-title">1&ndash;to&ndash;1s</h3>
-          <RoomList dispatch={dispatch} currentRoom={currentRoom} rooms={privateConversations} />
-        </div>
+            <h3 className="list-title">1&ndash;to&ndash;1s</h3>
+            <RoomList dispatch={dispatch} currentRoom={currentRoom} rooms={privateConversations} />
+          </FlexItem>
 
-        <OnlineStatus />
+          <FlexItem height='3.750em'>
+            <OnlineStatus />
+          </FlexItem>
+        </FlexContainer>
       </div>
     );
   }

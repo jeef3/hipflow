@@ -15,7 +15,9 @@ const styles = {
   },
 
   item: {
-    flexGrow: 1
+    flexGrow: 1,
+    alignSelf: 'stretch',
+    height: '100%'
   }
 };
 
@@ -41,9 +43,38 @@ export class FlexContainer extends Component {
 }
 
 export class FlexItem extends Component {
+  static propTypes = {
+    width: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object
+    ]),
+
+    height: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object
+    ]),
+
+    scrollY: PropTypes.bool
+  }
+
   render() : Component {
+    const { width, height, scrollY } = this.props;
+    const itemStyle = { ...styles.item };
+
+    if (width && typeof width === 'string') {
+      itemStyle.maxWidth = width;
+    }
+
+    if (height && typeof height === 'string') {
+      itemStyle.maxHeight = height;
+    }
+
+    if (scrollY) {
+      itemStyle.overflowY = 'scroll';
+    }
+
     return (
-      <div style={styles.item}>
+      <div style={itemStyle}>
         {this.props.children}
       </div>
     );
