@@ -7,18 +7,18 @@ export default class ChatContext extends Component {
   shouldComponentUpdate = shouldPureComponentUpdate;
 
   static propTypes = {
-    currentRoom: PropTypes.object,
+    room: PropTypes.object,
     users: PropTypes.object
   }
 
   render() {
-    const { currentRoom, users } = this.props;
+    const { room, users } = this.props;
 
     var contextHtml;
     if (users) {
       contextHtml = <UserList users={users} />;
     } else {
-      let user = currentRoom.users[1];
+      let user = room.users[1];
       let avatarUrl = user.avatar + '/316';
 
       contextHtml = (

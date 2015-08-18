@@ -2,11 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 
 import { FlexContainer, FlexItem } from '../Flex.jsx';
-import OnlineStatus from '../components/OnlineStatus.jsx';
-import RoomList from '../components/RoomList.jsx';
-import Button from '../components/Button.react';
+import Scroller from '../Scroller.jsx';
+import OnlineStatus from './OnlineStatus.jsx';
+import RoomList from './RoomList.jsx';
+import Button from './Button.react';
 import theme from '../theme';
-
 
 const styles = {
   container: {
@@ -21,14 +21,14 @@ export default class SideBar extends Component {
   shouldComponentUpdate = shouldPureComponentUpdate;
 
   static propTypes = {
-    currentRoom: PropTypes.string,
+    room: PropTypes.object.isRequired,
     flows: PropTypes.array.isRequired,
     privateConversations: PropTypes.array.isRequired
   }
 
   render() {
     const {
-      currentRoom,
+      room,
       flows,
       privateConversations,
       dispatch
@@ -37,19 +37,27 @@ export default class SideBar extends Component {
     return (
       <div style={styles.container}>
         <FlexContainer direction='column'>
-          <FlexItem height='2.625em'>
+          <FlexItem height={42}>
             <Button>Lobby</Button>
           </FlexItem>
 
-          <FlexItem scrollY>
-            <h3 className="list-title">Flows</h3>
-            <RoomList dispatch={dispatch} currentRoom={currentRoom} rooms={flows} />
+          <FlexItem>
+            <Scroller vertical>
+              <h3 className="list-title">Flows</h3>
+              <RoomList
+                dispatch={dispatch}
+                currentRoomId={room.id}
+                rooms={flows} />
 
-            <h3 className="list-title">1&ndash;to&ndash;1s</h3>
-            <RoomList dispatch={dispatch} currentRoom={currentRoom} rooms={privateConversations} />
+              <h3 className="list-title">1&ndash;to&ndash;1s</h3>
+              <RoomList
+                dispatch={dispatch}
+                currentRoomId={room.id}
+                rooms={privateConversations} />
+            </Scroller>
           </FlexItem>
 
-          <FlexItem height='3.750em'>
+          <FlexItem height={60}>
             <OnlineStatus />
           </FlexItem>
         </FlexContainer>

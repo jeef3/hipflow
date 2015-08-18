@@ -1,5 +1,5 @@
 // Application state
-export { default as currentRoom } from './currentRoom';
+export { default as currentRoomId } from './currentRoomId';
 
 // Flowdock data
 export { default as flows } from './flows';

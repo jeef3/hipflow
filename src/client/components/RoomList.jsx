@@ -21,11 +21,14 @@ export default class RoomList extends Component {
     dispatch: PropTypes.func.isRequired,
 
     rooms: PropTypes.array.isRequired,
-    currentRoom: PropTypes.string
+    currentRoomId: PropTypes.anyOneOf([
+      PropTypes.number,
+      PropTypes.string
+    ])
   }
 
   render() : Component {
-    const { rooms, currentRoom, dispatch } = this.props;
+    const { rooms, currentRoomId, dispatch } = this.props;
 
     return (
       <ul style={styles.container}>
@@ -33,7 +36,7 @@ export default class RoomList extends Component {
           return <Room
             key={room.id}
             room={room}
-            isActive={room.id === currentRoom}
+            isActive={room.id === currentRoomId}
             onShowRoom={() => dispatch(showRoom(room.parameterized_name || room.id))}
             onCloseRoom={() => dispatch(closeRoom(room.parameterized_name || room.id))} />;
         })}
