@@ -17,6 +17,7 @@ const styles = {
   item: {
     flexGrow: 1,
     alignSelf: 'stretch',
+    position: 'relative',
     height: '100%'
   }
 };

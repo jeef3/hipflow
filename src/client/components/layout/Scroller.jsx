@@ -1,5 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 
+const styles = {
+  container: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0
+  }
+};
+
 export default class Scroller extends Component {
   static propTypes = {
     vertical: PropTypes.bool,
@@ -8,11 +18,13 @@ export default class Scroller extends Component {
 
   render() : Component {
     const { vertical, horizontal } = this.props;
-    var styles = {
-      overflowY: vertical ? 'scroll' : 'hidden',
-      overflowX: horizontal ? 'scroll' : 'hidden'
+    var scrollStyles = {
+      ...styles.container,
+
+      overflowY: vertical ? 'scroll' : 'visible',
+      overflowX: horizontal ? 'scroll' : 'visible'
     };
 
-    return <div style={styles}>{this.props.children}</div>;
+    return <div style={scrollStyles}>{this.props.children}</div>;
   }
 }
