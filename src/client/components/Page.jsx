@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import PureRender from 'react-purerender';
 
-import { FlexContainer, FlexItem } from '../Flex.jsx';
-import SideBarContainer from './SideBarContainer.jsx';
-import ChatContainer from './ChatContainer.jsx';
+import { FlexContainer, FlexItem } from './layout/Flex.jsx';
+import SideBarContainer from '../containers/SideBarContainer.jsx';
+import ChatContainer from '../containers/ChatContainer.jsx';
 // import ChatContextContainer from './ChatContextContainer.jsx';
 
 @PureRender
 export default class Page extends Component {
   static propTypes = {
-    room: PropTypes.object.isRequired
+    room: PropTypes.object
   }
 
   render() : Component {
@@ -20,9 +20,13 @@ export default class Page extends Component {
       '@media (min-width: 60em)': '13.125em'
     };
 
+    if (!room) {
+      return <div>Loading...</div>;
+    }
+
     return (
       <FlexContainer direction='row'>
-        <FlexItem width='13.125em'>
+        <FlexItem width={210}>
           <SideBarContainer room={room} />
         </FlexItem>
 

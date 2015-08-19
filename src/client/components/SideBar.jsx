@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 
-import { FlexContainer, FlexItem } from '../Flex.jsx';
-import Scroller from '../Scroller.jsx';
+import { FlexContainer, FlexItem } from './layout/Flex.jsx';
+import Scroller from './layout/Scroller.jsx';
 import OnlineStatus from './OnlineStatus.jsx';
 import RoomList from './RoomList.jsx';
 import Button from './Button.react';
@@ -26,7 +26,7 @@ export default class SideBar extends Component {
     privateConversations: PropTypes.array.isRequired
   }
 
-  render() {
+  render() : Component {
     const {
       room,
       flows,

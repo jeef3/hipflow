@@ -1,17 +1,7 @@
-import {
-  loadFlowsAsync,
-  loadPrivateConversationsAsync,
-} from './actions/RoomActions';
-
-import {
-  loadMessagesAsync
-} from './actions/MessageActions';
+import { loadRoomsAndOpenFirstAsync } from './actions/RoomActions';
 
 export default {
-  sync: (dispatch) => {
-    dispatch(loadFlowsAsync());
-    dispatch(loadPrivateConversationsAsync());
-
-    dispatch(loadMessagesAsync('skilitics', 'idle-chitchat'));
+  load: (dispatch) => {
+    dispatch(loadRoomsAndOpenFirstAsync());
   }
 };

@@ -1,4 +1,5 @@
 import Flowdock from '../flowdock';
+import { loadMessagesAsync } from './MessageActions';
 import {
   LOAD_FLOWS_STARTED,
   LOAD_FLOWS_COMPLETED,
@@ -43,6 +44,21 @@ export function loadPrivateConversationsAsync() {
           type: LOAD_PRIVATE_CONVERSATIONS_FAILED,
           payload: error
         }));
+  };
+}
+
+export function loadRoomsAndOpenFirstAsync() {
+  return (dispatch, getState) => {
+    return Promise.all([
+      dispatch(loadFlowsAsync()),
+      dispatch(loadPrivateConversationsAsync())
+    ]).then(() => {
+      const { flows } = getState();
+      const flow = flows[0];
+
+      dispatch(loadMessagesAsync('skilitics', flow.parameterized_name));
+      dispatch(showRoom(flow.id));
+    });
   };
 }
 

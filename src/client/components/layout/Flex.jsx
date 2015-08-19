@@ -21,6 +21,24 @@ const styles = {
   }
 };
 
+function getSizeValue(size) {
+  if (!size) {
+    return null;
+  }
+
+  if (size) {
+    switch (typeof size) {
+      case 'number':
+        return `${size}px`;
+      case 'string':
+        return size;
+      case 'object':
+        // TODO: Responsive
+        return size['*'];
+    }
+  }
+}
+
 @PureRender
 @Radium
 export class FlexContainer extends Component {
@@ -45,11 +63,13 @@ export class FlexContainer extends Component {
 export class FlexItem extends Component {
   static propTypes = {
     width: PropTypes.oneOfType([
+      PropTypes.number,
       PropTypes.string,
       PropTypes.object
     ]),
 
     height: PropTypes.oneOfType([
+      PropTypes.number,
       PropTypes.string,
       PropTypes.object
     ]),
@@ -58,19 +78,19 @@ export class FlexItem extends Component {
   }
 
   render() : Component {
-    const { width, height, scrollY } = this.props;
-    const itemStyle = { ...styles.item };
+    const { width, height } = this.props;
 
-    if (width && typeof width === 'string') {
-      itemStyle.maxWidth = width;
+    const widthValue = getSizeValue(width);
+    const heightValue = getSizeValue(height);
+
+    var itemStyle = { ...styles.item };
+
+    if (widthValue) {
+      itemStyle.maxWidth = widthValue;
     }
 
-    if (height && typeof height === 'string') {
-      itemStyle.maxHeight = height;
-    }
-
-    if (scrollY) {
-      itemStyle.overflowY = 'scroll';
+    if (height) {
+      itemStyle.maxHeight = heightValue;
     }
 
     return (

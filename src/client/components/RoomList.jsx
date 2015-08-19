@@ -21,7 +21,7 @@ export default class RoomList extends Component {
     dispatch: PropTypes.func.isRequired,
 
     rooms: PropTypes.array.isRequired,
-    currentRoomId: PropTypes.anyOneOf([
+    currentRoomId: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.string
     ])
