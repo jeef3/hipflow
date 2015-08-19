@@ -37,8 +37,8 @@ export default class RoomList extends Component {
             key={room.id}
             room={room}
             isActive={room.id === currentRoomId}
-            onShowRoom={() => dispatch(showRoom(room.parameterized_name || room.id))}
-            onCloseRoom={() => dispatch(closeRoom(room.parameterized_name || room.id))} />;
+            onShowRoom={() => dispatch(showRoom(room.id))}
+            onCloseRoom={() => dispatch(closeRoom(room.id))} />;
         })}
       </ul>
     )
