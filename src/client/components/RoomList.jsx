@@ -41,6 +41,6 @@ export default class RoomList extends Component {
             onCloseRoom={() => dispatch(closeRoom(room.id))} />;
         })}
       </ul>
-    )
+    );
   }
 }
