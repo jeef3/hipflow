@@ -10,6 +10,21 @@ import {
   LOAD_MESSAGES_COMPLETED
 } from '../constants/ActionTypes';
 
+function processMessage(message) {
+  const { tags } = message;
+
+  if (!tags) { return message; }
+
+  const meId = 1;
+
+  return {
+    ...message,
+    highlight: tags.indexOf(':highlight:' + meId) !== -1,
+    mentionsMe: tags.indexOf(':user:' + meId) !== -1,
+    thread: tags.indexOf(':thread') !== -1
+  };
+}
+
 export default function (state = {}, action) {
   switch (action.type) {
     case LOAD_MESSAGES_COMPLETED:
@@ -18,12 +33,12 @@ export default function (state = {}, action) {
       // TODO: Proper look into messages and merge
       return {
         ...state,
-        [flow]: (state[flow] || []).concat(messages)
+        [flow]: (state[flow] || []).concat(messages.map(processMessage))
       };
 
     case SEND_MESSAGE_STARTED:
     case ADD_MESSAGE:
-      let newMessage = action.payload
+      let newMessage = action.payload;
       // let room = getRoomForMessage([
       //   state.flows,
       //   state.privateConversations
