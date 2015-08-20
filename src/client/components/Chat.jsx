@@ -11,7 +11,7 @@ export default class Chat extends Component {
   }
 
   render() {
-    const { room, messages } = this.props;
+    const { users, room, messages } = this.props;
 
     if (!room) {
       return <p>No room selected</p>;
