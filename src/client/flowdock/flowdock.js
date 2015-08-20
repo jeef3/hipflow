@@ -387,12 +387,12 @@ var user = function (cb) {
   apiGet('/user').then(cb);
 };
 
-var users = function (/*id, cb*/) {
+var users = function () {
 
 };
 
-users.list = function (cb) {
-  apiGet('/users').then(cb);
+users.list = function () {
+  return apiGet('/users');
 };
 
 module.exports = {

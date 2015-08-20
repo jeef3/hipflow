@@ -47,21 +47,6 @@ export function loadPrivateConversationsAsync() {
   };
 }
 
-export function loadRoomsAndOpenFirstAsync() {
-  return (dispatch, getState) => {
-    return Promise.all([
-      dispatch(loadFlowsAsync()),
-      dispatch(loadPrivateConversationsAsync())
-    ]).then(() => {
-      const { flows } = getState();
-      const flow = flows[0];
-
-      dispatch(loadMessagesAsync('skilitics', flow.parameterized_name));
-      dispatch(showRoom(flow.id));
-    });
-  };
-}
-
 export function showRoom(id) {
   return {
     type: SHOW_ROOM,

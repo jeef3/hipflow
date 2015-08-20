@@ -1,4 +1,4 @@
-import { loadRoomsAndOpenFirstAsync } from './actions/RoomActions';
+import { loadRoomsAndOpenFirstAsync } from './actions/SyncActions';
 
 export default {
   load: (dispatch) => {
