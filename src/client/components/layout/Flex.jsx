@@ -88,10 +88,12 @@ export class FlexItem extends Component {
 
     if (widthValue) {
       itemStyle.maxWidth = widthValue;
+      itemStyle.minWidth = widthValue;
     }
 
     if (height) {
       itemStyle.maxHeight = heightValue;
+      itemStyle.minHeight = heightValue;
     }
 
     return (
