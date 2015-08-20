@@ -5,32 +5,35 @@ import * as messageRenderers from './messages';
 import Button from './Button.react.js';
 import Icon from './Icon.react.js';
 
-function getMetadata(message) {
+function getMetadata(message, users) {
   if (message.event === 'message' ||
       message.event === 'comment' ||
       message.event === 'file') {
+
+    let user = users[message.user] || {};
+
     return {
-      author: message.user.name,
-      avatar: message.user.avatar + '60'
+      author: user.name,
+      avatar: user.avatar + '60'
     };
   }
 
   switch (message.event) {
-    case 'jira':
-      return {
-        author: 'JIRA',
-        avatar: '/images/jira/avatar.png'
-      };
-    case 'vcs':
-      return {
-        author: 'GitHub',
-        avatar: '/images/github/avatar.png'
-      };
-    case 'trello':
-      return {
-        author: 'Trello',
-        avatar: '/images/trello/avatar.png'
-      };
+  case 'jira':
+    return {
+      author: 'JIRA',
+      avatar: '/images/jira/avatar.png'
+    };
+  case 'vcs':
+    return {
+      author: 'GitHub',
+      avatar: '/images/github/avatar.png'
+    };
+  case 'trello':
+    return {
+      author: 'Trello',
+      avatar: '/images/trello/avatar.png'
+    };
   }
 }
 
@@ -58,17 +61,18 @@ function isSameDay(current, previous) {
 
 export default class Message extends Component {
   static propTypes = {
+    users: PropTypes.array.isRequired,
     message: PropTypes.object.isRequired,
-    previous: PropTypes.object
+    previous: PropTypes.object,
   }
 
   render() : Component {
-    const { message, previous } = this.props;
-    var meta = getMetadata(message);
+    const { users, message, previous } = this.props;
+    var meta = getMetadata(message, users);
 
     return (
       <li data-timestamp={message.sent}
-          className={cx('c-Message', 'c-Message--${message.app}', {
+          className={cx('c-Message', `c-Message--${message.app}`, {
             'c-Message--Me': isMe(message.user),
             'c-Message--Highlight': message.highlight,
             'c-Message--MentionsMe': message.mentionsMe,
@@ -86,7 +90,7 @@ export default class Message extends Component {
         </Button>
 
         <div className="o-avatar message__author-avatar"
-            style={{backgroundImage: 'url(${meta.avatar})'}}></div>
+            style={{backgroundImage: `url(${meta.avatar})`}}></div>
         <div className="message__author">{meta.author}</div>
 
         <a href="{{meta.permalink}}" title="Permalink">

@@ -8,7 +8,7 @@ export default class MessageWindow extends Component {
   }
 
   render() {
-    const { messages } = this.props;
+    const { users, messages } = this.props;
 
     return (
       <div className="c-MessageWindow">
@@ -16,6 +16,7 @@ export default class MessageWindow extends Component {
           {messages.map((message, i) => {
             return <Message
               key={message.id}
+              users={users}
               message={message}
               previousMessage={messages[i-1]} />;
           })}

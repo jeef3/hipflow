@@ -20,7 +20,7 @@ export default class Chat extends Component {
     return (
       <section className="c-Chat">
         <TopicBar name={room.name} description={room.description} />
-        <MessageWindow messages={messages} />
+        <MessageWindow users={users} messages={messages} />
         <ChatBar room={room} />
       </section>
     );
