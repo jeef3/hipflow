@@ -13,14 +13,17 @@ import {
 } from '../constants/ActionTypes';
 
 export function loadMessagesAsync(organizationName, flowName) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({ type: LOAD_MESSAGES_STARTED });
+
+    var flow = getState().flows
+      .filter(f => f.parameterized_name === flowName)[0];
 
     return Flowdock.flows(organizationName, flowName).messages.list()
       .then(
         (result) => dispatch({
           type: LOAD_MESSAGES_COMPLETED,
-          payload: { flow: flowName, messages: result }
+          payload: { flow: flow.id, messages: result }
         }),
         (error) => dispatch({
           type: LOAD_MESSAGES_FAILED,
