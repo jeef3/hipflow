@@ -30,10 +30,6 @@ export function getMetadata(message, users) {
   }
 }
 
-function isMe(user) {
-  return false;
-}
-
 export function isMonologue(current, previous) {
   if (current.user === '0') {
     return previous && current.event === previous.event;
