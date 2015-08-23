@@ -2,72 +2,25 @@ import React, { Component, PropTypes } from 'react';
 import cx from 'classnames';
 
 import * as messageRenderers from './messages';
+import { getMetadata, isMonologue, isSameDay } from '../message-util';
 import Button from './Button.react.js';
 import Icon from './Icon.react.js';
-
-function getMetadata(message, users) {
-  if (message.event === 'message' ||
-      message.event === 'comment' ||
-      message.event === 'file') {
-
-    let user = users[message.user] || {};
-
-    return {
-      author: user.name,
-      avatar: user.avatar + '60'
-    };
-  }
-
-  switch (message.event) {
-  case 'jira':
-    return {
-      author: 'JIRA',
-      avatar: '/images/jira/avatar.png'
-    };
-  case 'vcs':
-    return {
-      author: 'GitHub',
-      avatar: '/images/github/avatar.png'
-    };
-  case 'trello':
-    return {
-      author: 'Trello',
-      avatar: '/images/trello/avatar.png'
-    };
-  }
-}
 
 function isMe(user) {
   return false;
 }
 
-function isMonologue(current, previous) {
-  if (current.user === '0') {
-    return previous && current.event === previous.event;
-  } else {
-    return previous &&
-      current.user === previous.user &&
-      current.app === previous.app;
-  }
-}
-
-function isSameDay(current, previous) {
-  if (!previous) {
-    return true;
-  }
-
-  return new Date(current.sent).getDate() === new Date(previous.sent).getDate();
-}
-
 export default class Message extends Component {
   static propTypes = {
-    users: PropTypes.array.isRequired,
+    users: PropTypes.object.isRequired,
     message: PropTypes.object.isRequired,
     previous: PropTypes.object,
+
+    onShowThread: PropTypes.func.isRequired
   }
 
   render() : Component {
-    const { users, message, previous } = this.props;
+    const { users, message, previous, onShowThread } = this.props;
     var meta = getMetadata(message, users);
 
     return (
@@ -85,13 +38,13 @@ export default class Message extends Component {
             'c-Message--Fail': message.tags.indexOf('fail') > -1})}>
 
         <Button className="c-Message__DiscussionMarker"
-            onClick="setCurrentDiscussion(message)">
+            onClick={onShowThread}>
           <Icon kind={message.parent ? 'comments' : 'comment'} />
         </Button>
 
-        <div className="o-avatar message__author-avatar"
+        <div className="o-avatar c-Message__AuthorAvatar"
             style={{backgroundImage: `url(${meta.avatar})`}}></div>
-        <div className="message__author">{meta.author}</div>
+        <div className="c-Message__Author">{meta.author}</div>
 
         <a href="{{meta.permalink}}" title="Permalink">
           <time dateTime="{{message.sent | date:'yyyy-mm-ddThh:mm:ssZ'}}"
@@ -100,7 +53,7 @@ export default class Message extends Component {
               am-time-ago="message.sent"></time>
         </a>
 
-        <div className="message__content">
+        <div className="c-Message__Content">
           {this.renderMessage()}
           <div ng-if="message.event === 'message'" ng-include="'views/messages/plain.html'"></div>
           <div ng-if="message.event === 'comment'" ng-include="'views/messages/comment.html'"></div>

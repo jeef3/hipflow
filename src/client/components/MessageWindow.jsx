@@ -7,18 +7,23 @@ export default class MessageWindow extends Component {
     messages: PropTypes.array.isRequired
   }
 
+  showThread(message) {
+    console.log('open thread', message);
+  }
+
   render() {
     const { users, messages } = this.props;
 
     return (
-      <div className="c-MessageWindow">
+      <div>
         <ul className="c-MessageWindow__Messages o-scroller">
           {messages.map((message, i) => {
             return <Message
               key={message.id}
               users={users}
               message={message}
-              previousMessage={messages[i-1]} />;
+              previousMessage={messages[i-1]}
+              onShowThread={() => this.showThread(message)} />;
           })}
         </ul>
       </div>

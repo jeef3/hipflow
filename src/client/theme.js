@@ -23,6 +23,8 @@ const button = {
 };
 
 export default {
+  colors: colors,
+
   button: button,
   buttonNoFocus: {
     ...button,
