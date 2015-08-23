@@ -12,18 +12,31 @@ import {
   SEND_MESSAGE_FAILED
 } from '../constants/ActionTypes';
 
-export function loadMessagesAsync(organizationName, flowName) {
+export function loadMessagesAsync(roomId) {
   return (dispatch, getState) => {
     dispatch({ type: LOAD_MESSAGES_STARTED });
 
-    var flow = getState().flows
-      .filter(f => f.parameterized_name === flowName)[0];
+    const room = getState().rooms[roomId];
 
-    return Flowdock.flows(organizationName, flowName).messages.list()
+    var method;
+    if (room.access_mode) {
+      method = Flowdock
+        .flows(
+          room.organization.parameterized_name,
+          room.parameterized_name)
+        .messages
+        .list;
+    } else {
+      method = Flowdock
+        .privateConversations(room.id)
+        .list;
+    }
+
+    return method()
       .then(
         (result) => dispatch({
           type: LOAD_MESSAGES_COMPLETED,
-          payload: { flow: flow.id, messages: result }
+          payload: { roomId, messages: result }
         }),
         (error) => dispatch({
           type: LOAD_MESSAGES_FAILED,

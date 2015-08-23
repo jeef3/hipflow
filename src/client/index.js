@@ -31,5 +31,5 @@ React.render(
   </div>,
   document.getElementById('app'));
 
-FlowdockUtil.load(store.dispatch);
+FlowdockUtil.load(store.dispatch, store.getState);
 // FlowdockConnector.start();

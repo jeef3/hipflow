@@ -28,12 +28,12 @@ function processMessage(message) {
 export default function (state = {}, action) {
   switch (action.type) {
     case LOAD_MESSAGES_COMPLETED:
-      const { flow, messages } = action.payload;
+      const { roomId, messages } = action.payload;
 
       // TODO: Proper look into messages and merge
       return {
         ...state,
-        [flow]: (state[flow] || []).concat(messages.map(processMessage))
+        [roomId]: (state[roomId] || []).concat(messages.map(processMessage))
       };
 
     case SEND_MESSAGE_STARTED:

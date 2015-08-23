@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import SideBar from '../components/SideBar.jsx';
 import { closeRoom } from '../actions/RoomActions';
-import { showRoomAndLoadMessagesAsync } from '../actions/SyncActions';
+import { showRoomAndLoadMessagesAsync } from '../actions/AggregateActions';
 
 function mapStateToProps(state) {
   return {
