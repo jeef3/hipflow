@@ -325,8 +325,8 @@ var privateConversation = function (userId) {
     }
   };
 
-  messages.list = function (options, cb) {
-    apiGet('/private/' + userId + '/messages', options).then(cb);
+  messages.list = function (options) {
+    apiGet('/private/' + userId + '/messages', options);
   };
 
   messages.send = function (message, uuid, tags, cb) {

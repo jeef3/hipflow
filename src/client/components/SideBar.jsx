@@ -23,7 +23,12 @@ export default class SideBar extends Component {
   static propTypes = {
     room: PropTypes.object.isRequired,
     flows: PropTypes.array.isRequired,
-    privateConversations: PropTypes.array.isRequired
+    privateConversations: PropTypes.array.isRequired,
+
+    onShowFlow: PropTypes.func.isRequired,
+    onCloseFlow: PropTypes.func.isRequired,
+    onShowPrivateConversation: PropTypes.func.isRequired,
+    onClosePrivateConversation: PropTypes.func.isRequired
   }
 
   render() : Component {
@@ -31,7 +36,10 @@ export default class SideBar extends Component {
       room,
       flows,
       privateConversations,
-      dispatch
+      onShowFlow,
+      onCloseFlow,
+      onShowPrivateConversation,
+      onClosePrivateConversation
     } = this.props;
 
     return (
@@ -45,15 +53,17 @@ export default class SideBar extends Component {
             <Scroller vertical>
               <h3 className="list-title">Flows</h3>
               <RoomList
-                dispatch={dispatch}
                 currentRoomId={room.id}
-                rooms={flows} />
+                rooms={flows}
+                onShowRoom={onShowFlow}
+                onCloseRoom={onCloseFlow} />
 
               <h3 className="list-title">1&ndash;to&ndash;1s</h3>
               <RoomList
-                dispatch={dispatch}
                 currentRoomId={room.id}
-                rooms={privateConversations} />
+                rooms={privateConversations}
+                onShowRoom={onShowPrivateConversation}
+                onCloseRoom={onClosePrivateConversation} />
             </Scroller>
           </FlexItem>
 
