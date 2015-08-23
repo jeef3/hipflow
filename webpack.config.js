@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
   devtool: 'source-map',
@@ -25,9 +26,13 @@ module.exports = {
       test: /\.jsx?$/,
       loaders: ['react-hot', 'babel'],
       exclude: /node_modules/
-    }, {
+    },
+    {
       test: /\.css?$/,
-      loaders: ['style', 'raw']
+      loader: 'style-loader!css-loader!postcss-loader'
     }]
+  },
+  postcss: function () {
+    return [autoprefixer];
   }
 };
