@@ -19,5 +19,5 @@ export function loadUsersAsync() {
           type: LOAD_USERS_FAILED,
           payload: error
         }));
-  }
+  };
 }

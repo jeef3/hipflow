@@ -43,21 +43,21 @@ var apiGet = function (path, params) {
 
   return new Promise((resolve, reject) => {
     request({
-        url,
-        method: 'GET',
-        json: true
-      }, function (err, response, body) {
-        if (err) {
-          if (response.status === 401) {
-            // TODO: Token expired
-            // $rootScope.$broadcast('TOKEN_EXPIRED');
-          }
-          reject(err);
-          return;
+      url,
+      method: 'GET',
+      json: true
+    }, function (err, response, body) {
+      if (err) {
+        if (response.status === 401) {
+          // TODO: Token expired
+          // $rootScope.$broadcast('TOKEN_EXPIRED');
         }
+        reject(err);
+        return;
+      }
 
-        resolve(body);
-      });
+      resolve(body);
+    });
   });
 };
 
@@ -326,7 +326,7 @@ var privateConversation = function (userId) {
   };
 
   messages.list = function (options) {
-    apiGet('/private/' + userId + '/messages', options);
+    return apiGet('/private/' + userId + '/messages', options);
   };
 
   messages.send = function (message, uuid, tags, cb) {

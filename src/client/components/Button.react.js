@@ -1,9 +1,13 @@
-'use strict';
-
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import cx from 'classnames';
 
-class Button extends React.Component {
+class Button extends Component {
+  static propTypes = {
+    noFocus: PropTypes.bool,
+    children: PropTypes.node,
+    className: PropTypes.any
+  }
+
   render() {
     return (
       <button {...this.props}

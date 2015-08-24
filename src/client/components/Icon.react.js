@@ -1,9 +1,12 @@
-'use strict';
-
-import React from 'react';
+import React, { Component, PropTypes }  from 'react';
 import cx from 'classnames';
 
-class Icon extends React.Component {
+class Icon extends Component {
+  static propTypes = {
+    kind: PropTypes.string.isRequired,
+    className: PropTypes.any
+  }
+
   render() {
     return (
       <i className={cx('fa fa-fw',

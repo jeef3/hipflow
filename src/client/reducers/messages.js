@@ -27,46 +27,46 @@ function processMessage(message) {
 
 export default function (state = {}, action) {
   switch (action.type) {
-    case LOAD_MESSAGES_COMPLETED:
-      const { roomId, messages } = action.payload;
+  case LOAD_MESSAGES_COMPLETED:
+    const { roomId, messages } = action.payload;
 
-      // TODO: Proper look into messages and merge
-      return {
-        ...state,
-        [roomId]: (state[roomId] || []).concat(messages.map(processMessage))
-      };
+    // TODO: Proper look into messages and merge
+    return {
+      ...state,
+      [roomId]: (state[roomId] || []).concat(messages.map(processMessage))
+    };
 
-    case SEND_MESSAGE_STARTED:
-    case ADD_MESSAGE:
-      let newMessage = action.payload;
-      // let room = getRoomForMessage([
-      //   state.flows,
-      //   state.privateConversations
-      // ], message);
+  case SEND_MESSAGE_STARTED:
+  case ADD_MESSAGE:
+    let newMessage = action.payload;
+    // let room = getRoomForMessage([
+    //   state.flows,
+    //   state.privateConversations
+    // ], message);
 
-      // state.messages[room.id]
+    // state.messages[room.id]
 
-      return state
-        .update(
-          'messages',
-          messages => messages.push(newMessage));
+    return state
+      .update(
+        'messages',
+        messages => messages.push(newMessage));
 
-    case REMOVE_MESSAGE:
-      return state
-        .update(
-          'messages',
-          messages => messages.filter(m => m.id !== action.payload));
+  case REMOVE_MESSAGE:
+    return state
+      .update(
+        'messages',
+        messages => messages.filter(m => m.id !== action.payload));
 
-    case SEND_MESSAGE_COMPLETED:
-    case UPDATE_MESSAGE:
-      // TODO: Update existing message
-      return state;
+  case SEND_MESSAGE_COMPLETED:
+  case UPDATE_MESSAGE:
+    // TODO: Update existing message
+    return state;
 
-    case SEND_MESSAGE_FAILED:
-      // TODO: Alert user that send has failed? Retry?
-      return state;
+  case SEND_MESSAGE_FAILED:
+    // TODO: Alert user that send has failed? Retry?
+    return state;
 
-    default:
-      return state;
+  default:
+    return state;
   }
 }
