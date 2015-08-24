@@ -23,27 +23,23 @@ export default class SideBar extends Component {
   static propTypes = {
     room: PropTypes.object.isRequired,
     flows: PropTypes.array.isRequired,
-    privateConversations: PropTypes.array.isRequired,
+    privates: PropTypes.array.isRequired,
 
-    onShowFlow: PropTypes.func.isRequired,
-    onCloseFlow: PropTypes.func.isRequired,
-    onShowPrivateConversation: PropTypes.func.isRequired,
-    onClosePrivateConversation: PropTypes.func.isRequired
+    onShowRoom: PropTypes.func.isRequired,
+    onCloseRoom: PropTypes.func.isRequired,
   }
 
   render() : Component {
     const {
       room,
       flows,
-      privateConversations,
-      onShowFlow,
-      onCloseFlow,
-      onShowPrivateConversation,
-      onClosePrivateConversation
+      privates,
+      onShowRoom,
+      onCloseRoom
     } = this.props;
 
     return (
-      <div style={styles.container}>
+      <div style={ styles.container }>
         <FlexContainer direction='column'>
           <FlexItem height={42}>
             <Button>Lobby</Button>
@@ -51,19 +47,19 @@ export default class SideBar extends Component {
 
           <FlexItem>
             <Scroller vertical>
-              <h3 className="list-title">Flows</h3>
+              <h3 className='list-title'>Flows</h3>
               <RoomList
-                currentRoomId={room.id}
-                rooms={flows}
-                onShowRoom={onShowFlow}
-                onCloseRoom={onCloseFlow} />
+                  currentRoomId={room.id}
+                  rooms={flows}
+                  onShowRoom={onShowRoom}
+                  onCloseRoom={onCloseRoom} />
 
-              <h3 className="list-title">1&ndash;to&ndash;1s</h3>
+              <h3 className='list-title'>1&ndash;to&ndash;1s</h3>
               <RoomList
                 currentRoomId={room.id}
-                rooms={privateConversations}
-                onShowRoom={onShowPrivateConversation}
-                onCloseRoom={onClosePrivateConversation} />
+                rooms={privates}
+                onShowRoom={onShowRoom}
+                onCloseRoom={onCloseRoom} />
             </Scroller>
           </FlexItem>
 

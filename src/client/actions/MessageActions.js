@@ -29,6 +29,7 @@ export function loadMessagesAsync(roomId) {
     } else {
       method = Flowdock
         .privateConversations(room.id)
+        .messages
         .list;
     }
 

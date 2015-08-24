@@ -6,17 +6,15 @@ import { showRoomAndLoadMessagesAsync } from '../actions/AggregateActions';
 
 function mapStateToProps(state) {
   return {
-    flows: state.flows.filter(f => f.open),
-    privateConversations: state.privateConversations.filter(pc => pc.open)
+    flows: state.flows.map(id => state.rooms[id]).filter(f => f.open),
+    privates: state.privates.map(id => state.rooms[id]).filter(p => p.open)
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    onShowFlow: roomId => dispatch(showRoomAndLoadMessagesAsync(roomId)),
-    onCloseFlow: roomId => dispatch(closeRoom(roomId)),
-    onShowPrivateConversation: roomId => dispatch(showRoomAndLoadMessagesAsync(roomId)),
-    onClosePrivateConversation: roomId => dispatch(closeRoom(roomId))
+    onShowRoom: roomId => dispatch(showRoomAndLoadMessagesAsync(roomId)),
+    onCloseRoom: roomId => dispatch(closeRoom(roomId))
   };
 }
 
