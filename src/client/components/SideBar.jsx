@@ -5,7 +5,7 @@ import { FlexContainer, FlexItem } from './layout/Flex.jsx';
 import Scroller from './layout/Scroller.jsx';
 import OnlineStatus from './OnlineStatus.jsx';
 import RoomList from './RoomList.jsx';
-import Button from './Button.react';
+import Button from './Button.jsx';
 import theme from '../theme';
 
 const styles = {

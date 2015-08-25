@@ -4,7 +4,7 @@ import cx from 'classnames';
 import Radium from 'radium';
 
 import Icon from './Icon.react';
-import Button from './Button.react.js';
+import Button from './Button.jsx';
 import theme from '../theme';
 
 const styles = {

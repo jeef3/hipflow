@@ -3,7 +3,7 @@ import cx from 'classnames';
 
 import * as messageRenderers from './messages';
 import { getMetadata, isMonologue, isSameDay } from '../message-util';
-import Button from './Button.react.js';
+import Button from './Button.jsx';
 import Icon from './Icon.react.js';
 
 function isMe(user) {
