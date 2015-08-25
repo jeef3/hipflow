@@ -25,37 +25,58 @@ function processMessage(message) {
   };
 }
 
+function addOrUpdate(log, message) {
+  let existing = log.filter(l => l.id === message.id)[0];
+
+  let m = processMessage(message);
+
+  if (existing) {
+    let existingIndex = log.indexOf(existing);
+    log[existingIndex] = m;
+  } else {
+    log.push(m);
+  }
+}
+
+function sortMessages(log) {
+  log.sort((m1, m2) => m1.sent - m2.sent);
+}
+
+function cloneLog(messages, roomId) {
+  return messages[roomId] ? messages[roomId].slice() : [];
+}
+
 export default function (state = {}, action) {
   switch (action.type) {
   case LOAD_MESSAGES_COMPLETED:
     const { roomId, messages } = action.payload;
 
-    // TODO: Proper look into messages and merge
+    let log = cloneLog(state, roomId);
+    messages.forEach(m => addOrUpdate(log, m));
+    sortMessages(log);
+
     return {
       ...state,
-      [roomId]: (state[roomId] || []).concat(messages.map(processMessage))
+      [roomId]: log
     };
 
   case SEND_MESSAGE_STARTED:
   case ADD_MESSAGE:
-    let newMessage = action.payload;
-    // let room = getRoomForMessage([
-    //   state.flows,
-    //   state.privateConversations
-    // ], message);
+    let message = action.payload;
+    let aroomId = message.flow || message.to;
 
-    // state.messages[room.id]
+    let alog = cloneLog(state, aroomId);
+    addOrUpdate(alog, message);
+    // TODO: Only sort if the message was not appended
+    sortMessages(alog);
 
-    return state
-      .update(
-        'messages',
-        messages => messages.push(newMessage));
+    return {
+      ...state,
+      [aroomId]: alog
+    };
 
   case REMOVE_MESSAGE:
-    return state
-      .update(
-        'messages',
-        messages => messages.filter(m => m.id !== action.payload));
+    return state;
 
   case SEND_MESSAGE_COMPLETED:
   case UPDATE_MESSAGE:
