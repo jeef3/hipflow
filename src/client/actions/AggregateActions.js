@@ -1,5 +1,5 @@
 import { loadUsersAsync } from './UserActions';
-import { loadMessagesAsync } from './MessageActions';
+import { fetchMessagesAsync } from './MessageActions';
 import {
   showRoom,
   loadRoomsAsync
@@ -20,6 +20,6 @@ export function initializeAsync() {
 export function showRoomAndLoadMessagesAsync(roomId) {
   return (dispatch) => {
     dispatch(showRoom(roomId));
-    return dispatch(loadMessagesAsync(roomId));
+    return dispatch(fetchMessagesAsync(roomId));
   };
 }

@@ -1,8 +1,8 @@
 import Flowdock from '../flowdock';
 import {
-  LOAD_MESSAGES_STARTED,
-  LOAD_MESSAGES_COMPLETED,
-  LOAD_MESSAGES_FAILED,
+  REQUEST_MESSAGES,
+  RECEIVE_MESSAGES,
+  FETCH_MESSAGES_FAILED,
 
   ADD_MESSAGE,
   EDIT_MESSAGE,
@@ -12,35 +12,54 @@ import {
   SEND_MESSAGE_FAILED
 } from '../constants/ActionTypes';
 
-export function loadMessagesAsync(roomId) {
+export function requestMessages(roomId, options) {
+  return {
+    type: REQUEST_MESSAGES,
+    payload: { roomId, options }
+  };
+}
+
+export function receiveMessages(roomId, messages, append) {
+  return {
+    type: RECEIVE_MESSAGES,
+    payload: { roomId, messages, append }
+  };
+}
+
+function getFetchMethod(room) {
+  if (room.access_mode) {
+    return Flowdock
+      .flows(room.organization.parameterized_name, room.parameterized_name)
+      .messages
+      .list;
+  } else {
+    return Flowdock
+      .privateConversations(room.id)
+      .messages
+      .list;
+  }
+}
+
+export function fetchMessagesSince(roomId, sinceId) {
+  return fetchMessagesAsync(roomId, { since: sinceId });
+}
+
+export function fetchMessagesUntil(roomId, untilId) {
+  return fetchMessagesAsync(roomId, { until: untilId });
+}
+
+export function fetchMessagesAsync(roomId, options) {
   return (dispatch, getState) => {
-    dispatch({ type: LOAD_MESSAGES_STARTED });
+    dispatch(requestMessages(roomId, options));
 
     const room = getState().rooms[roomId];
+    const append = options && options.since;
 
-    var method;
-    if (room.access_mode) {
-      method = Flowdock
-        .flows(
-          room.organization.parameterized_name,
-          room.parameterized_name)
-        .messages
-        .list;
-    } else {
-      method = Flowdock
-        .privateConversations(room.id)
-        .messages
-        .list;
-    }
-
-    return method()
+    return getFetchMethod(room)()
       .then(
-        (result) => dispatch({
-          type: LOAD_MESSAGES_COMPLETED,
-          payload: { roomId, messages: result }
-        }),
+        (result) => dispatch(receiveMessages(roomId, result, append)),
         (error) => dispatch({
-          type: LOAD_MESSAGES_FAILED,
+          type: FETCH_MESSAGES_FAILED,
           payload: error
         }));
   };
@@ -57,7 +76,7 @@ export function editMessage(id, text) {
   return {
     type: EDIT_MESSAGE,
     payload: { id, text }
-  }
+  };
 }
 
 export function removeMessage(id) {
@@ -74,7 +93,7 @@ export function sendMessageAsync(message) {
       payload: message
     });
 
-    return FlowdockApi.sendMessage(text)
+    return Flowdock.sendMessage(message)
       .then(
         (result) => dispatch({
           type: SEND_MESSAGE_COMPLETED,
@@ -84,5 +103,5 @@ export function sendMessageAsync(message) {
           type: SEND_MESSAGE_FAILED,
           payload: error
         }));
-  }
+  };
 }

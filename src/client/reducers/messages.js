@@ -7,7 +7,7 @@ import {
   SEND_MESSAGE_COMPLETED,
   SEND_MESSAGE_FAILED,
 
-  LOAD_MESSAGES_COMPLETED
+  RECEIVE_MESSAGES
 } from '../constants/ActionTypes';
 
 function processMessage(message) {
@@ -48,12 +48,17 @@ function cloneLog(messages, roomId) {
 
 export default function (state = {}, action) {
   switch (action.type) {
-  case LOAD_MESSAGES_COMPLETED:
-    const { roomId, messages } = action.payload;
+  case RECEIVE_MESSAGES:
+    const { roomId, messages, append } = action.payload;
 
-    let log = cloneLog(state, roomId);
-    messages.forEach(m => addOrUpdate(log, m));
-    sortMessages(log);
+    var log;
+    if (append) {
+      log = cloneLog(state, roomId);
+      messages.forEach(m => addOrUpdate(log, m));
+      sortMessages(log);
+    } else {
+      log = messages;
+    }
 
     return {
       ...state,
