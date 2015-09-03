@@ -6,7 +6,11 @@ import {
   FLOWDOCK_STREAM_DISCONNECTING,
   FLOWDOCK_STREAM_DISCONNECTED,
 
-  FLOWDOCK_RECEIVE_STREAM_MESSAGE
+  MESSAGE_ADDED,
+  MESSAGE_EDITED,
+  MESSAGE_DELETED,
+  USER_ACTIVITY,
+  UNHANDLED_STREAM_MESSAGE
 } from '../constants/ActionTypes';
 
 export function connectStream(flows) {
@@ -46,8 +50,43 @@ export function disconnectStream() {
 }
 
 export function receiveStreamMessage(message) {
-  return {
-    type: FLOWDOCK_RECEIVE_STREAM_MESSAGE,
-    payload: message
+  return (dispatch) => {
+    switch (message.event) {
+    case 'message':
+    case 'comment':
+    case 'file':
+    case 'vcs':
+    case 'jira':
+    case 'mail':
+      return dispatch({
+        type: MESSAGE_ADDED,
+        payload: message
+      });
+
+    case 'message-edit':
+    case 'tag-change':
+      return dispatch({
+        type: MESSAGE_EDITED,
+        payload: message
+      });
+
+    case 'message-delete':
+      return dispatch({
+        type: MESSAGE_DELETED,
+        payload: message
+      });
+
+    case 'activity.user':
+      return dispatch({
+        type: USER_ACTIVITY,
+        payload: message
+      });
+
+    default:
+      return dispatch({
+        type: UNHANDLED_STREAM_MESSAGE,
+        payload: message
+      });
+    }
   };
 }
