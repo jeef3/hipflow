@@ -18,8 +18,14 @@ export function initializeAsync() {
 }
 
 export function showRoomAndLoadMessagesAsync(roomId) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch(showRoom(roomId));
-    return dispatch(fetchMessagesAsync(roomId));
+
+    const state = getState();
+    const room = state.rooms[roomId];
+
+    if (!room.loaded) {
+      return dispatch(fetchMessagesAsync(roomId));
+    }
   };
 }
