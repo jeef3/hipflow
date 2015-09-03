@@ -1,3 +1,4 @@
+import { connectStream } from './actions/FlowdockActions';
 import {
   initializeAsync,
   showRoomAndLoadMessagesAsync,
@@ -12,6 +13,13 @@ export default {
           rooms,
           flows
         } = getState();
+
+        // Connect to the stream
+        const openFlows = flows
+          .map(f => rooms[f])
+          .filter(f => f.open);
+
+        dispatch(connectStream(openFlows));
 
         // Select the current room, or first Flow
         const room = currentRoomId ?

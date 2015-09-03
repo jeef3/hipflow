@@ -406,6 +406,9 @@ module.exports = {
           fn.call(this, JSON.parse(e.data));
         };
       },
+      onopen: function (fn) {
+        fn.call(this);
+      },
       close: function () {
         stream.close();
       }
