@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 
 import Chat from '../components/Chat.jsx';
 
-function mapStateToProps(state) {
+function mapStateToProps({ users, messages, currentRoomId }) {
   return {
-    users: state.users,
-    messages: state.messages[state.currentRoomId] || []
+    users: users,
+    messages: messages[currentRoomId] || []
   };
 }
 

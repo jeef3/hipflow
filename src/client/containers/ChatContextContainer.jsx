@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 
 import ChatContext from '../components/ChatContext.jsx';
 
-function mapStateToProps(state) {
+function mapStateToProps({ flows, privates, currentRoomId }) {
   const room =
-    state.flows.filter(f => f.parameterized_name === state.currentRoomId)[0] ||
-    state.privateConversations.filter(pc => pc.id === state.currentRoomId)[0] ||
+    flows.filter(f => f.parameterized_name === currentRoomId)[0] ||
+    privates.filter(pc => pc.id === currentRoomId)[0] ||
     {};
 
   return {
