@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react-dom';
+import ReactDOM from 'react-dom';
 import { combineReducers, applyMiddleware, createStore, compose } from 'redux';
 import { devTools } from 'redux-devtools';
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
@@ -18,7 +19,7 @@ const finalCreateStore = compose(
 const reducer = combineReducers(reducers);
 const store = finalCreateStore(reducer);
 
-React.render(
+ReactDOM.render(
   <div style={{height: '100%'}}>
     <Provider store={store}>
       {() => <App />}

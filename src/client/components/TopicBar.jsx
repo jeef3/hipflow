@@ -1,5 +1,4 @@
-import React, { Component, PropTypes } from 'react';
-// import { PureRender } from 'react-purerender';
+import React from 'react';
 
 import theme from '../theme';
 
@@ -23,21 +22,9 @@ const styles = {
   }
 };
 
-// @PureRender
-export default class TopicBar extends Component {
-  static propTypes = {
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string
-  }
-
-  render() {
-    const { name, description } = this.props;
-
-    return (
-      <div style={styles.container} className="u-truncate">
-        <h3 style={styles.name}>{name}</h3>
-        <span style={styles.description}>{description}</span>
-      </div>
-    );
-  }
-}
+export default ({ name, description }) => (
+  <div style={styles.container} className="u-truncate">
+    <h3 style={styles.name}>{name}</h3>
+    <span style={styles.description}>{description}</span>
+  </div>
+);
